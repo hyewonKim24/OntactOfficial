@@ -7,13 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
-    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="./jquery-3.5.1.js"></script>
+    <link href="./reset.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
-        rel="stylesheet">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
     <style>
     *{
         margin : 0;
@@ -84,7 +81,7 @@
     .contents{
         position: absolute;
         width: 970px;
-        height: 860px;
+        height: 950px;
         left: 210px;
         padding : 40px 0 40px 40px;
         border-left: 1px solid #e7e7e7;
@@ -98,44 +95,30 @@
         font-size: 32px;
         border-bottom: 1px solid #e7e7e7;
     }
-    .commuteBtn{
-        width: 930px;
-        height: 40px;
-        line-height: 40px;
-        padding: 36px 0;
-        text-align: center;
-        border-bottom: 1px solid #e7e7e7;
-    }
-    .commuteBtn button{
-        width: 100px;
-        height: 32px;
-        margin-right: 20px;
-        background-color: #5A3673;
-        color:#F2F2F2;
-        border : none;
-        border-radius: 3px;
-    }
     .option{
         width: 930px;
-        height: 150px;
-        padding: 30px 0;
-    }
-    .option input:nth-child(1), input:nth-child(2){
-        border: 1px solid #e7e7e7;
+        height: 50px;
+        padding: 20px 0;
+        border-bottom: 1px solid #e7e7e7;
     }
     .option table{
-        width: 930px;
-        height: 150px;
+        width: 700px;
+        height: 50px;
     }
     .option table td{
         height: 50px;
         line-height: 50px;
     }
     .option table td:nth-child(1){
-        width: 150px;
+        width: 100px;
     }
-    .option table tr:nth-child(3){
-        text-align: center;
+    .option table td:nth-child(2){
+        width: 400px;
+    }
+    .searchgraph{
+        width: 930px;
+        height: 200px;
+        padding: 30px 0;
     }
     .option table button{
         width: 100px;
@@ -165,7 +148,6 @@
     }
     </style>
     <script>
-        // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
         $('.sidenav li.menu>a').on('click', function(){
 		$(this).removeAttr('href');
@@ -211,33 +193,22 @@
                 <li ><a href="">조직도</a></li>
             </ul>
         </div>
-        <div class="contents">
+    <div class="contents">
         <div class="article">
-            <div class="conTitle">출퇴근 관리</div>
-            <div class="commuteBtn">
-                <button value="">출근하기</button>
-                <button value="">퇴근하기</button>
-                <button value="">QR 스캐너</button>
-            </div>
+            <div class="conTitle">월 근무내역</div>
             <div class="option">
                 <table>
                     <tr>
                         <td>기간 선택</td>
                         <td><input type="text" id="startDate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate"></td>
+                        <td><button value="">조회</button></td>
                     </tr>
+                </table>
+            </div>
+            <div class="searchgraph">
+                <table>
                     <tr>
-                        <td>출퇴근 여부</td>
-                        <td>
-                            <input type="radio" id="nomalcommute">
-                            <label for="nomal">정상출퇴근</label>&nbsp;&nbsp;&nbsp;
-                            <input type="radio" id="abnomalEnter">
-                            <label for="nomal">출근누락</label>&nbsp;&nbsp;&nbsp;
-                            <input type="radio" id="abnomalLeave">
-                            <label for="nomal">퇴근누락</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><button value="">조회</button></td>
+                        <td>그래프 표시될곳</td>
                     </tr>
                 </table>
             </div>
@@ -245,96 +216,74 @@
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="6" style="text-align: left;">조회결과 00건</td>
+                        <td colspan="4" style="text-align: left;">조회결과 00건</td>
                     </tr>
                     <tr>
                         <th>날짜</th>
-                        <th>근무상태</th>
-                        <th>출근시간 </th>
-                        <th>퇴근시간</th>
-                        <th>지각여부</th>
-                        <th>지각사유</th>
+                        <th>근무시간</th>
+                        <th>시간외 근무시간</th>
+                        <th>월 누적 근무시간</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                     <tr>
                         <td>2020-12-29</td>
-                        <td>정상근무</td>
-                        <td>8:53</td>
-                        <td>18:13</td>
-                        <td> 0 </td>
-                        <td> - </td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>45</td>
                     </tr>
                 </table>
             </div>
@@ -368,6 +317,7 @@
             $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
             $('#endDate').datepicker('setDate', 'today');          
         });
+    
 </script>
 </body>
 </html>
