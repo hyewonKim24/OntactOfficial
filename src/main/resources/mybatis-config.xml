@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<!-- null이 있을때 value 값으로 바꿀 수 있도록 하는것  -->
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.kh.hllee.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kh.hllee.board.model.vo.BoardReply" alias="BoardReply" />
+		<!-- BoardVO 사용시 별칭을 사용해서 간단하게 쓸수 있다 -->
+	</typeAliases>
+	<!-- 사용하고자하는 쿼리문이 있는 클래스를 넣으면 된다 -->
+	<mappers>
+		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/boardReply-mapper.xml" />
+	</mappers>
+</configuration>
