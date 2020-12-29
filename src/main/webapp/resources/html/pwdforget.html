@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
+    <title>ontact, 서로 연결되는 온라인 공간 </title>
+    <script>
+        function goPwSearch() {
+            var frm = document.pw_search_frm;
+            frm.action = "<%=request.getContextPath()%>/memberPwSearch.do";
+            frm.method = "post";
+            frm.submit();
+        }
+    </script>
+    <style>
+        body {
+            font-size: 14px;
+            font-family: Noto Sans KR;
+            line-height: 1.15;
+        }
+
+        header {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0px 20px;
+        }
+
+        .title {
+            display: flex;
+        }
+
+        .title__logo {
+            margin: 0 0 0 0;
+            line-height: 60px;
+        }
+
+        .title__func {
+            margin: 0 0;
+            font-size: 17px;
+            line-height: 60px;
+        }
+
+        #login {
+            border-radius: 10px;
+            background: #432D73;
+            color: #fff;
+            border: none;
+            position: relative;
+            height: 40px;
+            padding: 0 2em;
+            cursor: pointer;
+            font-size: 14px;
+            position: relative;
+            top: 10px;
+        }
+
+        #pwfinder {
+            padding: 110px;
+        }
+
+        #pwfinder__desc {
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        #pwfinder__desc2 {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        #pwfinder__wrapper {
+            width: 380px;
+            height: 171px;
+            padding: 40px 60px;
+            margin: 0 auto;
+            background-color: #F2F2F2;
+            position: relative;
+        }
+
+        #pwfinder__wrapper2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+        }
+
+        #uemail {
+            width: 320px;
+            height: 40px;
+            padding: 0px 5px;
+            font-size: 14px;
+            vertical-align: top;
+            text-align: left;
+            margin: 5px 0 20px 0;
+            border: 1px solid #ccc;
+            line-height: 20px;
+            border-radius: 3px;
+        }
+        #pwfinder__wrappertext{
+            font-size:17px;
+            margin-bottom:5px;
+        }
+        #button__wrpper{
+            text-align: center;
+            margin-top:20px;
+        }
+        #pwbtn {
+            border-radius: 10px;
+            background: #432D73;
+            color: #fff;
+            border: none;
+            height: 50px;
+            padding: 0 2em;
+            cursor: pointer;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="title">
+            <h2 class="title__logo">ONTACT&nbsp;&nbsp;|</h2>
+            <h2 class="title__func">&nbsp;&nbsp;비밀번호 찾기</h2>
+        </div>
+        <div class="title">
+            <button id="login">로그인</button>
+        </div>
+    </header>
+    <section>
+
+        <!-- <form name="pw_search_frm" class="form_wrap">
+			<div class="pw_search_res">
+				<c:if test="${not empty pw_Search_error}">
+				${pw_Search_error}
+			</c:if>
+
+            </div> -->
+
+        <hr>
+        <div id="pwfinder">
+            <div id="pwfinder__desc">비밀번호를 잊으셨나요?</div>
+            <div id="pwfinder__desc2">기존에 가입하신 이메일을 입력하시면, 임시비밀번호가 발송됩니다.</div>
+            <div id="pwfinder__wrapper">
+                <div id="pwfinder__wrapper2">
+                    <div id="pwfinder__wrappertext">이메일</div>
+                    <input type="text" name="uemail" id="uemail" placeholder="기존에 가입하신 이메일을 입력해주세요."><br>
+                    <div id="button__wrpper">
+                    <input type="button" id="pwbtn" value="비밀번호 재설정하기" onclick="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

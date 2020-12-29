@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ontact, 서로 연결되는 온라인 공간 </title>
+    <link href="/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<style type="text/css">
+    body {
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+    }
+
+    header {
+        height: 60px;
+        margin: 0px 20px;
+    }
+
+    .register_res {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 20px;
+    }
+
+    #form_title {
+        margin: 0 auto;
+        line-height: 40px;
+        font-size: 23px;
+        font-weight: bold;
+        text-align: center;
+        height: 40px;
+        width: 640px;
+        letter-spacing: -0.9px;
+    }
+
+    #form_title2 {
+        margin: 0 auto;
+        line-height: 40px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        height: 40px;
+        width: 640px;
+        letter-spacing: -0.9px;
+    }
+
+    /* #required_sub {
+	width: 640px;
+	height: 5px;
+	margin: 0 auto;
+	text-align: right;
+	padding-top: 10px;
+	border-bottom: 2px solid black;
+	font-size: 12px;
+	color: #666;
+	font-size: 12px;
+} */
+    #title_bottom {
+        padding-bottom: 20px;
+    }
+
+    /* .form_wrap {
+	padding-top: 60px;
+	width: 1080px;
+	display: block;
+	margin: 0 auto;
+} */
+    .form_input {
+        width: 320px;
+        height: 40px;
+        column-span: 2;
+        padding: 0px 5px;
+        font-size: 14px;
+        vertical-align: top;
+        text-align: left;
+        margin: 5px 0 5px 0;
+        border: 1px solid #ccc;
+        line-height: 20px;
+        border-radius: 3px;
+    }
+
+    .form_select {
+        width: 332px;
+        height: 40px;
+        column-span: 2;
+        padding: 0px 5px;
+        font-size: 14px;
+        vertical-align: top;
+        text-align: left;
+        margin: 5px 0 5px 0;
+        border: 1px solid #ccc;
+        line-height: 20px;
+        border-radius: 3px;
+    }
+
+    .form_btn {
+        border: 1px solid #425c5a;
+        background-color: #fff;
+        color: #425c5a;
+        display: inline-block;
+        width: 120px;
+        margin-left: 5px;
+        vertical-align: top;
+        margin-top: 5px;
+        height: 44px;
+        border-radius: 3px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 40px;
+        text-align: center;
+        height: 44px;
+    }
+
+    .form_wrap table {
+        margin: 0 auto;
+        line-height: 45px;
+        height: 40px;
+    }
+
+    .form_wrap th {
+        width: 130px;
+        padding: 20px 0 0 0px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #333;
+        line-height: 20px;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    #email_res {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #id_res {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #pw_res {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #register_ok {
+        margin-top: 30px;
+        width: 150px;
+        height: 56px;
+        font-size: 18px;
+        line-height: 54px;
+        border: 1px solid #5A3673;
+        background-color: #5A3673;
+        border-radius: 20px;
+        font-weight: 700;
+        color: white;
+    }
+
+    tfoot {
+        text-align: center;
+    }
+
+    /*모달*/
+    #modal {
+        display:none;
+        width: 380px;
+        height: 330px;
+        border-radius: 3px;
+        border: 1px solid #c0c0c0;
+        position: relative;
+        text-align: center;
+        background-color: white;
+    }
+
+    #modal_title {
+        width: 380px;
+        height: 45px;
+        background-color: #F2F2F2;
+        text-align: center;
+        line-height: 45px;
+        font-size: 17px;
+    }
+    #modal_msg{
+        text-align: center;
+        padding:50px 0;
+        font-size: 15px;
+    }
+    .modal_numberbox{
+        border-bottom: 1px solid #787878;
+        padding:10px;
+    }
+    #modal_number{
+        border:none;
+    }
+    #modal_time{
+        color:red;
+    }
+    .errormsg{
+        font-size:13px;
+        width:226px;
+        text-align:left;
+        margin:20px auto 0 auto;
+        position:relative;
+    }
+    .errormsg #resend{
+        text-decoration: none;
+        position:absolute;
+        right:6px;
+    }
+    #modal_send{
+        margin-top: 30px;
+        width: 228px;
+        height: 40px;
+        font-size: 16px;
+        line-height: 40px;
+        border: 1px solid #5A3673;
+        background-color: #5A3673;
+        border-radius: 5px;
+        font-weight: 700;
+        color: white;
+    }
+    #modal .modal_close_btn {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+    }
+</style>
+
+<body>
+    <header>
+        <h2>ONTACT</h2>
+        <hr>
+    </header>
+    <section>
+        <!-- <div class="register_res">
+            <c:if test="${not empty register_fail}">
+                <script> alert('${register_fail}'); </script>
+            </c:if>
+        </div> -->
+        <!--register_res 뭔지 확인할것-->
+        <div class="form_wrap">
+            <h3 id="form_title">편안한 온라인 공간</h3>
+            <h2 id="form_title2">온택트 비즈니스 계정을 생성하세요.</h2>
+            <p id="required_sub">
+
+            </p>
+            <p id="title_bottom"></p>
+            <form name="register_frm">
+                <table id="login">
+                    <tbody>
+                        <tr>
+                            <th>이메일</th>
+                            <td><input type="text" class="form_input" name="uemail" id="uemail" required>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <th></th>
+                            <td><span id="email_res"></span></td>
+                        </tr> -->
+                        <script type="text/javascript">
+                            var emailreg = false;
+                            var emaildbchk = 0;
+                            $("#uemail").on("input", function () {
+                                var a = $("#uemail").val();
+                                var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+                                if (!regex.exec(a)) {
+                                    emailreg = false;
+                                    $("#email_res").html("이메일 형식이 맞지 않습니다");
+                                    return;
+                                }
+                                else {
+                                    $("#email_res").html("이메일 형식이 맞습니다.");
+                                    emailreg = true;
+                                }
+                            });
+
+                            $("#uemail").on("focusout", function () {
+                                $.ajax({
+                                    url: "<%=request.getContextPath()%>/CheckEmail.do",
+                                    data: {
+                                        uemail: $("#uemail").val()
+                                    },
+                                    success: function (res) {
+                                        if (res == 1) {
+                                            alert('사용가능한 이메일입니다');
+                                            emaildbchk = 1;
+                                        } else if (res == 0) {
+                                            alert('이미 사용중인 이메일입니다');
+                                            emaildbchk = 2;
+                                        } else {
+                                            alert(res);
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('오류가 발생했습니다');
+                                    }
+                                });
+                            });
+                        </script>
+                        <tr>
+                            <th>이름</th>
+                            <td><input type="text" class="form_input" name="uname" id="uname" required></td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td><input type="password" class="form_input" name="upwd" id="upwd"
+                                    placeholder="8자 이상, 대문자/소문자/숫자/특수문자  모두 포함." required>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <th></th>
+                            <td><span id="pw_res"> </span></td>
+                        </tr> -->
+                        <tr>
+                            <th>비밀번호확인</th>
+                            <td><input type="password" class="form_input" name="pwre" id="pwre"
+                                    placeholder="비밀번호를 한번 더 입력해주세요" required></td>
+                        </tr>
+
+                        <script type="text/javascript">
+                            var pwreg = false;
+                            $("#upwd").on("input",
+                                function () {
+                                    var a = $("#upwd").val();
+                                    var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+                                    if (!regex.exec(a)) {
+                                        pwreg = false;
+                                        $("#pw_res").html('비밀번호 형식이 맞지않습니다.');
+                                        return;
+                                    } else {
+                                        pwreg = true;
+                                        $("#pw_res").html('비밀번호 형식이 맞습니다.');
+                                    }
+                                });
+
+                            $("#pwre").focusout(function () {
+                                var pw1 = $("#upwd").val();
+                                var pw2 = $("#pwre").val();
+                                if (pw1 != "" && pw2 != "") {
+                                    {
+                                        if (pw1 != pw2) {
+                                            alert('비밀번호 동일하게 입력해주세요');
+                                            $("#upwd").focus();
+                                            $("#upwd").val('');
+                                            $("#pwre").val('');
+                                            return false;
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
+                        <tr>
+                            <th>회사명</th>
+                            <td><input type="text" class="form_input" name="cname" id="cname" required></td>
+                        </tr>
+                        <tr>
+                            <th>회사 URL</th>
+                            <td><input type="text" class="form_input" name="curl" id="curl" required></td>
+                        </tr>
+                        <tr>
+                            <th>회사 직종</th>
+                            <td><select class="form_select" name="ccate" id="ccate" required>
+                                    <option value="선택">선택</option>
+                                    <option value="제조">제조</option>
+                                    <option value="서비스">서비스</option>
+                                    <option value="IT">IT</option>
+                                    <option value="유통">유통</option>
+                                    <option value="마케팅">마케팅</option>
+                                    <option value="교육/연구">교육/연구</option>
+                                    <option value="건설">건설</option>
+                                    <option value="의료">의료</option>
+                                    <option value="금융">금융</option>
+                                    <option value="소비재">소비재</option>
+                                    <option value="공공행정">공공행정</option>
+                                    <option value="프렌차이즈">프렌차이즈</option>
+                                    <option value="엔터테인먼트">엔터테인먼트</option>
+                                    <option value="농업/어업">농업/어업</option>
+                                    <option value="기타">기타</option>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><input type="checkbox" class="form_input_chk" id="f_chk1" required> <label
+                                    for="f_chk1">서비스 이용약관, 개인정보취급방침을 확인하였고, 이에 동의합니다.</label>
+                            </th>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" id="footer"><button type="submit" id="register_ok"
+                                    onclick="goRegister();">회원가입</button>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+            <p id="required_sub"></p>
+        </div>
+        <script>
+            function goRegister() {
+                if (iddbchk == 0) {
+                    alert('아이디 중복체크를 해주세요.');
+                } else if (iddbchk == 2) {
+                    alert('사용중인 아이디 입니다. 변경해주세요.');
+                } else if (emaildbchk == 0) {
+                    alert('이메일 중복체크를 해주세요.');
+                } else if (emaildbchk == 2) {
+                    alert('사용중인 이메일입니다. 변경해주세요.');
+                }
+                else {
+                    if (idreg == false) {
+                        console.log(idreg);
+                        alert('아이디 형식을 바르게 입력해주세요');
+                    } else if (pwreg == false) {
+                        console.log(pwreg);
+                        alert('비밀번호 형식을 바르게 입력해주세요');
+                    } else if (emailreg == false) {
+                        alert('이메일 형식을 바르게 입력해주세요');
+                    } else if ($('#f_chk1').prop('checked') == false || $('#f_chk2').prop('checked') == false) {
+                        alert('필수 약관에 동의 하셔야 합니다.');
+                    } else {
+                        var frm = document.register_frm;
+                        frm.action = "<%=request.getContextPath()%>/memberRegister.do";
+                        frm.method = "post";
+                        frm.submit();
+                    }
+                }
+            }
+        </script>
+
+    <!--모달-->
+        <div id="modal">
+            <div id="modal_title">인증번호 입력</div>
+            <div id="modal_msg">
+                ontact@gmail.com 으로<br>6자리 인증번호가 전송되었습니다.<br>
+            </div>
+            <span class="modal_numberbox" style="cursor:pointer">
+                <input type="text" id="modal_number" maxlength="6" onkeypress="">
+                <span id="modal_time">3:00</span>
+            </span>
+            <div class="errormsg">
+                <p id="msgwrapper">
+                    <span id="errorrmsg_content">인증번호</span>
+                    <a id="resend" href="">재전송</a>
+                </p>
+            </div>
+            <button id="modal_send">확인</button>
+            <a class="modal_close_btn">X</a>
+        </div>
+
+        <script>
+            function modal(id){
+                var zIndex=9999;
+                var modal=document.getElementById(id);
+
+                // 모달 div 뒤에 희끄무레한 레이어
+                var bg = document.createElement('div');
+                bg.setStyle({
+                    position: 'fixed',
+                    zIndex: zIndex,
+                    left: '0px',
+                    top: '0px',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'auto',
+                    // 레이어 색갈은 여기서 바꾸면 됨
+                    backgroundColor: 'rgba(0,0,0,0.4)'
+                });
+                document.body.append(bg);
+
+                 // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                 modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                    bg.remove();
+                    modal.style.display = 'none';
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 시꺼먼 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+            }
+
+            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+            Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+
+            document.getElementById('register_ok').addEventListener('click', function() {
+                // 모달창 띄우기
+                modal('modal');
+            });
+        </script>
+    </section>
+</body>
+
+</html>
