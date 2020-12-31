@@ -8,6 +8,10 @@
 	<typeAliases>
 		<typeAlias type="com.kh.ontact.users.model.dto.UsersDto" alias="UsersDto"/>
 		<typeAlias type="com.kh.ontact.company.model.dto.CompanyDto" alias="CompanyDto"/>
+		<typeAlias type="com.kh.ontact.chat.model.dto.ChatDto" alias="ChatDto"/>
+		<typeAlias type="com.kh.ontact.chatcontent.model.dto.ChatContentDto" alias="ChatContentDto"/>
+		<typeAlias type="com.kh.ontact.chatmember.model.dto.ChatMemberDto" alias="ChatMemberDto"/>
+		<typeAlias type="com.kh.ontact.commute.model.dto.CommuteDto" alias="CommuteDto"/>
 	</typeAliases>
 	<!-- <mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

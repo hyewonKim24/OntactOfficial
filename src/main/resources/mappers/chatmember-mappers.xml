@@ -13,7 +13,7 @@
 	</resultMap>
 
 	<!-- user resultMap 필요 -->
-	<resultMap type="UserDto" id="resultUserName">
+	<resultMap type="UsersDto" id="resultUserName">
 		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
 		<id property="uno" column="uno" />
 		<result property="uname" column="uname" />
@@ -25,13 +25,13 @@
 		select count(*) from chatMember where chatno=#{chatno}
 	</select>
 
-	<!-- 채팅방에 따른 멤버 리스트 가져오기 -->
-	<select id="listChatMember" resultType="arrayList"
-		resultMap="UserDto">
+<!-- 채팅방에 따른 멤버 리스트 가져오기 -->
+<!-- 	<select id="listChatMember" resultType="arrayList"
+		resultMap="UsersDto">
 		select uname,uno from users where uno IN (select uno from
 		chatmember where chatno=#{chatno}
 	</select>
-
+ -->
 	<!--해당 채팅방에 멤버 insert -->
 	<insert id="insertChatMember" parameterType="string">
 		insert into

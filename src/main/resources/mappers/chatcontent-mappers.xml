@@ -27,7 +27,7 @@
 	</insert>
 	
 	<!-- 이미지, 이미지 대화 경로추가 -->
-	<insert id="insertChatContent" parameterType="string">
+	<insert id="insertChatContent2" parameterType="string">
 		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) values(CCNO_SE,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
 	</insert>
 	
