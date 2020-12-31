@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Company">
+	<resultMap type="CompanyDto" id="resultCompany">
+		<id property="cno" column="cno" />
+		<result property="cname" column="cname" />
+		<result property="ceo" column="ceo" />
+		<result property="ctel" column="ctel" />
+		<result property="curl" column="curl" />
+		<result property="clogo" column="clogo" />
+		<result property="clogopath" column="clogopath" />
+		<result property="ccate" column="ccate" />
+	</resultMap>
+	
+	<insert id="joinBusiness">
+		INSERT INTO COMPANY(cno, cname, ceo, curl, ccate) 
+		VALUES(CNO_SE.NEXTVAL, #{cname} , #{ceo}, #{curl} , #{ccate})
+	</insert>
+	
+</mapper>

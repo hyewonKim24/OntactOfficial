@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Users">
+	<resultMap type="UsersDto" id="resultUsers">
+		<id property="uno" column="uno" />
+		<result property="cno" column="cno" />
+		<result property="dno" column="dno" />
+		<result property="uemail" column="uemail" />
+		<result property="uname" column="uname" />
+		<result property="utell" column="utell" />
+		<result property="upwd" column="upwd" />
+		<result property="utmppwd" column="utmppwd" />
+		<result property="urank" column="urank" />
+		<result property="uregdate" column="uregdate" />
+		<result property="uresdate" column="uresdate" />
+		<result property="ustate" column="ustate" />
+		<result property="ufilename" column="ufilename" />
+		<result property="ufilepath" column="ufilepath" />
+		<result property="uauthority" column="uauthority" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+	
+	<!-- 가입 -->
+	<insert id="joinBusiness" flushCache="true">
+		INSERT INTO USERS(uno, cno, uemail, uname, upwd, urank, uauthority, enabled) 
+		VALUES(UNO_SE.NEXTVAL, CNO_SE.CURRVAL, #{uemail} , #{uname} , #{upwd} , '대표', 'ROLE_ADMIN', 1 )
+	</insert>
+	
+	<!-- 이메일 중복체크 -->
+	<select id="emailChk" resultType="int">
+		select count(*) from users
+		where uemail = #{uemail}
+	</select>
+	
+	<!-- 유저 정보 가져오기 -->
+	<select id="selectUserById" resultType="com.kh.ontact.users.model.dto.CustomUserDetails">
+        <![CDATA[
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                uemail=#{uemail}
+        ]]>
+    </select>
+</mapper>
