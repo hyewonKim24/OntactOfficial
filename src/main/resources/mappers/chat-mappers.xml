@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Chat">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="ChatDto" id="resultChat">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="chatno" column="chatno"/>
+		<result property="pno" column="pno" />
+		<result property="chatname" column="chatname" />
+	</resultMap>
+	
+	<!-- 채팅방 리스트 가져오기 -->
+	<select id="listChat" resultType="arrayList" resultMap="resultChat">
+		select * from chat;
+	</select>
+	
+	<!-- 개인 채팅방 추가 -->
+	<insert id="insertChat">
+		insert into chat(chatno,chatname) values(CHATNO_SE,#{chatname})
+	</insert>
+	
+	<!-- 프로젝트 채팅방 추가 -->
+	<insert id="insertProChat" parameterType="string">
+		insert into chat values(CHATNO_SE,#{pno},#{chatname})
+	</insert>
+	
+	<!-- 채팅방 삭제 -->
+	<delete id="deleteChat" parameterType="string">
+		delete from chat where chatno=#{chatno}
+	</delete>
+	
+	<!-- 채팅방 이름 변경 -->
+	<update id="updateChat" parameterType="string">
+		update chat set chatname = #{chatname} where chatno=#{chatno}
+	</update>
+	
+</mapper>

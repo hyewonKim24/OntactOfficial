@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="ChatMember">
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="ChatMemberDto" id="resultChatmember">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="chatno" column="chatno" />
+		<result property="uno" column="uno" />
+		<result property="createchat" column="createchat" />
+		<result property="chatstartdate" column="chatstartdate" />
+		<result property="chatenddate" column="chatenddate" />
+	</resultMap>
+
+	<!-- user resultMap 필요 -->
+	<resultMap type="UserDto" id="resultUserName">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="uno" column="uno" />
+		<result property="uname" column="uname" />
+	</resultMap>
+
+	<!-- 해당 채팅방 멤버 수 가져오기 -->
+	<select id="listChatMCount" resultType="int"
+		parameterType="string">
+		select count(*) from chatMember where chatno=#{chatno}
+	</select>
+
+	<!-- 채팅방에 따른 멤버 리스트 가져오기 -->
+	<select id="listChatMember" resultType="arrayList"
+		resultMap="UserDto">
+		select uname,uno from users where uno IN (select uno from
+		chatmember where chatno=#{chatno}
+	</select>
+
+	<!--해당 채팅방에 멤버 insert -->
+	<insert id="insertChatMember" parameterType="string">
+		insert into
+		chatmember(chatno,uno,createchat,chatstartdate) values
+		(#{chatno},#{uno},#{createchat},sysdate)
+	</insert>
+
+	<!-- 멤버 대화방 나가기 -->
+	<delete id="deleteChatMember" parameterType="string">
+		delete from chatmember where chatno=#{chatno} and uno=#{uno}
+	</delete>
+
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="ChatContent">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="ChatContentDto" id="resultChatContent">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="ccno" column="ccno"/>
+		<result property="chatno" column="chatno" />
+		<result property="uno" column="uno" />
+		<result property="chatdate" column="chatdate" />
+		<result property="content" column="content" />
+		<result property="chatfix" column="chatfix" />
+		<result property="chatimg" column="chatimg" />
+		<result property="chatfilepath" column="chatfilepath" />
+	</resultMap>
+	
+	<!-- 채팅방에 대화 가져오기 -->
+	<select id="listChatContent" resultType="arrayList" resultMap="resultChatContent">
+		select uno,content,chatdate from chatcontent where chatno=#{chatno};
+	</select>
+	
+	<!-- 일반 대화 추가 -->
+	<insert id="insertChatContent" parameterType="string">
+		insert into chatcontent(ccno,chatno,uno,chatdate,content,chatfix) values(CCNO_SE,#{chatno},#{uno},sysdate,#{content},0)
+	</insert>
+	
+	<!-- 이미지, 이미지 대화 경로추가 -->
+	<insert id="insertChatContent" parameterType="string">
+		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) values(CCNO_SE,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
+	</insert>
+	
+	<!-- 공지 등록 (1이면 공지 , defalut는 0) -->
+	<update id="fixChatContent">
+		update chatcontent set chatfix =1 where chatno=#{chatno} and ccno=#{ccno}
+	</update>
+	
+	
+</mapper>
