@@ -29,6 +29,7 @@ public class UsersDto {
 	private String ufilepath;
 	private String uauthority;
 	private int enabled;
+	private int failure_cnt;
 	
 	
 	

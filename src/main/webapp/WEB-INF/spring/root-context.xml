@@ -39,4 +39,13 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="5"/>
     </bean>
+    
+    <bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg ref="messageSource"/>
+    </bean>
+    
+    <bean id="message" class="com.kh.ontact.users.util.MessageUtils">
+        <property name="messageSourceAccessor" ref="messageSourceAccessor"/>
+    </bean>
+    
 </beans>

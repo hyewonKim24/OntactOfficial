@@ -20,6 +20,7 @@
 		<result property="ufilepath" column="ufilepath" />
 		<result property="uauthority" column="uauthority" />
 		<result property="enabled" column="enabled" />
+		<result property="failure_cnt" column="failure_cnt"/>
 	</resultMap>
 	
 	<!-- 가입 -->
@@ -34,6 +35,10 @@
 		where uemail = #{uemail}
 	</select>
 	
+	
+	
+	
+	<!-- ####### 여기부터 시큐리티 ####### -->
 	<!-- 유저 정보 가져오기 -->
 	<select id="selectUserById" resultType="com.kh.ontact.users.model.dto.CustomUserDetails">
         <![CDATA[
@@ -45,4 +50,48 @@
                 uemail=#{uemail}
         ]]>
     </select>
+    <!-- 로그인 실패 횟수 -->
+    <update id="updateFailureCount">
+        <![CDATA[
+            UPDATE
+                users
+            SET
+                FAILURE_CNT = FAILURE_CNT + 1
+            WHERE
+                uemail = #{ uemail}
+        ]]>
+    </update>
+    <select id="checkFailureCount" resultType="Integer">
+        <![CDATA[
+            SELECT
+                FAILURE_CNT
+            FROM
+                users
+            WHERE
+                uemail=#{uemail}
+        ]]>
+    </select>
+    <!-- 비밀번호 10번이상 틀릴시 계정 비활성화 -->
+    <update id="updateUnenabled">
+		<![CDATA[
+			UPDATE
+				users
+			SET
+				ENABLED = 0
+			WHERE
+				uemail = #{uemail}
+		]]>
+	</update>
+    <!-- 로그인실패횟수 초기화 -->
+    <update id="updateFailureCountReset">
+	<![CDATA[
+			UPDATE
+				users
+			SET
+				FAILURE_CNT = 0
+			WHERE
+				uemail = #{uemail}
+		]]>
+	</update>
+
 </mapper>

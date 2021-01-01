@@ -11,12 +11,12 @@ public class UsersDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//È¸»ç È¸¿ø°¡ÀÔ
+	//ë¹„ì¦ˆë‹ˆìŠ¤ íšŒì›ê°€ì…
 	public void joinBusiness(UsersDto dto) throws Exception{
 		sqlSession.insert("Users.joinBusiness",dto);
 	}
 	
-	//¾ÆÀÌµğ Áßº¹Ã¼Å©
+	//ì´ë©”ì¼ ì¤‘ë³µì²´í¬
 	public int emailChk(String uemail) throws Exception{
 		int result = sqlSession.selectOne("Users.emailChk",uemail);
 		return result;

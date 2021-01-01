@@ -1,11 +1,11 @@
 package com.kh.ontact.users.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
+import com.kh.ontact.users.model.dao.UsersAuthDao;
 import com.kh.ontact.users.model.dao.UsersDao;
 import com.kh.ontact.users.model.dto.UsersDto;
 
@@ -13,23 +13,46 @@ import com.kh.ontact.users.model.dto.UsersDto;
 public class UsersServiceImpl implements UsersService{
 
 	@Autowired
-	UsersDao usersdao;
+	UsersDao usersDao;
 	@Autowired
 	CompanyDao companydao;
+	@Autowired
+	UsersAuthDao usersAuthDao;
 
-	//ºñÁî´Ï½º È¸¿ø°¡ÀÔ
+	//ë¹„ì¦ˆë‹ˆìŠ¤ ê°€ì…
 	@Override
 	public void joinBusiness(UsersDto userdto, CompanyDto companydto) throws Exception {
 		companydao.joinBusiness(companydto);
-		usersdao.joinBusiness(userdto);
-		
+		usersDao.joinBusiness(userdto);
 	}
 	
-	//¾ÆÀÌµğ Áßº¹Ã¼Å©
+	//ì´ë©”ì¼ ì¤‘ë³µì²´í¬
 	@Override
 	public int emailChk(String uemail) throws Exception {
-		int result = usersdao.emailChk(uemail);
+		int result = usersDao.emailChk(uemail);
 		return result;
+	}
+	
+	
+	//ì—¬ê¸°ë¶€í„° ì‹œíë¦¬í‹°
+	@Override
+	public void countFailure(String username) {
+		usersAuthDao.updateFailureCount(username);
+	}
+
+	@Override
+	public int checkFailureCount(String username) {
+		return usersAuthDao.checkFailureCount(username);
+	}
+
+	@Override
+	public void disabledUsername(String username) {
+		usersAuthDao.updateDisabled(username);
+	}
+
+	@Override
+	public void resetFailureCnt(String username) {
+		usersAuthDao.updateFailureCountReset(username);
 	}
 
 }
