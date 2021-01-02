@@ -27,30 +27,36 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-			/WEB-INF/spring/appServlet/servlet-context.xml
+				/WEB-INF/spring/appServlet/servlet-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+		<!-- 비동기 작업이 필요한 이유는 클라이언트가 여러개일 경우 해당 클라이언트들이 동시에 데이터를 전송할 수 있기에 해당 제어를 
+			위해서 비동기 처리한다. 만약 비동기 처리를 하지 않게 되면 1:1통신은 에러가 나지 않지만 2개이상의 클라이언트가 접속하여 데이터를 
+			주고받으면 비동기 에러가 난다. 반드시 처리해줘야함  // 채팅관련 -->
+
 	</servlet>
 
 	<servlet-mapping>
+
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-    <!-- UTF-8 등록 -->
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter
-        </filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<!-- UTF-8 등록 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- Spring Security -->
 	<filter>

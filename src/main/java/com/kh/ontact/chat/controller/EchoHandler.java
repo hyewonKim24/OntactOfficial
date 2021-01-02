@@ -29,22 +29,16 @@ public class EchoHandler extends TextWebSocketHandler{
 	
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		
-		System.out.println(session.getId()+"로부터 "+message.getPayload()+"메시지 받음");
-//		System.out.println("userid는 "+userid +"message는"+messagers);
-		
+		System.out.println(session.getPrincipal().getName()+"로부터 "+message.getPayload()+"메시지 받음");
+		//session.getPrincipal().getName();
 		//연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
 		//getPrincipal()을 이용해서 세션에 몰려있는 유저의 정보를 불러온다.
 		//세션의 정보는 user를 이용한 것과 동일하다.
 		
-//		for(WebSocketSession sess : sessionList) {
-//			//연결된 모든 사용자에게 보내야 하므로 for문으로 sessionList에 있는 모든 세션들에게 메시지를 전송함.
-//			sess.sendMessage(new TextMessage(session.getPrincipal().getName()+" | "+message.getPayload()));
-//		}
-	       for(WebSocketSession sess : sessionList){
-	            //sess.sendMessage(new TextMessage(userid+" | "+messagers));
-	            sess.sendMessage(new TextMessage(session.getId()+" | "+message.getPayload()));
- 
-	       }
+		for(WebSocketSession sess : sessionList) {
+			//연결된 모든 사용자에게 보내야 하므로 for문으로 sessionList에 있는 모든 세션들에게 메시지를 전송함.
+			sess.sendMessage(new TextMessage(session.getPrincipal().getName()+" | "+message.getPayload()));
+		}
 	}
 	
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
@@ -52,6 +46,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		sessionList.remove(session);
 		
 		System.out.println(session.getId()+"연결 끊김 echo");
-	//	System.out.println("채팅방 퇴장자:"+session.getPrincipal().getName());
+		System.out.println("채팅방 퇴장자:"+session.getPrincipal().getName());
 	}
 }

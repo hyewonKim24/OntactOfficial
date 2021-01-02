@@ -1,5 +1,16 @@
 package com.kh.ontact.header.controller;
 
-public class HeaderController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+@Controller
+public class HeaderController {
+	
+	@RequestMapping(value="/header",method=RequestMethod.GET)
+	public ModelAndView chattest(ModelAndView mv) {
+		mv.setViewName("main/header");
+		return mv;
+	}
 }

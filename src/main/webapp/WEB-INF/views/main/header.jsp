@@ -12,7 +12,7 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -527,7 +527,10 @@ body {
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
 								<a href="#" class="chat-tab1">채팅</a> <a href="#"
-									class="chat-tab2">연락처</a> <a href="#" id="chat-add"> <svg
+									class="chat-tab2">연락처</a>
+					 <a href="${pageContext.request.contextPath}/chatinvite" id="chat-add" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+                                        <!--새로운 대화창 열림-->
+									 <svg
 										id="Layer_1" data-name="Layer 1"
 										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 										width="25px" height="25px" class="icon-middle">
@@ -572,7 +575,10 @@ body {
 								<div class="chat-scroll-box">
 									<div class="drag_bar"></div>
 									<div class="chat-name">
-										<a href="#"> <!--새로운 대화창 열려야함--> <span
+										<a href="${pageContext.request.contextPath}/chatroom" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+                                        <!--새로운 대화창 열림-->
+										
+										 <span
 											class="chat-users-icon"> <svg version="1.1"
 													id="Capa_1" xmlns="http://www.w3.org/2000/svg"
 													xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

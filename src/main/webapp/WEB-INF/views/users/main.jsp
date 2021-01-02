@@ -120,7 +120,11 @@
         </div>
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-        	<div id="info"><sec:authentication property="principal.username"/>님, 반갑습니다.</div>
+       	<div id="info">
+        		 <sec:authentication property="principal" var="username"/>
+        		 님, 반갑습니다.     		
+        		</div>
+        	
         </sec:authorize>
     </section>
     
@@ -128,4 +132,4 @@
 <a href='<c:url value="/member"/>'>MEMBER</a>
 <a href='<c:url value="/admin/adminHome.do"/>'>ADMIN</a>
 </body>
-</html>
+</html> 
