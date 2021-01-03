@@ -17,13 +17,18 @@
 	</select>
 	
 	<!-- 개인 채팅방 추가 -->
-	<insert id="insertChat">
-		insert into chat(chatno,chatname) values(CHATNO_SE,#{chatname})
+	<insert id="insertChat" parameterType="string">
+		insert into chat(chatno,chatname) values(CHATNO_SE.nextval,#{chatname})
 	</insert>
+	
+	<!-- 채팅방 번호  -->
+	<select id="chatnoSelect" resultType="string">
+		select chatno_se.currval from DUAL
+	</select>
 	
 	<!-- 프로젝트 채팅방 추가 -->
 	<insert id="insertProChat" parameterType="string">
-		insert into chat values(CHATNO_SE,#{pno},#{chatname})
+		insert into chat values(CHATNO_SE.nextval,#{pno},#{chatname})
 	</insert>
 	
 	<!-- 채팅방 삭제 -->

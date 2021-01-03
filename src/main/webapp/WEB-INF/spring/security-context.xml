@@ -7,7 +7,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-	<context:component-scan base-package="com.kh.ontact.users.model.dao"/>
+	<context:component-scan base-package="com.kh.ontact"/>
+	<context:component-scan base-package="com.kh.ontact.users.service"/>
+	<context:component-scan base-package="com.kh.ontact.users.util"/>
 
 	<http use-expressions="true" auto-config="true">
 		<intercept-url pattern="/admin/**"
@@ -15,13 +17,19 @@
 		<intercept-url pattern="/users/member"
 			access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/" access="permitAll" />
-		<form-login username-parameter="uemail"
-			password-parameter="upwd" login-processing-url="/login"
-			login-page="/loginform" default-target-url="/main"
+		<form-login
+			username-parameter="uemail"
+			password-parameter="upwd"
+			login-processing-url="/login"
+			login-page="/loginform"
+			authentication-failure-handler-ref="loginFailureHandler"
+			authentication-success-handler-ref="loginSuccessHandler"
 			/>
-		<logout logout-url="/logout" logout-success-url="/loginform" />
+		<logout logout-url="/logout"
+		logout-success-url="/loginform"
+		invalidate-session="true"/>
 		<!-- 권한 없는 요청 했을 때 보여지는 페이지 지정 -->
-		<access-denied-handler error-page="/accessDenied.do" />
+		<access-denied-handler error-page="/access_denied" />
 		<!-- <csrf disabled="false" /> -->
 
 		<!-- 최대 한 개 세션만 생성되도록 -->
@@ -33,16 +41,29 @@
 	<!-- UserDetails 클래스로 유저id비교 -->
 	<authentication-manager>
 		<authentication-provider ref="userAuthProvider"/>
-		<authentication-provider user-service-ref="userService">
+		<authentication-provider user-service-ref="userdetailService">
 			<password-encoder hash="bcrypt" />
 		</authentication-provider>
 	</authentication-manager>
 	
 	<beans:bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	<beans:bean id="userService" class="com.kh.ontact.users.model.service.CustomUserDetailsService"/>
+	<beans:bean id="userdetailService" class="com.kh.ontact.users.model.service.CustomUserDetailsService"/>
 	<beans:bean id="userAuthProvider" class="com.kh.ontact.users.model.service.CustomAuthenticationProvider"/>
-	
+	<beans:bean id="loginFailureHandler" class="com.kh.ontact.users.handler.LoginFailureHandler">
+	    <beans:property name="uemail" value="uemail"/>
+	    <beans:property name="upwd" value="upwd"/>
+	    <beans:property name="ERRORMSG" value="ERRORMSG"/>
+	    <beans:property name="defaultFailureUrl" value="/loginform"/>
+	</beans:bean>
+	<beans:bean id="loginSuccessHandler" class="com.kh.ontact.users.handler.LoginSuccessHandler">
+	    <beans:property name="uemail" value="uemail"/>
+	    <beans:property name="defaultUrl" value="/main"/>
+	</beans:bean>
+
+
+
+
 	<!-- 임시 id -->
 	<!-- <authentication-manager>
 		<authentication-provider>

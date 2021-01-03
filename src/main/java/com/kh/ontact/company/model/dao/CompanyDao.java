@@ -11,8 +11,15 @@ public class CompanyDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//х╦╩Г х╦©Ь╟║ют
+	//х╦О©╫О©╫ х╦О©╫О©╫О©╫О©╫О©╫О©╫
 	public void joinBusiness(CompanyDto dto) throws Exception{
 		sqlSession.insert("Company.joinBusiness",dto);
+	}
+	
+	
+	/* М≤°Л⌡░ Л╫■К⌠° */
+	//М ▄Л┌╛К╙┘ Й╟─Л═╦Л≤╓Й╦╟
+	public String cnameOne(String cno) throws Exception {
+		return sqlSession.selectOne("Company.cnameOne", cno);
 	}
 }

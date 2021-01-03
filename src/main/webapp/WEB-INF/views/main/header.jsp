@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -346,6 +348,11 @@ body {
 	margin-right: 10px;
 }
 
+.tel-scroll-box{
+	overflow: hidden;
+	
+}
+
 .tel-title {
 	width: 370px;
 	padding-top: 10px;
@@ -355,6 +362,12 @@ body {
 }
 
 .tel-my {
+	height: 76px;
+	vertical-align: middle;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.tel-other{
 	height: 76px;
 	vertical-align: middle;
 	border-bottom: 1px solid #e7e7e7;
@@ -377,11 +390,77 @@ body {
 	font-weight: bold;
 }
 
+.tel-all-desc{
+	display: inline;
+	float: left;
+	width: 290px;
+	height: 70px;
+	line-height: 70px;
+	padding-left: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
 .tel-chat-icon {
 	float: right;
 	margin: 20px;
 	height: 25px;
 }
+
+/* 프로필 정보 */
+
+
+.prof-info-dim{
+	position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgb(0, 0, 0);
+    opacity: 0.3;
+    z-index: 500;
+    display: none;
+}
+
+.prof-info{
+	position:fixed;
+	width: 300px;
+	height: 300px;
+	background-color: #fff;
+	z-index:9000;
+	top:30%;
+	left:40%;
+	border:1px solid #fff;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	display:none;
+
+}
+
+.prof-exit{
+	margin-right:10px;
+	margin-top:10px;
+}
+
+.prof-name{
+	float:left;
+	font-size:30px;
+	font-weight: bold;
+	line-height: 50px;
+	padding:10px;
+	margin-top:20px;
+	margin-left:10px;
+}
+.prof-cname{
+	font-size:13px;
+	line-height: 20px;
+	padding:10px;
+	margin-top:50px;
+	margin-left:10px;
+}
+
+
 </style>
 <script>
         $(document).ready(function () {
@@ -412,6 +491,16 @@ body {
                 $(".chat-tab-wrap").hide();
                 $(".tel-tab-wrap").show();
             });
+            
+            $(".tel-prof-modal").click(function () {
+                $(".prof-info-dim").css("display","block");
+                $(".prof-info").css("display","block");
+            });
+            
+            $(".prof-exit").click(function () {
+                $(".prof-info-dim").css("display","none");
+                $(".prof-info").css("display","none");
+            });
         });
     </script>
 </head>
@@ -435,7 +524,7 @@ body {
 
 			</span> <span class="header-right-wrap"> <a href="#"
 				class="header-btn">관리자 설정</a> <a href="#" class="header-btn"> <svg
-						version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+						version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 42 42" style="enable-background: new 0 0 42 42;"
 						xml:space="preserve" width="10px" height="10px" class="add">
@@ -445,12 +534,12 @@ body {
 			</a> <span class="header-icon-wrap"> <a href="#"
 					class="header-right-icon" id="chat-icon"> <span
 						class="alarm-count" id="chat-alarm-count">3</span> <!--채팅 아이콘--> <svg
-							id="Layer_1" data-name="Layer 1"
+							id="Layer1" data-name="Layer 1"
 							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 							fill="#505050" width="25px" height="25px" class="header-icon">
                             <defs>
                                 <style>
-									#Layer_1 {
+									#Layer1 {
 										fill: none;
 										stroke: #505050;
 										stroke-miterlimit: 10;
@@ -464,7 +553,7 @@ body {
                         </svg>
 				</a> <a href="#" id="alarm-icon" class="header-right-icon"> <span
 						class="alarm-count">8</span> <!--알림 아이콘--> <svg version="1.1"
-							id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+							id="Capa1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 55 55" style="enable-background: new 0 0 55 55;"
 							xml:space="preserve" fill="#505050" width="25px" height="25px"
@@ -496,7 +585,7 @@ body {
 
 
 				</a> <!-- 마이 프로필 --> <a href="#" class="header-right-icon" id="my-icon">
-						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+						<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 55 55" style="enable-background: new 0 0 55 55;"
 							xml:space="preserve" fill="#505050" width="25px" height="25px"
@@ -528,10 +617,10 @@ body {
 							<div class="chat-tab-box">
 								<a href="#" class="chat-tab1">채팅</a> <a href="#"
 									class="chat-tab2">연락처</a>
-					 <a href="${pageContext.request.contextPath}/chatinvite" id="chat-add" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+					 <a href="${pageContext.request.contextPath}/chat/chatinvite" id="chat-add" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
                                         <!--새로운 대화창 열림-->
 									 <svg
-										id="Layer_1" data-name="Layer 1"
+										id="Layer1" data-name="Layer 1"
 										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 										width="25px" height="25px" class="icon-middle">
                                         <defs>
@@ -556,7 +645,7 @@ body {
 							</div>
 							<div class="chat-tab-wrap">
 								<div class="search-box">
-									<span id="chat-search"> <svg version="1.1" id="Capa_1"
+									<span id="chat-search"> <svg version="1.1" id="Capa1"
 											xmlns="http://www.w3.org/2000/svg"
 											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 											viewBox="0 0 53.627 53.627"
@@ -573,14 +662,14 @@ body {
 										placeholder="채팅방 또는 이름 검색">
 								</div>
 								<div class="chat-scroll-box">
-									<div class="drag_bar"></div>
+									<div class="dragbar"></div>
 									<div class="chat-name">
-										<a href="${pageContext.request.contextPath}/chatroom" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+										<a href="${pageContext.request.contextPath}/chat/chatroom" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
                                         <!--새로운 대화창 열림-->
 										
 										 <span
 											class="chat-users-icon"> <svg version="1.1"
-													id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+													id="Capa1" xmlns="http://www.w3.org/2000/svg"
 													xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 													viewBox="0 0 60 60"
 													style="enable-background: new 0 0 60 60;"
@@ -623,7 +712,7 @@ body {
 											<div class="chat-content-wrap">
 												<span class="chat-room-name">채팅방 제목 <span
 													class="chat-room-count"> <svg version="1.1"
-															id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+															id="Capa1" xmlns="http://www.w3.org/2000/svg"
 															xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 															y="0px" viewBox="0 0 60 60"
 															style="enable-background: new 0 0 60 60;"
@@ -652,7 +741,7 @@ body {
 							<!--연락처 모달-->
 							<div class="tel-tab-wrap">
 								<div class="search-box">
-									<span id="chat-search"> <svg version="1.1" id="Capa_1"
+									<span id="chat-search"> <svg version="1.1" id="Capa1"
 											xmlns="http://www.w3.org/2000/svg"
 											xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 											viewBox="0 0 53.627 53.627"
@@ -668,12 +757,12 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 										placeholder="이름, 소속 또는 연락처 검색">
 								</div>
 								<div class="tel-scroll-box">
-									<div class="drag_bar"></div>
+									<div class="dragbar"></div>
 									<div class="tel-name">
 										<p class="tel-title">내 프로필</p>
 										<div class="tel-my">
 
-											<svg version="1.1" id="Capa_1"
+											<svg version="1.1" id="Capa1"
 												xmlns="http://www.w3.org/2000/svg"
 												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 												viewBox="0 0 55 55"
@@ -701,19 +790,19 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                                                 C5.132,41.483,2,34.852,2,27.5C2,13.439,13.439,2,27.5,2S53,13.439,53,27.5C53,35.153,49.606,42.024,44.25,46.702z" />
                                                 </svg>
 											<span class="tel-my-desc"> <a href="#">김혜원</a> <span>
-													<a href="#"><svg id="Layer_1" data-name="Layer 1"
+													<a href="#"><svg id="Layer1" data-name="Layer 1"
 															xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 															fill="#505050" width="30px" height="25px"
 															class="tel-chat-icon">
                                                         <defs>
                                                             <style>
-																#Layer_1 {
+																#Layer1 {
 																	fill: none;
 																	stroke: #505050;
 																	stroke-miterlimit: 10;
 																	stroke-width: 1.7px;
 																}
-</style>
+															</style>
                                                         </defs>
                                                         <path
 																d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
@@ -724,13 +813,104 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 
 										</div>
 										<p class="tel-title">전체 연락처</p>
-										<div class="tel-all"></div>
+										<div class="tel-all">
+										<!-- 전체 연락처 / 해당 회사 user list 가져와서 뿌리기 -->
+										<c:forEach items="${ulist}" var="list">
+										<form action="${pageContext.request.contextPath}/chat/chatroom" method="post" id="chatfrm1">
+										<div class="tel-other">
+											<input type="hidden" name="chatuno" value="${list.uno }">
+											<input type="hidden" name="chatuname" value="${list.uname }">
+												<svg version="1.1" id="Capa1"
+												xmlns="http://www.w3.org/2000/svg"
+												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												viewBox="0 0 55 55"
+												style="enable-background: new 0 0 55 55;"
+												xml:space="preserve" fill="#505050" width="35px"
+												height="35px" class="tel-my-img">
+                                                    <path
+													d="M27.5,0C12.336,0,0,12.337,0,27.5c0,7.976,3.417,15.167,8.86,20.195l-0.072,0.098l0.705,0.604
+                                                c3.904,3.342,8.655,5.483,13.681,6.26c0.356,0.056,0.715,0.102,1.075,0.144c0.391,0.045,0.782,0.085,1.176,0.112
+                                                c0.579,0.043,1.162,0.071,1.75,0.078c0.062,0,0.123,0.008,0.185,0.008c0.017,0,0.035-0.002,0.052-0.002
+                                                c0.03,0,0.059,0.002,0.089,0.002C42.664,55,55,42.663,55,27.5S42.664,0,27.5,0z M27.414,52.998c-0.09,0-0.178-0.006-0.267-0.007
+                                                c-0.478-0.004-0.954-0.029-1.429-0.06c-5.298-0.368-10.154-2.359-14.074-5.482c0.381-0.36,0.802-0.665,1.266-0.9l9.137-3.921
+                                                c0.739-0.368,1.191-1.186,1.628-2.063c0.274-0.552,0.243-1.195-0.083-1.721C23.265,38.315,22.699,38,22.079,38l-6.347,0.005
+                                                c-0.022-0.002-2.195-0.222-3.83-0.924c-0.308-0.132-0.437-0.235-0.474-0.241c0.015-0.042,0.051-0.124,0.141-0.251
+                                                c2.264-3.224,6.083-9.643,6.214-16.409c0.008-0.379,0.303-9.287,9.332-9.361c5.365,0.044,7.902,3.189,9.086,5.82
+                                                c0.591,1.313,0.939,2.879,1.065,4.785c0.39,5.9,3.1,11.466,5.305,15.095c0.114,0.188,0.148,0.418,0.096,0.631
+                                                c-0.049,0.197-0.168,0.361-0.335,0.461c-1.038,0.62-2.389,0.407-2.397,0.404L33.273,38c-0.713,0-1.33,0.45-1.571,1.146
+                                                c-0.243,0.702-0.028,1.472,0.536,1.917c0.71,0.561,0.992,0.734,1.104,0.794l7.619,4.609c0.654,0.357,1.229,0.845,1.692,1.434
+                                                C38.231,51.229,32.983,52.986,27.414,52.998z M44.25,46.702c-0.633-0.815-1.415-1.491-2.293-1.969l-7.619-4.609
+                                                c-0.016-0.009-0.07-0.04-0.19-0.124h5.54c0.436,0.061,2.175,0.222,3.669-0.673c0.627-0.374,1.072-0.977,1.25-1.695
+                                                c0.181-0.727,0.062-1.511-0.327-2.151c-2.088-3.438-4.655-8.691-5.018-14.189c-0.143-2.147-0.547-3.938-1.237-5.473
+                                                c-1.424-3.164-4.469-6.947-10.91-7c-10.964,0.09-11.33,11.206-11.332,11.32c-0.125,6.47-4.134,12.855-5.851,15.3
+                                                c-0.467,0.665-0.616,1.312-0.444,1.921c0.188,0.66,0.719,1.171,1.625,1.56c1.917,0.823,4.322,1.066,4.521,1.081h6.084
+                                                c-0.167,0.324-0.395,0.735-0.512,0.813l-9.113,3.908l-0.053,0.024c-0.713,0.356-1.349,0.83-1.914,1.395
+                                                C5.132,41.483,2,34.852,2,27.5C2,13.439,13.439,2,27.5,2S53,13.439,53,27.5C53,35.153,49.606,42.024,44.25,46.702z" />
+                                                </svg>
+                                                
+
+											<span class="tel-all-desc">
+												 <a href="#" class="tel-prof-modal" >
+												 	${list.uname }
+												 </a> 
+												 <span>
+												 <!-- 개인채팅 -->
+													<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${list.uno}&chatuname=${list.uname}" onClick="window.open(this.href, '', 'width=365, height=495'); return false;">
+													
+													
+													<svg id="Layer1" data-name="Layer 1"
+															xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
+															fill="#505050" width="30px" height="25px"
+															class="tel-chat-icon">
+                                                        <defs>
+                                                            <style>
+																#Layer1 {
+																	fill: none;
+																	stroke: #505050;
+																	stroke-miterlimit: 10;
+																	stroke-width: 1.7px;
+																}
+															</style>
+                                                        </defs>
+                                                        <path d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
+                                                    </svg> </a>
+											</span>
+											</span>
+											</div>
+										</form>
+									</c:forEach>
+											
+									 <!-- 연락처에서 이름 클릭했을 때 info 모달 -->
+				  								<div class="prof-info-dim">
+												  </div>
+													<div class="prof-info">
+												<a href="#" class="prof-exit">
+						<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 31.112 31.112" style="enable-background:new 0 0 31.112 31.112;" xml:space="preserve" width="12px" height="12px" fill="#111111" storke="#111111" stroke-width="3px">
+<polygon points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
+	29.698,31.112 31.112,29.698 16.97,15.556 "/></svg></a>
+									<p class="prof-name">
+											${list.uname }
+										</p>
+									<p class="prof-cname">
+											${cname }
+									</p>
+					</div>
+										
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-					</div> <!--알림 모달-->
+					</div> 
+
+
+					
+					
+					
+					
+					<!--알림 모달-->
 					<div class="alarm-wrap">
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
@@ -740,7 +920,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 							</div>
 							<div class="chat-tab-wrap">
 								<div class="search-box">
-									<svg version="1.1" id="Capa_1"
+									<svg version="1.1" id="Capa1"
 										xmlns="http://www.w3.org/2000/svg"
 										xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 										viewBox="0 0 53.627 53.627"
@@ -757,7 +937,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	</div>
 	<div class="tel-tab-wrap">
 		<div class="search-box">
-			<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+			<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
 				xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 				viewBox="0 0 53.627 53.627"
 				style="enable-background: new 0 0 53.627 53.627;"
@@ -777,7 +957,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		<div id="h-profile-top">
 			<!--이미지가 있을 때 이미지 뿌리고 없으면 기본이미지-->
 			<p>
-				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+				<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 					viewBox="0 0 55 55" style="enable-background: new 0 0 55 55;"
 					xml:space="preserve" fill="#505050" width="40px" height="40px">
@@ -806,7 +986,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		</div>
 		<div id="h-profile-bottom">
 			<p>
-				<a href="#"> <svg version="1.1" id="Capa_1"
+				<a href="#"> <svg version="1.1" id="Capa1"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 54 54" style="enable-background: new 0 0 54 54;"
@@ -846,7 +1026,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 				</a>
 			</p>
 			<p>
-				<a href="#"> <svg version="1.1" id="Capa_1"
+				<a href="#"> <svg version="1.1" id="Capa1"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 56 56" style="enable-background: new 0 0 56 56;"
@@ -861,6 +1041,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                             <path
 							d="M28,27c0.553,0,1-0.447,1-1V1c0-0.553-0.447-1-1-1s-1,0.447-1,1v25C27,26.553,27.447,27,28,27z" />
                         </g>
+                        
                     </svg> 로그아웃
 				</a>
 			</p>
@@ -875,6 +1056,8 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 
 
 	</div>
+
+	
 </body>
 
 </html>

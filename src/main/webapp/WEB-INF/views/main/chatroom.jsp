@@ -8,6 +8,7 @@
 <html lang="en">
 
 <head>
+<sec:csrfMetaTags /> <!-- 토큰 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ontact, 서로 연결되는 온라인 공간</title>
@@ -285,7 +286,7 @@ input:focus {
 
 		<div class="chat-room-top">
 			<p class="chat-room-name-wrap">
-				<span id="chat-name-title">채팅방제목 (3명)</span> <span
+				<span id="chat-name-title">${chatname }</span> <span
 					class="chat-top-right"> <a href="#" id="chat-room-search">
 						<svg version="1.1" id="Capa_1_margin"
 							xmlns="http://www.w3.org/2000/svg"
@@ -327,8 +328,32 @@ input:focus {
 			//websocket 과 연결을 끊고 싶을때 실행하는 메소드
 			sock.onclose = onClose;
 			$(function() {
+				
+				//엔터쳤을때 메시지 보내짐
+				$('#message').keypress(function(event){
+				     if ( event.which == 13 ) {
+				         $('#sendBtn').click();
+				         return false;
+				     }
+				});
+				     
 				$("#sendBtn").click(function() {
 					console.log('send message...');
+					$.ajax({
+						url: "${pageContext.request.contextPath}/chat/contentadd",
+						data: {
+							message : $("#message").val(),
+							chatno : $("#chatno").val(),
+							uno : $("#uno").val()
+						},
+						dataType: "json",
+						success:function(){
+							console.log("성공");
+						},
+						error:function(){
+							console.log("실패");
+						}
+					});
 					sendMessage();
 				});
 			});
@@ -339,15 +364,6 @@ input:focus {
 				$("#message").val('');
 				//메시지 지우기 
 				
-				//json형식 사용해서 userid 넘기기
-				/* 	var arrayList = new Array();
-				 var data= new Object();
-				 data.userid=  $('#sessionuserid').val();
-				 data.message = $("#message").val();
-				 arrayList.push(data);
-				 var rs = JSON.stringify(arrayList);
-				 console.log("메시지넘길 데이터 : "+rs);
-				 sock.send(rs);     */
 			}
 
 			//evt 파라미터는 websocket이 보내준 데이터다.
@@ -414,12 +430,18 @@ input:focus {
 			<div class="well" id="chatdata">
 				<!-- User Session Info Hidden -->
 			</div>
-			<sec:authentication property="principal" var="name"/>
-			<input type="hidden" value='${name}' id="sessionuserid">
+			<sec:authentication property="principal.username" var="username"/>
+			<sec:authentication property="principal.uno" var="uno"/>
+			<sec:csrfInput />
+			<input type="hidden" value='${username}' name="sessionuserid" id="sessionuserid">
+			<input type="hidden" value="${uno}" id="uno" name="uno">
+			<input type="hidden" value="${chatname }" id="chatname" name="chatname">
+			<input type="hidden" value="${chatno }" id="chatno" name="chatno">
+			
 		</div>
 		<div class="chat-room-bottom">
 			<input type="text" class="chat-input" id="message"
-				placeholder="메세지를 입력하세요"> <input type="button"
+				placeholder="메세지를 입력하세요" name="message"> <input type="submit"
 				class="chat-submit" id="sendBtn" value="전송">
 		</div>
 	</div>

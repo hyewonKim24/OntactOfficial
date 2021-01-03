@@ -1,6 +1,7 @@
 package com.kh.ontact.users.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,14 +20,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
+		
 		CustomUserDetails user = (CustomUserDetails) userDeSer.loadUserByUsername(username);
 		
+		
+		//계정비활성 체크
+		if(!user.isEnabled()||user.isCredentialsNonExpired()) {
+			throw new AuthenticationCredentialsNotFoundException(username);
+		}
+		//패스워드 체크
 		if(!matchPassword(password, user.getPassword())) {
 			throw new BadCredentialsException(username);
 		}
-		if(!user.isEnabled()) {
-			throw new BadCredentialsException(username);
-		}
+		
+
 		return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
 	}
 

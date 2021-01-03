@@ -20,26 +20,26 @@ import com.kh.ontact.users.model.service.UsersService;
 @Controller
 public class UsersMainController {
 	@Autowired
-	UsersService uservice;
+	UsersService usersService;
 
 	@Autowired
 	BCryptPasswordEncoder pwdEncoder;
 
 	private static final Logger logger = LoggerFactory.getLogger(UsersMainController.class);
 
-	// ¸ŞÀÎÈ­¸é ÀÌµ¿
+	// ë©”ì¸í™”ë©´ ì´ë™
 	@RequestMapping("/main")
 	public String main() {
 		return "users/main";
 	}
 
-	// ºñÁî´Ï½º È¸¿ø°¡ÀÔÃ¢ ÀÌµ¿
+	// ë¹„ì¦ˆë‹ˆìŠ¤ íšŒì›ê°€ì…ì°½ ì´ë™
 	@RequestMapping(value = "/busjoin", method = RequestMethod.GET)
 	public String joinBusiness() {
 		return "users/join";
 	}
 
-	// ºñÁî´Ï½º È¸¿ø°¡ÀÔ
+	// ë¹„ì¦ˆë‹ˆìŠ¤ íšŒì›ê°€ì…
 	@RequestMapping(value = "/busjoin", method = RequestMethod.POST)
 	public String joinBusiness(UsersDto userdto, CompanyDto companydto) {
 		logger.info("userInfo");
@@ -49,26 +49,26 @@ public class UsersMainController {
 			userdto.setUpwd(pwd);
 			String uname = userdto.getUname();
 			companydto.setCeo(uname);
-			uservice.joinBusiness(userdto, companydto); // °¡ÀÔ¸Ş¼Òµå
+			usersService.joinBusiness(userdto, companydto); // ê°€ì…ë©”ì†Œë“œ
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "users/main";
 	}
 
-	// ¾ÆÀÌµğ Áßº¹Ã¼Å©
+	// ì•„ì´ë”” ì¤‘ë³µì²´í¬
 	@RequestMapping(value = "/emailChk", method = RequestMethod.POST)
 	@ResponseBody
 	public String emailChk(String uemail) {
-		logger.info("memberIdChk() ÁøÀÔ");
+		logger.info("memberIdChk() ì§„ì…");
 		String val = null;
 		try {
-			int result = uservice.emailChk(uemail);
-			logger.info("°á°ú°ª = " + result);
+			int result = usersService.emailChk(uemail);
+			logger.info("ê²°ê³¼ê°’ = " + result);
 			if (result != 0) {
-				val = "fail"; // Áßº¹ ¾ÆÀÌµğ°¡ Á¸Àç
+				val = "fail"; // ì¤‘ë³µ ì•„ì´ë””ê°€ ì¡´ì¬
 			} else {
-				val = "success"; // Áßº¹ ¾ÆÀÌµğ x
+				val = "success"; // ì¤‘ë³µ ì•„ì´ë”” x
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,32 +76,32 @@ public class UsersMainController {
 		return val;
 	}
 
-	// ·Î±×ÀÎÆäÀÌÁö·Î ÀÌµ¿
-	@RequestMapping(value = "/loginform", method = RequestMethod.GET)
+	// ë¡œê·¸ì¸í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping(value = "/loginform")
 	public String loginFor(Locale locale, Model model) {
 		logger.info("Welcome Login Form!");
 
 		return "users/login";
 	}
 
-//	//·Î±×ÀÎ
+//	//ë¡œê·¸ì¸
 //	@RequestMapping(value = "/login", method = RequestMethod.POST)
 //	public void loginPage(String error, String logout, Model model) {
-//		logger.info("·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿~");
+//		logger.info("ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™~");
 //		logger.info("err :" + error);
 //		logger.info("logout : " + logout);
 //		if (error != null) {
-//			model.addAttribute("error", "·Î±×ÀÎ ½ÇÆĞ");
+//			model.addAttribute("error", "ë¡œê·¸ì¸ ì‹¤íŒ¨");
 //		}
 //		if (logout != null) {
-//			model.addAttribute("logout", "·Î±×¾Æ¿ô");
+//			model.addAttribute("logout", "ë¡œê·¸ì•„ì›ƒ");
 //		}
 //	}
 
-	// ±ÇÇÑ ¾øÀ½ ÆäÀÌÁö
+	// ê¶Œí•œ ì—†ìŒ í˜ì´ì§€
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
 	public String accessDeniedPage() {
-		logger.info("Á¢±Ù±ÇÇÑ¾øÀ½");
+		logger.info("ì ‘ê·¼ê¶Œí•œì—†ìŒ");
 		return "users/accessDenied";
 	}
 
@@ -111,7 +111,7 @@ public class UsersMainController {
 		logger.info("err :" + error);
 	}
 	
-	//°ü¸®ÀÚ±ÇÇÑ Å×½ºÆ®¿ë
+	//ê´€ë¦¬ìê¶Œí•œ í…ŒìŠ¤íŠ¸ìš©
 	@RequestMapping(value = "/admin/adminHome.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome Admin Home!");
@@ -119,7 +119,7 @@ public class UsersMainController {
 		return "admin/adminHome";
 	}
 
-	// À¯Àú ±ÇÇÑ Å×½ºÆ®
+	// ìœ ì € ê¶Œí•œ í…ŒìŠ¤íŠ¸
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
 	public String member() {
 		return "intro/introduction";

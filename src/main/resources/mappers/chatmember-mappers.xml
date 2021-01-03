@@ -7,42 +7,18 @@
 		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
 		<id property="chatno" column="chatno" />
 		<result property="uno" column="uno" />
-		<result property="createchat" column="createchat" />
+		<result property="creatchat" column="creatchat" />
 		<result property="chatstartdate" column="chatstartdate" />
 		<result property="chatenddate" column="chatenddate" />
 	</resultMap>
 
-	<!-- user resultMap 필요 -->
-	<resultMap type="UsersDto" id="resultUserName">
-		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
-		<id property="uno" column="uno" />
-		<result property="uname" column="uname" />
-	</resultMap>
 
-	<!-- 해당 채팅방 멤버 수 가져오기 -->
-	<select id="listChatMCount" resultType="int"
-		parameterType="string">
-		select count(*) from chatMember where chatno=#{chatno}
-	</select>
-
-<!-- 채팅방에 따른 멤버 리스트 가져오기 -->
-<!-- 	<select id="listChatMember" resultType="arrayList"
-		resultMap="UsersDto">
-		select uname,uno from users where uno IN (select uno from
-		chatmember where chatno=#{chatno}
-	</select>
- -->
 	<!--해당 채팅방에 멤버 insert -->
-	<insert id="insertChatMember" parameterType="string">
+	<insert id="insertChatMember" parameterType="ChatMemberDto">
 		insert into
-		chatmember(chatno,uno,createchat,chatstartdate) values
-		(#{chatno},#{uno},#{createchat},sysdate)
+		chatmember(chatno,uno,creatchat,chatstartdate) values
+		(#{chatno},#{uno},#{creatchat},sysdate)
 	</insert>
-
-	<!-- 멤버 대화방 나가기 -->
-	<delete id="deleteChatMember" parameterType="string">
-		delete from chatmember where chatno=#{chatno} and uno=#{uno}
-	</delete>
 
 
 </mapper>

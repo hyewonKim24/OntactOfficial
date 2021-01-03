@@ -2,14 +2,15 @@ package com.kh.ontact.chat.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
 
 
 public class EchoHandler extends TextWebSocketHandler{
@@ -18,9 +19,13 @@ public class EchoHandler extends TextWebSocketHandler{
 	
 	//전체 채팅
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	
+	 //1대1채팅 map사용
+	HashMap<String, WebSocketSession> sessions  = new HashMap<String, WebSocketSession>();
+
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		//맵 쓸때 sessions.put(session.getId(), session)
+		// 1대1 채팅 , 맵 쓸때 
+		//sessions.put(session.getId(), session);
+		
 		//List 사용할때 
 		sessionList.add(session);
 		//세션값을 불러온 0번째 중괄호에 session.getId()를 넣으라는 뜻임.
@@ -30,11 +35,20 @@ public class EchoHandler extends TextWebSocketHandler{
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		
 		System.out.println(session.getPrincipal().getName()+"로부터 "+message.getPayload()+"메시지 받음");
-		//session.getPrincipal().getName();
+		session.getPrincipal().getName();
 		//연결된 모든 클라이언트에게 메시지 전송 : 리스트 방법
 		//getPrincipal()을 이용해서 세션에 몰려있는 유저의 정보를 불러온다.
 		//세션의 정보는 user를 이용한 것과 동일하다.
 		
+		
+		//map사용
+//        Iterator<String> sessionIds = sessions.keySet().iterator();
+//        String sessionId="";
+//        while(sessionIds.hasNext()){
+//            sessionId = sessionIds.next();
+//            sessions.get(sessionId).sendMessage(new TextMessage("echo:" + message.getPayload()));
+//        }
+//		
 		for(WebSocketSession sess : sessionList) {
 			//연결된 모든 사용자에게 보내야 하므로 for문으로 sessionList에 있는 모든 세션들에게 메시지를 전송함.
 			sess.sendMessage(new TextMessage(session.getPrincipal().getName()+" | "+message.getPayload()));

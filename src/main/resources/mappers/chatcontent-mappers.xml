@@ -23,12 +23,13 @@
 	
 	<!-- 일반 대화 추가 -->
 	<insert id="insertChatContent" parameterType="string">
-		insert into chatcontent(ccno,chatno,uno,chatdate,content,chatfix) values(CCNO_SE,#{chatno},#{uno},sysdate,#{content},0)
+		insert into chatcontent(ccno,chatno,uno,chatdate,content,chatfix) 
+		values(CCNO_SE.nextval,#{chatno},#{uno},sysdate,#{content},0)
 	</insert>
 	
 	<!-- 이미지, 이미지 대화 경로추가 -->
 	<insert id="insertChatContent2" parameterType="string">
-		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) values(CCNO_SE,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
+		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) values(CCNO_SE.nextval,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
 	</insert>
 	
 	<!-- 공지 등록 (1이면 공지 , defalut는 0) -->

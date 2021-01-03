@@ -19,4 +19,11 @@
 		VALUES(CNO_SE.NEXTVAL, #{cname} , #{ceo}, #{curl} , #{ccate})
 	</insert>
 	
+	
+	<!-- 혜원 코드   -->
+	<select id="cnameOne" resultType="String">
+		SELECT CNAME FROM COMPANY
+		WHERE CNO=#{cno}
+	</select>
+	
 </mapper>

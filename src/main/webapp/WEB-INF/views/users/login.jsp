@@ -143,13 +143,13 @@
             <tr>
                 <td colspan="2" class="login_name">이메일</td>
                 <td colspan="3" class="input_login_wrap">
-                    <input type="text" name="uemail" id="uemail" class="input_login" tabindex="1" placeholder="이메일을 입력해주세요">
+                    <input type="text" name="uemail" id="uemail" class="input_login" value="${uemail }" tabindex="1" placeholder="이메일을 입력해주세요">
                 </td>
             </tr>
             <tr>
                 <td colspan="2" class="login_name">비밀번호</td>
                 <td colspan="3">
-                	<input type="password" name="upwd" id="upwd" class="input_login" tabindex="1" placeholder="비밀번호를 입력해주세요">
+                	<input type="password" name="upwd" id="upwd" class="input_login" value="${upwd }" tabindex="1" placeholder="비밀번호를 입력해주세요">
             	</td>
             </tr>
             <tr>
@@ -167,11 +167,10 @@
             </tr>
             <tr>
             	<td colspan="5">
-            		<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+            		<c:if test="${not empty ERRORMSG}">
     					<font color="red">
-       					 <p>Your login attempt was not successful due to <br/>
-           			 	${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-       				 <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
+       					 <p>로그인에 실패했습니다.<br/>
+           			 	${ERRORMSG}</p>
    					 </font>
 					</c:if>
             	</td>

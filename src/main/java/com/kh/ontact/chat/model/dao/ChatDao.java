@@ -13,16 +13,19 @@ public class ChatDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<ChatDto> listCaht(){
+	public List<ChatDto> listCaht() throws Exception{
 		return sqlSession.selectList("Chat.listChat");
 	}
-	public int insertChat(ChatDto c) {
-		return sqlSession.insert("Chat.insertChat",c);
+	public String chatnoSelect() throws Exception{
+		return sqlSession.selectOne("Chat.chatnoSelect");
 	}
-	public int insertProChat(ChatDto c) {
+	public int insertChat(String chatname) throws Exception {
+		return sqlSession.insert("Chat.insertChat",chatname);
+	}
+	public int insertProChat(ChatDto c) throws Exception {
 		return sqlSession.insert("Chat.insertProChat",c);
 	}
-	public int deleteChat(String chatno) {
+	public int deleteChat(String chatno) throws Exception {
 		return sqlSession.insert("Chat.deleteChat",chatno);
 	}
 

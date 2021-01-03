@@ -27,7 +27,7 @@
 <body>
 
 	<h1>Register</h1>
-	<form action="${pageContext.request.contextPath}/users/busjoin" method="post">
+	<form action="${pageContext.request.contextPath}/busjoin" method="post">
 		<div>
 			id <input type="text" class="form_input" name="uemail" id="uemail"
 				required>
@@ -74,7 +74,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			method : "POST",
-			url : "${pageContext.request.contextPath}/users/emailChk",
+			url : "${pageContext.request.contextPath}/emailChk",
 			data : data,
 			beforeSend: function(xhr){
 				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
