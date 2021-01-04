@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Project">
+	<resultMap type="ProjectDto" id="resultProject">
+		<id property="pno" column="pno" />
+		<result property="pname" column="pname" />
+		<result property="pdesc" column="pdesc" />
+		<result property="padmin" column="padmin" />
+		<result property="pdate" column="pdate" />
+		<result property="popen" column="popen" />
+		<collection property="ProjectMemberDto"
+			ofType="ProjectMemberDto" columnPrefix="pjm_">
+			<id property="pno" column="pno" />
+			<result property="uno" column="uno" />
+			<result property="padmin" column="padmin" />
+		</collection>
+	</resultMap>
+
+	<!-- 프로젝트 전체 목록 : 프로젝트명, 비밀글여부 -->
+	<select id="selectListProject" resultType="arraylist"
+		resultMap="resultProject">
+		select pno, pname, popen from project
+	</select>
+
+	<!-- 프로젝트 전체 목록 : 참여수 -->
+	<!-- <select id="selectListProjectMcnt" resultType="arraylist" resultMap="resultProject"> 
+		select pj.pno, count(pjm.uno) as pjmembercnt from project pj, project_member 
+		pjm group by pj.pno having pj.pno = pjm.pno </select> -->
+	<select id="selectListProjectMcnt" resultType="arraylist"
+		resultMap="resultProject">
+		<![CDATA[
+		select pjm.pno as pjm_pno, pjm.uno as pjm_uno
+		from project pj 
+            inner join project_member pjm
+            on pj.pno = pjm.pno
+        ]]>
+	</select>
+
+
+	<!-- 프로젝트 생성 -->
+	<insert id="insertProject" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		<![CDATA[
+		insert into project values(
+		PNO_SE.NEXTVAL, #{pname}, #{pdesc}, sysdate, #{popen}
+		)
+		 ]]>
+	</insert>
+
+	<!-- 프로젝트 업데이트 : 부서이동 <update> </update> -->
+</mapper>
