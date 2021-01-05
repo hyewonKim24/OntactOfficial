@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ProjectMember">
+	<resultMap type="ProjectMemberDto" id="resultProjectMember">
+		<id property="pno" column="pno" />
+		<result property="uno" column="uno" />
+		<result property="padmin" column="padmin" />
+	</resultMap>
+
+	<!-- 프로젝트 생성 : 사원 입력 -->
+	<insert id="insertProjectMember" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		insert into project_member
+		values(PNO_SE.CURRVAL, #{uno}, #{padmin})
+	</insert>
+</mapper>
