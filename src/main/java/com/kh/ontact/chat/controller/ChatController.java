@@ -1,5 +1,7 @@
 package com.kh.ontact.chat.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -102,7 +104,7 @@ public class ChatController {
 		dto.setChatno(chatno);
 		dto.setContent(message);
 		dto.setUno(uno);
-		System.out.println("uno:"+uno+"chatno:"+chatno+message+"컨트롤러 메세지");
+		System.out.println("uno:"+uno+"chatno:"+chatno+message+"메세지");
 		try {
 			int rs=chatConService.insertChatContent(dto);
 			System.out.println(rs+"content추가");
@@ -111,6 +113,58 @@ public class ChatController {
 			e.printStackTrace();
 		}
 	}
+	
+	//해당 chatno방으로 입장
+	@SuppressWarnings("null")
+	@RequestMapping(value="/chatroomdetail")
+	public ModelAndView chatroomdetail(@RequestParam(name = "chatno") String chatno,
+			ChatMemberDto mdto,ChatDto dto,Authentication authentication, ModelAndView mv ) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno=userdetail.getUno();
+		
+		System.out.println("chatno:"+chatno);
+		List<ChatContentDto> conlist=null;
+		String chatname=null;
+		
+		try {
+			conlist=chatConService.listChatContent(chatno);
+			System.out.println("내용 list:"+conlist);
+			chatname=chatService.selectchatname(chatno);
+			System.out.println("chatname:"+chatname);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mv.addObject("chatname",chatname);
+		mv.addObject("uno",uno);
+		mv.addObject("chatno",chatno);
+		mv.addObject("conlist",conlist);
+		mv.setViewName("main/chatroom");
+		return mv;
+	}
+	
+	
+	//내 uno가 참여된 채팅방 리스트 출력
+//	@RequestMapping(value="/mychatlist")
+//	public ModelAndView mychatlist(Authentication authentication,List<String> dto,ModelAndView mv ) {
+//		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+//		String uno=userdetail.getUno();
+//		String chatno=null;
+//		
+//		try {
+//			dto=chatMemService.mychatlist(uno);
+//			for(String a : dto) {
+//				System.out.println("chatno는"+a);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		mv.setViewName("main/header");
+//		return mv;
+//	}
+	
 	
 
 }

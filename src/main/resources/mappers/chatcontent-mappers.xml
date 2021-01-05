@@ -14,27 +14,48 @@
 		<result property="chatfix" column="chatfix" />
 		<result property="chatimg" column="chatimg" />
 		<result property="chatfilepath" column="chatfilepath" />
-	</resultMap>
+ 	<collection property="usersdto" resultMap="resultUsers"></collection>
+ </resultMap>
 	
-	<!-- 채팅방에 대화 가져오기 -->
-	<select id="listChatContent" resultType="arrayList" resultMap="resultChatContent">
-		select uno,content,chatdate from chatcontent where chatno=#{chatno};
+ 	<resultMap type="UsersDto" id="resultUsers">
+		<result property="uname" column="uname" />
+	</resultMap> 
+	
+<!-- 채팅방에 대화 가져오기 -->
+ 	<select id="listChatContent" resultType="arrayList" resultMap="resultChatContent">
+		 <![CDATA[
+ 		 	select u.uname,u.uno,c.content,c.chatdate
+		 	from chatcontent c, users u 
+		 	where c.chatno=#{chatno} and c.uno=u.uno 
+		]]>
+	</select> 
+	<select id="listChatContent2" resultType="arrayList" resultMap="resultChatContent">
+		 <![CDATA[
+			select uno,content,chatno,chatdate from chatcontent where chatno=#{chatno}
+		]]>
 	</select>
 	
 	<!-- 일반 대화 추가 -->
 	<insert id="insertChatContent" parameterType="string">
+ 	<![CDATA[
 		insert into chatcontent(ccno,chatno,uno,chatdate,content,chatfix) 
 		values(CCNO_SE.nextval,#{chatno},#{uno},sysdate,#{content},0)
+		]]>
 	</insert>
 	
 	<!-- 이미지, 이미지 대화 경로추가 -->
 	<insert id="insertChatContent2" parameterType="string">
-		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) values(CCNO_SE.nextval,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
+ 	<![CDATA[
+		insert into chatcontent(ccno,chatno,uno,chatdate,chatimg,chatfilepath,chatfix) 
+		values(CCNO_SE.nextval,#{chatno},#{uno},sysdate,#{chatimg},#{chatfilepath},0)
+		]]>
 	</insert>
 	
 	<!-- 공지 등록 (1이면 공지 , defalut는 0) -->
 	<update id="fixChatContent">
+ 	<![CDATA[
 		update chatcontent set chatfix =1 where chatno=#{chatno} and ccno=#{ccno}
+		]]>
 	</update>
 	
 	

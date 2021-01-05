@@ -102,11 +102,9 @@
 	
 	<!-- 해당 cno의 내 정보 빼고 users list 불러오기 -->
 	<select id="ChatUsersList" resultType="arraylist" resultMap="resultUsers" >
-		SELECT * 
-		FROM USERS
-		WHERE CNO=#{cno} 
-			AND
-		 UNO NOT IN (#{uno})
+ 	<![CDATA[
+		SELECT * FROM USERS WHERE CNO=#{cno} AND UNO NOT IN (#{uno})
+		]]>
 	</select>
 
 </mapper>

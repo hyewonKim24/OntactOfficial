@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.kh.ontact.users.model.dto.UsersDto;
+
 import lombok.Data;
 
 //------------ -------- -------------- 
@@ -27,5 +29,7 @@ public class ChatContentDto {
 	private int chatfix;
 	private String chatimg;
 	private String chatfilepath;
+	
+	private UsersDto usersdto;
 	
 }

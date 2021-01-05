@@ -43,6 +43,11 @@ public class ChatServiceImpl implements ChatService{
 	public String chatnoSelect() throws Exception {
 		return chatDao.chatnoSelect();
 	}
+
+	@Override
+	public String selectchatname(String chatno) throws Exception {
+		return chatDao.selectchatname(chatno);
+	}
 	
 
 }

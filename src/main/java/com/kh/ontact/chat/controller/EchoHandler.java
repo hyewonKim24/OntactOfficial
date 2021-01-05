@@ -3,10 +3,8 @@ package com.kh.ontact.chat.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,12 +17,16 @@ public class EchoHandler extends TextWebSocketHandler{
 	
 	//전체 채팅
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	 //1대1채팅 map사용
+	//1대1채팅 map사용
 	HashMap<String, WebSocketSession> sessions  = new HashMap<String, WebSocketSession>();
-
+	// 아마 채팅방 번호를 담을 수 있는 String을 포함한 세션을 따로 만들어서 관리해야 할듯...(?)의문임.
+	//Map<String, List<WebSocketSession>>
+	
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		// 1대1 채팅 , 맵 쓸때 
-		//sessions.put(session.getId(), session);
+		sessions.put(session.getId(), session);
+		sessions.put(session.getId(), session);
+		
 		
 		//List 사용할때 
 		sessionList.add(session);

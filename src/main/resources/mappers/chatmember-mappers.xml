@@ -11,14 +11,32 @@
 		<result property="chatstartdate" column="chatstartdate" />
 		<result property="chatenddate" column="chatenddate" />
 	</resultMap>
+	
+	<resultMap type="ChatDto" id="resultChat">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="chatno" column="chatno"/>
+		<result property="pno" column="pno" />
+		<result property="chatname" column="chatname" />
+	</resultMap>
+	
 
 
 	<!--해당 채팅방에 멤버 insert -->
 	<insert id="insertChatMember" parameterType="ChatMemberDto">
+	 <![CDATA[
 		insert into
 		chatmember(chatno,uno,creatchat,chatstartdate) values
 		(#{chatno},#{uno},#{creatchat},sysdate)
+		]]>
 	</insert>
+	
+	<!-- 내 uno가 포함된 채팅list -->
+	<select id="mychatlist" parameterType="string" resultType="arraylist" resultMap="resultChat">
+	 <![CDATA[
+		select chatname,chatno from chat where chatno in (select chatno from chatmember where uno=#{uno})
+		]]>
+	
+	</select>
 
 
 </mapper>

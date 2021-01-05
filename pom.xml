@@ -199,7 +199,6 @@
     		<version>1.2.1</version>
 		</dependency>
 
-
 		<!-- 웹소켓관련 -->
 		<dependency>
 			<groupId>org.springframework</groupId>

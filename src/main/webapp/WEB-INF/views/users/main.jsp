@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -97,7 +95,7 @@
     <header>
 	    <h2>ONTACT</h2>
 	    <sec:authorize access="isAnonymous()">
-	        <button id="login">로그인</button>
+	        <button id="login"  onclick="location.href ='${pageContext.request.contextPath}/loginform'">로그인</button>
 	    </sec:authorize>
     	<sec:authorize access="isAuthenticated()">
 			<form action="${pageContext.request.contextPath}/logout" method="POST">
@@ -120,12 +118,11 @@
         </div>
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-       	<div id="info">
-        		 <sec:authentication property="principal" var="username"/>
-        		 님, 반갑습니다.     		
-        		</div>
-        	
-        </sec:authorize>
+        	<div id="info"><sec:authentication property="principal.uname" var="name"/>님, 반갑습니다.</div>
+        	<sec:authentication property="principal.cno" var="cno"/>
+        	<input type="text" value="${name}">
+        	<input type="text" value="${cno }">
+                </sec:authorize>
     </section>
     
 <a href='<c:url value="/main"/>'>GUEST</a>

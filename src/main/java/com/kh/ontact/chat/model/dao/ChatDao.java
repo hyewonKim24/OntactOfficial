@@ -19,6 +19,9 @@ public class ChatDao {
 	public String chatnoSelect() throws Exception{
 		return sqlSession.selectOne("Chat.chatnoSelect");
 	}
+	public String selectchatname(String chatno) throws Exception{
+		return sqlSession.selectOne("Chat.selectchatname",chatno);
+	}
 	public int insertChat(String chatname) throws Exception {
 		return sqlSession.insert("Chat.insertChat",chatname);
 	}

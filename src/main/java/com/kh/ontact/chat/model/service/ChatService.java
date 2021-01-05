@@ -6,6 +6,7 @@ import com.kh.ontact.chat.model.dto.ChatDto;
 
 public interface ChatService {
 	List<ChatDto> listCaht() throws Exception;
+	String selectchatname(String chatno) throws Exception;
 	String insertChat(String chatname) throws Exception;
 	String chatnoSelect() throws Exception;
 	int insertProChat(ChatDto c) throws Exception;

@@ -80,7 +80,16 @@ body {
 	overflow:scroll;
 	border-bottom: 1px solid #e7e7e7;
 }
-
+/*스크롤바 변경*/
+::-webkit-scrollbar { width: 5px; height: 0px; }
+/* 스크롤바의 width */
+::-webkit-scrollbar-track { background-color: #f0f0f0; }
+/* 스크롤바의 전체 배경색 */
+::-webkit-scrollbar-thumb { 
+    background: linear-gradient(to bottom, #5A3673, #432D73); 
+}
+/* 스크롤바 색 */
+::-webkit-scrollbar-button { display: none; }
 .chat-room-bottom {
 	text-align: center;
 }
@@ -206,20 +215,26 @@ input:focus {
 	height: 30px;
 	line-height: 30px;
 	padding:10px 0px 10px 10px;
+	display:block;
 
 }
 .other-content{
 	width: 430px;
 	height: 40px;
 	line-height: 40px;
-	padding:20px 0px 20px 10px;
 	float:left;
+}
+
+.other-content-date{
+	font-size:10px;
+	color:#505050;
 }
 .mycontent-info{
 	margin-left:335px;
 }
 .other-content-info{
 	display:block;
+	margin:10px;
 	
 }
 
@@ -235,13 +250,14 @@ input:focus {
     line-height: 1.5;
     font-size: 14px;
     position: relative;
+    margin-left:10px;
 }
 
 .mycontent-wrap{
 	background: #5A3673;
     border: 1px solid #5A3673;
     border-top-left-radius: 5px;
-	display: inline-block;
+	display: block;
     max-width: 100%;
     float:right;
     padding: 7px 12px;
@@ -361,8 +377,8 @@ input:focus {
 			function sendMessage() {
 				//websocket으로 메시지를 보내겠다.
 				sock.send($("#message").val());
-				$("#message").val('');
 				//메시지 지우기 
+				$("#message").val('');
 				
 			}
 
@@ -414,7 +430,7 @@ input:focus {
 					printHTML += "<p class='other-content-wrap'>"+message+"</p>";
 					printHTML += "</div>";
 					printHTML += "</div>";
-
+					
 					$("#chatdata").append(printHTML);
 				}
 
@@ -426,9 +442,25 @@ input:focus {
 				$("#data").append("연결 끊김");
 			}
 		</script>
+		
+		
 		<div class="chat-room-content">
 			<div class="well" id="chatdata">
-				<!-- User Session Info Hidden -->
+				<!-- 대화내용 출력 -->
+<%-- 			<c:if test="${conlist.uno ne uno }">  --%>
+				<c:forEach items="${conlist }" var="list">
+				<div class="well">
+					<div class="otehr-content">
+						<div class="other-content-info">
+								<strong> ${list.usersdto.uname}</strong><br>
+						</div>
+						<p class="other-content-wrap"> ${list.content}</p> 
+						<span class="other-content-date">${list.chatdate }</span>
+					</div>
+				</div>
+				</c:forEach>
+<%-- 		 		</c:if>  --%>
+			
 			</div>
 			<sec:authentication property="principal.username" var="username"/>
 			<sec:authentication property="principal.uno" var="uno"/>
@@ -450,7 +482,7 @@ input:focus {
 	<div class="room-search-wrap">
 		<div class="chat-room-top">
 			<p class="chat-room-name-wrap">
-				<span id="message-title">메시지 검색</span>
+				<span id="message-title">메시지 검색 </span>
 				<!--검색모달 닫기-->
 				<a href="#"><svg version="1.1" id="search-exit"
 						xmlns="http://www.w3.org/2000/svg"

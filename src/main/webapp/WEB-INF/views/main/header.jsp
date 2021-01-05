@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +14,8 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/reset.css"
+	rel="stylesheet" type="text/css">
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -42,6 +43,7 @@ body {
 	margin: 0 auto;
 	height: 52px;
 	padding-top: 8px;
+	background:#fff;
 }
 
 .header-left-wrap {
@@ -170,6 +172,22 @@ body {
 	box-shadow: 0 0 6px 2px #e7e7e7;
 	border-radius: 7px;
 }
+/*스크롤바 변경*/
+::-webkit-scrollbar { width: 5px; height: 0px; }
+/* 스크롤바의 width */
+::-webkit-scrollbar-track { background-color: #f0f0f0; }
+/* 스크롤바의 전체 배경색 */
+::-webkit-scrollbar-thumb { 
+    background: linear-gradient(to bottom, #5A3673, #432D73); 
+}
+/* 스크롤바 색 */
+::-webkit-scrollbar-button { display: none; }
+
+#chat-scroll-box{
+	width:380px;
+	height:445px;
+	overflow: scroll;
+}
 
 .alarm-wrap {
 	width: 380px;
@@ -284,7 +302,7 @@ body {
 
 .chat-content-wrap {
 	display: inline;
-	float: left;
+	float: right;
 	height: 50px;
 	padding-top: 10px;
 	width: 300px;
@@ -296,9 +314,9 @@ body {
 }
 
 .chat-users-icon {
-	vertical-align: middle;
 	margin: 20px;
-	float: left;
+	display: inline-block;
+	position: relative;
 }
 
 .chat-room-name {
@@ -348,9 +366,8 @@ body {
 	margin-right: 10px;
 }
 
-.tel-scroll-box{
+.tel-scroll-box {
 	overflow: hidden;
-	
 }
 
 .tel-title {
@@ -367,7 +384,7 @@ body {
 	border-bottom: 1px solid #e7e7e7;
 }
 
-.tel-other{
+.tel-other {
 	height: 76px;
 	vertical-align: middle;
 	border-bottom: 1px solid #e7e7e7;
@@ -390,7 +407,7 @@ body {
 	font-weight: bold;
 }
 
-.tel-all-desc{
+.tel-all-desc {
 	display: inline;
 	float: left;
 	width: 290px;
@@ -408,101 +425,97 @@ body {
 }
 
 /* 프로필 정보 */
-
-
-.prof-info-dim{
+.prof-info-dim {
 	position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: rgb(0, 0, 0);
-    opacity: 0.3;
-    z-index: 500;
-    display: none;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: rgb(0, 0, 0);
+	opacity: 0.3;
+	z-index: 500;
+	display: none;
 }
 
-.prof-info{
-	position:fixed;
+.prof-info {
+	position: fixed;
 	width: 300px;
 	height: 300px;
 	background-color: #fff;
-	z-index:9000;
-	top:30%;
-	left:40%;
-	border:1px solid #fff;
+	z-index: 9000;
+	top: 30%;
+	left: 40%;
+	border: 1px solid #fff;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	display:none;
-
+	display: none;
 }
 
-.prof-exit{
-	margin-right:10px;
-	margin-top:10px;
+.prof-exit {
+	margin-right: 10px;
+	margin-top: 10px;
 }
 
-.prof-name{
-	float:left;
-	font-size:30px;
+.prof-name {
+	float: left;
+	font-size: 30px;
 	font-weight: bold;
 	line-height: 50px;
-	padding:10px;
-	margin-top:20px;
-	margin-left:10px;
+	padding: 10px;
+	margin-top: 20px;
+	margin-left: 10px;
 }
-.prof-cname{
-	font-size:13px;
+
+.prof-cname {
+	font-size: 13px;
 	line-height: 20px;
-	padding:10px;
-	margin-top:50px;
-	margin-left:10px;
+	padding: 10px;
+	margin-top: 50px;
+	margin-left: 10px;
 }
-
-
 </style>
 <script>
-        $(document).ready(function () {
-            $("#chat-icon").click(function () {
-                $(".chat-wrap").toggle();
-                $(".alarm-wrap").hide();
-                $(".my-wrap").hide();
-            });
-            $("#alarm-icon").click(function () {
-                $(".alarm-wrap").toggle();
-                $(".chat-wrap").hide();
-                $(".my-wrap").hide();
-            });
-            $("#my-icon").click(function () {
-                $(".my-wrap").toggle();
-                $(".chat-wrap").hide();
-                $(".alarm-wrap").hide();
-            });
-            $(".chat-tab1").click(function () {
-                $(".chat-tab1").css("border-bottom", "3px solid #432D73");
-                $(".chat-tab2").css("border", "none");
-                $(".chat-tab-wrap").show();
-                $(".tel-tab-wrap").hide();
-            });
-            $(".chat-tab2").click(function () {
-                $(".chat-tab2").css("border-bottom", "3px solid #432D73");
-                $(".chat-tab1").css("border", "none");
-                $(".chat-tab-wrap").hide();
-                $(".tel-tab-wrap").show();
-            });
-            
-            $(".tel-prof-modal").click(function () {
-                $(".prof-info-dim").css("display","block");
-                $(".prof-info").css("display","block");
-            });
-            
-            $(".prof-exit").click(function () {
-                $(".prof-info-dim").css("display","none");
-                $(".prof-info").css("display","none");
-            });
-        });
-    </script>
+	$(document).ready(function() {
+		$("#chat-icon").click(function() {
+			$(".chat-wrap").toggle();
+			$(".alarm-wrap").hide();
+			$(".my-wrap").hide();
+		});
+		$("#alarm-icon").click(function() {
+			$(".alarm-wrap").toggle();
+			$(".chat-wrap").hide();
+			$(".my-wrap").hide();
+		});
+		$("#my-icon").click(function() {
+			$(".my-wrap").toggle();
+			$(".chat-wrap").hide();
+			$(".alarm-wrap").hide();
+		});
+		$(".chat-tab1").click(function() {
+			$(".chat-tab1").css("border-bottom", "3px solid #432D73");
+			$(".chat-tab2").css("border", "none");
+			$(".chat-tab-wrap").show();
+			$(".tel-tab-wrap").hide();
+		});
+		$(".chat-tab2").click(function() {
+			$(".chat-tab2").css("border-bottom", "3px solid #432D73");
+			$(".chat-tab1").css("border", "none");
+			$(".chat-tab-wrap").hide();
+			$(".tel-tab-wrap").show();
+		});
+
+		$(".tel-prof-modal").click(function() {
+			$(".prof-info-dim").css("display", "block");
+			$(".prof-info").css("display", "block");
+		});
+
+		$(".prof-exit").click(function() {
+			$(".prof-info-dim").css("display", "none");
+			$(".prof-info").css("display", "none");
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -539,13 +552,13 @@ body {
 							fill="#505050" width="25px" height="25px" class="header-icon">
                             <defs>
                                 <style>
-									#Layer1 {
-										fill: none;
-										stroke: #505050;
-										stroke-miterlimit: 10;
-										stroke-width: 1.7px;
-									}
-									</style>
+#Layer1 {
+	fill: none;
+	stroke: #505050;
+	stroke-miterlimit: 10;
+	stroke-width: 1.7px;
+}
+</style>
                             </defs>
                             <title>chat</title>
                             <path
@@ -616,24 +629,24 @@ body {
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
 								<a href="#" class="chat-tab1">채팅</a> <a href="#"
-									class="chat-tab2">연락처</a>
-					 <a href="${pageContext.request.contextPath}/chat/chatinvite" id="chat-add" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
-                                        <!--새로운 대화창 열림-->
-									 <svg
-										id="Layer1" data-name="Layer 1"
+									class="chat-tab2">연락처</a> <a
+									href="${pageContext.request.contextPath}/chat/chatinvite"
+									id="chat-add"
+									onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+									<!--새로운 대화창 열림--> <svg id="Layer1" data-name="Layer 1"
 										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 										width="25px" height="25px" class="icon-middle">
                                         <defs>
                                             <style>
-												.cls-1 {
-													fill: #5a3673;
-												}
-												
-												.cls-2 {
-													fill: #fff;
-													stroke: #fff;
-												}
-												</style>
+.cls-1 {
+	fill: #5a3673;
+}
+
+.cls-2 {
+	fill: #fff;
+	stroke: #fff;
+}
+</style>
                                         </defs>
                                         <title>chatadd</title>
                                         <path class="cls-1"
@@ -663,20 +676,26 @@ body {
 								</div>
 								<div class="chat-scroll-box">
 									<div class="dragbar"></div>
-									<div class="chat-name">
-										<a href="${pageContext.request.contextPath}/chat/chatroom" onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
-                                        <!--새로운 대화창 열림-->
-										
-										 <span
-											class="chat-users-icon"> <svg version="1.1"
-													id="Capa1" xmlns="http://www.w3.org/2000/svg"
-													xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-													viewBox="0 0 60 60"
-													style="enable-background: new 0 0 60 60;"
-													xml:space="preserve" fill="#505050" width="35px"
-													height="35px">
+
+
+
+									<!-- 채팅방 -->
+									<div id="chat-scroll-box">
+
+									<c:forEach items="${clist}" var="clist">
+										<div class="chat-name">
+											<a href="${pageContext.request.contextPath}/chat/chatroomdetail?chatno=${clist.chatno}"
+												onClick="window.open(this.href, '', 'width=350, height=488'); return false;">
+												<!--해당 채팅방 열림--> <span class="chat-users-icon"> <svg
+														version="1.1" id="Capa1"
+														xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														viewBox="0 0 60 60"
+														style="enable-background: new 0 0 60 60;"
+														xml:space="preserve" fill="#505050" width="35px"
+														height="35px">
                                                     <path
-														d="M55.014,45.389l-9.553-4.776C44.56,40.162,44,39.256,44,38.248v-3.381c0.229-0.28,0.47-0.599,0.719-0.951
+															d="M55.014,45.389l-9.553-4.776C44.56,40.162,44,39.256,44,38.248v-3.381c0.229-0.28,0.47-0.599,0.719-0.951
                                                    c1.239-1.75,2.232-3.698,2.954-5.799C49.084,27.47,50,26.075,50,24.5v-4c0-0.963-0.36-1.896-1-2.625v-5.319
                                                    c0.056-0.55,0.276-3.824-2.092-6.525C44.854,3.688,41.521,2.5,37,2.5s-7.854,1.188-9.908,3.53c-1.435,1.637-1.918,3.481-2.064,4.805
                                                    C23.314,9.949,21.294,9.5,19,9.5c-10.389,0-10.994,8.855-11,9v4.579c-0.648,0.706-1,1.521-1,2.33v3.454
@@ -708,19 +727,21 @@ body {
                                                    l-0.498,0.153l-0.16,0.495c-0.669,2.081-1.622,4.003-2.834,5.713c-0.297,0.421-0.586,0.794-0.837,1.079L42,34.123v4.125
                                                    c0,1.77,0.983,3.361,2.566,4.153l9.553,4.776C56.513,48.374,58,50.78,58,53.457V55.5z" />
                                                 </svg>
-										</span>
-											<div class="chat-content-wrap">
-												<span class="chat-room-name">채팅방 제목 <span
-													class="chat-room-count"> <svg version="1.1"
-															id="Capa1" xmlns="http://www.w3.org/2000/svg"
-															xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-															y="0px" viewBox="0 0 60 60"
-															style="enable-background: new 0 0 60 60;"
-															xml:space="preserve" fill="#ffffff" stroke="#ffffff"
-															stroke-miterlimit="50" width="10px" height="10px">
+											</span>
+
+
+												<div class="chat-content-wrap">
+													<span class="chat-room-name">${clist.chatno }.${clist.chatname }<span
+														class="chat-room-count"> <svg version="1.1"
+																id="Capa1" xmlns="http://www.w3.org/2000/svg"
+																xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+																y="0px" viewBox="0 0 60 60"
+																style="enable-background: new 0 0 60 60;"
+																xml:space="preserve" fill="#ffffff" stroke="#ffffff"
+																stroke-miterlimit="50" width="10px" height="10px">
                                                             <path
-																class="st0"
-																d="M47.4,42.5l-9.2-4.6c-0.9-0.4-1.4-1.3-1.4-2.3v-3.3c0.2-0.3,0.5-0.6,0.7-0.9c1.2-1.7,2.2-3.6,2.9-5.6
+																	class="st0"
+																	d="M47.4,42.5l-9.2-4.6c-0.9-0.4-1.4-1.3-1.4-2.3v-3.3c0.2-0.3,0.5-0.6,0.7-0.9c1.2-1.7,2.2-3.6,2.9-5.6
    c1.4-0.6,2.3-2,2.3-3.5v-3.9c0-0.9-0.3-1.8-1-2.5v-5.1c0.1-0.5,0.3-3.7-2-6.3C37.6,2.1,34.4,1,30,1s-7.6,1.1-9.6,3.4
    c-2.3,2.6-2.1,5.8-2,6.3v5.1c-0.6,0.7-1,1.6-1,2.5v3.9c0,1.2,0.5,2.3,1.4,3c0.9,3.5,2.7,6.2,3.4,7v3.2c0,0.9-0.5,1.8-1.3,2.2
    l-8.6,4.7c-2.8,1.5-4.5,4.5-4.5,7.7v3.1C7.8,57.8,22.3,59,30,59s22.3-1.2,22.3-5.8v-2.9C52.3,46.9,50.4,44,47.4,42.5z M50.3,53.2
@@ -729,13 +750,14 @@ body {
    c1.6-1.8,4.3-2.8,8.1-2.8c3.8,0,6.5,0.9,8.1,2.7c1.9,2.1,1.6,4.9,1.6,4.9l0,6.2L40,17c0.4,0.4,0.6,0.9,0.6,1.4v3.9
    c0,0.8-0.6,1.6-1.4,1.8l-0.5,0.1l-0.2,0.5c-0.6,2-1.6,3.9-2.7,5.5c-0.3,0.4-0.6,0.8-0.8,1l-0.2,0.3v4c0,1.7,1,3.3,2.5,4l9.2,4.6
    c2.3,1.2,3.8,3.5,3.8,6.1V53.2z" />
-                                                        </svg>&nbsp; 3
-												</span></span> <br> <span class="chat-recent-content">최근 대화
-													내용임</span>
-											</div>
-										</a>
+                                                        </svg>&nbsp;2
+													</span></span> <br> <span class="chat-recent-content">최근 대화
+														내용</span>
+												</div>
+											</a>
+										</div>
+									</c:forEach>
 									</div>
-
 								</div>
 							</div>
 							<!--연락처 모달-->
@@ -796,13 +818,13 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 															class="tel-chat-icon">
                                                         <defs>
                                                             <style>
-																#Layer1 {
-																	fill: none;
-																	stroke: #505050;
-																	stroke-miterlimit: 10;
-																	stroke-width: 1.7px;
-																}
-															</style>
+#Layer1 {
+	fill: none;
+	stroke: #505050;
+	stroke-miterlimit: 10;
+	stroke-width: 1.7px;
+}
+</style>
                                                         </defs>
                                                         <path
 																d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
@@ -814,21 +836,24 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 										</div>
 										<p class="tel-title">전체 연락처</p>
 										<div class="tel-all">
-										<!-- 전체 연락처 / 해당 회사 user list 가져와서 뿌리기 -->
-										<c:forEach items="${ulist}" var="list">
-										<form action="${pageContext.request.contextPath}/chat/chatroom" method="post" id="chatfrm1">
-										<div class="tel-other">
-											<input type="hidden" name="chatuno" value="${list.uno }">
-											<input type="hidden" name="chatuname" value="${list.uname }">
-												<svg version="1.1" id="Capa1"
-												xmlns="http://www.w3.org/2000/svg"
-												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-												viewBox="0 0 55 55"
-												style="enable-background: new 0 0 55 55;"
-												xml:space="preserve" fill="#505050" width="35px"
-												height="35px" class="tel-my-img">
+											<!-- 전체 연락처 / 해당 회사 user list 가져와서 뿌리기 -->
+											<c:forEach items="${ulist}" var="list">
+												<form
+													action="${pageContext.request.contextPath}/chat/chatroomnew"
+													method="post" id="chatfrm1">
+													<div class="tel-other">
+														<input type="hidden" name="chatuno" value="${list.uno }">
+														<input type="hidden" name="chatuname"
+															value="${list.uname }">
+														<svg version="1.1" id="Capa1"
+															xmlns="http://www.w3.org/2000/svg"
+															xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+															y="0px" viewBox="0 0 55 55"
+															style="enable-background: new 0 0 55 55;"
+															xml:space="preserve" fill="#505050" width="35px"
+															height="35px" class="tel-my-img">
                                                     <path
-													d="M27.5,0C12.336,0,0,12.337,0,27.5c0,7.976,3.417,15.167,8.86,20.195l-0.072,0.098l0.705,0.604
+																d="M27.5,0C12.336,0,0,12.337,0,27.5c0,7.976,3.417,15.167,8.86,20.195l-0.072,0.098l0.705,0.604
                                                 c3.904,3.342,8.655,5.483,13.681,6.26c0.356,0.056,0.715,0.102,1.075,0.144c0.391,0.045,0.782,0.085,1.176,0.112
                                                 c0.579,0.043,1.162,0.071,1.75,0.078c0.062,0,0.123,0.008,0.185,0.008c0.017,0,0.035-0.002,0.052-0.002
                                                 c0.03,0,0.059,0.002,0.089,0.002C42.664,55,55,42.663,55,27.5S42.664,0,27.5,0z M27.414,52.998c-0.09,0-0.178-0.006-0.267-0.007
@@ -847,21 +872,19 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                                                 c-0.167,0.324-0.395,0.735-0.512,0.813l-9.113,3.908l-0.053,0.024c-0.713,0.356-1.349,0.83-1.914,1.395
                                                 C5.132,41.483,2,34.852,2,27.5C2,13.439,13.439,2,27.5,2S53,13.439,53,27.5C53,35.153,49.606,42.024,44.25,46.702z" />
                                                 </svg>
-                                                
 
-											<span class="tel-all-desc">
-												 <a href="#" class="tel-prof-modal" >
-												 	${list.uname }
-												 </a> 
-												 <span>
-												 <!-- 개인채팅 -->
-													<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${list.uno}&chatuname=${list.uname}" onClick="window.open(this.href, '', 'width=365, height=495'); return false;">
-													
-													
-													<svg id="Layer1" data-name="Layer 1"
-															xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
-															fill="#505050" width="30px" height="25px"
-															class="tel-chat-icon">
+
+														<span class="tel-all-desc"> <a href="#"
+															class="tel-prof-modal"> ${list.uname } </a> <span>
+																<!-- 개인채팅 --> <a
+																href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${list.uno}&chatuname=${list.uname}"
+																onClick="window.open(this.href, '', 'width=365, height=495'); return false;">
+
+
+																	<svg id="Layer1" data-name="Layer 1"
+																		xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
+																		fill="#505050" width="30px" height="25px"
+																		class="tel-chat-icon">
                                                         <defs>
                                                             <style>
 																#Layer1 {
@@ -870,47 +893,42 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 																	stroke-miterlimit: 10;
 																	stroke-width: 1.7px;
 																}
-															</style>
+																</style>
                                                         </defs>
-                                                        <path d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
-                                                    </svg> </a>
-											</span>
-											</span>
+                                                        <path
+																			d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
+                                                    </svg>
+															</a>
+														</span>
+														</span>
+													</div>
+												</form>
+											</c:forEach>
+
+											<!-- 연락처에서 이름 클릭했을 때 info 모달 -->
+											<div class="prof-info-dim"></div>
+											<div class="prof-info">
+												<a href="#" class="prof-exit"> <svg version="1.1"
+														id="Capa1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														viewBox="0 0 31.112 31.112"
+														style="enable-background: new 0 0 31.112 31.112;"
+														xml:space="preserve" width="12px" height="12px"
+														fill="#111111" storke="#111111" stroke-width="3px">
+<polygon
+															points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
+	29.698,31.112 31.112,29.698 16.97,15.556 " /></svg></a>
+												<p class="prof-name">${list.uname }</p>
+												<p class="prof-cname">${cname }</p>
 											</div>
-										</form>
-									</c:forEach>
-											
-									 <!-- 연락처에서 이름 클릭했을 때 info 모달 -->
-				  								<div class="prof-info-dim">
-												  </div>
-													<div class="prof-info">
-												<a href="#" class="prof-exit">
-						<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 31.112 31.112" style="enable-background:new 0 0 31.112 31.112;" xml:space="preserve" width="12px" height="12px" fill="#111111" storke="#111111" stroke-width="3px">
-<polygon points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
-	29.698,31.112 31.112,29.698 16.97,15.556 "/></svg></a>
-									<p class="prof-name">
-											${list.uname }
-										</p>
-									<p class="prof-cname">
-											${cname }
-									</p>
-					</div>
-										
+
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-					</div> 
-
-
-					
-					
-					
-					
-					<!--알림 모달-->
+					</div> <!--알림 모달-->
 					<div class="alarm-wrap">
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
@@ -1057,7 +1075,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 
 	</div>
 
-	
+
 </body>
 
 </html>

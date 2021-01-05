@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ontact.chat.model.dto.ChatDto;
 import com.kh.ontact.chatmember.model.dao.ChatMemberDao;
 import com.kh.ontact.chatmember.model.dto.ChatMemberDto;
 import com.kh.ontact.users.model.dto.UsersDto;
@@ -18,6 +19,11 @@ public class ChatMemberServiceImpl implements ChatMemberService{
 	@Override
 	public int insertChatMember(ChatMemberDto c) throws Exception {
 		return chatMemDao.insertChatMember(c);
+	}
+
+	@Override
+	public List<ChatDto> mychatlist(String uno) throws Exception {
+		return chatMemDao.mychatlist(uno);
 	}
 
 }
