@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OverworkMapper">
+  <resultMap type="OverworkDto" id="resultOverwork">
+  	<id property="owno" column="owno" />
+  	<result property="uno" column="uno" />
+  	<result property="dname" column="dname" />
+	<result property="uname" column="uname" />
+	<result property="owdate" column="owdate" />
+	<result property="owtime" column="owtime" />
+	<result property="owtitle" column="owtitle" />
+	<result property="owreason" column="owreason" />
+	<result property="owapproval" column="owapproval" />
+	<result property="owapplydate" column="owapplydate" />
+  </resultMap>
+  
+  	<!-- 시간외 근무 조회 -->
+	<select id="listCount" resultType="int">
+		select count(*) from overwork
+	</select>
+	
+	<select id="selectOverwork" resultType="arraylist"
+		resultMap="resultOverwork">
+		select * from overwork
+	</select>
+	
+	<select id="searchOverwork" parameterType ="java.util.HashMap"
+		resultType="arraylist" resultMap="resultOverwork">
+		select * from overwork where owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+	</select>
+	
+	<select id="selectOwOne" parameterType="string" resultType="OverworkDto">
+		select * from overwork where owno = #{owno} 
+	</select>
+	
+	<!-- 시간외 근무 삽입 -->
+	<update id="insetOverwork" parameterType="string"
+		flushCache="true" statementType="PREPARED"> 
+		insert into overwork values(OWNO_SE.nextval, '1', '${dname}', '${uname}',  to_date('${owdate}', 'yyyy-mm-dd'), ${owtime}, '${owtitle}',
+		'${owreason}', default, default)
+	</update>
+	
+	<!-- 시간외 근무 승인여부 삽입 -->
+	<update id="updateOverworkApp" parameterType="string"
+		flushCache="true" statementType="PREPARED"> 
+		update overwork set owapproval = #{owapproval}
+		<!-- where uno = #{uno} and owno = #{owno} -->
+	</update>
+</mapper>

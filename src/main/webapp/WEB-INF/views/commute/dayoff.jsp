@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
-    <link href="./reset.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -103,7 +104,7 @@
         height: 210px;
         font-size: 14px;
     }
-    .application table tr:nth-child(1), tr:nth-child(2){
+    .application table tr{
         height: 30px;
         line-height: 30px;
     }
@@ -163,7 +164,7 @@
         height: 200px;
         padding: 30px 0;
     }
-    .option table button{
+    .option table #insertDf{
         width: 100px;
         height: 32px;
         background-color: #5A3673;
@@ -171,29 +172,42 @@
         border : none;
         border-radius: 3px;
     }
-    .list{
+    .lista{
         padding-top: 30px;
         width: 930px;
         height: 360px;
     }
-    .list table{
+    .lista table{
         width: 930px;
         height: 360px;
         font-size: 14px;
         text-align: center;
     }
-    .list table tr{
+    .lista table tr{
         height: 30px;
         line-height: 30px;
         border-bottom: 1px solid #e7e7e7;
     }
-    .list table thead{
+    .lista table thead{
         font-weight: 700;
     }
     </style>
      <script>
+     	/* var result='${message}';
+		console.log(result);
+		if(result == "success") {
+	        alert("신청이 완료되었습니다");
+	    } */
+		
+	    $('#insertDf').on('click', function(){
+            console.log("들어왔다!!")
+            $("#frm").action = "${pageContext.request.contextPath}/dayoff/dayoffins";
+        	$("#frm").method = "post";
+        	$("#frm").submit();
+        });
+		
         // html dom 이 다 로딩된 후 실행된다.
-        $(document).ready(function() {
+   $(document).ready(function() {
         $('.sidenav li.menu>a').on('click', function(){
 		$(this).removeAttr('href');
 		var element = $(this).parent('li');
@@ -210,9 +224,68 @@
 			element.siblings('li').find('li').removeClass('open');
             element.siblings('li').find('ul').slideUp();
 		}
-	    });
-	
-    });
+        });
+        
+        
+       	/* var responseMessage = "<c:out value="${message}" />"; */
+       		/* $("#insertDf").on("click", function(){
+       			
+       		}); */
+       		
+    //    $('#insertDf').on('click', function(){
+    //    		if(fnMemberValidation() == false) {
+    //                return;
+    //                console.log("false로 들어옴");
+    //          }else if(nMemberValidation() == true){
+    //             console.log("true로 들어옴");
+    //    			confirm("제출하시겠습니까?");
+    //    			alert("제출 완료");
+    //     	   var frm = document.frm;
+    //     	   frm.action = "<c:url value='/dayoff/dayoffins'/>";
+    //     	   frm.method = "post";
+    //     	   frm.submit();
+    //     	}else{
+    //     	   return;
+    //     	}
+    //    	});
+       		
+        	 
+    //     function fnMemberValidation(){
+    //     	 if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
+    //     	   alert("부서를 선택해주세요");
+    //     	   $('#name').focus();
+    //     	   return false;
+    //     	 }
+    //     	 if($.trim($('#uname').val()) == ''){
+    //     	   alert("이름을 입력해주세요");
+    //     	   $('#uname').focus();
+    //     	   return false;
+    //     	  }
+    //     	 if($.trim($('#dayoffStart').val()) == ''){
+    //        	   alert("휴가 시작일을 선택해주세요.");
+    //        	   $('#dayoffStart').focus();
+    //        	   return false;
+    //        	  }
+    //     	 if($.trim($('#dayoffEnd').val()) == ''){
+    //           	alert("휴가 종료일을 선택해주세요.");
+    //           	$('#dayoffEnd').focus();
+    //           	return false;
+    //           }
+    //     	 if($.trim($('#offdays').val()) == ''){
+    //             alert("일수를 입력해주세요.");
+    //             $('#offdays').focus();
+    //             return false;
+    //            }
+    //     	 if($.trim($('#offreason').val()) == ''){
+    //        	   alert("휴가사유를 입력해주세요");
+    //        	   $('#offreason').focus();
+    //        	   return false;
+    //        	  }
+        	  
+    //     	  return true;
+    //     	 };
+   }); 
+    	
     </script>
 </head>
 <body>
@@ -223,164 +296,152 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-                    <ul class="hide">
-                        <li><a href="">출퇴근 관리</a></li>
-                        <li><a href="">월 근무내역</a></li>
-                        <li><a href="">시간외 근무신청</a></li>
-                    </ul>
-                </li>
-                <li class="menu"><a href="">휴가 관리</a>
-                    <ul class="hide">
-                        <li><a href="">휴가 신청</a></li>
-                        <li><a href="">휴가 현황</a></li>
-                    </ul>
-                </li>
-                <li ><a href="">조직도</a></li>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
+						<li><a href="">월 근무내역</a></li>
+						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
+					</ul></li>
+				<li class="menu"><a href="">휴가 관리</a>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
+						<li><a href="">휴가 현황</a></li>
+					</ul></li>
+				<li><a href="">조직도</a></li>
             </ul>
         </div>
     <div class="contents">
         <div class="article">
             <div class="conTitle">휴가 신청 및 조회</div>
             <div class="application">
+            <form name="frm" id ="frm" >
+           <%--  action = "${pageContext.request.contextPath}/dayoff/dayoffins" method = "post"> --%>
+           
                 <table>
-                    <thead>
                     <tr>
                         <td class="title">부서명</td>
-                        <td style="width: 250px;">
-                            <select style="width: 200px; height: 25px;">
-                                <option value="">선택하세요</option>
-                                <option value="">경영팀</option>
-                                <option value="">인사팀</option>
-                                <option value="">개발팀</option>
-                                <option value="">영업팀</option>
-                                <option value="">디자인팀</option>
-                                <option value="">마케팅팀</option>
+                        <td style="width: 230px;">
+                            <select style="width: 200px; height: 25px;" id="dname" name="dname">
+                                <option value="0">선택하세요</option>
+                                <option value="경영팀">경영팀</option>
+                                <option value="인사팀">인사팀</option>
+                                <option value="개발팀">개발팀</option>
+                                <option value="영업팀">영업팀</option>
+                                <option value="디자인팀">디자인팀</option>
+                                <option value="마케팅팀">마케팅팀</option>
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td><input type="text" style="width: 200px; height: 25px;"></td>
-                        
-                    </tr>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname"></td>
+                        <td></td>
+                        <td></td>
+                    </tr> 
                     <tr>
                         <td class="title">휴가 시작 일자</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="dayoffStart"></td>
-                        <td class="title">일수</td>
-                        <td><input type="text" style="width: 200px; height: 25px;"></td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffStart" name="offstart" placeholder="시작일을 선택해주세요"></td>
+                        <td class="title">휴가 종료 일자</td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffEnd" name="offend" placeholder="종료일을 선택해주세요"></td>
+                        <td class="title" style="width: 50px;">일수</td>
+                        <td><input type="text" style="width: 50px; height: 25px;" id="offdays" name="offdays"></td>
+                   
                     </tr>
                     <tr>
                         <td class="title">휴가사유</td>
-                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 865px; height: 65px;"></td>
+                        <td colspan="6" style="padding-bottom: 20px;"><input type="text" style="width: 830px; height: 65px;" id="offreason" name="offreason"></td>
+             
                     </tr>
                     <tr>
-                        <td colspan="4"><button value="">신청하기</button></td>
+                        <td colspan="6"><button onclick="go()" id="insertDf" name="insertDf" >신청하기</button></td>
+                    <!-- type="submit" -->
                     </tr>
                     </table>
+                    </form>
             </div>
             <div class="option">
+            <form name="frm">
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate"></td>
-                        <td><button value="">조회</button></td>
+                        <td><input type="text" id="startDate" name="startdate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate"></td>
+                        <td><button type="submit" value="">조회</button></td>
                     </tr>
                 </table>
+            </form>
             </div>
-            <div class="list">
+            <div class="lista">
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="6" style="text-align: left;">조회결과 00건</td>
+                        <td colspan="8" style="text-align: left;">조회결과 00건</td>
                     </tr>
                     <tr>
                         <th>부서명</th>
                         <th>성명</th>
                         <th>휴가시작일자</th>
-                        <th>일수</th>
-                        <th>휴가사유</th>
+                        <th>휴가종료일자</th>
+                        <th>휴가일수</th>
+                        <th>사유</th>
+                        <th>신청일</th>
                         <th>상태</th>
                     </tr>
                     </thead>
+                    <c:if test="${listCount eq 0}">
+						<tr>
+							<td colspan="7" align="center"><br>
+							<br> 신청내역이 없습니다.<br>
+							<br></td>
+						</tr>
+					</c:if>
+					<c:if test="${listCount ne 0}">
+						<c:forEach var="df" items="${list}" varStatus="status">
                     <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
+                        <td>${df.dname}</td>
+                        <td>${df.uname}</td>
+                        <td>${df.offstart}</td>
+                        <td>${df.offend}</td>
+                        <td>${df.offdays}</td>
+                        <td>${df.offreason}</td>
+                        <td>${df.offtime}</td>
+                        <td>${df.offapproval}</td>
                     </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>영업팀</td>
-                        <td>김철수</td>
-                        <td>2020-12-23</td>
-                        <td>2</td>
-                        <td>연차</td>
-                        <td>결제완료</td>
-                    </tr>
-                    
+                    </c:forEach>
+                    </c:if>
+                   <!-- 앞 페이지 번호 처리 -->
+					<tr>
+						<td colspan="8">
+						<c:if test="${currentPage <= 1}">
+						&lt; &nbsp;
+						</c:if>
+						 	<c:if test="${currentPage > 1}">
+								<c:url var="dflistprev" value="/dayoff/dflist">
+									<c:param name="page" value="${currentPage-1}" />
+								</c:url>
+								<a href="${dflistprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+							</c:if> 
+							<!-- 끝 페이지 번호 처리 -->
+							 <c:set var="endPage" value="${maxPage}" /> 
+							 <c:forEach
+								var="p" begin="${startPage+1}" end="${endPage}">
+								<!-- eq : == / ne : != -->
+								<c:if test="${p eq currentPage}">
+									<font color="red" size="4"><b>${p} &nbsp; &nbsp; &nbsp;</b></font>
+								</c:if>
+								<c:if test="${p ne currentPage}">
+									<c:url var="dflistchk" value="/dayoff/dflist">
+										<c:param name="page" value="${p}" />
+									</c:url>
+									<a href="${dflistchk}">${p} &nbsp; &nbsp; &nbsp;</a>
+								</c:if>
+							</c:forEach> 
+							<c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
+							</c:if>
+							<c:if test="${currentPage < maxPage}">
+								<c:url var="dflistnext" value="/dayoff/dflist">
+									<c:param name="page" value="${currentPage+1}" />
+								</c:url>
+								<a href="${dflistnext}">&nbsp; &gt;</a>
+							</c:if>
+							</td>
+					</tr>
                 </table>
             </div>
         </div>
@@ -407,15 +468,18 @@
                 ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                 ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
             });
-            $('#dayoffStart').datepicker();                     
+            $('#dayoffStart').datepicker();  
+            $('#dayoffEnd').datepicker();                     
             $('#startDate').datepicker(); 
             $('#endDate').datepicker(); 
-            //초기값을 오늘 날짜로 설정
-            $('#dayoffStart').datepicker('setDate', 'today');
+            /* //초기값을 오늘 날짜로 설정
+            $('#dayoffStart').datepicker();
+            $('#dayoffEnd').datepicker();
             $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            $('#endDate').datepicker('setDate', 'today');          
-        });
-
+            $('#endDate').datepicker('setDate', 'today');           */
+        });  
+    	
+     
 </script>
 </body>
 </html>

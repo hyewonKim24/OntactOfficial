@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
-    <link href="./reset.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -23,6 +23,9 @@
         font-family: Noto Sans KR;
         line-height: 1.15;
     }
+   a {
+   	text-decoration: none;
+   }
     .header{
         position: relative;
         width: 100%;
@@ -121,7 +124,7 @@
         border-top: 1px solid #e7e7e7;
     }
     .title{
-        width: 100px;
+        width: 70px;
         font-weight: 700;
     }
     .application select{
@@ -166,7 +169,7 @@
         height: 200px;
         padding: 30px 0;
     }
-    .option table button{
+    #insertOw{
         width: 100px;
         height: 32px;
         background-color: #5A3673;
@@ -195,6 +198,8 @@
     }
     </style>
     <script>
+    	${message}
+    	
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
         $('.sidenav li.menu>a').on('click', function(){
@@ -214,6 +219,52 @@
             element.siblings('li').find('ul').slideUp();
 		}
 	    });
+        
+       function fnSubmit(){
+       		if(fnMemberValidation() == false) return;
+        	if(confirm("제출하시겠습니?")){
+        	   alert("제출완료");
+        	}else{
+        	   return;
+        	}
+        }	 
+        function fnMemberValidation(){
+        	 if($.trim($('#name').val()) == ''){
+        	   alert("부서를 선택해주세요");
+        	   $('#name').focus();
+        	   return false;
+        	  }
+        	  if($.trim($('#email').val()) == ''){
+        	   alert("이름을 입력해주세요");
+        	   $('#email').focus();
+        	   return false;
+        	  }
+        	  if(!($('#genderM')[0].checked == true || $('#genderW')[0].checked == true)){
+        	   alert("휴가 시작일자를 선택해주세요.");
+        	   $('#genderM').focus();
+        	   return false;
+        	  }
+        	  
+        	  if($('#smsyn').is(':checked') == false){
+        	   alert("휴가 종료일자를 선택해주세요");
+        	   $('#smsyn').focus();
+        	   return false;
+        	  }
+        	  
+        	  if(($.trim($('#zipcode1').val()) == '') || ($.trim($('#zipcode2').val()) == '')){
+        	   alert("일수를 입력해주세요");
+        	   $('#zipcode1').focus();
+        	   return false;
+        	  }
+        	  if(($.trim($('#zipcode1').val()) == '') || ($.trim($('#zipcode2').val()) == '')){
+           	   alert("휴가사유를 입력해주세요");
+           	   $('#zipcode1').focus();
+           	   return false;
+           	  }
+        	  
+        	  return true;
+        	 }
+        	
 	
     });
     </script>
@@ -227,19 +278,17 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-                    <ul class="hide">
-                        <li><a href="">출퇴근 관리</a></li>
-                        <li><a href="">월 근무내역</a></li>
-                        <li><a href="">시간외 근무신청</a></li>
-                    </ul>
-                </li>
-                <li class="menu"><a href="">휴가 관리</a>
-                    <ul class="hide">
-                        <li><a href="">휴가 신청</a></li>
-                        <li><a href="">휴가 현황</a></li>
-                    </ul>
-                </li>
-                <li ><a href="">조직도</a></li>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
+						<li><a href="">월 근무내역</a></li>
+						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
+					</ul></li>
+				<li class="menu"><a href="">휴가 관리</a>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
+						<li><a href="">휴가 현황</a></li>
+					</ul></li>
+				<li><a href="">조직도</a></li>
             </ul>
         </div>
     </div>
@@ -247,176 +296,134 @@
         <div class="article">
             <div class="conTitle">시간외 근무 신청 및 조회</div>
             <div class="application">
+            <form action="<c:url value="/overwork/ins"/>" method="get">
                 <table>
-                    <thead>
                     <tr>
                         <td class="title">부서명</td>
                         <td style="width: 250px;">
-                            <select style="width: 200px; height: 25px;">
-                                <option value="">선택하세요</option>
-                                <option value="">경영팀</option>
-                                <option value="">인사팀</option>
-                                <option value="">개발팀</option>
-                                <option value="">영업팀</option>
-                                <option value="">디자인팀</option>
-                                <option value="">마케팅팀</option>
+                            <select style="width: 200px; height: 25px;" name="dname">
+                                <option value="0">선택하세요</option>
+                                <option value="경영팀">경영팀</option>
+                                <option value="인사팀">인사팀</option>
+                                <option value="개발팀">개발팀</option>
+                                <option value="영업팀">영업팀</option>
+                                <option value="디자인팀">디자인팀</option>
+                                <option value="마케팅팀">마케팅팀</option>
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td><input type="text" style="width: 200px; height: 25px;"></td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">예정일시</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="overcomStart"></td>
-                        <td class="title">예정시간</td>
-                        <td><input type="text" style="width: 200px; height: 25px;"></td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="owstart" name="owdate"></td>
+                        <td class="title">예상시간</td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="owtime" name="owtime"></td>
                     </tr>
                     <tr>
                         <td class="title">업무내용</td>
-                        <td colspan="3"><input type="text" style="width: 865px; height: 65px;"></td>
+                        <td colspan="3"><input type="text" style="width: 860px; height: 65px;" id="owtitle" name="owtitle"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">사유</td>
-                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 865px; height: 65px;"></td>
+                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason"></td>
                     </tr>
                     <tr>
-                        <td colspan="4"><button value="">신청하기</button></td>
+                        <td colspan="4"><button type="submit" name="insertOw" id="insertOw">신청하기</button></td>
                     </tr>
                     </table>
+               </form>
             </div>
             <div class="option">
+            <form action="<c:url value="/overwork/owlist"/>" method="get">
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate"></td>
-                        <td><button value="">조회</button></td>
+                        <td><input type="text" id="startDate" name="startdate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate"></td>
+                        <td><button name="submit" >조회</button></td>
                     </tr>
                 </table>
+               </form>
             </div>
             <div class="list">
                 <table>
                     <thead>
-                    <tr>
-                        <td colspan="6" style="text-align: left;">조회결과 00건</td>
-                    </tr>
-                    <tr>
-                        <th>부서명</th>
-                        <th>성명</th>
-                        <th>예정일시</th>
-                        <th>예정시간</th>
-                        <th>업무내용</th>
-                        <th>사유</th>
-                        <th>상태</th>
-                    </tr>
-                    </thead>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제완료</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    <tr>
-                        <td>개발팀</td>
-                        <td>이혜림</td>
-                        <td>2020-12-29</td>
-                        <td>2</td>
-                        <td>28일 00산업 요청사항 마무리</td>
-                        <td>개발팀 회의가 예상보다 길어짐에 따라 업무 딜레이</td>
-                        <td>결제대기</td>
-                    </tr>
-                    
+	                    <tr>
+	                        <td colspan="6" style="text-align: left;">조회결과 00건</td>
+	                    </tr>
+	                    <tr>
+	                        <th>부서명</th>
+	                        <th>성명</th>
+	                        <th>예정일시</th>
+	                        <th>예정시간</th>
+	                        <th>업무내용</th>
+	                        <th>사유</th>
+	                        <th>상태</th>
+	                    </tr>
+	                 </thead>
+	                <%-- <c:if test="${not empty list}"> --%>
+						<c:forEach var="ow" items="${list}" varStatus="status">
+	                    <tr>
+	                        <td>${ow.dname}</td>
+	                        <td>${ow.uname}</td>
+	                        <td>${ow.owdate}</td>
+	                        <td>${ow.owtime}</td>
+	                        <td>${ow.owtitle}</td>
+	                        <td>${ow.owreason}</td>
+	                        <td>${ow.owapproval}</td>
+	                    </tr>
+                   		</c:forEach>
+                    <%-- </c:if> --%>
+			      <!-- 앞 페이지 번호 처리 -->
+					<tr align="center" height="20">
+						<td colspan="5">
+						<c:if test="${currentPage <= 1}">
+						&lt; &nbsp;
+						</c:if>
+						 	<c:if test="${currentPage > 1}">
+								<c:url var="owlistprev" value="/overwork/owlist">
+									<c:param name="page" value="${currentPage-1}" />
+								</c:url>
+								<a href="${owlistprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+							</c:if> 
+							<!-- 끝 페이지 번호 처리 -->
+							 <c:set var="endPage" value="${maxPage}" /> 
+							 <c:forEach
+								var="p" begin="${startPage+1}" end="${endPage}">
+								<!-- eq : == / ne : != -->
+								<c:if test="${p eq currentPage}">
+									<font color="red" ><b>${p} &nbsp; &nbsp; &nbsp;</b></font>
+								</c:if>
+								<c:if test="${p ne currentPage}">
+									<c:url var="owlistchk" value="/overwork/owlist">
+										<c:param name="page" value="${p}" />
+									</c:url>
+									<a href="${owlistchk}">${p} &nbsp; &nbsp; &nbsp;</a>
+								</c:if>
+							</c:forEach> 
+							<c:if test="${currentPage >= maxPage}">  &nbsp; &gt;
+							</c:if>
+							<c:if test="${currentPage < maxPage}">
+								<c:url var="owlistnext" value="/overwork/owlist">
+									<c:param name="page" value="${currentPage+1}" />
+								</c:url>
+								<a href="${owlistnext}"> &nbsp; &gt;</a>
+							</c:if>
+							</td>
+					</tr>
                 </table>
             </div>
         </div>
     </div>
 </div>
 <script>
+	var result='${message}';
+	console.log(result);
+	if(result == "success")
+	    alert("신청이 완료되었습니다");
+	
     $(function() {
             //input을 datepicker로 선언
             $.datepicker.setDefaults({
@@ -437,13 +444,13 @@
                 ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                 ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
             });                    
-            $('#overcomStart').datepicker();
+            $('#owstart').datepicker();
             $('#startDate').datepicker(); 
             $('#endDate').datepicker(); 
             //초기값을 오늘 날짜로 설정
-            $('#overcomStart').datepicker('setDate', 'today');
-            $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            $('#endDate').datepicker('setDate', 'today');          
+            $('#owstart').datepicker('setDate', 'today');
+            /* $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
+            $('#endDate').datepicker('setDate', 'today') */;          
         });
 
 </script>

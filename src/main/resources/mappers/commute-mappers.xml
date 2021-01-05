@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="Commute">
+<mapper namespace="CommuteMapper">
 	<resultMap type="CommuteDto" id="resultCommute">
 		<!-- property에는 vo의 필드명, column에는 db tabel의 컬럼명 두개를 map으로 연결한다 -->
 		<id property="uno" column="uno" />
+		<result property="dname" column="dname" />
+		<result property="uname" column="uname" />
 		<result property="cdate" column="cdate" />
 		<result property="cstate" column="cstate" />
 		<result property="cstarttime" column="cstarttime" />
 		<result property="cendtime" column="cendtime" />
 		<result property="cworktime" column="cworktime" />
-		<result property="capproval" column="capproval" />
-		<result property="cadditionaltime" column="cadditionaltime" />
+		<result property="creson" column="creson" />
 		<!-- <result property="board_subtitle" column="board_subtitle"/> -->
 	</resultMap>
+	
+	<!-- 출퇴근 시간 기간별 조회 -->
+	<select id="allListCount" resultType="int">
+		select count(*) from commute 
+	</select>
+	<select id="selectDailyCommute" resultType="arraylist"
+		resultMap="resultCommute">
+		select * from commute 
+	</select>
+	
+	<!-- 출퇴근 시간 기간별 조회 : 정상, 지각, 기타 -->
+	<select id="listCount" resultType="int">
+		select count(*) from commute where cstate = 0 
+		and cdate between to_date('${startdate}', 'yyyy-mm-dd') and to_date('${enddate}', 'yyyy-mm-dd')
+	</select>
+	<select id="searchDailyCommute" 
+		parameterType ="java.util.HashMap"
+		resultType="arraylist"
+		resultMap="resultCommute">
+		select * from commute 
+		where cdate between to_date('${startdate}', 'yyyy-mm-dd') and to_date('${enddate}', 'yyyy-mm-dd')
+		and cstate = '${cstate}'
+	</select>
+	
+	<!-- 월 근무내역 조회 -->
+	<select id="monthListCount" resultType="int">
+		select count(*) from commute where uno = #{uno}
+	</select>
+	<select id="searchMonthCommute" 
+		parameterType ="java.util.HashMap"
+		resultType="arraylist"
+		resultMap="resultCommute">
+		select cdate, cworktime, cadditionaltime from commute
+	</select>
+	
+	<!-- 출근 시간 삽입 -->
+	<insert id="insertEnter" flushCache="true" statementType="PREPARED">  
+	insert into commute values('1', #{dname}, #{uname}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
+			null, null, #{creason})
+	</insert>
+	
+	<!-- 퇴근 시간 삽입 -->
+	<update id="updateLeave" flushCache="true" statementType="PREPARED">
+		update commute 
+		set cendtime = to_char(to_date( '${cendtime}', 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
+			cworktime = TRUNC((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss')-to_date(cstarttime,'yyyy-mm-dd hh24:mi:ss'))*24-1) || '시간' ||
+						TRUNC(mod((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss') - to_date(cstarttime, 'yyyy-mm-dd hh24:mi:ss'))*24,1)*60) || '분' 
+		where uname = '${uname}' and dname = '${dname}'
+		<!-- and to_date(cdate, 'yyyy-mm-dd') = to_date(sysdate, 'yyyy-mm-dd') -->
+	</update>
 </mapper>

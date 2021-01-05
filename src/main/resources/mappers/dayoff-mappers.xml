@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DayoffMapper">
+	<resultMap type="DayoffDto" id="resultDayoff">
+		<!-- property에는 vo의 필드명, column에는 db tabel의 컬럼명 두개를 map으로 연결한다 -->
+		<id property="dfno" column="dfno" />
+		<result property="uno" column="uno" />
+		<result property="dname" column="dname" />
+		<result property="uname" column="uname" />
+		<result property="offdays" column="offdays" />
+		<result property="offstart" column="offstart" />
+		<result property="offend" column="offend" />
+		<result property="offtime" column="offtime" />
+		<result property="offreason" column="offreason" />
+		<result property="offapproval" column="offapproval" />
+		<!-- <result property="board_subtitle" column="board_subtitle"/> -->
+	</resultMap>
+	
+	<!-- <resultMap type="UserDto" id="resultUser">
+		<result property="uno" column="uno"/>
+		<result property="cno" column="cno"/>
+		<result property="dno" column="dno"/>
+		<result property="uname" column="uname"/>
+		<collection property="dayoff" resultMap="resultDayoff"></collection>
+	</resultMap> -->
+	
+	<!-- 휴가 신청 내역 조회-->
+	<select id="allListCount" resultType="int">
+		select count(*) from dayoff 
+	</select>
+	<select id="selectDayoff" resultType="arraylist" resultMap="resultDayoff">
+		select * from dayoff 
+	</select>
+	<select id="searchDayoff" parameterType ="java.util.HashMap"
+		resultType="arraylist" resultMap="resultDayoff">
+		select * from dayoff where offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+	</select>
+	<select id="selectDfOne" parameterType="string" resultType="DayoffDto">
+		select * from dayoff where dfno = #{dfno} 
+	</select>
+	
+	<!-- 휴가 신청 -->
+	<insert id="insertDayoff" flushCache="true" statementType="PREPARED"> 
+		insert into dayoff values(dfno_se.nextval, '1', #{dname}, #{uname}, #{offdays}, to_date(#{offstart}, 'yyyy-mm-dd'), to_date(#{offend}, 'yyyy-mm-dd'), #{offreason}, default, default)
+		<!-- insert into dayoff values(dfno_se.nextval, '2', '${dname}', '${uname}', ${offdays}, to_date('${offstart}', 'yyyy-mm-dd'), to_date('${offend}', 'yyyy-mm-dd'), '${offreason}', default, default) -->
+	</insert>
+	
+	<!-- 휴가 신청 승인여부 -->
+	<update id="updateDayoffApp" parameterType="string"
+		flushCache="true" statementType="PREPARED"> 
+		update dayoff set offapproval = #{offapproval}
+		where uno = #{uno} and dfno = #{dfno}
+	</update>
+</mapper>
