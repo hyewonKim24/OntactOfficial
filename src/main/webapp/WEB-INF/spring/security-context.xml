@@ -27,7 +27,13 @@
 			/>
 		<logout logout-url="/logout"
 		logout-success-url="/loginform"
-		invalidate-session="true"/>
+		invalidate-session="true"
+		delete-cookies="remember-me,JSESSION_ID"
+		/>
+		<!-- 자동로그인 (4주) -->
+		<remember-me data-source-ref="dataSource"
+		authentication-success-handler-ref="loginSuccessHandler"
+		token-validity-seconds="2419200"/>
 		<!-- 권한 없는 요청 했을 때 보여지는 페이지 지정 -->
 		<access-denied-handler error-page="/access_denied" />
 		<!-- <csrf disabled="false" /> -->

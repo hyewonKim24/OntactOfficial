@@ -12,6 +12,7 @@ import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.kh.ontact.users.model.service.UsersService;
@@ -36,7 +37,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 			loginFailureCount(username);
 			errormsg = MessageUtils.getMessage("error.BadCredentials");
 			// 비밀번호 일치x
-		} else if(exception instanceof InternalAuthenticationServiceException) {
+		}
+//		else if (exception instanceof UsernameNotFoundException) {
+//			errormsg = MessageUtils.getMessage("error.UsernameNotFoundException");
+//		}
+		else if(exception instanceof InternalAuthenticationServiceException) {
 			errormsg = MessageUtils.getMessage("error.BadCredentials");
 			// 존재하지 않는 아이디 (비밀번호 일치 x 와 같은 메세지 뿌려줌)
 		} else if(exception instanceof DisabledException) {

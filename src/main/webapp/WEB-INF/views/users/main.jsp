@@ -109,8 +109,8 @@
         이젠 서로 연결되는 온라인 공간 ontact로</h3>
         <sec:authorize access="isAnonymous()">
         <div class="btn">
-            <button class="btn__join">비즈니스 계정</button>
-            <button class="btn__join">게스트 계정</button>
+            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/busjoin'">비즈니스 계정</button>
+            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/guestjoin'">게스트 계정</button>
         </div>
         <div class="txt">
             <div class="txt__join">온택트 공간 개설하기</div>
@@ -122,11 +122,15 @@
         	<sec:authentication property="principal.cno" var="cno"/>
         	<input type="text" value="${name}">
         	<input type="text" value="${cno }">
-                </sec:authorize>
+        	<sec:authentication property="principal" var="principal"/>
+			<input type="text" value="${principal }">
+			<sec:authentication property="principal.username"/>
+        	
+        </sec:authorize>
     </section>
     
 <a href='<c:url value="/main"/>'>GUEST</a>
 <a href='<c:url value="/member"/>'>MEMBER</a>
 <a href='<c:url value="/admin/adminHome.do"/>'>ADMIN</a>
 </body>
-</html> 
+</html>

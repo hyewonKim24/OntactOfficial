@@ -18,11 +18,27 @@ public class UsersDao {
 		sqlSession.insert("Users.joinBusiness",dto);
 	}
 	
-	//이메일 중복체크
-	public int emailChk(String uemail) throws Exception{
-		int result = sqlSession.selectOne("Users.emailChk",uemail);
-		return result;
+// 이메일 중복체크
+	public String emailChk(String uemail) throws Exception {
+		return sqlSession.selectOne("Users.emailChk", uemail);
 	}
+
+	// 유저 회원가입
+	public int joinGuest(UsersDto dto) throws Exception {
+		return sqlSession.insert("Users.joinGuest", dto);
+	}
+
+	// 임시비밀번호 확인
+	public String pwdChk(UsersDto userdto) throws Exception {
+		return sqlSession.selectOne("Users.pwdChk", userdto);
+	}
+	// 임시비밀번호 업데이트
+	public int updateTmppwd(UsersDto dto) throws Exception{
+		System.out.println("가져온비밀번호:"+dto.getUpwd());
+		System.out.println("가져온이메일:"+dto.getUemail());
+		return sqlSession.update("Users.updateTmppwd",dto);
+	}
+
 	
 	
 	

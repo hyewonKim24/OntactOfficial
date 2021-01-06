@@ -23,20 +23,46 @@
 		<result property="failure_cnt" column="failure_cnt"/>
 	</resultMap>
 	
-	<!-- 가입 -->
+	<!-- 비즈니스 가입 -->
 	<insert id="joinBusiness" flushCache="true">
+		<![CDATA[
 		INSERT INTO USERS(uno, cno, uemail, uname, upwd, urank, uauthority, enabled) 
 		VALUES(UNO_SE.NEXTVAL, CNO_SE.CURRVAL, #{uemail} , #{uname} , #{upwd} , '대표', 'ROLE_ADMIN', 1 )
+		]]>
 	</insert>
 	
 	<!-- 이메일 중복체크 -->
-	<select id="emailChk" resultType="int">
-		select count(*) from users
+	<select id="emailChk" resultType="string">
+		<![CDATA[
+		select uemail from users
 		where uemail = #{uemail}
+		]]>
 	</select>
 	
+	<!-- 유저 가입 -->
+	<insert id="joinGuest" flushCache="true">
+		<![CDATA[
+		insert into users(uno, cno, uemail, uname, upwd, enabled)
+		values (UNO_SE.NEXTVAL, #{cno}, #{uemail}, #{uname}, #{upwd}, 1)
+		]]>
+	</insert>
 	
+	<!-- 비밀번호 찾기 -->
+	<select id="pwdChk" resultType="string">
+		<![CDATA[
+		select uemail from users
+		where uemail = #{uemail} and uname = #{uname}
+		]]>
+	</select>
 	
+	<update id="updateTmppwd" flushCache="true">
+		<![CDATA[
+		update users set upwd=#{upwd} where uemail=#{uemail}
+		]]>
+	</update>
+	
+
+
 	
 	<!-- ####### 여기부터 시큐리티 ####### -->
 	<!-- 유저 정보 가져오기 -->

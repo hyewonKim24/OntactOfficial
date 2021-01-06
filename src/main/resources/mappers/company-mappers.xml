@@ -14,11 +14,28 @@
 		<result property="ccate" column="ccate" />
 	</resultMap>
 	
+	<!-- 비즈니스 회원가입 -->
 	<insert id="joinBusiness">
-		INSERT INTO COMPANY(cno, cname, ceo, curl, ccate) 
-		VALUES(CNO_SE.NEXTVAL, #{cname} , #{ceo}, #{curl} , #{ccate})
+		<![CDATA[
+			INSERT INTO COMPANY(cno, cname, ceo, curl, ccate) 
+			VALUES(CNO_SE.NEXTVAL, #{cname} , #{ceo}, #{curl} , #{ccate})
+		]]>
 	</insert>
 	
+	<!-- 회사 url 중복체크 -->
+	<select id="curlChk" resultType="string">
+		<![CDATA[
+			select curl from company
+			where curl = #{curl}
+		]]>
+	</select>
+	
+	<!-- 유저 가입 회사정보 찾기 -->
+	<select id="findCno" resultType="string">
+		<![CDATA[
+			select cno from company where curl=#{curl}
+		]]>
+	</select>
 	
 	<!-- 혜원 코드   -->
 	<select id="cnameOne" resultType="String">

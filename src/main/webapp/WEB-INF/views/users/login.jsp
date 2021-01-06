@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
     rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style type="text/css">
     body{
         width:100%;
@@ -134,9 +136,19 @@
 <body>
     <header>
         <h2>ONTACT</h2>
-        <button id="joinbtn" onclick="${pageContext.request.contextPath}/busjoin">회원가입</button>
+        <sec:authorize access="isAnonymous()">
+	        <button id="joinbtn" onclick="location.href='${pageContext.request.contextPath}/main'">회원가입</button>
+	    </sec:authorize>
+    	<sec:authorize access="isAuthenticated()">
+			<form action="${pageContext.request.contextPath}/logout" method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        		<button type="submit" id="joinbtn">로그아웃</button>
+			</form>    	
+    	</sec:authorize>
+        
     </header>
     <section>
+    <sec:authorize access="isAnonymous()">
         <form id="login" method="post" action="${pageContext.request.contextPath}/login">
             <div id="table_wrapper">
             <table id="login_tbl">
@@ -154,7 +166,7 @@
             </tr>
             <tr>
                 <td colspan="3" id="login_pwdforgot">
-                    <input type="checkbox" id="login_keep" name="login_keep" width="20px">
+                    <input type="checkbox" id="login_keep" name="remember-me" width="20px">
                     <label for="login_keep"
 					class="login_font_size">자동 로그인</label>
                 </td>
@@ -178,7 +190,7 @@
             <tr>
                 <td colspan="5">
                     <p id="login_search">
-                        <a href="" class="login_font_size">비밀번호를 잊어버리셨나요?</a>
+                        <a href="${pageContext.request.contextPath}/pwdforget" class="login_font_size">비밀번호를 잊어버리셨나요?</a>
                     </p>
                 </td>
             </tr>
@@ -186,6 +198,20 @@
     </div>
     <div id="login_text">편안한 곳에서<br>서로 편하게 소통할 수 있는<br>온택트</div>
         </form>
+      </sec:authorize>
+      
+      <sec:authorize access="isAuthenticated()">
+      	<div id="info"><sec:authentication property="principal.uname" var="name"/>${name}님, 반갑습니다.</div>
+      </sec:authorize>
     </section>
+    
+    <script>
+    $(function(){
+        var responseMessage = "<c:out value="${success}" />";
+        if(responseMessage != ""){
+            alert(responseMessage)
+        }
+    }) 
+    </script>
 </body>
 </html>
