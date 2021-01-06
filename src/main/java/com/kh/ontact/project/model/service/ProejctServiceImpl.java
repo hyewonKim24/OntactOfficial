@@ -22,16 +22,10 @@ public class ProejctServiceImpl implements ProjectService{
 	@Autowired
 	private ProjectDeptDao pjdDao;
 
-	// 프로젝트 전체 목록 : 프로젝트명, 공개여부
+	// 프로젝트 전체 목록
 	@Override
 	public List<ProjectDto> selectListProject() throws Exception {
 		return pjDao.selectListProject();
-	}
-
-	// 프로젝트 전체 목록 : 참여자수
-	@Override
-	public List<ProjectDto> selectListProjectMcnt() throws Exception {
-		return pjDao.selectListProjectMcnt();
 	}
 
 	// 프로젝트 생성

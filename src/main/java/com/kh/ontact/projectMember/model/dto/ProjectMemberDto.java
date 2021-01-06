@@ -1,11 +1,6 @@
 package com.kh.ontact.projectMember.model.dto;
 
-import java.sql.Date;
-import java.util.List;
-
 import org.springframework.stereotype.Component;
-
-import com.kh.ontact.project.model.dto.ProjectDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

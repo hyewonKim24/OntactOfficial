@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
-<html>
+<html lang="kr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/reset.css">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ontact, 서로 연결되는 온라인 공간 </title>
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+    <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>ontact, 서로 연결되는 온라인 공간</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style>
 body {
@@ -726,10 +726,10 @@ input:checked+.slider:before {
 				<span class="close">&times;</span>
 				<h3>프로젝트 만들기</h3>
 			</div>
-			<form action="${pageContext.request.contextPath}/project/all/ins" method="post">
+			<form action="${pageContext.request.contextPath}/project/all/ins"
+				method="post">
 				<div class="sb-modal-body">
-					<input type="text" placeholder="프로젝트 이름을 입력하세요."> 
-					<input
+					<input type="text" placeholder="프로젝트 이름을 입력하세요."> <input
 						type="textarea" placeholder="프로젝트 설명을 입력할 수 있습니다.">
 					<div class="pj_secret">
 						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -753,13 +753,14 @@ input:checked+.slider:before {
 					<div class="pj_select_team">
 						<div>부서보관함 선택</div>
 						<div>
-							<span><input type="checkbox" name="pjdept1" value="개발팀">개발팀</span> 
-							<span><input type="checkbox" name="pjdept2" value="영업팀">영업팀</span> 
+							<span><input type="checkbox" name="pjdept1" value="개발팀">개발팀</span>
+							<span><input type="checkbox" name="pjdept2" value="영업팀">영업팀</span>
 							<span><input type="checkbox" name="pjdept3" value="기획팀">기획팀</span>
 							<span><input type="checkbox" name="pjdept4" value="마케팅팀">마케팅팀</span>
 						</div>
 					</div>
-					<input type="submit" id="pj_new_btn">프로젝트생성</button>
+					<input type="submit" id="pj_new_btn">프로젝트생성
+					</button>
 				</div>
 			</form>
 		</div>

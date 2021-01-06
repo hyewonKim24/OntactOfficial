@@ -1,5 +1,8 @@
 package com.kh.ontact.project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +24,19 @@ import net.sf.json.JSONObject;
 public class ProjectController {
 	@Autowired
 	private ProjectService pjService;
-
-	// 프로젝트 전체목록
-	@RequestMapping(value = "/project/all/list", method = RequestMethod.GET)
-	public ModelAndView selectListProject(ModelAndView mv) {
-		try {
-			mv.addObject("listpj", pjService.selectListProject());
-			System.out.println("111" + pjService.selectListProject());
-			mv.addObject("listpjcnt", pjService.selectListProjectMcnt());
-			System.out.println("222" + pjService.selectListProjectMcnt());
-			mv.setViewName("user/project/projectall");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mv;
-	}
+	
+	//프로젝트 전체목록
+    @RequestMapping(value = "/project/all/list", method = RequestMethod.GET)
+    public ModelAndView selectListProject(ModelAndView mv) {
+        try {
+            mv.addObject("listpj", pjService.selectListProject());
+            System.out.println("*******" + pjService.selectListProject());
+            mv.setViewName("users/project/projectall");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mv;
+    }
 
 //	@RequestMapping(value="/project/all/ins", method=RequestMethod.POST)
 //	public String insertProject(ProjectDto pj, ProjectMemberDto pjm, ProjectDeptDto pjd,

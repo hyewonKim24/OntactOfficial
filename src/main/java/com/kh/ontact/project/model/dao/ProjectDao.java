@@ -16,14 +16,9 @@ public class ProjectDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 프로젝트 전체 목록 : 프로젝트명, 비밀글여부
+	// 프로젝트 전체 목록
 	public List<ProjectDto> selectListProject() {
 		return sqlSession.selectList("Project.selectListProject");
-	}
-
-	// 프로젝트 전체 목록 : 참여수
-	public List<ProjectDto> selectListProjectMcnt() {
-		return sqlSession.selectList("Project.selectListProjectMcnt");
 	}
 
 	// 프로젝트 생성

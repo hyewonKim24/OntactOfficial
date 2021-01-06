@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ProjcetDept">
+	<resultMap type="projectDeptDto" id="resultProjectDept">
+		<!-- extends="DeptDto" -->
+		<id property="pno" column="pno" />
+		<result property="dno" column="dno" />
+	</resultMap>
+
+	<!-- 프로젝트 생성 : 부서 입력 -->
+	<insert id="insertProjectDept" parameterType="java.util.List"
+		flushCache="true" statementType="PREPARED">
+		insert into project_dept values
+		<foreach collection="list" item="item" separator=",">
+			(PNO_SE.CURRVAL, #{item.DNO})
+		</foreach>
+	</insert>
+</mapper>

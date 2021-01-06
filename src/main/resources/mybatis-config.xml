@@ -12,18 +12,13 @@
 		<typeAlias type="com.kh.ontact.chatcontent.model.dto.ChatContentDto" alias="ChatContentDto"/>
 		<typeAlias type="com.kh.ontact.chatmember.model.dto.ChatMemberDto" alias="ChatMemberDto"/>
 		
-				<typeAlias type="com.kh.ontact.commute.model.dto.CommuteDto" alias="CommuteDto" />
+		<typeAlias type="com.kh.ontact.commute.model.dto.CommuteDto" alias="CommuteDto" />
 		<typeAlias type="com.kh.ontact.dayoff.model.dto.DayoffDto" alias="DayoffDto" />
 		<typeAlias type="com.kh.ontact.overwork.model.dto.OverworkDto" alias="OverworkDto" />
 		
-		<!-- <typeAlias type="com.kh.ontact.project.model.dto.ProjectDto" alias="ProjectDto" />
-		<typeAlias type="com.kh.ontact.projectMember.model.dto.ProjectMemberDto" alias="ProjectMemberDto" /> -->
-		<!-- BoardVO 사용시 별칭을 사용해서 간단하게 쓸수 있다 -->
+		<typeAlias type="com.kh.ontact.project.model.dto.ProjectDto" alias="ProjectDto" />
+		<typeAlias type="com.kh.ontact.projectMember.model.dto.ProjectMemberDto" alias="ProjectMemberDto" />
+ 		<typeAlias type="com.kh.ontact.projectDept.model.dto.ProjectDeptDto" alias="ProjectDeptDto" />
+ 		<typeAlias type="com.kh.ontact.dept.model.dto.DeptDto" alias="DeptDto" />
 	</typeAliases>
-	<!-- <mappers>
-		<mapper resource="mappers/user-mapper.xml"/>
-		<mapper resource="mappers/company-mapper.xml"/>
-		<mapper resource="mappers/project-mappers.xml" />
-		<mapper resource="mappers/projectMember-mappers.xml" />
-	</mappers> -->
 </configuration>

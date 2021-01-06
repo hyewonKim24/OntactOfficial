@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="pjsidebar.jsp" %>
+<%@ include file="pjsidebar.jsp" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
-<html>
+<html lang="kr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/reset.css">
-<link
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ontact, 서로 연결되는 온라인 공간 </title>
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+    <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title>ontact, 서로 연결되는 온라인 공간</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style>
 body {
@@ -302,6 +301,22 @@ body {
 	//         }
 	//     }
 	// };
+
+	/* 	$.ajax({
+	 url: "${pageContext.request.contextPath}/project/all/list",
+	 type: "GET",
+	 contentType: "application/json; charset=utf-8;",
+	 dataType: "json",
+	 success: function(data){
+	 console.log("aaa");
+	 for(var i =0; i<data.length; i++){
+	 $('.result').append('<span>' + data[i].pname + '</span>');
+	 }
+	 },
+	 error: function(){
+	 alert("projectlist err");
+	 }
+	 }); */
 </script>
 
 <body>
@@ -375,69 +390,21 @@ body {
 					</c:if>
 					<!-- 프로젝트가 있는 경우 -->
 					<c:if test="${!empty listpj}">
-						<c:forEach var="pj" items="${listpj}" varStatus="status">
+						<c:forEach var="aaa" items="${listpj}" varStatus="status">
 							<a href="#">
 								<div id="pj_project" class="pj_box">
-									<div>${pj.pname}</div>
+									<div>${aaa.pname}</div>
 									<div class="pj_team_list">
-										<div>${pj.pno}</div>
-										<div>부서명2</div>
+												<div>${aaa.pjteam}</div>
 									</div>
-									<c:if test="${!empty listpjcnt}">
-										<div>
-											<span>${fn:length(listpjcnt)}</span> 
-											<span style="color: skyblue">명 참여중</span>
-										</div>
-									</c:if>
+									<div>
+										<span>${aaa.pjmembercnt}</span> 
+										<span style="color: skyblue">명 참여중</span>
+									</div>
 								</div>
 							</a>
 						</c:forEach>
 					</c:if>
-					<a href="#">
-						<div id="pj_project" class="pj_box">
-							<div>회사명</div>
-							<div class="pj_team_list">
-								<div>부서명1</div>
-								<div>부서명2</div>
-							</div>
-							<div>
-								<span>0</span> <span>명 참여중</span>
-							</div>
-						</div>
-					</a> <a href="#">
-						<div id="pj_project" class="pj_box">
-							<div>회사명</div>
-							<div class="pj_team_list">
-								<div>부서명1</div>
-								<div>부서명2</div>
-							</div>
-							<div>
-								<span>0</span> <span>명 참여중</span>
-							</div>
-						</div>
-					</a> <a href="#">
-						<div id="pj_project" class="pj_box">
-							<div>회사명</div>
-							<div class="pj_team_list">
-								<div>부서명1</div>
-								<div>부서명2</div>
-							</div>
-							<div>
-								<span>0</span> <span>명 참여중</span>
-							</div>
-						</div>
-					</a> <a href="#">
-						<div id="pj_project" class="pj_box">
-							<div>회사명</div>
-							<div class="pj_team_list">
-								<div>부서명1</div>
-								<div>부서명2</div>
-							</div>
-							<div>
-								<span>0</span> <span>명 참여중</span>
-							</div>
-						</div>
-					</a>
 				</div>
 			</div>
 		</div>

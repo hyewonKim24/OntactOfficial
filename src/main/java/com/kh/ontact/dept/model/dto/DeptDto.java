@@ -1,10 +1,6 @@
-package com.kh.ontact.projectDept.model.dto;
-
-import java.util.List;
+package com.kh.ontact.dept.model.dto;
 
 import org.springframework.stereotype.Component;
-
-import com.kh.ontact.dept.model.dto.DeptDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class ProjectDeptDto {
-	private String pno;
+public class DeptDto {
 	private String dno;
-	
-	/* private List<DeptDto> DeptDto; */
-	
+	private String cno;
+	private String dname;
 }
