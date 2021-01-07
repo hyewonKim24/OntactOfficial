@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +33,7 @@ import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
 import com.kh.ontact.users.exception.NotExistingCurlException;
+import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
 import com.kh.ontact.users.util.GuestRegisterRequest;
@@ -283,8 +287,8 @@ public class UsersMainController {
 		}
 		return sb.toString();
 	}
-	
-	//메일 보내는 메소드
+
+	// 메일 보내는 메소드
 	@Async
 	private void mailSend(String setFrom, String toMail, String title, String content) {
 		MimeMessage message = mailSender.createMimeMessage();
@@ -342,12 +346,12 @@ public class UsersMainController {
 			String inputPass = tempwd;
 			String pwd = pwdEncoder.encode(inputPass);
 			userdto.setUpwd(pwd);
-			System.out.println("암호화된비밀번호:"+userdto.getUpwd());
+			System.out.println("암호화된비밀번호:" + userdto.getUpwd());
 			// 비밀번호 업데이트
 			usersService.updateTmppwd(userdto);
 			// 메일 발송
 			mailSend(setFrom, toMail, title, content);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -356,19 +360,62 @@ public class UsersMainController {
 		return mv;
 	}
 	
-	// 비밀번호 변경
+	// 마이페이지 - 계정정보
+	@RequestMapping(value = "/user/mypage/detail", method = RequestMethod.GET)
+	public String selectOneUser(UsersDto userdto) {
+		return "users/myinfo";
+	}
+	
+	// 마이페이지 - 계정정보 업데이트
+	@RequestMapping(value = "/user/mypage/upduser", method = RequestMethod.GET)
+	public String updateUser(UsersDto userdto) {
+		return "users/pwdsetting";
+	}
+
+	// 마이페이지 - 비밀번호 변경 페이지로 이동
+	@RequestMapping(value = "/user/mypage/updpwd", method = RequestMethod.GET)
+	public String updatePwd(UsersDto userdto) {
+		return "users/pwdsetting";
+	}
+
+	// 마이페이지 - 비밀번호 변경
+	@RequestMapping(value = "/user/mypage/updpwd", method = RequestMethod.POST)
+	public ModelAndView updatePwdCheck(@RequestParam String nowpwd,UsersDto userdto) {
+		ModelAndView mv = new ModelAndView();
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String realpwd = user.getPassword(); // 현재 비밀번호 값
+		String upwd = nowpwd; // 사용자가 입력한 현재 비밀번호
+		System.out.println(realpwd+"그리고"+nowpwd);
+		System.out.println(userdto.getUpwd());
+		if (!pwdEncoder.matches(upwd, realpwd)) {
+			logger.info("비밀번호 틀림");
+			mv.addObject("message", "이전 비밀번호가 올바르지 않습니다.");
+			mv.setViewName("users/pwdsetting");
+			return mv;
+		} else {
+			logger.info("비밀번호 일치함");
+			// 비밀번호 업데이트
+			String inputPass = userdto.getUpwd();
+			String pwd = pwdEncoder.encode(inputPass);
+			userdto.setUpwd(pwd);
+			userdto.setUemail(user.getUsername());
+			try {
+				usersService.updateTmppwd(userdto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+			mv.addObject("success", "비밀번호 변경이 되었습니다.");
+			mv.setViewName("users/pwdsetting");
+		return mv;
+	}
 
 	// 권한 없음 페이지
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
 	public String accessDeniedPage() {
 		logger.info("접근권한없음");
 		return "users/accessDenied";
-	}
-
-	@RequestMapping(value = "/login-processing", method = RequestMethod.POST)
-	public void loginProcessing(String error) {
-		logger.info("login-processing!");
-		logger.info("err :" + error);
 	}
 
 	// 관리자권한 테스트용

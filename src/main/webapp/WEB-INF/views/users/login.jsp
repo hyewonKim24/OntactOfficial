@@ -148,7 +148,7 @@
         
     </header>
     <section>
-    <sec:authorize access="isAnonymous()">
+   <%--  <sec:authorize access="isAnonymous()"> --%>
         <form id="login" method="post" action="${pageContext.request.contextPath}/login">
             <div id="table_wrapper">
             <table id="login_tbl">
@@ -198,11 +198,11 @@
     </div>
     <div id="login_text">편안한 곳에서<br>서로 편하게 소통할 수 있는<br>온택트</div>
         </form>
-      </sec:authorize>
+      <%-- </sec:authorize> --%>
       
-      <sec:authorize access="isAuthenticated()">
+      <%-- <sec:authorize access="isAuthenticated()">
       	<div id="info"><sec:authentication property="principal.uname" var="name"/>${name}님, 반갑습니다.</div>
-      </sec:authorize>
+      </sec:authorize> --%>
     </section>
     
     <script>

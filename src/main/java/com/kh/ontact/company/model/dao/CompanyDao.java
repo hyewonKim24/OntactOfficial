@@ -10,18 +10,24 @@ import com.kh.ontact.company.model.dto.CompanyDto;
 public class CompanyDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	//비즈니스 회원가입
-	public void joinBusiness(CompanyDto dto) throws Exception{
-		sqlSession.insert("Company.joinBusiness",dto);
+
+	// 비즈니스 회원가입
+	public void joinBusiness(CompanyDto dto) throws Exception {
+		sqlSession.insert("Company.joinBusiness", dto);
 	}
-	
-	//회사 url 중복체크
-	public String curlChk(String curl) throws Exception{
-		return sqlSession.selectOne("Company.curlChk",curl);
+
+	// 회사 url 중복체크
+	public String curlChk(String curl) throws Exception {
+		return sqlSession.selectOne("Company.curlChk", curl);
 	}
+
+	// 유저 가입 회사 cno 찾기
+	public String findCno(String curl) throws Exception {
+		return sqlSession.selectOne("Company.findCno", curl);
+	}
+
 	/* 혜원 코드 */
-	//회사명 가져오기
+	// 회사명 가져오기
 	public String cnameOne(String cno) throws Exception {
 		return sqlSession.selectOne("Company.cnameOne", cno);
 	}
