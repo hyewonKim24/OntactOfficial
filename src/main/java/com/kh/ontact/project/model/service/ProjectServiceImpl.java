@@ -13,7 +13,7 @@ import com.kh.ontact.projectMember.model.dao.ProjectMemberDao;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 
 @Service("pjService")
-public class ProejectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService{
 	
 	@Autowired
 	private ProjectDao pjDao;
