@@ -6,4 +6,8 @@
 		<result property="cno" column="cno"/>
 		<result property="dname" column="dname"/>
 	</resultMap>
+	<!-- project insert : 부서 보관함 목록 뿌리기 -->
+	<select id="selectListDeptDname" resultType="DeptDto">
+		select dno, dname from dept
+	</select>
 </mapper>

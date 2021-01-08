@@ -1,29 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ontact, 서로 연결되는 온라인 공간 </title>
-    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-    <link
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ontact, 서로 연결되는 온라인 공간</title>
+<link href="${pageContext.request.contextPath}/resources/css/reset.css"
+	rel="stylesheet" type="text/css">
+<link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style>
 body {
 	font-family: Noto Sans KR;
 	font-size: 14px;
 	line-height: 1.15;
+	width: 1200px;
+	margin: 0 auto;
 }
 
 /*sidebar*/
 #pj_sidebar {
-	width: 200px;
+	width: 210px;
 	height: 100%;
 	padding-top: 20px;
 	background-color: #f2f2f2;
@@ -31,6 +36,7 @@ body {
 	z-index: 10;
 	position: fixed;
 	overflow-x: hidden;
+	margin: 0 auto;
 }
 
 #pj_sidebar>ul {
@@ -364,7 +370,8 @@ input:checked+.slider:before {
 }
 </style>
 <script>
-	$(document).ready(function() {
+	$(document).ready(
+	function() {
 		$("#pj_sidebar").mouseover(function() {
 			$(this).css("overflow-y", "scroll");
 			// $(this).animate();
@@ -372,7 +379,28 @@ input:checked+.slider:before {
 		$("#pj_sidebar").mouseout(function() {
 			$(this).css("overflow-y", "hidden");
 		});
-		//경로 추가하고 현재페이지 색 바뀌는 것 추가해야함		
+		
+		//<input type="checkbox" name="${d.dname}" value="${d.dname}">
+		$("#new_pj_btn").click(
+			function() {
+				$.ajax({
+					url : "${pageContext.request.contextPath}/project/all/newpjmodal",
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(data) {
+						$("#pjteam").html("");
+						for (var i = 0; i < data.length; i++) {
+							$("#pjteam").append('<input type="checkbox" name="pjteam" value="'+ data[i].dname + '">'+data[i].dname+'<br>');
+						}
+					},
+					error : function() {
+						alert("pjteam load error");
+					}
+				})
+				return false;
+			});
+//경로 추가하고 현재페이지 색 바뀌는 것 추가해야함		
+
 	});
 	// modal
 	window.onload = function() {
@@ -399,7 +427,7 @@ input:checked+.slider:before {
 
 <body>
 	<nav id="pj_sidebar">
-		<button type="button" id="new_pj_btn" onclick="">+&nbsp;새
+		<button type="button" id="new_pj_btn" onclick="newpjmodal">+&nbsp;새
 			프로젝트</button>
 		<ul>
 			<li><a href="#"> <svg version="1.1" class="pj_btn"
@@ -753,14 +781,10 @@ input:checked+.slider:before {
 					<div class="pj_select_team">
 						<div>부서보관함 선택</div>
 						<div>
-							<span><input type="checkbox" name="pjdept1" value="개발팀">개발팀</span>
-							<span><input type="checkbox" name="pjdept2" value="영업팀">영업팀</span>
-							<span><input type="checkbox" name="pjdept3" value="기획팀">기획팀</span>
-							<span><input type="checkbox" name="pjdept4" value="마케팅팀">마케팅팀</span>
+							<div id="pjteam"></div>
 						</div>
 					</div>
-					<input type="submit" id="pj_new_btn">프로젝트생성
-					</button>
+					<input type="submit" id="pj_new_btn" value="프로젝트생성" />
 				</div>
 			</form>
 		</div>

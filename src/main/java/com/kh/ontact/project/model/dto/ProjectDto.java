@@ -30,16 +30,12 @@ public class ProjectDto implements Serializable{
 	private String pjmembercnt;
 	private String pjteam;
 	
-	private List<ProjectMemberDto> ProjectMemberDto;
-	private List<ProjectDeptDto> ProjectDeptDto;
-	private List<DeptDto> DeptDto;
-
-	//프로젝트 전체 목록
-	public ProjectDto(String pno, String pname, int popen) {
-		super();
-		this.pno = pno;
-		this.pname = pname;
-		this.popen = popen;
-	}
+	// 프로젝트 전체 목록 : 회사명
+	private String cno;
+	private String cname;
+	private int ucnt;
 	
+	// 프로젝트 전체 목록 : 부서
+	private String dno;
+	private String dname;
 }
