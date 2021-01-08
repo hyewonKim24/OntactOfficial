@@ -7,16 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ontact.chatcontent.model.dao.ChatContentDao;
 import com.kh.ontact.chatcontent.model.dto.ChatContentDto;
+import com.kh.ontact.chatmember.model.dto.ChatMemberDto;
 
 @Service("chatConService")
 public class ChatContentServiceImpl implements ChatContentService {
 	@Autowired
 	private ChatContentDao condao;
 	
-	@Override
-	public List<ChatContentDto> listChatContent(String chatno) throws Exception {
-		return condao.listChatContent(chatno);
-	}
 
 	@Override
 	public int insertChatContent(ChatContentDto c) throws Exception {
@@ -31,6 +28,16 @@ public class ChatContentServiceImpl implements ChatContentService {
 	@Override
 	public int fixChatContent(ChatContentDto c) throws Exception {
 		return condao.fixChatContent(c);
+	}
+
+	@Override
+	public List<ChatContentDto> mylistChatContent(ChatMemberDto dto) throws Exception {
+		return condao.mylistChatContent(dto);
+	}
+
+	@Override
+	public List<ChatContentDto> otherlistChatContent(ChatMemberDto dto) throws Exception {
+		return condao.otherlistChatContent(dto);
 	}
 
 }

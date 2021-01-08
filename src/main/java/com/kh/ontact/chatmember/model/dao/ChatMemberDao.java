@@ -1,6 +1,7 @@
 package com.kh.ontact.chatmember.model.dao;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +23,12 @@ public class ChatMemberDao {
 	}
 	public List<ChatDto> mychatlist(String uno) throws Exception{
 		return sqlSession.selectList("ChatMember.mychatlist",uno);
+	}
+	public List<ChatDto> searchchatlist(HashMap<String,String> map) throws Exception{
+		return sqlSession.selectList("ChatMember.mychatlist",map);
+	}
+	public List<String> chatUnoList(ChatMemberDto c) throws Exception{
+		return sqlSession.selectList("ChatMember.chatUnoList",c);
 	}
 	
 	

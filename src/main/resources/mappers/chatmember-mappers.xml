@@ -33,10 +33,25 @@
 	<!-- 내 uno가 포함된 채팅list -->
 	<select id="mychatlist" parameterType="string" resultType="arraylist" resultMap="resultChat">
 	 <![CDATA[
-		select chatname,chatno from chat where chatno in (select chatno from chatmember where uno=#{uno})
+		select chatname,chatno from chat 
+		where chatno in (select chatno from chatmember where uno=#{uno})
 		]]>
-	
 	</select>
-
+	
+	<!-- 내 uno가 포함되고 검색단어가 포함된 채팅list -->
+	<select id="searchchatlist" parameterType="hashMap" resultType="arraylist" resultMap="resultChat">
+	 <![CDATA[
+		select chatname,chatno from chat 
+		where chatno in (select chatno from chatmember where uno=#{uno}) 
+		and chatname like '%' || #{searchword} || '%'
+		]]>
+	</select>
+	
+	<!-- 채팅방에 포함된 uno 출력 -->
+	<select id="chatUnoList" resultType="java.lang.String" parameterType="ChatMemberDto">
+		<![CDATA[
+		select uno from chatmember where chatno=#{chatno} and uno not in (#{uno}) group by uno
+		]]>
+	</select>
 
 </mapper>

@@ -18,14 +18,12 @@
 <!-- jQuery, bootstrap CDN -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <!-- msie 문제 해결 -->
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<!-- Zebra-Dialog CDN -->
-<script src="resources/js/dialog/zebra_dialog.src.js"></script>
-<link rel="stylesheet" href="resources/css/dialog/zebra_dialog.css"
-	type="text/css" />
 <!-- SocketJS CDN -->
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 
@@ -75,8 +73,9 @@ body {
 }
 
 .chat-room-content {
-	width: 100%;
+	width: 470px;
 	height: 495px;
+	margin:0 auto;
 	overflow:scroll;
 	border-bottom: 1px solid #e7e7e7;
 }
@@ -254,6 +253,7 @@ input:focus {
 }
 
 .mycontent-wrap{
+	clear:both;
 	background: #5A3673;
     border: 1px solid #5A3673;
     border-top-left-radius: 5px;
@@ -298,6 +298,7 @@ input:focus {
 </head>
 
 <body>
+	<input type="hidden" value="${chatno}" id="chatno" name="chatno">
 	<div id="chat-room-wrap">
 
 		<div class="chat-room-top">
@@ -337,8 +338,10 @@ input:focus {
 		</div>
 		<script type="text/javascript">
 			//websocket을 지정한 URL로 연결
-
-			var sock = new SockJS("<c:url value="/echo"/>");
+			var chatno=$("#chatno").val();
+			console.log("chatno:"+chatno)
+//			var sock =new WebSocket("ws://" + location.host + "/ontact/echo/"+chatno);
+			var sock =new WebSocket("ws://localhost:8090/ontact/echo/"+chatno);
 			//websocket 서버에서 메시지를 보내면 자동으로 실행된다.
 			sock.onmessage = onMessage;
 			//websocket 과 연결을 끊고 싶을때 실행하는 메소드
@@ -355,6 +358,7 @@ input:focus {
 				     
 				$("#sendBtn").click(function() {
 					console.log('send message...');
+					//DB에 채팅 content 저장
 					$.ajax({
 						url: "${pageContext.request.contextPath}/chat/contentadd",
 						data: {
@@ -376,7 +380,9 @@ input:focus {
 
 			function sendMessage() {
 				//websocket으로 메시지를 보내겠다.
-				sock.send($("#message").val());
+				var msg = $("#message").val();
+				var chatno = $("#chatno").val();
+				sock.send(chatno+","+msg);
 				//메시지 지우기 
 				$("#message").val('');
 				
@@ -408,7 +414,7 @@ input:focus {
 				sessionid.trim();
 				console.log("current:"+currentuser_session +"그리고 sessionid:"+sessionid);
 				
-				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
+/* 				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
 				if (sessionid == currentuser_session) {
 					var printHTML = "<div class='well'>";
 					printHTML += "<div class='mycontent'>";
@@ -425,15 +431,33 @@ input:focus {
 					var printHTML = "<div class='well'>	";
 					printHTML += "<div class='other-content'>";
 					printHTML += "<div class='other-content-info'>";
-					printHTML += "<strong>[" + sessionid + "] </strong><br>";
+					printHTML += "<strong>" + sessionid + "</strong><br>";
 					printHTML += "</div>";
-					printHTML += "<p class='other-content-wrap'>"+message+"</p>";
+					printHTML += "<p class='other-content-wrap'>"+message+"</p><br>";
 					printHTML += "</div>";
 					printHTML += "</div>";
 					
 					$("#chatdata").append(printHTML);
 				}
-
+ */
+				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
+				if(sessionid == currentuser_session){
+					var printHTML = "<div class='well'>";
+					printHTML += "<div class='alert alert-info'>";
+					printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
+					printHTML += "</div>";
+					printHTML += "</div>";
+					
+					$("#chatdata").append(printHTML);
+				} else{
+					var printHTML = "<div class='well'>";
+					printHTML += "<div class='alert alert-warning'>";
+					printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
+					printHTML += "</div>";
+					printHTML += "</div>";
+					
+					$("#chatdata").append(printHTML);
+				}
 				console.log('chatting data: ' + data);
 				/* sock.close(); */
 			}
@@ -447,7 +471,6 @@ input:focus {
 		<div class="chat-room-content">
 			<div class="well" id="chatdata">
 				<!-- 대화내용 출력 -->
-<%-- 			<c:if test="${conlist.uno ne uno }">  --%>
 				<c:forEach items="${conlist }" var="list">
 				<div class="well">
 					<div class="otehr-content">
@@ -459,16 +482,18 @@ input:focus {
 					</div>
 				</div>
 				</c:forEach>
-<%-- 		 		</c:if>  --%>
+
 			
 			</div>
+			
 			<sec:authentication property="principal.username" var="username"/>
 			<sec:authentication property="principal.uno" var="uno"/>
+			<sec:authentication property="principal.uname" var="uname"/>
 			<sec:csrfInput />
-			<input type="hidden" value='${username}' name="sessionuserid" id="sessionuserid">
+			<input type="hidden" value='${uname}' name="sessionuserid" id="sessionuserid">
 			<input type="hidden" value="${uno}" id="uno" name="uno">
 			<input type="hidden" value="${chatname }" id="chatname" name="chatname">
-			<input type="hidden" value="${chatno }" id="chatno" name="chatno">
+
 			
 		</div>
 		<div class="chat-room-bottom">
@@ -529,8 +554,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 				style="enable-background: new 0 0 31.112 31.112;"
 				xml:space="preserve" fill="#505050" width="20px" height="20px"
 				stroke="#505050">
-<polygon
-					points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
+<polygon points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
 	29.698,31.112 31.112,29.698 16.97,15.556 " /></svg>
 		</a>
 		<div class="chat-moa-sub">

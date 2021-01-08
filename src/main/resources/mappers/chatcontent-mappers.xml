@@ -22,18 +22,20 @@
 	</resultMap> 
 	
 <!-- 채팅방에 대화 가져오기 -->
- 	<select id="listChatContent" resultType="arrayList" resultMap="resultChatContent">
+ 	<select id="mylistChatContent" resultType="arrayList" resultMap="resultChatContent">
 		 <![CDATA[
  		 	select u.uname,u.uno,c.content,c.chatdate
 		 	from chatcontent c, users u 
-		 	where c.chatno=#{chatno} and c.uno=u.uno 
+		 	where c.chatno=#{chatno} and c.uno=u.uno and c.uno in (#{uno})
 		]]>
 	</select> 
-	<select id="listChatContent2" resultType="arrayList" resultMap="resultChatContent">
+ 	<select id="otherlistChatContent" resultType="arrayList" resultMap="resultChatContent">
 		 <![CDATA[
-			select uno,content,chatno,chatdate from chatcontent where chatno=#{chatno}
+ 		 	select u.uname,u.uno,c.content,c.chatdate
+		 	from chatcontent c, users u 
+		 	where c.chatno=#{chatno} and c.uno=u.uno
 		]]>
-	</select>
+	</select> 
 	
 	<!-- 일반 대화 추가 -->
 	<insert id="insertChatContent" parameterType="string">

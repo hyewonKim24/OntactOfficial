@@ -51,5 +51,10 @@ public class UsersDao {
 	public List<UsersDto> ChatUsersList(UsersDto dto) throws Exception{
 		return sqlSession.selectList("Users.ChatUsersList", dto);
 	}
+	
+	//uemail에 해당되는 유저 정보
+	public UsersDto ChatUserDetail(String uemail) throws Exception{
+		return sqlSession.selectOne("Users.ChatUserDetail", uemail);
+	}
 
 }

@@ -117,6 +117,11 @@ public class UsersServiceImpl implements UsersService{
 	public List<UsersDto> ChatUsersList(UsersDto dto) throws Exception {
 		return usersDao.ChatUsersList(dto);
 	}
+
+	@Override
+	public UsersDto ChatUserDetail(String uemail) throws Exception {
+		return usersDao.ChatUserDetail(uemail);
+	}
 	
 
 }

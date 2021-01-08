@@ -11,6 +11,7 @@
 		<typeAlias type="com.kh.ontact.chat.model.dto.ChatDto" alias="ChatDto"/>
 		<typeAlias type="com.kh.ontact.chatcontent.model.dto.ChatContentDto" alias="ChatContentDto"/>
 		<typeAlias type="com.kh.ontact.chatmember.model.dto.ChatMemberDto" alias="ChatMemberDto"/>
+		<typeAlias type="com.kh.ontact.chatalert.model.dto.ChatAlertDto" alias="ChatAlertDto"/>
 		
 		<typeAlias type="com.kh.ontact.commute.model.dto.CommuteDto" alias="CommuteDto" />
 		<typeAlias type="com.kh.ontact.dayoff.model.dto.DayoffDto" alias="DayoffDto" />

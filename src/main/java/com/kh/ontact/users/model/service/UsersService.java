@@ -25,6 +25,6 @@ public interface UsersService {
 	
 	
 	//채팅
-	public List<UsersDto> ChatUsersList(UsersDto dto) throws Exception;
-	
+	List<UsersDto> ChatUsersList(UsersDto dto) throws Exception;
+	UsersDto ChatUserDetail(String uemail) throws Exception	;
 }

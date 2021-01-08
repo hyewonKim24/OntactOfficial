@@ -132,5 +132,11 @@
 		SELECT * FROM USERS WHERE CNO=#{cno} AND UNO NOT IN (#{uno})
 		]]>
 	</select>
+		
+	<select id="ChatUserDetail" resultType="UsersDto" resultMap="resultUsers">
+	 	<![CDATA[
+		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
+		]]>
+	</select>
 
 </mapper>

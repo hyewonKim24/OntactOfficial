@@ -1,0 +1,49 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="ChatAlert">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="ChatAlertDto" id="resultChatAlert">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="chatno" column="chatno"/>
+		<result property="uno" column="uno" />
+		<result property="chatcount" column="chatcount" />
+ </resultMap>
+	
+<!-- 방이 만들어졌을 때 해당 alert insert -->
+	<insert id="insertChatAlertDefault" parameterType="string">
+ 	<![CDATA[
+ 		 	insert into chatalert values (#{chatno},#{uno},0)
+		]]>
+	</insert>
+<!-- 해당 채팅방에 alert 추가 -->
+	<insert id="insertChatAlert" parameterType="string">
+ 	<![CDATA[
+ 		 	insert into chatalert values (#{chatno},#{uno},1)
+		]]>
+	</insert>
+ <!-- 해당 채팅방에 alert ++ 업데이트 -->
+	<update id="updateChatAlertPlus" parameterType="string">
+	 	<![CDATA[
+ 		 	update chatalert set CHATCOUNT=CHATCOUNT+1 where chatno=#{chatno} and uno=#{uno}
+		]]>
+	</update>
+ <!-- 해당 채팅방에 alert 0으로 업데이트 -->
+	<update id="updateChatAlertReset" parameterType="string">
+	 	<![CDATA[
+ 		 	update chatalert set CHATCOUNT=0 where chatno=#{chatno} and uno=#{uno}
+		]]>
+	</update>
+ <!-- 해당 채팅방 알림수 -->
+	<select id="EachChatAlert" resultType="string">
+		<![CDATA[
+			select chatcount from chatalert where chatno=#{chatno} and uno=#{uno}
+		]]>
+	</select>
+ <!-- 내 채팅방 전체 알림수 -->
+	<select id="AllChatAlert" resultType="string" parameterType="string">
+		<![CDATA[
+			select chatcount from chatalert where uno=#{uno}
+		]]>
+	</select>
+</mapper>

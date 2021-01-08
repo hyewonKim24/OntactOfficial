@@ -1,5 +1,6 @@
 package com.kh.ontact.chatmember.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,16 @@ public class ChatMemberServiceImpl implements ChatMemberService{
 	@Override
 	public List<ChatDto> mychatlist(String uno) throws Exception {
 		return chatMemDao.mychatlist(uno);
+	}
+
+	@Override
+	public List<ChatDto> searchchatlist(HashMap<String, String> map) throws Exception {
+		return chatMemDao.searchchatlist(map);
+	}
+
+	@Override
+	public List<String> chatUnoList(ChatMemberDto c) throws Exception {
+		return chatMemDao.chatUnoList(c);
 	}
 
 }

@@ -13,9 +13,6 @@ import lombok.Data;
 @Component
 public class ChatAlertDto {
 	private String chatno;
-	private int ccno;
 	private String uno;
-	private int chatcount;
-	
-
+	private String chatcount;
 }

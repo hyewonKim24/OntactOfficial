@@ -28,7 +28,6 @@
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler"
 			path="/echo" />
-		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
