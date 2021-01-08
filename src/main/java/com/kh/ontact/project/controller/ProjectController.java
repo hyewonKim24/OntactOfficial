@@ -20,7 +20,7 @@ import com.kh.ontact.dept.model.dao.DeptDao;
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
 import com.kh.ontact.project.model.dto.ProjectDto;
-import com.kh.ontact.project.model.service.ProejectServiceImpl;
+import com.kh.ontact.project.model.service.ProjectServiceImpl;
 import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.projectDept.model.dto.ProjectDeptDto;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
