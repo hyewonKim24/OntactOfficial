@@ -21,5 +21,6 @@
 		<typeAlias type="com.kh.ontact.projectMember.model.dto.ProjectMemberDto" alias="ProjectMemberDto" />
  		<typeAlias type="com.kh.ontact.projectDept.model.dto.ProjectDeptDto" alias="ProjectDeptDto" />
  		<typeAlias type="com.kh.ontact.dept.model.dto.DeptDto" alias="DeptDto" />
+ 		<typeAlias type="com.kh.ontact.approval.model.dto.ApprovalDto" alias="ApprovalDto" />
 	</typeAliases>
 </configuration>

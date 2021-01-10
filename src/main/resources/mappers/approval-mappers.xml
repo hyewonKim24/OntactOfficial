@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Approval">
+	<resultMap type="ApprovalDto" id="resultApproval">
+		<id property="apno" column="apno" />
+		<result property="dno" column="dno" />
+		<result property="uno" column="uno" />
+		<result property="aptitle" column="aptitle" />
+		<result property="apdate" column="apdate" />
+		<result property="apcontent" column="apcontent" />
+		<result property="apperson" column="apperson" />
+		<result property="apstate" column="apstate" />
+		<result property="aprejection" column="aprejection" />
+		<result property="applace" column="applace" />
+		<result property="apattenda" column="apattenda" />
+		<result property="apdec" column="apdec" />
+		<result property="apetc" column="apetc" />
+		<result property="apformat" column="apformat" />
+		<result property="apdrafter" column="apdrafter" />
+		<result property="apptitle" column="apptitle" />
+	</resultMap>
+
+
+
+	<!-- 기안 작성 -->
+	<insert id="insertApproval" flushCache="true">
+		<![CDATA[
+		INSERT INTO APPROVAL(APNO,DNO,APPERSON,APFORMAT,APDRAFTER,APDATE,
+			APTITLE,APPTITLE,APPLACE,APATTEND,APCONTENT,APDEC,APETC)
+			values(APNO_SE.NEXTVAL,#{DNO},#{APPERSON},#{APFORMAT},#{APDRAFTER},#{APDATE},#{APTITLE},#{APPTITLE}#{APPLACE},
+			#{APATTEND},#{APCONTENT},#{APDEC},#{APETC})
+		]]>
+	</insert>
+
+
+</mapper>
