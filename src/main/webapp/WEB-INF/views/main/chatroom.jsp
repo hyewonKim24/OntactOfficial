@@ -65,7 +65,6 @@ body {
 	float: right;
 	margin-right: 20px;
 	vertical-align: middle;
-	padding-top:7px;
 }
 
 #Capa_1_margin {
@@ -210,8 +209,8 @@ input:focus {
 
 /* 채팅 내용 */
 .mycontent{
-	width: 430px;
-	height: 30px;
+	width: 450px;
+	height: 40px;
 	line-height: 30px;
 	padding:10px 0px 10px 10px;
 	display:block;
@@ -219,7 +218,7 @@ input:focus {
 }
 .other-content{
 	width: 430px;
-	height: 40px;
+	height: 100%;
 	line-height: 40px;
 	float:left;
 }
@@ -234,6 +233,7 @@ input:focus {
 .other-content-info{
 	display:block;
 	margin:10px;
+	height: 20px;
 	
 }
 
@@ -292,13 +292,33 @@ input:focus {
 			$(".chat-dim").hide();
 			$(".chat-moa").hide();
 		});
-
+		//메시지 입력시에만 활성ㅎ
+		$("#message").on('input',function(){
+				$("#sendBtn").css("background-color","#111111");
+		});
+		
+		//최하단으로 포커스 이동
+		 var isScrollUp = false;
+		 var divChat = document.getElementById('chat-content-wrap');
+		 if (!isScrollUp) {
+		      $('.chat-room-content').animate({
+		        scrollTop: divChat.scrollHeight - divChat.clientHeight
+		      }, 100);
+		    }
 	});
 </script>
 </head>
 
 <body>
+ 	<!-- 정보 가져오기 -->
 	<input type="hidden" value="${chatno}" id="chatno" name="chatno">
+	<sec:authentication property="principal.username" var="username"/>
+	<sec:authentication property="principal.uno" var="uno"/>
+	<sec:authentication property="principal.uname" var="uname"/>
+	<sec:csrfInput />
+	<input type="hidden" value='${uname}' name="sessionuserid" id="sessionuserid">
+	<input type="hidden" value="${uno}" id="uno" name="uno">
+	<input type="hidden" value="${chatname }" id="chatname" name="chatname">
 	<div id="chat-room-wrap">
 
 		<div class="chat-room-top">
@@ -414,7 +434,7 @@ input:focus {
 				sessionid.trim();
 				console.log("current:"+currentuser_session +"그리고 sessionid:"+sessionid);
 				
-/* 				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
+ 				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
 				if (sessionid == currentuser_session) {
 					var printHTML = "<div class='well'>";
 					printHTML += "<div class='mycontent'>";
@@ -439,28 +459,15 @@ input:focus {
 					
 					$("#chatdata").append(printHTML);
 				}
- */
-				//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-				if(sessionid == currentuser_session){
-					var printHTML = "<div class='well'>";
-					printHTML += "<div class='alert alert-info'>";
-					printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-					printHTML += "</div>";
-					printHTML += "</div>";
-					
-					$("#chatdata").append(printHTML);
-				} else{
-					var printHTML = "<div class='well'>";
-					printHTML += "<div class='alert alert-warning'>";
-					printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-					printHTML += "</div>";
-					printHTML += "</div>";
-					
-					$("#chatdata").append(printHTML);
-				}
-				console.log('chatting data: ' + data);
-				/* sock.close(); */
-			}
+				//최하단으로 포커스 이동
+				 var isScrollUp = false;
+				 var divChat = document.getElementById('chat-content-wrap');
+				 if (!isScrollUp) {
+				      $('.chat-room-content').animate({
+				        scrollTop: divChat.scrollHeight - divChat.clientHeight
+				      }, 100);
+				    }
+			} 
 
 			function onClose(evt) {
 				$("#data").append("연결 끊김");
@@ -468,11 +475,12 @@ input:focus {
 		</script>
 		
 		
-		<div class="chat-room-content">
+		<div class="chat-room-content" id="chat-content-wrap">
 			<div class="well" id="chatdata">
 				<!-- 대화내용 출력 -->
 				<c:forEach items="${conlist }" var="list">
 				<div class="well">
+				<c:if test="${list.usersdto.uname ne uname}">
 					<div class="otehr-content">
 						<div class="other-content-info">
 								<strong> ${list.usersdto.uname}</strong><br>
@@ -480,19 +488,21 @@ input:focus {
 						<p class="other-content-wrap"> ${list.content}</p> 
 						<span class="other-content-date">${list.chatdate }</span>
 					</div>
+				</c:if>
+				<c:if test="${list.usersdto.uname eq uname}">
+					<div class="mycontent">
+						<div class="mycontent-info">
+						</div>
+						<p class="mycontent-wrap"> ${list.content}</p> 
+					</div>
+				</c:if>
 				</div>
 				</c:forEach>
 
 			
 			</div>
 			
-			<sec:authentication property="principal.username" var="username"/>
-			<sec:authentication property="principal.uno" var="uno"/>
-			<sec:authentication property="principal.uname" var="uname"/>
-			<sec:csrfInput />
-			<input type="hidden" value='${uname}' name="sessionuserid" id="sessionuserid">
-			<input type="hidden" value="${uno}" id="uno" name="uno">
-			<input type="hidden" value="${chatname }" id="chatname" name="chatname">
+
 
 			
 		</div>

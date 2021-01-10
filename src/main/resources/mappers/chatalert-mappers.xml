@@ -41,9 +41,9 @@
 		]]>
 	</select>
  <!-- 내 채팅방 전체 알림수 -->
-	<select id="AllChatAlert" resultType="string" parameterType="string">
+	<select id="AllChatAlert" resultType="int" parameterType="string">
 		<![CDATA[
-			select chatcount from chatalert where uno=#{uno}
+			select sum(chatcount) as chatcount from chatalert where uno=#{uno}
 		]]>
 	</select>
 </mapper>

@@ -14,7 +14,8 @@ public class ChatDto {
 	private String chatno;
 	private String pno;
 	private String chatname;
-	
-	
+	private int mcount;
+	private String chatcount;
+	private String content;
 
 }

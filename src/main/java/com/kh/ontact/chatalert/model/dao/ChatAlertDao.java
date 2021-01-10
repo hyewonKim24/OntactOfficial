@@ -25,10 +25,10 @@ public class ChatAlertDao {
 	public int updateChatAlertReset(ChatAlertDto dto) throws Exception{
 		return sqlSession.update("ChatAlert.updateChatAlertReset", dto);
 	}
-	public String EachChatAlert(ChatAlertDto dto) throws Exception{
+	public int EachChatAlert(ChatAlertDto dto) throws Exception{
 		return sqlSession.selectOne("ChatAlert.EachChatAlert", dto);
 	}
-	public String AllChatAlert(String uno) throws Exception{
+	public int AllChatAlert(String uno) throws Exception{
 		return sqlSession.selectOne("ChatAlert.AllChatAlert", uno);
 	}
 	

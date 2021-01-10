@@ -27,12 +27,12 @@ public class ChatAlertServiceImpl implements ChatAlertService{
 	}
 
 	@Override
-	public String EachChatAlert(ChatAlertDto dto) throws Exception {
+	public int EachChatAlert(ChatAlertDto dto) throws Exception {
 		return chatalertDao.EachChatAlert(dto);
 	}
 
 	@Override
-	public String AllChatAlert(String uno) throws Exception {
+	public int AllChatAlert(String uno) throws Exception {
 		return chatalertDao.AllChatAlert(uno);
 	}
 
