@@ -13,7 +13,40 @@ public class DeptServiceImpl implements DeptService{
 	@Autowired
 	private DeptDao deptDao;
 	
+	//윤진 - 프로젝트
 	public List<DeptDto> selectListDeptDname(){
 		return deptDao.selectListDeptDname();
 	}
+	
+	//혜림- 조직도
+	@Override
+	public int listCount() {
+		return deptDao.listCount();
+	}
+	
+	@Override
+	public List<DeptDto> selectDept() {
+		return deptDao.selectDept();
+	}
+	
+	@Override
+	public List<DeptDto> searchDept(String keyword) {  
+		return deptDao.searchDept(keyword);
+	}
+	
+	@Override
+	public int insertDept(DeptDto d) {  
+		return deptDao.insertDept(d);
+	}
+	
+	@Override
+	public int deleteDept(String dno) {  
+		return deptDao.deleteDept(dno);
+	}
+	
+	@Override
+	public DeptDto selectDtOne(String dno){
+		return deptDao.selectDtOne(dno);
+	}
+	
 }

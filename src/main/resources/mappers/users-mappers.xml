@@ -138,5 +138,41 @@
 		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
 		]]>
 	</select>
+	
+	<!-- 혜림 조직도 부서별 직원리스트 조회 -->
+	<!-- 미분류 상태 -->
+	<select id="listCountFirst" resultType="int">
+		select count(*) from users where dno = null 
+	</select>
+	<select id="selectOgFirst" resultType="arraylist"
+		resultMap="resultUsers">
+		select uno, uname, urank, uemail from users where dno = null;
+	</select>
+	<!-- 부서로 분류된 후 -->
+	<select id="listCount" resultType="int">
+		select count(*) from users where dno = '1' 
+	</select>
+	
+	<select id="selectOgUser"
+		resultMap="resultUsers">
+		select u.uno, d.dname, u.uname, u.urank, u.uemail 
+		from users u, dept d 
+		where u.dno = d.dno and d.dno = '1'
+	</select>
+	<!-- <resultMap type="map" id="resultUsersMap">
+		<id property="u_uno" column="uno" />
+		<result property="d_dname" column="dname" />
+		<result property="u_uname" column="uname" />
+		<result property="u_urank" column="urank" />
+		<result property="u_uemail" column="uemail" />
+	</resultMap> -->
+	<!-- <select id="deptListCount" resultType="int" resultMap="resultUsersMap">
+		select count(d_dname) from dept 
+	</select> -->
+	
+	<update id="updateDept" flushCache="true" statementType="PREPARED">
+		update users set dno = #{dno} where uno = #{uno}
+	</update>
+	
 
 </mapper>
