@@ -20,8 +20,8 @@ public class OverworkServiceImpl implements OverworkService{
 	}
 
 	@Override
-	public List<OverworkDto> selectOverwork(int startPage, int limit) {
-		return overworkDao.selectOverwork(startPage, limit);
+	public List<OverworkDto> selectOverwork(int startPage, int limit, String uno) {
+		return overworkDao.selectOverwork(startPage, limit, uno);
 	}
 	
 	@Override
@@ -40,8 +40,8 @@ public class OverworkServiceImpl implements OverworkService{
 	}
 
 	@Override
-	public OverworkDto updateOverworkApp(OverworkDto o) {
-		int result = overworkDao.updateOverworkApp(o);
+	public OverworkDto updateOverworkApp(OverworkDto o, String uno) {
+		int result = overworkDao.updateOverworkApp(o, uno);
 		if (result > 0) { // 읽어나온게 있다면
 			o = overworkDao.selectOwOne(o.getOwno());
 		} else {

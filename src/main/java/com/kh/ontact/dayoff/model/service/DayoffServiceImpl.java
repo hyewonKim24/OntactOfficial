@@ -21,8 +21,8 @@ public class DayoffServiceImpl implements DayoffService{
 	}
 
 	@Override
-	public List<DayoffDto> selectDayoff(int startPage, int limit) {
-		return dayoffDao.selectDayoff(startPage, limit);
+	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno) {
+		return dayoffDao.selectDayoff(startPage, limit, uno);
 	}
 	@Override
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap) {
@@ -41,14 +41,19 @@ public class DayoffServiceImpl implements DayoffService{
 	}
 
 	@Override
-	public DayoffDto updateDayoffApp(DayoffDto d) {
-		int result = dayoffDao.updateDayoffApp(d);
+	public DayoffDto updateDayoffApp(DayoffDto d, String uno) {
+		int result = dayoffDao.updateDayoffApp(d, uno);
 		if (result > 0) { // 읽어나온게 있다면
 			d = dayoffDao.selectDfOne(d.getDfno());
 		} else {
 			d = null; //읽어나온게 없다면
 		}
 		return d;
+	}
+	
+	@Override
+	public List<DayoffDto> selectDfCalendar() {
+		return dayoffDao.selectDfCalendar();
 	}
 
 }
