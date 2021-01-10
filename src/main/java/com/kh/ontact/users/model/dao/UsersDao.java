@@ -2,6 +2,7 @@ package com.kh.ontact.users.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -56,5 +57,31 @@ public class UsersDao {
 	public UsersDto ChatUserDetail(String uemail) throws Exception{
 		return sqlSession.selectOne("Users.ChatUserDetail", uemail);
 	}
+	
+	//혜림 - 조직도
+		//미분류그룹
+		public int listCountFirst() {
+			return sqlSession.selectOne("Users.listCount");
+		}
+		public List<UsersDto> selectOgFirst(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
+			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
+			return sqlSession.selectList("Users.selectOgFirst",null,row);
+		}
+		//분류그룹
+		public int listCount() {
+			return sqlSession.selectOne("Users.listCount");
+		}
+		public List<UsersDto> selectOrgani(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
+			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
+			return sqlSession.selectList("Users.selectOgUser",null,row);
+		}
+		//부서 수정
+		public int updateDept(UsersDto u) { // 글 수정 
+			return sqlSession.update("Users.updateDept", u);
+		}
+		
+		
 
 }

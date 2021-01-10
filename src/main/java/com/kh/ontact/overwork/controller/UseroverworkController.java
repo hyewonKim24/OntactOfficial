@@ -3,8 +3,10 @@ package com.kh.ontact.overwork.controller;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ontact.overwork.model.dto.OverworkDto;
 import com.kh.ontact.overwork.model.service.OverworkService;
+import com.kh.ontact.users.model.dto.CustomUserDetails;
 
 @Controller
 public class UseroverworkController {
@@ -26,27 +29,30 @@ public class UseroverworkController {
 			@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "startdate", required = false) String startdate,
 			@RequestParam(name = "enddate", required = false) String enddate,
-			HttpServletRequest request, ModelAndView mv) {
-			System.out.println("시간외근무 리스트 진");
+			Authentication authentication, ModelAndView mv) {
+			
+		System.out.println("시간외근무 리스트 진입");
 		try {
 			int currentPage = page;
 //			 한 페이지당 출력할 목록 갯수, 페이징
 			int listCount = overworkServ.listCount();
 			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
-			
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		    String uno=userdetail.getUno();
+		    System.out.println("세션값확인 : " + uno);
+		      
 			//검색
-//			String startdate = request.getParameter("startdate");
-//			String enddate = request.getParameter("enddate");
 			String start =  startdate;
 			System.out.println("start" + start);
 			String end = enddate;
+			System.out.println("end" + end);
+			
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
 			
 			if (startdate == null && enddate == null) {
-				mv.addObject("list", overworkServ.selectOverwork(currentPage, LIMIT));
-				System.out.println(overworkServ.selectOverwork(currentPage, LIMIT));
+				mv.addObject("list", overworkServ.selectOverwork(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
@@ -65,9 +71,16 @@ public class UseroverworkController {
 	}
 	
 	@RequestMapping(value = "/overwork/ins", method = RequestMethod.GET)
-	public String  insetOverwork(OverworkDto o, RedirectAttributes rttr) {
+	public String  insetOverwork(OverworkDto o, Authentication authentication, RedirectAttributes rttr) {
 		try {
 			System.out.println("인서트진입");
+			
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		    String uno=userdetail.getUno();
+		    String dno = userdetail.getDno();
+		    System.out.println("세션값확인 : " + uno);
+		    o.setUno(uno);
+		    
 			overworkServ.insertOverwork(o);
 			rttr.addFlashAttribute("message", "success");
 		}catch(Exception e) {
@@ -81,12 +94,17 @@ public class UseroverworkController {
 	@RequestMapping(value = "/overwork/owupd", method = RequestMethod.POST)
 	public ModelAndView updateOverworkApp(OverworkDto o, 
 			@RequestParam(name = "page", defaultValue = "1") int page,
-			HttpServletRequest request, ModelAndView mv) {
+			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
 		try {
-			
-			if(overworkServ.updateOverworkApp(o) != null) {
+			System.out.println("업데이트진입");
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		    String uno = userdetail.getUno();
+		    
+		    overworkServ.updateOverworkApp(o,uno);
+		    
+		    if(overworkServ.updateOverworkApp(o,uno) != null) {
+				mv.addObject("owno", overworkServ.updateOverworkApp(o, uno).getOwno()); //가지고 들어가는 것
 				mv.addObject("currentPage", page); //가지고 들어가는 것
-				mv.addObject("owno", overworkServ.updateOverworkApp(o).getOwno()); //가지고 들어가는 것
 				mv.setViewName("redirect:/overwork/owlist"); 
 			} else {
 				//이전화면으로 이동

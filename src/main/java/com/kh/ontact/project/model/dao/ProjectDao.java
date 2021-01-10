@@ -1,4 +1,3 @@
-
 package com.kh.ontact.project.model.dao;
 
 import java.util.List;
@@ -17,10 +16,20 @@ public class ProjectDao {
 	private SqlSession sqlSession;
 
 	// 프로젝트 전체 목록
-	public List<ProjectDto> selectListProject() {
-		return sqlSession.selectList("Project.selectListProject");
+	public List<ProjectDto> selectListProject(String uno) {
+		return sqlSession.selectList("Project.selectListProject", uno);
 	}
-
+	
+	// 프로젝트 전체목록 : 회사명
+	public ProjectDto selectOneCompany(String uno){
+		return sqlSession.selectOne("Project.selectOneCompany", uno);
+	}
+	
+	// 프로젝트 전체목록 : 회사명
+	public ProjectDto selectOneTeam(String uno){
+		return sqlSession.selectOne("Project.selectOneTeam", uno);
+	}
+	
 	// 프로젝트 생성
 	public int insertProject(ProjectDto pj) {
 		return sqlSession.insert("Project.insertProject", pj);

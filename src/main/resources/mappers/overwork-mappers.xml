@@ -16,34 +16,34 @@
   
   	<!-- 시간외 근무 조회 -->
 	<select id="listCount" resultType="int">
-		select count(*) from overwork
+		select count(*) from overwork where uno = #{uno}
 	</select>
 	
 	<select id="selectOverwork" resultType="arraylist"
 		resultMap="resultOverwork">
-		select * from overwork
+		select * from overwork where uno = #{uno}
 	</select>
 	
 	<select id="searchOverwork" parameterType ="java.util.HashMap"
 		resultType="arraylist" resultMap="resultOverwork">
-		select * from overwork where owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+		select * from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') 
 	</select>
 	
 	<select id="selectOwOne" parameterType="string" resultType="OverworkDto">
-		select * from overwork where owno = #{owno} 
+		select * from overwork where owno = #{owno} and uno =#{uno}
 	</select>
 	
 	<!-- 시간외 근무 삽입 -->
 	<update id="insetOverwork" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
-		insert into overwork values(OWNO_SE.nextval, '1', '${dname}', '${uname}',  to_date('${owdate}', 'yyyy-mm-dd'), ${owtime}, '${owtitle}',
+		insert into overwork values(OWNO_SE.nextval, '${uno}', '${dname}', '${uname}',  to_date('${owdate}', 'yyyy-mm-dd'), ${owtime}, '${owtitle}',
 		'${owreason}', default, default)
+	<!-- qr uno 값 넣어줘야함 -->
 	</update>
 	
 	<!-- 시간외 근무 승인여부 삽입 -->
 	<update id="updateOverworkApp" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
-		update overwork set owapproval = #{owapproval}
-		<!-- where uno = #{uno} and owno = #{owno} -->
+		update overwork set owapproval = #{owapproval} where uno = #{uno} and owno = #{owno}
 	</update>
 </mapper>

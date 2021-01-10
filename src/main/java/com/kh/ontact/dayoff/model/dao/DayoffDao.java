@@ -18,10 +18,10 @@ public class DayoffDao {
 	public int allListCount() {
 		return sqlSession.selectOne("DayoffMapper.allListCount");
 	}
-	public List<DayoffDto> selectDayoff(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno) { // 특정 페이지 단위의 게시글 조
 		int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 		RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
-		return sqlSession.selectList("DayoffMapper.selectDayoff",null,row);
+		return sqlSession.selectList("DayoffMapper.selectDayoff",uno,row);
 	}
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap) { 
 		return sqlSession.selectList("DayoffMapper.searchDayoff", paramMap);
@@ -33,7 +33,10 @@ public class DayoffDao {
 		System.out.println("다오진입");
 		return sqlSession.insert("DayoffMapper.insertDayoff", d);
 	}
-	public int updateDayoffApp(DayoffDto d) { // 글 수정 
+	public int updateDayoffApp(DayoffDto d, String uno) { // 글 수정 
 		return sqlSession.update("DayoffMapper.updateDayoffApp", d);
+	}
+	public List<DayoffDto> selectDfCalendar() {
+		return sqlSession.selectList("DayoffMapper.selectDfCalendar");
 	}
 }

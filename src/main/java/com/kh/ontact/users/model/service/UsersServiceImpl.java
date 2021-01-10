@@ -123,5 +123,23 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.ChatUserDetail(uemail);
 	}
 	
+	//조직도 - 혜림
+		public int listCountFirst() {
+			return usersDao.listCountFirst();
+		}
+		public List<UsersDto> selectOgFirst(int startPage, int limit) { 
+			return usersDao.selectOgFirst(startPage, limit);
+		}
+			public int listCount() {
+			return usersDao.listCount();
+		}
+		public List<UsersDto> selectOgUser(int startPage, int limit) {
+			return usersDao.selectOrgani(startPage, limit);
+		}
+		public int updateDept(UsersDto u) {  
+			return usersDao.updateDept(u);
+		}
+		
+	
 
 }

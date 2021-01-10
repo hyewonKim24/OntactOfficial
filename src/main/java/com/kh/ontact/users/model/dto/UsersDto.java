@@ -30,6 +30,7 @@ public class UsersDto {
 	private String uauthority;
 	private int enabled;
 	private int failure_cnt;
+	private String dname;
 	
 	
 	

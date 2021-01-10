@@ -7,30 +7,61 @@
 		<![CDATA[
 			select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam
 			    from project pj 
+				    inner join 
+				    	(select * from project_member where uno= #{uno}) pju
+				    on pj.pno = pju.pno
 			        inner join 
-			        (select pj.pno, count(uno) as pjmembercnt
-			            from project_member pjm, project pj 
-			            group by pj.pno 
-			            having pj.pno = pjm.pno) pjm 
+			        	(select pno, count(*) as pjmembercnt from project_member group by pno order by pno ) pjm 
 			        on pj.pno = pjm.pno
 			        left join
-			        (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
-			            from project_dept pjd, dept d 
-			            where d.dno = pjd.dno 
-			            group by pjd.pno) pjteam 
+			        	(select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
+				            from project_dept pjd, dept d 
+				            where d.dno = pjd.dno 
+				            group by pjd.pno) pjteam 
 			        on pj.pno = pjteam.pno 
 			    order by pj.pno asc
 	     ]]>
 	</select>
 	<resultMap type="map" id="projectListMap">
-		<id column="pj_pno" property="pno"/>
-		<result column="pj_pname" property="pname"/>
-		<result column="pj_open" property="popen"/>
-		<result column="pjmembercnt" property="pjmembercnt"/>
-		<result column="pjteam" property="pjteam"/>
+		<id column="pj_pno" property="pno" />
+		<result column="pj_pname" property="pname" />
+		<result column="pj_open" property="popen" />
+		<result column="pjmembercnt" property="pjmembercnt" />
+		<result column="pjteam" property="pjteam" />
 	</resultMap>
 
+	<!-- 프로젝트 전체 목록 : 회사 -->
+	<select id="selectOneCompany" resultMap="selectOneCompanyMap">
+		<![CDATA[
+			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt
+			    from 
+			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
+			    left join  
+			        (select cno, count(*) as ucnt from users group by cno  ) uc
+			    on c.cno = uc.cno
+		]]>
+	</select>
+	<resultMap type="ProjectDto" id="selectOneCompanyMap">
+		<id column="cno" property="cno" />
+		<result column="cname" property="cname" />
+		<result column="ucnt" property="ucnt" />
+	</resultMap>
 
+	<!-- 프로젝트 전체 목록 : 부서 -->
+	<select id="selectOneTeam" resultMap="selectOneTeamMap">
+		<![CDATA[
+			select d.dno as dno, d.dname as dname, u.ucnt as ucnt
+			    from (select d.dno, d.dname from dept d join users u on d.dno = u.dno where u.uno = #{uno}) d
+			    join (select dno, count(*) as ucnt from users group by dno ) u
+			    on d.dno = u.dno
+		]]>
+	</select>
+	<resultMap type="ProjectDto" id="selectOneTeamMap">
+		<id column="dno" property="dno" />
+		<result column="dname" property="dname" />
+		<result column="ucnt" property="ucnt"/>
+	</resultMap>
+	
 	<!-- 프로젝트 생성 -->
 	<insert id="insertProject" parameterType="string"
 		flushCache="true" statementType="PREPARED">

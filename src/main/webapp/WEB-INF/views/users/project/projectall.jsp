@@ -3,28 +3,33 @@
 <%@ include file="pjsidebar.jsp" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ontact, 서로 연결되는 온라인 공간 </title>
-    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-    <link
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ontact, 서로 연결되는 온라인 공간</title>
+<link href="${pageContext.request.contextPath}/resources/css/reset.css"
+	rel="stylesheet" type="text/css">
+<link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style>
 body {
 	font-family: Noto Sans KR;
 	font-size: 14px;
 	line-height: 1.15;
+	width: 1200px;
+	margin: 0 auto;
 }
 
 #pj_board {
-	padding: 20px 0 0 20px;
+	margin: 20px auto 0 230px;
 	width: 970px;
 }
 
@@ -262,6 +267,10 @@ body {
 	background-color: #5a3673;
 	box-sizing: border-box;
 }
+.lock_1{
+	width: 20px;
+	float: right;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -354,28 +363,32 @@ body {
 		<div id="pj_board_top">
 			<div id="section_company">
 				<div class="pj_title">All</div>
-				<a href="#">
-					<div id="pj_company" class="pj_box">
-						<div>회사명</div>
-						<div class="pj_team_list"></div>
-						<div>
-							<span>0</span> <span>명 참여중</span>
+				<c:if test="${!empty pjc}">
+					<a href="#">
+						<div id="pj_company" class="pj_box">
+							<div>${pjc.cname}</div>
+							<div class="pj_team_list"></div>
+							<div>
+								<span>${pjc.ucnt}</span> <span>명 참여중</span>
+							</div>
+							<button type="button" title="선택" class="pjCheck"></button>
 						</div>
-						<button type="button" title="선택" class="pjCheck"></button>
-					</div>
-				</a>
+					</a>
+				</c:if>
 			</div>
 			<div id="section_team">
 				<div class="pj_title">Team</div>
-				<a href="#">
-					<div id="pj_team" class="pj_box">
-						<div>회사명</div>
-						<div class="pj_team_list"></div>
-						<div>
-							<span>0</span> <span>명 참여중</span>
+				<c:if test="${!empty pjd}">
+					<a href="#">
+						<div id="pj_team" class="pj_box">
+							<div>${pjd.dname}</div>
+							<div class="pj_team_list"></div>
+							<div>
+								<span>${pjd.ucnt}</span> <span>명 참여중</span>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</c:if>
 			</div>
 		</div>
 		<hr>
@@ -385,22 +398,41 @@ body {
 					<span>Project</span> <span><a href="#" id="pj_edit">편집</a></span>
 				</div>
 				<div class="pj_board_list">
-					<!-- 프로젝트가 하나도 없을 경우 -->
+					<!-- 프로젝트가 하나도 없을 경우
 					<c:if test="${empty listpj}">
-					</c:if>
+					</c:if> -->
 					<!-- 프로젝트가 있는 경우 -->
 					<c:if test="${!empty listpj}">
-						<c:forEach var="aaa" items="${listpj}" varStatus="status">
+						<c:forEach var="listpj" items="${listpj}" varStatus="status">
 							<a href="#">
 								<div id="pj_project" class="pj_box">
-									<div>${aaa.pname}</div>
+									<div>${listpj.pname}</div>
 									<div class="pj_team_list">
-												<div>${aaa.pjteam}</div>
+										<div>${listpj.pjteam}</div>
 									</div>
 									<div>
-										<span>${aaa.pjmembercnt}</span> 
-										<span style="color: skyblue">명 참여중</span>
+										<span>${listpj.pjmembercnt}</span> <span>명 참여중</span>
 									</div>
+									 <c:if test="${listpj.popen == 0 }">
+										<span> <svg version="1.1" class="lock_1"
+												xmlns="http://www.w3.org/2000/svg"
+												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												viewBox="0 0 60 60"
+												style="enable-background: new 0 0 60 60; fill: #ffffff;"
+												xml:space="preserve">
+												<g>
+													<path
+													d="M43,20.113V14.5C43,6.505,35.822,0,27,0S11,6.505,11,14.5v5.613c-3.401,0.586-6,3.55-6,7.117v19.542
+														C5,50.757,8.243,54,12.229,54h29.542C45.757,54,49,50.757,49,46.771V27.229C49,23.663,46.401,20.699,43,20.113z M13,14.5
+														C13,7.607,19.28,2,27,2s14,5.607,14,12.5V20H13V14.5z M47,46.771C47,49.654,44.654,52,41.771,52H12.229C9.346,52,7,49.654,7,46.771
+														V27.229C7,24.346,9.346,22,12.229,22h29.542C44.654,22,47,24.346,47,27.229V46.771z" />
+													<path
+													d="M27,28c-2.206,0-4,1.794-4,4v6c0,2.206,1.794,4,4,4s4-1.794,4-4v-6C31,29.794,29.206,28,27,28z M29,38c0,1.103-0.897,2-2,2
+														s-2-0.897-2-2v-6c0-1.103,0.897-2,2-2s2,0.897,2,2V38z" />
+												</g>
+											</svg>
+										</span>
+									</c:if>
 								</div>
 							</a>
 						</c:forEach>

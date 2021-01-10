@@ -6,13 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ontact, 서로 연결되는 온라인 공간</title>
-    <link href="./reset.css" rel="stylesheet" type="text/css">
+	<title>ontact, 서로 연결되는 온라인 공간</title>
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
     <style>
-    *{
+  *{
         margin : 0;
     }
     body{
@@ -22,7 +22,13 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
+        color: rgb(17,17,17);
     }
+    a{
+        text-decoration: none;
+        color: rgb(17,17,17);;
+    }
+
     .header{
         position: relative;
         width: 100%;
@@ -95,56 +101,118 @@
         font-size: 32px;
         border-bottom: 1px solid #e7e7e7;
     }
-    .team{
+    .search{
         position: absolute;
         width: 200px;
-        height: 480px;
+        height: 60px;
+        padding: 10px 15px;
         margin-top: 30px;
-        
+        line-height: 40px;
         border: 1px solid #e7e7e7;
         box-sizing: border-box;
-        float: left;
+        border-bottom: 0;
+        
     }
-    .team ul li:nth-child(1){
-        width: 180px;
+    .search input{
+        width: 130px;
         height: 30px;
-        padding: 10px;
-        margin-bottom: 15px;;
-        background-color: #e7e7e7;
+        border: 1px solid #e7e7e7;
+        /* border-right: 0; */
+        box-sizing: border-box;
+    }
+    #searchBtn{
+        width: 33px;
+        height: 30px;
+        background-color: white;
+
+        color:#F2F2F2;
+        border : 1px solid #e7e7e7;
+        /* border-left: 0; */
+        box-sizing: border-box;
+        vertical-align: middle;   
+    }
+    #searchBtn img{
+        width: 15px;
+        height: 15px;
+        margin-top: 3px;
+    }
+    .team{
+        position: absolute;
+        top: 190px;
+        width: 200px;
+        height: 400px;
+        border: 1px solid #e7e7e7;
+        border-bottom: 0;
+        box-sizing: border-box;
+        
     }
     .team ul li{
-        width: 170px;
-        height: 30px;
-        padding: 0 15px;    
-    }    
-    .team input{
-        width: 150px;
-        height: 30px;
+        width: 158px;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 40px;    
+    }
+    .team ul li:nth-child(1){
+        width: 183px;
+        padding-left: 15px;    
+    }
+    #deptBtn{
+        width: 14px;
+        height: 14px;
+        background-color: white;
+        border: 1px solid #d1d1d1;
+        box-sizing: border-box;
+        font-size: 8px;
+        margin: 0;
+        padding: 0;
+        color: black;
+        vertical-align: middle;
+    }
+    .notyet{
+        position: absolute;
+        top : 590px;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 15px;
+        border: 1px solid #e7e7e7;
+        border-bottom: 0;
+        box-sizing: border-box;
+        
+    }
+    .deptEdit{
+        position: absolute;
+        top : 630px;
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 15px;
+        float: left;
         border: 1px solid #e7e7e7;
         box-sizing: border-box;
-        float: left;
-    }
-    .team button{
-        width: 27px;
-        height: 30px;
-        background-color: #5A3673;
-        color:#F2F2F2;
-        border : none;
         
+    }
+    .deptEdit button{
+        background-color: white;
+        border: none;
+        padding-top: 3px;
+        margin-top: 10px;
+        margin-right: 3px;
     }
     .detail{
         position: absolute;
         width: 710px;
-        height: 480px;
+        height: 549px;
         left: 260px;
         margin-top: 30px;
-        padding: 15px;
+        padding: 15px 15px 0 15px;
         border: 1px solid #e7e7e7;
         box-sizing: border-box;
+        
     }
     .title{
-        height: 35px;
-        margin-bottom: 15px;
+        height: 44px;
+        line-height: 44px;
         border-bottom: 1px solid #e7e7e7;
         font-size: 18px;
         font-weight: 700;
@@ -157,14 +225,32 @@
     .detail table{
         width: 678px;
         font-size: 12px;
+        text-align: center;
     }
     .detail table tr{
-        height: 30px;
-        line-height: 30px;
+        height: 36px;
+        line-height: 35px;
         border-bottom: 1px solid #e7e7e7;
+    }
+    .detail table tr:nth-last-child(1){
+        height: 37px;
     }
     .detail table tr td{
         padding-left: 10px;
+    }
+    .move_wrap{
+        width: 710px;
+        height: 50px;
+        line-height: 52px;
+    }
+    #moveBtn{
+        padding: 0;
+        margin: 0;
+        width: 150px;
+        height: 30px;
+        background-color: #F2F2F2;
+        border: none;
+        border-radius: 3px;
     }
     </style>
     <script>
@@ -217,89 +303,97 @@
     <div class="contents">
         <div class="conTitle">조직도</div>
             <div class="article">
+                <form action="/commute/organlist" method="get">
+                <div class="search">
+                    <input type="text" name="keyword">
+                    <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
+                </div>
+                </form>
                 <div class="team">
                     <ul>
-                        <li><input type="text"><button>검</button></li>
-                        <li style="font-weight: 700;">ONTACT<span>(5)</span></li>
-                        <li>경영팀</li>
-                        <li>인사팀</li>
-                        <li>개발팀</li>
-                        <li>영업팀</li>
-                        <li>디자인팀</li>
-                        <li>마케팅팀</li>
+                        <li style="font-weight: 700;">
+                            <button id="deptBtn"><img src ="${pageContext.request.contextPath}/resources/img/substract.png" style="width: 8px; height: 8px;"></button>
+                            &nbsp; ONTACT<span>(${deptlistCount})</span>
+                        </li>
+                        <c:if test="${not empty selectDept}">
+							<c:forEach var="dp" items="${selectDept}" varStatus="status">
+                        	<li><a href="">${dp.dname} </a></li>
+                        	</c:forEach>
+                        </c:if>
                     </ul>
                 </div>
+                <div class="notyet">
+                    <div>미분류그룹 &nbsp; <span>(0)</span></div>
+                </div>
+                <div class="deptEdit">
+                    <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
+                    <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
+                    <button id="editBtn"><img src="${pageContext.request.contextPath}/resources/img/edit-1.png" style="width: 19px; height: 20px;"></button>
+                </div>
                 <div class="detail">
-                    <div class="title">경영팀<span>총 0명</span></div>
+                
+                    <div class="title">경영팀 총 <span>${userslistCount}</span>명</div>
                     <div>
                         <table>
                             <tr>
-                                <th>사원번호</th>
-                                <th>이메일</th>
+                                <th>선택</th>
                                 <th>이름</th>
                                 <th>직급</th>
+                                <th>이메일</th>
                             </tr>
+                        <c:if test="${not empty selectOgUser}">
+						<c:forEach var="og" items="${selectOgUser}" varStatus="status">
                             <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
+                                <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td>
+                                <td>${og.uname}</td>
+                                <td>${og.urank}</td>
+                                <td>${og.uemail}</td>
                             </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
-                            <tr>
-                                <td>001089</td>
-                                <td>gildong123@ontact.co.kr</td>
-                                <td>홍길동</td>
-                                <td>팀장</td>
-                            </tr>
+                        </c:forEach>
+                       	</c:if>
+                       
+                            <!-- 앞 페이지 번호 처리 -->
+					<tr>
+						<td colspan="8">
+						<c:if test="${currentPage <= 1}">
+						&lt; &nbsp;
+						</c:if>
+						 	<c:if test="${currentPage > 1}">
+								<c:url var="dflistprev" value="/dayoff/dflist">
+									<c:param name="page" value="${currentPage-1}" />
+								</c:url>
+								<a href="${dflistprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+							</c:if> 
+							<!-- 끝 페이지 번호 처리 -->
+							 <c:set var="endPage" value="${maxPage}" /> 
+							 <c:forEach
+								var="p" begin="${startPage+1}" end="${endPage}">
+								<!-- eq : == / ne : != -->
+								<c:if test="${p eq currentPage}">
+									<font color="red" size="4"><b>${p} &nbsp; &nbsp; &nbsp;</b></font>
+								</c:if>
+								<c:if test="${p ne currentPage}">
+									<c:url var="dflistchk" value="/dayoff/dflist">
+										<c:param name="page" value="${p}" />
+									</c:url>
+									<a href="${dflistchk}">${p} &nbsp; &nbsp; &nbsp;</a>
+								</c:if>
+							</c:forEach> 
+							<c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
+							</c:if>
+							<c:if test="${currentPage < maxPage}">
+								<c:url var="dflistnext" value="/dayoff/dflist">
+									<c:param name="page" value="${currentPage+1}" />
+								</c:url>
+								<a href="${dflistnext}">&nbsp; &gt;</a>
+							</c:if>
+							</td>
+					</tr>
                         </table>
+                    </div>
+                    <div class="move_wrap">
+                        <button id="moveBtn">다른 조직으로 이동</button>
+                        &nbsp; <span>0명</span>
                     </div>
                 </div>
             </div>

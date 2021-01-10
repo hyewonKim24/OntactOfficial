@@ -13,7 +13,7 @@ import com.kh.ontact.projectMember.model.dao.ProjectMemberDao;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 
 @Service("pjService")
-public class ProejctServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService{
 	
 	@Autowired
 	private ProjectDao pjDao;
@@ -24,8 +24,20 @@ public class ProejctServiceImpl implements ProjectService{
 
 	// 프로젝트 전체 목록
 	@Override
-	public List<ProjectDto> selectListProject() throws Exception {
-		return pjDao.selectListProject();
+	public List<ProjectDto> selectListProject(String uno) throws Exception {
+		return pjDao.selectListProject(uno);
+	}
+
+	//프로젝트 목록 : 회사
+	@Override
+	public ProjectDto selectOneCompany(String uno) throws Exception {
+		return pjDao.selectOneCompany(uno);
+	}
+	
+	//프로젝트 목록 : 부서
+	@Override
+	public ProjectDto selectOneTeam(String uno) throws Exception {
+		return pjDao.selectOneTeam(uno);
 	}
 
 	// 프로젝트 생성
@@ -35,5 +47,6 @@ public class ProejctServiceImpl implements ProjectService{
 		pjmDao.insertProjectMember(pjm);
 		pjdDao.insertProjectDept(pjd);
 	}
+
 	
 }
