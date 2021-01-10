@@ -33,6 +33,7 @@ input:focus {
 
 .header-wrap a {
 	text-decoration: none;
+	color:#505050;
 }
 
 .header-wrap {
@@ -150,6 +151,22 @@ input:focus {
 	display: inline;
 	top: 15px;
 	width: 5px;
+	height: 13px;
+	line-height: 12px;
+	padding: 0 5px;
+	text-align: center;
+	font-size: 10px;
+	margin-left: 16px;
+	color: #fff;
+	background-color: #fc0d1b;
+	border-radius: 6px;
+	z-index: 100;
+}
+.alarm-counts {
+	position: absolute;
+	display: inline;
+	top: 15px;
+	width: 10px;
 	height: 13px;
 	line-height: 12px;
 	padding: 0 5px;
@@ -327,11 +344,12 @@ input:focus {
 }
 
 .chat-content-wrap {
-	display: inline;
+	clear:both;
+	display: inline-block;
 	float: right;
 	height: 50px;
-	padding-top: 10px;
 	width: 300px;
+	padding-top:10px;
 }
 
 .chat-name {
@@ -352,7 +370,7 @@ input:focus {
 }
 
 .chat-recent-content {
-	font-size: 11px;
+	font-size: 10px;
 	float: left;
 	position: relative;
 }
@@ -369,6 +387,25 @@ input:focus {
 	border-radius: 8px;
 	background: #a9adb1;
 }
+
+.chat-alert-count{
+	background-color: red;
+	color:#fff;
+	display:inline-block;
+	float:right;
+	width: 15px;
+	height:15px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 30px;
+	font-size:12px;
+	line-height:15px;
+	margin-right:20px;
+	margin-bottom:10px;
+	padding:3px;
+	
+}
+
 
 /* 프로필 */
 #h-profile-top {
@@ -498,11 +535,79 @@ input:focus {
 }
 </style>
 <script>
+
 	$(document).ready(function() {
+		var timerID;
+		allChatAlert();
+		
+		//DB에 채팅알림 전체 수 
+		function allChatAlert() {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/chatalertall",
+			success:function(object){
+				$("#chat-alarm-count").html('');
+				$("#chat-alarm-counts").html(''); 
+				console.log(object+"성공");
+				if(object==0 || object==null){
+				console.log(object+"없음");
+				$("#chat-alarm-count").remove();
+				$("#chat-alarm-counts").remove(); 
+				}else{
+					if(object>9){
+						$("#chat-alarm-count").remove();
+						$("#chat-alarm-counts").append(object);
+						console.log(object+"성공");
+					}else{
+						$("#chat-alarm-counts").remove(); 
+						$("#chat-alarm-count").append(object);
+					}					
+				}
+			},
+			error:function(){
+				console.log("실패");
+			}
+		});
+				setTimeout("allChatAlert()", 2000); 
+		}
+		//	timerID = setInterval("allChatAlert()", 1000); // 2초 단위로 갱신 처리
+
 		$("#chat-icon").click(function() {
 			$(".chat-wrap").toggle();
 			$(".alarm-wrap").hide();
 			$(".my-wrap").hide();
+			//DB에 저장된 채팅 list가져오기 
+			$.ajax({
+				url: "${pageContext.request.contextPath}/chatlist",
+				success:function(object){
+					$("#chat-scroll-box").html('');
+					var href= "this.href";
+					
+					for(var i=0 in object){
+						console.log(object[i].chatno+"성공");
+					var printHTML = "<div class='chat-name'>";
+					printHTML += "<a href='${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"'"+
+						" target='_blank' onClick='window.open("+ href +", '', 'width=480, height=650'); return false;'>";
+					printHTML += "<span class='chat-users-icon'>";
+					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/svg/users.svg' width='35px' height='35px'></span>";
+					printHTML += "<div class='chat-content-wrap'>";
+					printHTML += "<span class='chat-room-name' >";
+					printHTML += " <p id='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
+					printHTML += "<span class='chat-room-count'> "+object[i].mcount +"</span></span></p>";
+					printHTML += "<span class='chat-recent-content'>"+object[i].content+"</span>"
+					if(object[i].chatcount!=null && object[i].chatcount!=0){
+						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span>";
+					}
+					printHTML += "</div> </a> </div>";
+					
+					$("#chat-scroll-box").append(printHTML);
+					}
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+			
+			
 		});
 		$("#alarm-icon").click(function() {
 			$(".alarm-wrap").toggle();
@@ -525,6 +630,31 @@ input:focus {
 			$(".chat-tab1").css("border", "none");
 			$(".chat-tab-wrap").hide();
 			$(".tel-tab-wrap").show();
+			$.ajax({
+			url: "${pageContext.request.contextPath}/userlist",
+			success:function(object){
+				$(".tel-all").html('');
+				for(var i=0 in object){
+					console.log(object+"성공");
+					var html="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
+					html += "<div class='tel-other'>";
+					html += "<input type='hidden' name='chatuno' value='"+object[i].uno+"'>";
+					html += "<input type='hidden' name='chatuname' value='"+object[i].uname+"'>";
+					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></span>";
+					html += "<span class='tel-all-desc'> ";
+					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname +" </a>";
+					html += " <a href='${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"' onClick= 'window.open(this.href, '', 'width=350, height=488'); return false;'>";
+//					html += " <a href='javascript:openNewWindow('${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"')>";
+					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/chat-03.svg' width='30px' height='25px' class='tel-chat-icon'></a>";
+					html += "</span></span></div></form>";
+					
+					$(".tel-all").append(html);
+				}
+			},
+			error:function(){
+				console.log("실패");
+			}
+		}); 
 		});
 
 		$(".tel-prof-modal").click(function() {
@@ -557,6 +687,7 @@ input:focus {
 </head>
 
 <body>
+
 			<sec:authentication property="principal.username" var="username"/>
 			<sec:authentication property="principal.uno" var="uno"/>
 			<sec:authentication property="principal.uname" var="uname"/>
@@ -581,8 +712,8 @@ input:focus {
 
 			</span>
 
-			</span> <span class="header-right-wrap"> <a href="#"
-				class="header-btn">관리자 설정</a> <a href="#" class="header-btn"> <svg
+			</span> <span class="header-right-wrap"> 
+			<a href="#" class="header-btn">관리자 설정</a> <a href="#" class="header-btn"> <svg
 						version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 42 42" style="enable-background: new 0 0 42 42;"
@@ -592,14 +723,8 @@ input:focus {
                     </svg> &nbsp; 직원 초대
 			</a> <span class="header-icon-wrap"> <a href="#"
 					class="header-right-icon" id="chat-icon"> 
-					<c:if test="${empty alertcount}">
-					</c:if>
-					${alertcount}
-					<c:if test="${alertcount ne 0}">
-					<c:if test="${not empty alertcount}">
-					<span class="alarm-count" id="chat-alarm-count">${alertcount}</span> 
-					</c:if>
-					</c:if>
+					<span class="alarm-count" id="chat-alarm-count"></span> 
+					<span class="alarm-counts" id="chat-alarm-counts"></span> 
 					
 					<!--채팅 아이콘--> <svg
 							id="Layer1" data-name="Layer 1"
@@ -740,87 +865,12 @@ input:focus {
 								<div class="chat-scroll-box">
 									<div class="dragbar"></div>
 
-
-
 									<!-- 채팅방 -->
 									<div id="chat-scroll-box">
-
-									<c:forEach items="${clist}" var="clist">
-										<div class="chat-name">
-											<a href="${pageContext.request.contextPath}/chat/chatroomdetail?chatno=${clist.chatno}"
-												onClick="window.open(this.href, '', 'width=350, height=488'); return false;">
-												<!--해당 채팅방 열림--> <span class="chat-users-icon"> <svg
-														version="1.1" id="Capa1"
-														xmlns="http://www.w3.org/2000/svg"
-														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-														viewBox="0 0 60 60"
-														style="enable-background: new 0 0 60 60;"
-														xml:space="preserve" fill="#505050" width="35px"
-														height="35px">
-                                                    <path
-															d="M55.014,45.389l-9.553-4.776C44.56,40.162,44,39.256,44,38.248v-3.381c0.229-0.28,0.47-0.599,0.719-0.951
-                                                   c1.239-1.75,2.232-3.698,2.954-5.799C49.084,27.47,50,26.075,50,24.5v-4c0-0.963-0.36-1.896-1-2.625v-5.319
-                                                   c0.056-0.55,0.276-3.824-2.092-6.525C44.854,3.688,41.521,2.5,37,2.5s-7.854,1.188-9.908,3.53c-1.435,1.637-1.918,3.481-2.064,4.805
-                                                   C23.314,9.949,21.294,9.5,19,9.5c-10.389,0-10.994,8.855-11,9v4.579c-0.648,0.706-1,1.521-1,2.33v3.454
-                                                   c0,1.079,0.483,2.085,1.311,2.765c0.825,3.11,2.854,5.46,3.644,6.285v2.743c0,0.787-0.428,1.509-1.171,1.915l-6.653,4.173
-                                                   C1.583,48.134,0,50.801,0,53.703V57.5h14h2h44v-4.043C60,50.019,58.089,46.927,55.014,45.389z M14,53.262V55.5H2v-1.797
-                                                   c0-2.17,1.184-4.164,3.141-5.233l6.652-4.173c1.333-0.727,2.161-2.121,2.161-3.641v-3.591l-0.318-0.297
-                                                   c-0.026-0.024-2.683-2.534-3.468-5.955l-0.091-0.396l-0.342-0.22C9.275,29.899,9,29.4,9,28.863v-3.454
-                                                   c0-0.36,0.245-0.788,0.671-1.174L10,23.938l-0.002-5.38C10.016,18.271,10.537,11.5,19,11.5c2.393,0,4.408,0.553,6,1.644v4.731
-                                                   c-0.64,0.729-1,1.662-1,2.625v4c0,0.304,0.035,0.603,0.101,0.893c0.027,0.116,0.081,0.222,0.118,0.334
-                                                   c0.055,0.168,0.099,0.341,0.176,0.5c0.001,0.002,0.002,0.003,0.003,0.005c0.256,0.528,0.629,1,1.099,1.377
-                                                   c0.005,0.019,0.011,0.036,0.016,0.054c0.06,0.229,0.123,0.457,0.191,0.68l0.081,0.261c0.014,0.046,0.031,0.093,0.046,0.139
-                                                   c0.035,0.108,0.069,0.215,0.105,0.321c0.06,0.175,0.123,0.356,0.196,0.553c0.031,0.082,0.065,0.156,0.097,0.237
-                                                   c0.082,0.209,0.164,0.411,0.25,0.611c0.021,0.048,0.039,0.1,0.06,0.147l0.056,0.126c0.026,0.058,0.053,0.11,0.079,0.167
-                                                   c0.098,0.214,0.194,0.421,0.294,0.621c0.016,0.032,0.031,0.067,0.047,0.099c0.063,0.125,0.126,0.243,0.189,0.363
-                                                   c0.108,0.206,0.214,0.4,0.32,0.588c0.052,0.092,0.103,0.182,0.154,0.269c0.144,0.246,0.281,0.472,0.414,0.682
-                                                   c0.029,0.045,0.057,0.092,0.085,0.135c0.242,0.375,0.452,0.679,0.626,0.916c0.046,0.063,0.086,0.117,0.125,0.17
-                                                   c0.022,0.029,0.052,0.071,0.071,0.097v3.309c0,0.968-0.528,1.856-1.377,2.32l-2.646,1.443l-0.461-0.041l-0.188,0.395l-5.626,3.069
-                                                   C15.801,46.924,14,49.958,14,53.262z M58,55.5H16v-2.238c0-2.571,1.402-4.934,3.659-6.164l8.921-4.866
-                                                   C30.073,41.417,31,39.854,31,38.155v-4.018v-0.001l-0.194-0.232l-0.038-0.045c-0.002-0.003-0.064-0.078-0.165-0.21
-                                                   c-0.006-0.008-0.012-0.016-0.019-0.024c-0.053-0.069-0.115-0.152-0.186-0.251c-0.001-0.002-0.002-0.003-0.003-0.005
-                                                   c-0.149-0.207-0.336-0.476-0.544-0.8c-0.005-0.007-0.009-0.015-0.014-0.022c-0.098-0.153-0.202-0.32-0.308-0.497
-                                                   c-0.008-0.013-0.016-0.026-0.024-0.04c-0.226-0.379-0.466-0.808-0.705-1.283c0,0-0.001-0.001-0.001-0.002
-                                                   c-0.127-0.255-0.254-0.523-0.378-0.802l0,0c-0.017-0.039-0.035-0.077-0.052-0.116h0c-0.055-0.125-0.11-0.256-0.166-0.391
-                                                   c-0.02-0.049-0.04-0.1-0.06-0.15c-0.052-0.131-0.105-0.263-0.161-0.414c-0.102-0.272-0.198-0.556-0.29-0.849l-0.055-0.178
-                                                   c-0.006-0.02-0.013-0.04-0.019-0.061c-0.094-0.316-0.184-0.639-0.26-0.971l-0.091-0.396l-0.341-0.22
-                                                   C26.346,25.803,26,25.176,26,24.5v-4c0-0.561,0.238-1.084,0.67-1.475L27,18.728V12.5v-0.354l-0.027-0.021
-                                                   c-0.034-0.722,0.009-2.935,1.623-4.776C30.253,5.458,33.081,4.5,37,4.5c3.905,0,6.727,0.951,8.386,2.828
-                                                   c1.947,2.201,1.625,5.017,1.623,5.041L47,18.728l0.33,0.298C47.762,19.416,48,19.939,48,20.5v4c0,0.873-0.572,1.637-1.422,1.899
-                                                   l-0.498,0.153l-0.16,0.495c-0.669,2.081-1.622,4.003-2.834,5.713c-0.297,0.421-0.586,0.794-0.837,1.079L42,34.123v4.125
-                                                   c0,1.77,0.983,3.361,2.566,4.153l9.553,4.776C56.513,48.374,58,50.78,58,53.457V55.5z" />
-                                                </svg>
-											</span>
-
-
-												<div class="chat-content-wrap">
-													<span class="chat-room-name">${clist.chatno }.${clist.chatname }<span
-														class="chat-room-count"> <svg version="1.1"
-																id="Capa1" xmlns="http://www.w3.org/2000/svg"
-																xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-																y="0px" viewBox="0 0 60 60"
-																style="enable-background: new 0 0 60 60;"
-																xml:space="preserve" fill="#ffffff" stroke="#ffffff"
-																stroke-miterlimit="50" width="10px" height="10px">
-                                                            <path
-																	class="st0"
-																	d="M47.4,42.5l-9.2-4.6c-0.9-0.4-1.4-1.3-1.4-2.3v-3.3c0.2-0.3,0.5-0.6,0.7-0.9c1.2-1.7,2.2-3.6,2.9-5.6
-   c1.4-0.6,2.3-2,2.3-3.5v-3.9c0-0.9-0.3-1.8-1-2.5v-5.1c0.1-0.5,0.3-3.7-2-6.3C37.6,2.1,34.4,1,30,1s-7.6,1.1-9.6,3.4
-   c-2.3,2.6-2.1,5.8-2,6.3v5.1c-0.6,0.7-1,1.6-1,2.5v3.9c0,1.2,0.5,2.3,1.4,3c0.9,3.5,2.7,6.2,3.4,7v3.2c0,0.9-0.5,1.8-1.3,2.2
-   l-8.6,4.7c-2.8,1.5-4.5,4.5-4.5,7.7v3.1C7.8,57.8,22.3,59,30,59s22.3-1.2,22.3-5.8v-2.9C52.3,46.9,50.4,44,47.4,42.5z M50.3,53.2
-   c0,1.3-7.2,3.9-20.3,3.9S9.7,54.5,9.7,53.2v-3.1c0-2.5,1.4-4.8,3.5-6l8.6-4.7c1.4-0.8,2.3-2.3,2.3-3.9v-3.9L24,31.3
-   c0,0-2.4-2.9-3.3-6.8l-0.1-0.4l-0.3-0.2c-0.6-0.4-0.9-1-0.9-1.6v-3.9c0-0.5,0.2-1,0.6-1.4l0.3-0.3v-6l0-0.1c0,0-0.3-2.7,1.6-4.9
-   c1.6-1.8,4.3-2.8,8.1-2.8c3.8,0,6.5,0.9,8.1,2.7c1.9,2.1,1.6,4.9,1.6,4.9l0,6.2L40,17c0.4,0.4,0.6,0.9,0.6,1.4v3.9
-   c0,0.8-0.6,1.6-1.4,1.8l-0.5,0.1l-0.2,0.5c-0.6,2-1.6,3.9-2.7,5.5c-0.3,0.4-0.6,0.8-0.8,1l-0.2,0.3v4c0,1.7,1,3.3,2.5,4l9.2,4.6
-   c2.3,1.2,3.8,3.5,3.8,6.1V53.2z" />
-                                                        </svg>&nbsp;2
-													</span></span> <br> <span class="chat-recent-content">최근 대화
-														내용</span>
-												</div>
-											</a>
-										</div>
-									</c:forEach>
+									
 									</div>
+									
+									
 								</div>
 							</div>
 							<!--연락처 모달-->
@@ -884,74 +934,9 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 										<p class="tel-title">전체 연락처</p>
 										<div class="tel-all">
 											<!-- 전체 연락처 / 해당 회사 user list 가져와서 뿌리기 -->
-											<c:forEach items="${ulist}" var="list">
-												<form
-													action="${pageContext.request.contextPath}/chat/chatroomnew"
-													method="post" id="chatfrm1">
-													<div class="tel-other">
-														<input type="hidden" name="chatuno" value="${list.uno }">
-														<input type="hidden" name="chatuname"
-															value="${list.uname }">
-														<svg version="1.1" id="Capa1"
-															xmlns="http://www.w3.org/2000/svg"
-															xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-															y="0px" viewBox="0 0 55 55"
-															style="enable-background: new 0 0 55 55;"
-															xml:space="preserve" fill="#505050" width="35px"
-															height="35px" class="tel-my-img">
-                                                    <path
-																d="M27.5,0C12.336,0,0,12.337,0,27.5c0,7.976,3.417,15.167,8.86,20.195l-0.072,0.098l0.705,0.604
-                                                c3.904,3.342,8.655,5.483,13.681,6.26c0.356,0.056,0.715,0.102,1.075,0.144c0.391,0.045,0.782,0.085,1.176,0.112
-                                                c0.579,0.043,1.162,0.071,1.75,0.078c0.062,0,0.123,0.008,0.185,0.008c0.017,0,0.035-0.002,0.052-0.002
-                                                c0.03,0,0.059,0.002,0.089,0.002C42.664,55,55,42.663,55,27.5S42.664,0,27.5,0z M27.414,52.998c-0.09,0-0.178-0.006-0.267-0.007
-                                                c-0.478-0.004-0.954-0.029-1.429-0.06c-5.298-0.368-10.154-2.359-14.074-5.482c0.381-0.36,0.802-0.665,1.266-0.9l9.137-3.921
-                                                c0.739-0.368,1.191-1.186,1.628-2.063c0.274-0.552,0.243-1.195-0.083-1.721C23.265,38.315,22.699,38,22.079,38l-6.347,0.005
-                                                c-0.022-0.002-2.195-0.222-3.83-0.924c-0.308-0.132-0.437-0.235-0.474-0.241c0.015-0.042,0.051-0.124,0.141-0.251
-                                                c2.264-3.224,6.083-9.643,6.214-16.409c0.008-0.379,0.303-9.287,9.332-9.361c5.365,0.044,7.902,3.189,9.086,5.82
-                                                c0.591,1.313,0.939,2.879,1.065,4.785c0.39,5.9,3.1,11.466,5.305,15.095c0.114,0.188,0.148,0.418,0.096,0.631
-                                                c-0.049,0.197-0.168,0.361-0.335,0.461c-1.038,0.62-2.389,0.407-2.397,0.404L33.273,38c-0.713,0-1.33,0.45-1.571,1.146
-                                                c-0.243,0.702-0.028,1.472,0.536,1.917c0.71,0.561,0.992,0.734,1.104,0.794l7.619,4.609c0.654,0.357,1.229,0.845,1.692,1.434
-                                                C38.231,51.229,32.983,52.986,27.414,52.998z M44.25,46.702c-0.633-0.815-1.415-1.491-2.293-1.969l-7.619-4.609
-                                                c-0.016-0.009-0.07-0.04-0.19-0.124h5.54c0.436,0.061,2.175,0.222,3.669-0.673c0.627-0.374,1.072-0.977,1.25-1.695
-                                                c0.181-0.727,0.062-1.511-0.327-2.151c-2.088-3.438-4.655-8.691-5.018-14.189c-0.143-2.147-0.547-3.938-1.237-5.473
-                                                c-1.424-3.164-4.469-6.947-10.91-7c-10.964,0.09-11.33,11.206-11.332,11.32c-0.125,6.47-4.134,12.855-5.851,15.3
-                                                c-0.467,0.665-0.616,1.312-0.444,1.921c0.188,0.66,0.719,1.171,1.625,1.56c1.917,0.823,4.322,1.066,4.521,1.081h6.084
-                                                c-0.167,0.324-0.395,0.735-0.512,0.813l-9.113,3.908l-0.053,0.024c-0.713,0.356-1.349,0.83-1.914,1.395
-                                                C5.132,41.483,2,34.852,2,27.5C2,13.439,13.439,2,27.5,2S53,13.439,53,27.5C53,35.153,49.606,42.024,44.25,46.702z" />
-                                                </svg>
-
-
-														<span class="tel-all-desc"> <a href="#"
-															class="tel-prof-modal"> ${list.uname } </a>
-															<input type="hidden" value="${list.uno}" class="listuno"> <span>
-																<!-- 채팅방 새로 만들기 --> <a
-																href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${list.uno}&chatuname=${list.uname}"
-																onClick="window.open(this.href, '', 'width=350, height=488'); return false;">
-
-
-																	<svg id="Layer1" data-name="Layer 1"
-																		xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
-																		fill="#505050" width="30px" height="25px"
-																		class="tel-chat-icon">
-                                                        <defs>
-                                                            <style>
-																#Layer1 {
-																	fill: none;
-																	stroke: #505050;
-																	stroke-miterlimit: 10;
-																	stroke-width: 1.7px;
-																}
-																</style>
-                                                        </defs>
-                                                        <path
-																			d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
-                                                    </svg>
-															</a>
-														</span>
-														</span>
-													</div>
-												</form>
-											</c:forEach>
+											
+											
+											
 
 											<!-- 연락처에서 이름 클릭했을 때 info 모달 -->
 											<div class="prof-info-dim"></div>
@@ -1108,7 +1093,14 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 							d="M28,27c0.553,0,1-0.447,1-1V1c0-0.553-0.447-1-1-1s-1,0.447-1,1v25C27,26.553,27.447,27,28,27z" />
                         </g>
                         
-                    </svg> 로그아웃
+                    </svg> 
+               	<sec:authorize access="isAuthenticated()">
+					<form action="${pageContext.request.contextPath}/logout" method="POST">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<!-- 수정필요 -->
+	        		<button type="submit" id="login">로그아웃</button>
+					</form>    	
+	    		</sec:authorize>
 				</a>
 			</p>
 		</div>

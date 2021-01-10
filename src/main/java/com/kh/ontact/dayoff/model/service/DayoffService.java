@@ -9,7 +9,7 @@ public interface DayoffService {
 	
 	public int allListCount();
 	
-	public List<DayoffDto> selectDayoff(int startPage, int limit);
+	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno);
 	
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap);
 	
@@ -17,6 +17,8 @@ public interface DayoffService {
 	
 	public int insertDayoff(DayoffDto d); 
 	
-	public DayoffDto updateDayoffApp(DayoffDto d); 
-
+	public DayoffDto updateDayoffApp(DayoffDto d, String uno); 
+	
+	public List<DayoffDto> selectDfCalendar();
+	
 }

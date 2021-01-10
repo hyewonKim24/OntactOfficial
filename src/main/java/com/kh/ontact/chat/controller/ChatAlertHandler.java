@@ -31,7 +31,6 @@ public class ChatAlertHandler extends TextWebSocketHandler{
 	
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		String uno = getUno(session);
-		String rs =chatalertService.AllChatAlert(uno);
 		
 		
 	}

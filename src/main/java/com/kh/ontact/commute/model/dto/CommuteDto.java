@@ -32,4 +32,6 @@ public class CommuteDto {
 	private String cendtime;
 	private String cworktime;
 	private String creason;
+	private int owtime;
+	private double total;
 }
