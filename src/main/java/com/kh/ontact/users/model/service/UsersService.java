@@ -1,5 +1,6 @@
 package com.kh.ontact.users.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ontact.company.model.dto.CompanyDto;
@@ -16,6 +17,12 @@ public interface UsersService {
 	public void joinGuestChk(GuestRegisterRequest regReq) throws Exception;
 	public void pwdChk(UsersDto userdto) throws Exception;
 	public int updateTmppwd(UsersDto dto) throws Exception;
+	public CompanyDto findCompany(String cno) throws Exception;
+	public String dnameChk(String dno) throws Exception;
+	public int updateUrank(HashMap<String, String> paramMap) throws Exception;
+	public int updateUtell(HashMap<String, String> paramMap) throws Exception;
+	public int updateCname(HashMap<String, String> paramMap) throws Exception;
+	public int updateCtel(HashMap<String, String> paramMap) throws Exception;
 	
 	//시큐리티
 	void countFailure(String username);

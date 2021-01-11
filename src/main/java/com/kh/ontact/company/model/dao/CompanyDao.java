@@ -1,5 +1,7 @@
 package com.kh.ontact.company.model.dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,19 @@ public class CompanyDao {
 	public String findCno(String curl) throws Exception {
 		return sqlSession.selectOne("Company.findCno", curl);
 	}
+	
+	// 마이페이지 - 회사 정보 가져오기
+	public CompanyDto findCompany(String cno) throws Exception{
+		return sqlSession.selectOne("Company.findCompany", cno);
+	}
+	// 마이페이지 - 내정보 수정
+	public int updateCname(HashMap<String, String> paramMap) throws Exception{
+		return sqlSession.update("Company.updateCname",paramMap);
+	}
+	public int updateCtel(HashMap<String, String> paramMap) throws Exception{
+		return sqlSession.update("Company.updateCtel",paramMap);
+	}
+	
 
 	/* 혜원 코드 */
 	// 회사명 가져오기

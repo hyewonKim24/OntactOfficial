@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Dept">
 	<resultMap type="DeptDto" id="resultDept">
@@ -6,6 +6,13 @@
 		<result property="cno" column="cno"/>
 		<result property="dname" column="dname"/>
 	</resultMap>
+	
+	<!-- 은실 / 마이페이지 부서 가져오기 -->
+	<select id="dnameChk" resultType="string">
+		<![CDATA[
+		select dname from dept where dno=#{dno}
+		]]>
+	</select>
 	<!-- project insert : 부서 보관함 목록 뿌리기 -->
 	<select id="selectListDeptDname" resultType="DeptDto">
 		select dno, dname from dept

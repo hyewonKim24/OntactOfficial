@@ -11,7 +11,6 @@
 		<result property="uname" column="uname" />
 		<result property="utell" column="utell" />
 		<result property="upwd" column="upwd" />
-		<result property="utmppwd" column="utmppwd" />
 		<result property="urank" column="urank" />
 		<result property="uregdate" column="uregdate" />
 		<result property="uresdate" column="uresdate" />
@@ -54,14 +53,23 @@
 		where uemail = #{uemail} and uname = #{uname}
 		]]>
 	</select>
-	
 	<update id="updateTmppwd" flushCache="true">
 		<![CDATA[
 		update users set upwd=#{upwd} where uemail=#{uemail}
 		]]>
 	</update>
 	
-
+	<!-- 마이페이지 내 정보 업데이트 -->
+	<update id="updateUtell" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update users set utell=#{utell} where uno=#{uno}
+		]]>
+	</update>
+	<update id="updateUrank" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update users set urank=#{urank} where uno=#{uno}
+		]]>
+	</update>
 
 	
 	<!-- ####### 여기부터 시큐리티 ####### -->

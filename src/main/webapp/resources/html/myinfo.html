@@ -10,10 +10,12 @@
     <link href="/css/reset.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
-        *{
-            margin:0;
+        * {
+            margin: 0;
         }
-        html,body {
+
+        html,
+        body {
             width: 100%;
             height: 100%;
             position: relative;
@@ -21,15 +23,18 @@
             font-family: Noto Sans KR;
             line-height: 1.15;
         }
-        button{
+
+        button {
             font-family: Noto Sans KR;
-            cursor:pointer;
+            cursor: pointer;
         }
-        input{
+
+        input {
             font-family: Noto Sans KR;
         }
-        a{
-            cursor:pointer;
+
+        a {
+            cursor: pointer;
         }
 
         header {
@@ -100,108 +105,231 @@
             border-left: 1px solid #e7e7e7;
             box-sizing: border-box;
         }
-        #info_text{
-            font-size:18px;
-            border-bottom:2px solid #5A3673;
-            padding : 0 0 12px 0;
+
+        #info_text {
+            font-size: 18px;
+            border-bottom: 2px solid #5A3673;
+            padding: 0 0 12px 0;
             margin-bottom: 15px;
         }
-        #info_wrapper{
+
+        #alert{
+            position:absolute;
+            left:40%;
+            width:350px;
+            height:40px;
+            border:1px solid #a2a2a2;
+            margin:5px auto;
+            background-color:#d4cdf5;
+            font-size: 14px;
+            color: #505050;
+            font-weight:700;
+            text-align: center;
+            line-height: 40px;
+            z-index:99999;
+            /* display:none; */
+        }
+
+        #info_wrapper {
             position: relative;
             display: flex;
-            margin:20px 0px 0px 60px;
+            margin: 20px 0px 0px 60px;
         }
-        #info_side{
-            
+
+        #info_side {}
+
+        #info_side_text {
+            font-size: 16px;
+            color: #111;
+            padding-left: 2px;
+            font-weight: 400;
+            margin-left: 20px;
         }
-        #info_side_text{
-            font-size:16px;
-            color:#111;
-            padding-left:2px;
-            font-weight:400;
-            margin-left:20px;
-        }
-        #line{
-            margin:20px 0;
-            height:1px;
-            line-height:0;
-            overflow:hidden;
+
+        #line {
+            margin: 20px 0;
+            height: 1px;
+            line-height: 0;
+            overflow: hidden;
             background-color: #e9eaed;
-            width:400px;
+            width: 400px;
         }
+
         /* 사진부분 */
-        #info_photo_wrap{
-            width:250px;
+        #info_photo_wrap {
+            /* 바꿈 */
+            width: 250px;
+            position: relative;
         }
+
+        #userphoto {
+            width: 110px;
+            height: 110px;
+            z-index: 30;
+            position: absolute;
+            top: 10px;
+            /* 바꿈 */
+            left: 30px;
+            right: 0;
+            bottom: 0px;
+            content: "";
+            display: block;
+            border-radius: 90px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+            border:1px solid #acacac;
+            background-image: URL(../img/main.jpg);
+            background-size:contain;
+        }
+        #userphoto_btn{
+            display: block;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            /* 바꿈 */
+            bottom: -115px;
+            /* 바꿈 */
+            right: 105px;
+            border-radius: 90px;
+            border:1px solid #acacac;
+            /* background-image: url("../img/photo-camera.png"); */
+            background-color: #fff;
+            z-index: 30;
+        }
+        #userphoto_btn img{
+            display: block;
+            position: relative;
+            width: 30px;
+            padding-top:4px;
+            margin:0 auto;
+            /* border-radius: 90px; */
+            /* border:1px solid #d2d2d2; */
+        }
+        #userphoto_menu{
+            display:none;
+            position:absolute;
+            border:1px solid #d2d2d2;
+            top:95px;
+            /* 바꿈 */
+            right:58px;
+            padding:5px 0px 5px 0px;
+            font-size:12px;
+            text-align: left;
+            box-shadow: 3px 7px 7px 2px rgba(0,0,0,.15);
+            border-radius: 3px;
+            z-index: 100;
+            background-color: #fff;
+        }
+        #changephoto{
+            display:block;
+            color:#666;
+            white-space:nowrap;
+            padding:5px 10px 10px 10px;
+            border-bottom:1px solid #d2d2d2;
+            line-height: 12px;
+        }
+        #removephoto{
+            display:block;
+            color:#666;
+            white-space:nowrap;
+            padding:10px 10px 5px 10px;
+            line-height: 12px;
+        }
+        #photobtn {
+            width: 100px;
+            height: 25px;
+            background-color: #5A3673;
+            border: 1px solid #5A3673;
+            border-radius: 3px;
+            color: #e7e7e7;
+            border: none;
+            font-family: Noto Sans KR;
+            font-weight: 500;
+            vertical-align: middle;
+            font-size: 14px;
+            position:absolute;
+            top:140px;
+            left:37px;
+        }
+
         /* 내정보 부분 */
-        #info_section ul li{
-            padding-bottom:5px
+        #info_section ul li {
+            padding-bottom: 5px
         }
+
         .userinfo_editable,
         .userinfo_uneditable,
-        .companyinfo_editable{
-            display:flex;
-            position:relative;
+        .companyinfo_editable {
+            display: flex;
+            position: relative;
             min-width: 350px;
-            min-height:31px;
+            min-height: 31px;
             line-height: 31px;
-            padding:3px;
+            padding: 3px;
         }
+
         .userinfo_editable:hover,
-        .companyinfo_editable:hover{
-            background-color:#e7e7e7;
+        .companyinfo_editable:hover {
+            background-color: #e7e7e7;
         }
-        .userinfo_editable_content{
-            width:170px;
+
+        .userinfo_editable_content {
+            width: 170px;
         }
-        .editbtn{
-            display:none;
+
+        .editbtn {
+            display: none;
         }
+
         .userinfo_editable:hover .editbtn,
-        .companyinfo_editable:hover .editbtn{
+        .companyinfo_editable:hover .editbtn {
             position: absolute;
-            display:block;
-            right:0;
-            font-size:12px;
-            color:#a3a3a3;
-            margin-left:30px;
-            margin-right:5px;
+            display: block;
+            right: 0;
+            font-size: 12px;
+            color: #a3a3a3;
+            margin-left: 30px;
+            margin-right: 5px;
         }
+
         /*내 정보 편집*/
-        .userinfo_edit{
-            display:flex;
-            position:relative;
+        .userinfo_edit {
+            display: flex;
+            position: relative;
             min-width: 350px;
-            min-height:31px;
+            min-height: 31px;
             line-height: 31px;
-            padding:3px;
+            padding: 3px;
         }
-        .input_edit{
-            border-top:none;
-            border-left:none;
-            border-right:none;
-            border-bottom:1px solid #dddee2;
-            font-weight:700;
-            vertical-align:middle;
+
+        .input_edit {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #dddee2;
+            font-weight: 700;
+            vertical-align: middle;
         }
-        .info_btn_save{
-            padding:0 7px 1px 7px;
-            margin-left:12px;
-            height:24px;
-            line-height:24px;
-            font-size:13px;
-            font-weight:700;
-            color:#505050;
-            text-align:center;
-            border:1px solid #b0b1b3;
-            border-radius:2px;
-            background-color:#fff;
+
+        .info_btn_save {
+            padding: 0 7px 1px 7px;
+            margin-left: 12px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #505050;
+            text-align: center;
+            border: 1px solid #b0b1b3;
+            border-radius: 2px;
+            background-color: #fff;
         }
-        .canclebtn{
-            margin-left:10px;
-            font-size:13px;;
-            font-weight:700;
-            color:#7b7c7f;
+
+        .canclebtn {
+            margin-left: 10px;
+            font-size: 13px;
+            ;
+            font-weight: 700;
+            color: #7b7c7f;
             line-height: 26px;
         }
     </style>
@@ -209,15 +337,16 @@
 
 <body>
     <header>
+        <div id="alert">수정되었습니다</div>
         <div>헤더 들어갈 자리</div>
     </header>
     <section>
         <aside>
             <button id="aside_back"><&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
-            <ul>
-                <li><a href="#">계정 정보</a></li>
-                <li><a href="#">비밀번호 설정</a></li>
-            </ul>
+                    <ul>
+                        <li><a href="#">계정 정보</a></li>
+                        <li><a href="#">비밀번호 설정</a></li>
+                    </ul>
         </aside>
         <article>
             <div id="info_text">계정 정보</div>
@@ -225,13 +354,14 @@
             <div id="info_wrapper">
                 <div id="info_side">
                     <div id="info_photo_wrap">
-                        <div id="userphoto">사진</div>
+                        <div id="userphoto"></div>
                         <!--radious:90px-->
-                        <a id="userphoto_btn">사진버튼</a>
+                        <a id="userphoto_btn"><img src="../img/photo-camera.png"></a>
                         <div id="userphoto_menu">
-                            <a id="changephoto">사진 편집</a>
+                            <a id="changephoto"><input type="file" id="uploadphoto" accept="image/*" style="display:none;">사진 편집</a>
                             <a id="removephoto">사진 삭제</a>
                         </div>
+                        <button type="submit" id="photobtn">사진 등록하기</button>
                     </div>
                 </div>
                 <div id="info_section">
@@ -253,7 +383,8 @@
                             <!--편집활성-->
                             <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">이름</span>
-                                <input type="text" class="input_edit" placeholder="이름 입력 2~6자"  max="6" min="2" name="uname">
+                                <input type="text" class="input_edit" placeholder="이름 입력 2~6자" max="6" min="2"
+                                    name="uname">
                                 <button class="info_btn_save">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -275,7 +406,7 @@
                             <!--편집활성-->
                             <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">휴대폰번호</span>
-                                <input type="tel" class="input_edit" placeholder="숫자만 입력해주세요"  max="11" name="utell">
+                                <input type="tel" class="input_edit" placeholder="숫자만 입력해주세요" maxlength="11" name="utell">
                                 <button class="info_btn_save">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -293,7 +424,7 @@
                             <!--편집활성-->
                             <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">회사명</span>
-                                <input type="text" class="input_edit" placeholder="최대 30자"  max="30" name="cname">
+                                <input type="text" class="input_edit" placeholder="최대 30자" max="30" name="cname">
                                 <button class="info_btn_save">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -308,7 +439,7 @@
                             <!--편집활성-->
                             <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">부서명</span>
-                                <input type="text" class="input_edit" placeholder="최대 15자"  max="15" name="dname">
+                                <input type="text" class="input_edit" placeholder="최대 15자" max="15" name="dname">
                                 <button class="info_btn_save">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -320,10 +451,11 @@
                                 <strong class="userinfo_content">대표</strong>
                                 <a class="editbtn">수정</a>
                             </div>
-                             <!--편집활성-->
-                             <div class="userinfo_edit" style="display: none">
+                            <!--편집활성-->
+                            <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">직책</span>
-                                <input type="text" class="input_edit" placeholder="직책 입력 2~6자"  max="6" min="2" name="urank">
+                                <input type="text" class="input_edit" placeholder="직책 입력 2~6자" maxlength="6" minlength="2"
+                                    name="urank">
                                 <button class="info_btn_save">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -351,28 +483,34 @@
 
     <script>
         //편집 버튼 활성화
-        $('.editbtn').click(function(){
-            $(this).parent('.userinfo_editable').css("display","none");
-            $(this).parents('li').find('.userinfo_edit').css("display","flex");
+        $('.editbtn').click(function () {
+            $(this).parent('.userinfo_editable').css("display", "none");
+            $(this).parents('li').find('.userinfo_edit').css("display", "flex");
         });
-        $('.editbtn').click(function(){
-            $(this).parent('.companyinfo_editable').css("display","none");
-            $(this).parents('li').find('.userinfo_edit').css("display","flex");
+        $('.editbtn').click(function () {
+            $(this).parent('.companyinfo_editable').css("display", "none");
+            $(this).parents('li').find('.userinfo_edit').css("display", "flex");
         });
-        $('.canclebtn').click(function(){
+        $('.canclebtn').click(function () {
             let $t = $(this).parents('li');
             //let content = $t.find('.userinfo_content').text();
-            $(this).parent('.userinfo_edit').css("display","none");
+            $(this).parent('.userinfo_edit').css("display", "none");
             //$(this).parent('.userinfo_edit').find('.input_edit').val(content);
-            $t.find('.userinfo_editable').css("display","flex");
+            $t.find('.userinfo_editable').css("display", "flex");
         });
-        $('.canclebtn').click(function(){
+        $('.canclebtn').click(function () {
             let $t = $(this).parents('li');
             //let content = $t.find('.userinfo_content').text();
-            $(this).parent('.userinfo_edit').css("display","none");
+            $(this).parent('.userinfo_edit').css("display", "none");
             //$(this).parent('.userinfo_edit').find('.input_edit').val(content);
-            $t.find('.companyinfo_editable').css("display","flex");
+            $t.find('.companyinfo_editable').css("display", "flex");
         });
+
+        //사진 메뉴 토글
+        $("#userphoto_btn").on("click", function (e) {
+            e.preventDefault();
+            $("#userphoto_menu").toggle();
+        })
     </script>
 </body>
 

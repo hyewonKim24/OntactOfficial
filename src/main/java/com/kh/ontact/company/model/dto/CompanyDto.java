@@ -14,7 +14,7 @@ public class CompanyDto {
 	private String cno;
 	private String cname;
 	private String ceo;
-	private int ctel;
+	private String ctel;
 	private String curl;
 	private String clogo;
 	private String clogopath;
