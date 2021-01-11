@@ -4,164 +4,295 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='utf-8' />
-<link href='../packages/core/main.css' rel='stylesheet' />
-<link href='../packages/daygrid/main.css' rel='stylesheet' />
-<link href='../packages/timegrid/main.min.css' rel="stylesheet"/>
-<script src='../packages/core/main.js'></script>
-<script src='../packages/interaction/main.js'></script>
-<script src='../packages/daygrid/main.js'></script>
-<script src='../packages/timegrid/main.min.js'></script>
-<script src='../packages/daygrid/main.js'></script>
-<script>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ontact, 서로 연결되는 온라인 공간</title>
+<script src='${pageContext.request.contextPath}/resources/packages/core/main.js'></script>
+<script src='${pageContext.request.contextPath}/resources/packages/daygrid/main.js'></script>
+<script src='${pageContext.request.contextPath}/resources/packages/interaction/main.js'></script> 
+<script src='${pageContext.request.contextPath}/resources/packages/timegrid/main.min.js'></script>
+<link href='${pageContext.request.contextPath}/resources/packages/core/main.css' rel='stylesheet' />
+<link href='${pageContext.request.contextPath}/resources/packages/daygrid/main.css' rel='stylesheet' />
+<script src='${pageContext.request.contextPath}/resources/js/moment.js'></script> 
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
+<link href='${pageContext.request.contextPath}/resources/packages/timegrid/main.min.css' rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 
-  document.addEventListener('DOMContentLoaded', function() {
-
-    var calendarEl = document.getElementById('calendar');
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid' ],
-      header: {
-        left: 'prevYear,prev,next,nextYear today',
-        center: 'title',
-        right: 'dayGridMonth,dayGridWeek,dayGridDay'
-      },
-      local : "ko",
-      navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
-      events: function(start, end, callback) { 
-	   		$.ajax({
-	   			url: '/myPlan', 
-	   			dataType: 'json', 
-	   			success: function(plan) {
-	   				var events = [];
-	   				//여기서 0번째로 테스트 중입니다.
-	   				$.each(plan,function(){
-	   					events.push({title:"hi",start:plan.plan[0].date})
-
-	   				});
-	   				console.log(plan);//배열로 잘 나옵니다.
-	   				console.log(plan.plan[0].title);//여기도 잘 나옵니다.
-// 	   				var events = eval(plan.jsonTxt); 
-	   				callback(events); //여기서 오류 나더라구요
-	   				} 
-	   		}); 
-   		}, 	
-      
-      // [
-      //   {
-      //     title: '안녕하세요',
-      //     start: '2021-01-01'
-      //   },
-      //   {
-      //     title: 'Long Event',
-      //     start: '2020-01-07',
-      //     end: '2021-01-10'
-      //   },
-      //   {
-      //     groupId: 999,
-      //     title: 'Repeating Event',
-      //     start: '2021-02-09T16:00:00'
-      //   },
-      //   {
-      //     groupId: 999,
-      //     title: 'Repeating Event',
-      //     start: '2021-02-16T16:00:00'
-      //   },
-      //   {
-      //     title: 'Conference',
-      //     start: '2020-02-11',
-      //     end: '2020-02-13'
-      //   }
-      // ]
-    });
-
-    calendar.render();
+<style>
   
-    var arrTest = getCalendarDataInDB();
-    $.each(arrTest, function(index, item){
-        console.log('outer loop_in_cal' + index + ' : ' + item);
-        $.each(item, function(iii, ttt){
-            console.log('inner loop_in_cal => ' + iii + ' : ' + ttt);
-        });
-  });
-
-  function getCalendarDataInDB(){
-    var arr = [{title: 'evt1', start:'ssssss'}, {title: 'evt2', start:'123123123'}];
-    
-    //배열 초기화
-    var viewData = {};
-    //data[키] = 밸류
-    viewData["id"] = $("#currId").text().trim();
-    viewData["title"] = $("#title").val();
-    viewData["content"] = $("#content").val();
-    
-    $.ajax({
-        contentType:'application/json',
-        dataType:'json',
-        url:'calendar/getall',
-        type:'post',
-        async: false,
-        data:JSON.stringify(viewData),
-        success:function(resp){
-            //alert(resp.f.id + ' ggg');     
-            $.each(resp, function(index, item){
-                console.log(index + ' : ' + item);
-                $.each(item, function(iii, ttt){
-                    console.log('inner loop => ' + iii + ' : ' + ttt);
-                });
-            });
-            arr = resp;
-        },
-        error:function(){
-            alert('저장 중 에러가 발생했습니다. 다시 시도해 주세요.');
-        }
-    });
-    
-    return arr;
+* {
+	margin: 0;
 }
 
-$("#btnAddTest").click(function(){
-      //var arr = getCalendarEvent();
-      var arr = getCalendarDataInDB();
-      //console.log('arr[0].size : ' +  Object.keys( arr[0] ).length );
-      $.each(arr, function(index, item){
-          calendar.addEvent( item );
-          console.log('click evt loop_in_cal' + index + ' : ' + item);
-          $.each(item, function(iii, ttt){
-                console.log('click evt inner loop_in_cal => ' + iii + ' : ' + ttt);
-          });
-      });
-      
-      //calendar.addEvent( {'title':'evt4', 'start':'2019-09-04', 'end':'2019-09-06'});
-      calendar.render();
-  });  
-  //alert( '캘린더에서 알린다!!! 잘 받았다! ' + (arrTest.0.id) );
-});
+body {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	font-size: 14px;
+	font-family: Noto Sans KR;
+	line-height: 1.15;
+}
 
-</script>
-<style>
+.header {
+	position: relative;
+	width: 100%;
+	height: 60px;
+}
 
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
+.header div {
+	width: 1200px;
+	height: 60px;
+	margin: 0 auto;
+}
+/* 본문 */
+.main {
+	position: relative;
+	width: 1200px;
+	height: 100%;
+	margin: 0 auto;
+}
+/* 사이드메뉴 */
+.sidenav {
+	position: relative;
+	width: 210px;
+	height: 100%;
+	float: left;
+}
 
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
+.sidenav ul, .sidenav ul li a {
+	display: block;
+	color: black;
+}
+
+.sidenav ul li {
+	display: block;
+	font-size: 16px;
+}
+
+.sidenav ul ul {
+	display: none;
+}
+
+.sidenav>ul>li>a {
+	padding: 19px 20px;
+	z-index: 2;
+	cursor: pointer;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.sidenav ul ul li {
+	background-color: #e7e7e7;
+}
+
+.sidenav ul ul li a {
+	cursor: pointer;
+	padding: 10px 0;
+	padding-left: 30px;
+	z-index: 1;
+	text-decoration: none;
+	font-size: 13px;
+}
+/* 콘텐츠 */
+.contents {
+	position: absolute;
+	width: 970px;
+	height: 860px;
+	left: 210px;
+	padding: 40px 0 40px 40px;
+	border-left: 1px solid #e7e7e7;
+	box-sizing: border-box;
+}
+
+.conTitle {
+	width: 930px;
+	height: 40px;
+	line-height: 40px;
+	padding-bottom: 20px;
+	font-size: 32px;
+	border-bottom: 1px solid #e7e7e7;
+	text-align: left;
+}
+#calendar {
+    width: 930px;
+    padding-top : 30px;
+    margin: 0;
+}
 
 </style>
+<script> 
+  document.addEventListener('DOMContentLoaded', function() {
+	  /* var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems); */
+      
+	    var calendarEl = document.getElementById('calendar');   
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	        height: 600,
+	        plugins: [ 'interaction', 'dayGrid' ],
+	        defaultView: 'dayGridMonth',
+	        defaultDate: new Date(),
+	        header: {
+	            left: 'prevYear,prev,next,nextYear today',
+	            center: 'title',
+	            right: 'dayGridMonth,dayGridWeek,dayGridDay'
+	          },
+	        eventLimit: true,
+	        eventLimitText: "more",
+	        eventLimitClick: "popover",
+	        editable: false,
+	        droppable: true,
+	     	/* //해당 일정 클릭하면 url로 이동
+	        eventClick: function(info) {
+	        	  console.log(info);
+	              var eventObj = info.event;
+	              $.ajax({
+	            	   contentType:'application/json',
+	                   url: '${pageContext.request.contextPath}/dayoff/calendar',
+	                   dataType: 'json',
+	                   success: 
+	                       function(result) {
+	                           var events = [];
+	                           if(result!=null){
+	                           $.each(result, function(index, element) {
+	                              console.log("새로" + element);
+	                        	   if (eventObj.url) {
+	               	                alert(
+	               	                  'Clicked ' + eventObj.title + '.\n' +
+	               	                  'Will open ' + eventObj.url + ' in a new tab'
+	               	                );
+	               	                window.open(eventObj.url);
+
+	               	                info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
+	               	              } else {
+	               	                alert('Clicked ' + eventObj.title);
+	               	              }
+	                                            console.log(event);
+	                               }); //.each()
+	                               console.log(events);
+	                           }//if end  
+
+	                           
+	                           
+	                           successCallback(events);                               
+	                       }//success: function end                          
+	            }); //ajax end
+	            
+	            
+	            }, */
+	            
+	        //달력에 일정 출력
+	        events:function(info, successCallback, failureCallback){
+	        	console.log(info);
+	            $.ajax({
+	            		contentType:'application/json',
+	                   url: '${pageContext.request.contextPath}/dayoff/calendar',
+	                   dataType: 'json',
+	                   success: 
+	                       function(result) {
+	 						 							
+	                           var events = [];
+	                           if(result!=null){
+	                               
+	                           $.each(result, function(index, element) {
+	                                   
+	                        	   	   var enddate=element.offend;
+	                                   var startdate=element.offstart;
+	                                   var realmname = element.uname;
+	                                   var description = element.uname + "/" + element.offreason;
+	                                   var reason = "${pageContext.request.contextPath}/commute/dailylist";
+	                                   console.log("이" + reason );
+	                                   
+	                                   var array1 = enddate.replace("월", ",");
+	                                   var array2 = startdate.replace("월", ",");
+	                                   console.log("날짜" + array1 + ", " + array2);
+	                                    /* if(enddate==null){
+	                                        enddate=element.offstart;
+	                                    } */
+	                                    var startdate=moment(array2).format('YYYY-MM-DD');
+	                                    var enddate=moment(array1).format('YYYY-MM-DD');
+	                                    console.log("날짜" + startdate + "," + enddate);
+	                                    console.log("이름" + realmname);
+	                                        events.push({
+	                                        	   title: description,
+	                                               start: startdate,
+	                                               end: enddate,
+	                                            
+	                                                  /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
+	                                                  color:"#ff3399"   */                                                 
+	                                            }); //.push()
+	                                            console.log(event);
+	                               }); //.each()
+	                               console.log(events);
+	                           }//if end  
+
+	                           
+	                           
+	                           successCallback(events);                               
+	                       }//success: function end                          
+	            }); //ajax end
+	        }, //events:function end
+	   });//new FullCalendar end
+	 
+	   calendar.render();
+	   
+	  });
+
+</script>
+
 </head>
 <body>
-
+	<div class="header">
+		<div>헤더 들어갈 자리</div>
+	</div>
+	<div class="main">
+		<div class="sidenav">
+			<ul>
+				<li class="menu"><a href="">근태 관리</a>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
+						<li><a href="">월 근무내역</a></li>
+						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
+					</ul></li>
+				<li class="menu"><a href="">휴가 관리</a>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
+						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
+					</ul></li>
+				<li><a href="">조직도</a></li>
+			</ul>
+		</div>
+		<div class="contents">
+			<div class="article">
+				<div class="conTitle">휴가현황</div>
+ 				<div id='calendar'></div>
+ 			</div>
+		 			
+ 			
+        
+ 		</div>
+	</div>
   
-<div id='calendar'></div>
-<input type="button" id="btnAddTest" value="추가">
+  
 
+<script>
+	/* 세로드롭다운 */
+	$('.sidenav li.menu>a').on('click', function(){
+	$(this).removeAttr('href');
+	var element = $(this).parent('li');
+	if (element.hasClass('open')) {
+		element.removeClass('open');
+		element.find('li').removeClass('open');
+	    element.find('ul').slideUp();
+	}
+	else {
+		element.addClass('open');
+		element.children('ul').slideDown();
+		element.siblings('li').children('ul').slideUp();
+		element.siblings('li').removeClass('open');
+		element.siblings('li').find('li').removeClass('open');
+	    element.siblings('li').find('ul').slideUp();
+	}
+	});
+</script>
 </body>
 </html>

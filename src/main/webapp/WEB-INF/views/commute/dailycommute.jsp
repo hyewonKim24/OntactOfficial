@@ -307,6 +307,7 @@ canvas {
             element.siblings('li').find('ul').slideUp();
 		}
         });
+        
         //모달생성
         $("#qrcreate").click(function(){
         $("#gomodal").attr("style", "display:block");

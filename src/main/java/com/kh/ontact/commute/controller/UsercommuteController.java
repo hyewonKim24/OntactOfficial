@@ -232,7 +232,7 @@ public class UsercommuteController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/commute/getDailyVisitor", method = RequestMethod.GET)
-    public String getDailyVisitor(HttpSession session, String month, Authentication authentication){
+    public String getDailyVisitor(String month, Authentication authentication){
 		//세션값
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 	    String uno=userdetail.getUno();

@@ -52,8 +52,8 @@ public class DayoffServiceImpl implements DayoffService{
 	}
 	
 	@Override
-	public List<DayoffDto> selectDfCalendar() {
-		return dayoffDao.selectDfCalendar();
+	public List<DayoffDto> selectDfCalendar(String dno) {
+		return dayoffDao.selectDfCalendar(dno);
 	}
 
 }

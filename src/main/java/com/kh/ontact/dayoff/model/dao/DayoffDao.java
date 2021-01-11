@@ -36,7 +36,7 @@ public class DayoffDao {
 	public int updateDayoffApp(DayoffDto d, String uno) { // 글 수정 
 		return sqlSession.update("DayoffMapper.updateDayoffApp", d);
 	}
-	public List<DayoffDto> selectDfCalendar() {
-		return sqlSession.selectList("DayoffMapper.selectDfCalendar");
+	public List<DayoffDto> selectDfCalendar(String dno) {
+		return sqlSession.selectList("DayoffMapper.selectDfCalendar", dno);
 	}
 }
