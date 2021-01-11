@@ -1,5 +1,6 @@
 package com.kh.ontact.project.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,7 +26,7 @@ public class ProjectDao {
 		return sqlSession.selectOne("Project.selectOneCompany", uno);
 	}
 	
-	// 프로젝트 전체목록 : 회사명
+	// 프로젝트 전체목록 : 부서명
 	public ProjectDto selectOneTeam(String uno){
 		return sqlSession.selectOne("Project.selectOneTeam", uno);
 	}
@@ -33,5 +34,15 @@ public class ProjectDao {
 	// 프로젝트 생성
 	public int insertProject(ProjectDto pj) {
 		return sqlSession.insert("Project.insertProject", pj);
+	}
+	
+	// 미보관 프로젝트
+	public List<ProjectDto> selectListPjUns(String uno){
+		return sqlSession.selectList("Project.selectListPjUns", uno);
+	}
+	
+	// 부서별 보관함 프로젝트 목록
+	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap){
+		return sqlSession.selectList("Project.selectListPjTeam", paramMap);
 	}
 }

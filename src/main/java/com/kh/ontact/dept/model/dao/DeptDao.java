@@ -39,7 +39,7 @@ public class DeptDao {
 	}
 	public int deleteDept(String dno) { // 글 삭제 
 		return sqlSession.delete("Dept.deleteDept", dno);
-
+	}
 	//은실
 	public String dnameChk(String dno) throws Exception {
 		return sqlSession.selectOne("Dept.dnameChk", dno);

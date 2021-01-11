@@ -13,7 +13,7 @@ public class ProjectMemberDao {
 	private SqlSession sqlSession;
 
 	// 프로젝트 생성 : 멤버 영입
-	public int insertProjectMember(ProjectMemberDto pjm) {
-		return sqlSession.insert("ProjectMember.insertProjectMember", pjm);
+	public int insertProjectMember(String uno) {
+		return sqlSession.insert("Project.insertProjectMember", uno);
 	}
 }
