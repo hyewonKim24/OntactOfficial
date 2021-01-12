@@ -1,5 +1,6 @@
 package com.kh.ontact.users.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -19,7 +20,7 @@ public class UsersDao {
 		sqlSession.insert("Users.joinBusiness",dto);
 	}
 	
-// 이메일 중복체크
+	// 이메일 중복체크
 	public String emailChk(String uemail) throws Exception {
 		return sqlSession.selectOne("Users.emailChk", uemail);
 	}
@@ -39,7 +40,13 @@ public class UsersDao {
 		System.out.println("가져온이메일:"+dto.getUemail());
 		return sqlSession.update("Users.updateTmppwd",dto);
 	}
-
+	// 마이페이지 계정정보 업데이트
+	public int updateUtell(HashMap<String, String> paramMap) {
+		return sqlSession.update("Users.updateUtell",paramMap);
+	}
+	public int updateUrank(HashMap<String, String> paramMap) {
+		return sqlSession.update("Users.updateUrank",paramMap);
+	}
 	
 	
 	

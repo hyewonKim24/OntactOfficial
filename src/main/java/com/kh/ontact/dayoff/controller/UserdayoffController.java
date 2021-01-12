@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.kh.ontact.dayoff.model.dto.DayoffDto;
 import com.kh.ontact.dayoff.model.service.DayoffService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
@@ -44,7 +45,7 @@ public class UserdayoffController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		    String uno=userdetail.getUno();
 		    System.out.println("세션값확인 : " + uno);
-		    
+		    //
 			//검색
 			String start =  startdate;
 			String end = enddate;
@@ -90,15 +91,15 @@ public class UserdayoffController {
 	public String insetOverwork(DayoffDto d, Authentication authentication, RedirectAttributes rttr) {
 		try {
 			System.out.println("인서트진입");
-			System.out.println(d.getDname());
-			System.out.println(d.getUname());
 		
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		    String uno=userdetail.getUno();
+		    String dno=userdetail.getDno();
 		    System.out.println("세션값확인 : " + uno);
 		    d.setUno(uno);
-		    
-			dayoffServ.insertDayoff(d);
+		    d.setDno(dno);
+			
+		    dayoffServ.insertDayoff(d);
 			rttr.addFlashAttribute("message", "success");
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -133,29 +134,28 @@ public class UserdayoffController {
 			return mv; 
 	}
 	
+	@RequestMapping(value = "/dayoff/calendarlist", method = RequestMethod.GET)
+	public String calendarlist(ModelAndView mv) {
+		System.out.println("캘린더 진입");
+		return "commute/dayofflist";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/dayoff/calendar", method = RequestMethod.GET)
-	public HashMap<String, Object> selectDfCalendar(
+	public String selectDfCalendar(
 			Authentication authentication, HttpServletRequest request) {
-		System.out.println("캘린터 리스트 진입");
-		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-	    String dno=userdetail.getDno();
-	    System.out.println("세션 값 확인" + dno);
-	    
-	    HashMap<String, Object> dayoffMap = new HashMap<String, Object>();
-	    List<DayoffDto> dayoffCalendar = dayoffServ.selectDfCalendar();
-	    System.out.println("결과 확인" + dayoffServ.selectDfCalendar());
-	    dayoffMap.put("dayoffCalendar", dayoffCalendar);
-//	    javaMap.put("evt1", new DayoffDto());
-//	    javaMap.put("evt2", new DayoffDto());        
-//	    System.out.println(javaMap);
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		String id = (String)session.getAttribute("user");
-//		List<Planner> plan = mservice.myPlan(id);
-//		map.put("plan", plan);
-//		dayoffServ.selectDfCalendar();
 		
-		return dayoffMap;
+		System.out.println("캘린더 진입2");
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+//		String dno=userdetail.getDno(); // 해당 부서의 휴가현황만 볼 수 있도록
+		String dno = "1";
+		System.out.println("세션 값 확인" + dno);
+
+	    Gson gson = new Gson();
+		List<DayoffDto> dayoffCalendar = dayoffServ.selectDfCalendar(dno);
+		System.out.println("결과 확인" + dayoffCalendar);
+
+		return gson.toJson(dayoffCalendar);
 	}
 
 }

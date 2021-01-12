@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 public class DayoffDto {
 	private String dfno;
 	private String uno;
+	private String dno;
 	private String dname;
 	private String uname;
 	private int offdays;

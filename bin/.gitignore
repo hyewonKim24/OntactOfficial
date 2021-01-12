@@ -1,7 +1,0 @@
-.classpath
-.project
-.springBeans
-.settings/
-src/main/java/com/kh/ontact/HomeController.java
-src/main/webapp/WEB-INF/views/home.jsp
-target/

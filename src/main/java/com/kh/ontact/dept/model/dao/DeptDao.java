@@ -1,4 +1,4 @@
-package com.kh.ontact.dept.model.dao;
+﻿package com.kh.ontact.dept.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +16,9 @@ public class DeptDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//윤진
-	//부서 목록 뿌리기
-	public List<DeptDto> selectListDeptDname(){
-	return sqlSession.selectList("Dept.selectListDeptDname");
+	//윤진 : 부서 목록 뿌리기
+	public List<DeptDto> selectListDept(String cno){
+		return sqlSession.selectList("Dept.selectListDept", cno);
 	}
 	//혜림
 	public int listCount() {
@@ -39,6 +38,10 @@ public class DeptDao {
 	}
 	public int deleteDept(String dno) { // 글 삭제 
 		return sqlSession.delete("Dept.deleteDept", dno);
+	}
+	//은실
+	public String dnameChk(String dno) throws Exception {
+		return sqlSession.selectOne("Dept.dnameChk", dno);
 	}
 	
 	

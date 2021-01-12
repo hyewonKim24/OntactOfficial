@@ -16,7 +16,7 @@ public class CustomUserDetails implements UserDetails{
 	private String cno;
 	private String dno;
 	private String uname;
-	private int utell;
+	private String utell;
 	private String urank;
 	private Date uregdate;
 	private Date uresdate;
@@ -98,11 +98,11 @@ public class CustomUserDetails implements UserDetails{
 		this.uname = uname;
 	}
 
-	public int getUtell() {
+	public String getUtell() {
 		return utell;
 	}
 
-	public void setUtell(int utell) {
+	public void setUtell(String utell) {
 		this.utell = utell;
 	}
 

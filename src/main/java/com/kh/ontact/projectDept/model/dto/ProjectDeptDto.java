@@ -18,6 +18,4 @@ public class ProjectDeptDto {
 	private String pno;
 	private String dno;
 	
-	/* private List<DeptDto> DeptDto; */
-	
 }

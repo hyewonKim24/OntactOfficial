@@ -37,6 +37,25 @@
 		]]>
 	</select>
 	
+	<!-- 마이페이지 계정 정보 -->
+	<select id="findCompany" resultType="CompanyDto">
+		<![CDATA[
+			select cname, nvl('',ctel) as ctel from company where cno=#{cno}
+		]]>
+	</select>
+	
+	<!-- 마이페이지 계정 업데이트 -->
+	<update id="updateCname" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update company set cname=#{cname} where cno=#{cno}
+		]]>
+	</update>
+	<update id="updateCtel" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update company set ctel=#{ctel} where cno=#{cno}
+		]]>
+	</update>
+	
 	<!-- 혜원 코드   -->
 	<select id="cnameOne" resultType="String">
 		SELECT CNAME FROM COMPANY

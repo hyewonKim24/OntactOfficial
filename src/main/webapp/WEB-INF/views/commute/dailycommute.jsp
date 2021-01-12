@@ -10,25 +10,22 @@
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- date피커 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 현재시간 및 위치 , QR 생성 -->
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
 	type="text/javascript" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/getmap.js"></script>
 
 <!-- 스캐너 -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jsQr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jsQr.js"></script>
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
 
 <style>
@@ -307,6 +304,7 @@ canvas {
             element.siblings('li').find('ul').slideUp();
 		}
         });
+        
         //모달생성
         $("#qrcreate").click(function(){
         $("#gomodal").attr("style", "display:block");
@@ -388,10 +386,10 @@ canvas {
 		  });
 		  
 		//출퇴근 스캐너호출 
-		  $('#qrenter').click(function() {
+		$('#qrenter').click(function() {
 				popupOpen('qrenter');
-			});
-		  function popupOpen(url){
+		});
+		function popupOpen(url){
 			  	var name="enter";
 			    var specs = 'width=510, height=700, menubar=no,status=no,toolbar=no';
 			    var newWindow = window.open(url,name,specs);
