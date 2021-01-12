@@ -16,10 +16,9 @@ public class DeptDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//윤진
-	//부서 목록 뿌리기
-	public List<DeptDto> selectListDeptDname(){
-	return sqlSession.selectList("Dept.selectListDeptDname");
+	//윤진 : 부서 목록 뿌리기
+	public List<DeptDto> selectListDept(String cno){
+		return sqlSession.selectList("Dept.selectListDept", cno);
 	}
 	//혜림
 	public int listCount() {
