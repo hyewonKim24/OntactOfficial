@@ -34,18 +34,18 @@ public class ApprovalDto {
 	private String apno;
 	private String dno;
 	private String uno;
-	private String aptile;
+	private String aptitle;
 	private Date apdate;
 	private String apcontent;
 	private String apperson;
-	private int APSTATE;
-	private String APREJECTION;
-	private String APPLACE;
-	private String APATTEND;
-	private String APDEC;
-	private String APETC;
-	private String APFORMAT;
-	private String APDRAFTER;
-	private String APPTITLE;
+	private int apstate;
+	private String aprejection;
+	private String applace;
+	private String apattend;
+	private String apdec;
+	private String apetc; 
+	private String apformat;
+	private String apdrafter;
+	private String apptitle;
 	
 }

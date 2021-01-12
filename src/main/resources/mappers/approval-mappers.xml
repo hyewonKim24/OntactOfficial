@@ -21,17 +21,37 @@
 		<result property="apptitle" column="apptitle" />
 	</resultMap>
 
-
+	<!-- 기안 전체 개수 조회 -->
+	<select id="listCount" resultType="int">
+			<![CDATA[
+			SELECT count(*) FROM APPROVAL
+			]]>
+	</select>
+		<!-- 페이지당 기안 조회 -->
+	<select id="selectList" resultType="arraylist"
+		resultMap="resultApproval">
+		<![CDATA[
+		SELECT * FROM APPROVAL
+		]]>
+	</select>
 
 	<!-- 기안 작성 -->
-	<insert id="insertApproval" flushCache="true">
+	<insert id="insertApproval" flushCache="true" parameterType="string" statementType="PREPARED">
 		<![CDATA[
-		INSERT INTO APPROVAL(APNO,DNO,APPERSON,APFORMAT,APDRAFTER,APDATE,
+		INSERT INTO APPROVAL(APNO,DNO,APPERSON,APFORMAT,APDRAFTER,
 			APTITLE,APPTITLE,APPLACE,APATTEND,APCONTENT,APDEC,APETC)
-			values(APNO_SE.NEXTVAL,#{DNO},#{APPERSON},#{APFORMAT},#{APDRAFTER},#{APDATE},#{APTITLE},#{APPTITLE}#{APPLACE},
+			values(APNO_SE.NEXTVAL,#{DNO},#{APPERSON},#{APFORMAT},#{APDRAFTER},#{APDATE},#{APTITLE},#{APPTITLE},#{APPLACE},
 			#{APATTEND},#{APCONTENT},#{APDEC},#{APETC})
 		]]>
 	</insert>
+	
+	
+<!-- 	<select id="selectOne" parameterType="string" resultType="ApprovalDto">
+		<![CDATA[
+		SELECT * FROM APPROVAL
+		WHERE aptitle = #{aptitle}
+		]]>
+	</select> -->
 
 
 </mapper>

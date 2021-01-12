@@ -1,5 +1,8 @@
 package com.kh.ontact.approval.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.ontact.approval.model.dto.ApprovalDto;
 import com.kh.ontact.approval.model.service.ApprovalService;
 
+
 @Controller
 public class ApprovalController {
 	
@@ -21,26 +25,33 @@ public class ApprovalController {
 	public static final int LIMIT = 10;
 	
 
+	@RequestMapping(value = "driftlist" , method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public ModelAndView approvalService(@RequestParam(name = "keyword", required = false) ModelAndView mv) {
+		
+		int listCount = ApproService.totalCount();
+//		mv.addObject("listCount", listCount);
+//		mv.addObject(ApproService.selectList());
+		mv.setViewName("users/approval/driftlist");
+		return mv;
+	}
+	
 	@RequestMapping(value = "/driftform" , method = RequestMethod.GET)
 	public String driftform(ModelAndView mv) {
 		return "users/approval/driftform";
 	}
-	@RequestMapping(value = "/insert" , method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/appinsert" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public ModelAndView insertApproval(ApprovalDto dto, @RequestParam(required = false) 
 	HttpServletRequest request, ModelAndView mv) throws Exception {
+		
+		System.out.println("insert들어옴");
 		ApproService.insertApproval(dto);
-		mv.setViewName("redirect:driftform");
+		
+		mv.setViewName("redirect:main");
 		return mv;
 	}
 	
-//	@RequestMapping(value = "/guestjoin", method = RequestMethod.POST)
-//	public String insertApproval(@RequestParam ApprovalDto ApprovalDto) {
-//		
-//		try {
-//			ApproService.insertApproval(ApprovalDto);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "redirect:/driftform";
-//	}
+	
+	
+
 }

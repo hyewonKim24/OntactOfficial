@@ -1,5 +1,7 @@
 package com.kh.ontact.approval.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 	private ApprovalDao apDao;
 	
 	@Override
+	public int totalCount() {
+		return apDao.listCount();
+	}
+	
+	@Override
 	public void insertApproval(ApprovalDto dto) throws Exception{
 		apDao.insertApproval(dto);
+	}
+	
+	@Override
+	public List<ApprovalDto> selectList() {
+		return apDao.selectList();
 	}
 
 }
