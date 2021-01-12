@@ -110,6 +110,7 @@ public class HeaderController {
 	}
 	
 	//채팅 전체 알림수 
+	@SuppressWarnings("unused")
 	@ResponseBody
 	@RequestMapping(value="/chatalertall" ,method = {RequestMethod.GET, RequestMethod.POST})
 	public int chatalertAll(ModelAndView mv,Authentication authentication) {
@@ -118,8 +119,9 @@ public class HeaderController {
 		Integer count=0;
 		try {
 			count=chatalertService.AllChatAlert(uno);
-			if(count==null)
+			if(count==null) 
 				count=0;
+			
 			System.out.println("채팅count:"+count);
 			
 		} catch (Exception e) {

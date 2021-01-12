@@ -51,7 +51,7 @@ public class ProjectController {
 			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(uno));
 			mv.addObject("listpj", pjService.selectListProject(uno));
 			System.out.println("project List 결과 : " + pjService.selectListProject(uno));
-			mv.setViewName("users/project/projectall");
+			mv.setViewName("/project/projectall");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,5 +90,8 @@ public class ProjectController {
 //			return ;
 //		}
 //	}
+	
+
+
 
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="BoardAll">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+
+	
+	<resultMap type="BoardAllDto" id="resultBoardAll">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="bno" column="bno"/>
+	<result property="pno" column="pno" />
+	<result property="uno" column="uno" />
+	<result property="bname" column="bname" />
+	<result property="bopen" column="bopen" />
+	<result property="btype" column="btype" />
+	<result property="bfirst" column="bfirst" />
+	<result property="bdate" column="bdate" />
+	</resultMap>
+	
+	<!-- boardAll 추가 -->
+	<insert id="insertBoardAll">
+	 <![CDATA[
+		]]>
+	</insert>
+	
+</mapper>
