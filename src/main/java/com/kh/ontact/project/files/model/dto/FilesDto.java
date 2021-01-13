@@ -1,4 +1,4 @@
-package com.kh.ontact.project.file.model.dto;
+package com.kh.ontact.project.files.model.dto;
 
 import java.sql.Date;
 
@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class FileDto {
-	private String fno;
-	private String pno;
+public class FilesDto {
 	private String fname;
+	private String pno;
+	private String bno;
+	private String uno;
 	private Date fdate;
 	private String fsize;
 	private String fpath;

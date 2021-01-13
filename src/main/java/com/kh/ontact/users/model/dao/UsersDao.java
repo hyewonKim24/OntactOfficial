@@ -47,6 +47,14 @@ public class UsersDao {
 	public int updateUrank(HashMap<String, String> paramMap) {
 		return sqlSession.update("Users.updateUrank",paramMap);
 	}
+	// 마이페이지 프로필 변경
+	public int updateProfile(HashMap<String, String> paramMap) {
+		return sqlSession.update("Users.updateProfile",paramMap);
+	}
+	// 마이페이지 프로필 삭제
+	public int deleteProfile(String uno) {
+		return sqlSession.update("Users.deleteProfile",uno);
+	}
 	
 	
 	

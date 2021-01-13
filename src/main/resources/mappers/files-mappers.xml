@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Files">
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="FilesDto" id="resultFile">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="fname" column="fname"/>
+		<result property="pno" column="pno" />
+		<result property="bno" column="bno" />
+		<result property="uno" column="uno" />
+		<result property="fdate" column="fdate" />
+		<result property="fsize" column="fsize" />
+		<result property="fpath" column="fpath" />
+	</resultMap>
+	
+	<!-- 파일추가, fdate/fsize/fpath 어떻게 처리할지 -->
+	<insert id="addFile">
+		 <![CDATA[
+		 	insert into files(fname,pno,bno,uno) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno})
+		 ]]>
+	</insert>
+	
+</mapper>

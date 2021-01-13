@@ -6,15 +6,17 @@
 <html lang="kr">
 
 <head>
+	<sec:csrfMetaTags />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf_header" content="${_csrf.headerName}" />
-    <meta name="_csrf" content="${_csrf.token}" />
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/lightbox.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/22634e2e1a.js" crossorigin="anonymous"></script>
+    
     <style>
         *{
             margin:0;
@@ -164,6 +166,21 @@
             position: absolute;
             top: 10px;
             left: 30px;
+            right: 0;
+            bottom: 0px;
+            content: "";
+            display: block;
+            border-radius: 90px;
+            /* box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05); */
+            /* border:1px solid #acacac; */
+        }
+        #profile{
+       		width: 110px;
+            height: 110px;
+           /*  z-index: 30; */
+            position: absolute;
+            top: 0px;
+            left: 0px;
             right: 0;
             bottom: 0px;
             content: "";
@@ -350,17 +367,26 @@
             <div id="info_wrapper">
                 <div id="info_side">
                     <div id="info_photo_wrap">
-                        <div id="userphoto"></div>
+                    <sec:authentication property="principal.ufilepath" var="ufilepath"/>
+                    <sec:authentication property="principal.ufilename" var="dbufilename"/>
+                    	<c:if test="${empty ufilepath}">
+                        	<div id="userphoto"><img src="${pageContext.request.contextPath}/resources/img/user-3.png" id="profile"></div>
+                    	</c:if>
+                    	<c:if test="${not empty ufilepath}">
+                    		<div id="userphoto"><img src="${ufilepath}" id="profile"></div>
+                    	</c:if>
                         <a id="userphoto_btn"><img src="${pageContext.request.contextPath}/resources/img/photo-camera.png"></a>
-                        <form method="post" enctype="multipart/form-data" id="form">
+                        <form id="profileform" action="${pageContext.request.contextPath}/user/mypage/profile" method="post">
 	                        <div id="userphoto_menu">
 	                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                            <label class="file" for="uploadphoto" style="cursor:pointer;">사진 편집</label>
-	                            <!-- <input type="file" id="uploadphoto" accept="image/*" name="image" style="display:none;" onchange="setProfile(event);"> -->
-	                            <input type="file" id="uploadphoto" accept="image/*" name="image" style="display:none;"">
-	                            <a id="removephoto">사진 삭제</a>
+	                            <input type="file" id="uploadphoto" accept="image/*" name="image" style="display:none;">
+	                            <a id="removephoto" onclick="deleteFileWrtPage()">사진 삭제</a>
+	                            <input type="hidden" id="ufilename" name="ufilename">
+	                            <input type="hidden" id="ufilepath" name="ufilepath">
+	                            <input type="hidden" id="dbufilename" value="${dbufilename}">
 	                        </div>
-	                        <button type="button" id="photobtn">사진 등록하기</button>
+	                        <button type="submit" id="photobtn">사진 등록하기</button>
                         </form>
                     </div>
                 </div>
@@ -470,11 +496,39 @@
                         </li>
                     </ul>
                 </form>
+            <!-- 테스트 -->
+            <div class="form-group">
+                    <div class="fileDrop">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
+                    </div>
+                </div>
+             <div class="box-footer">
+                <ul class="mailbox-attachments clearfix uploadedFileList">
+                <li>
+	                <span class="mailbox-attachment-icon has-img">
+	            		<img src="${imgSrc}" alt="Attachment" class="imgsrc">
+	        		</span>
+	        		<div class="mailbox-attachment-info">
+			            <a href="${originalFileUrl}" class="mailbox-attachment-name">
+			                <i class="fa fa-paperclip"></i>
+			            </a>
+			            <a href="${fullName}" class="btn btn-default btn-xs pull-right delBtn">
+			                <i class="fa fa-fw fa-remove"></i>
+			            </a>
+	       			 </div>
+	       			 </li>
+          		</ul>
+          	</div>
             </div>
         </article>
     </section>
 
     <script>
+    
         //편집 버튼 활성화
         $('.editbtn').click(function(){
             $(this).parent('.userinfo_editable').css("display","none");
@@ -629,110 +683,173 @@
             e.preventDefault();
             $("#userphoto_menu").toggle();
         })
+  
+    	var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
         
-       /* function setProfile(event){
-        	var image = $("#uploadphoto").val();
-    	   	$("#userphoto").css("background-image","URL("+image+")")
-    	   	$("#userphoto").css("background-size","contain")
-    	   	$("#userphoto_menu").hide();
-        	$("#photobtn").show();
-    	   /* var image = $("#uploadphoto").val();
-    	   $.ajax({
-    		type:"GET",
-			url:"${pageContext.request.contextPath}/user/mypage/mypicture?image="+image,
-			success:function(data){
-				alert("성공");
-			}  
-    	  })
-       } */
-       
-       // 프사 미리보기
-/*        function readURL(input) {
-           if (input.files && input.files[0]) {
-               var reader = new FileReader();
-               reader.onload = function(e) {
-            	   $("#userphoto").css("background-image","URL("+e.target.result+")")
-					$("#userphoto").css("background-size","cover")
-					$("#userphoto_menu").hide();
-        			$("#photobtn").show()
-               }
-               reader.readAsDataURL(input.files[0]);
-           }
-       }
-       $("#uploadphoto").change(function() {
-           readURL(this);
-       });
-       
-       // 프사 등록하기
-       $("#photobtn").click(function(){
-    	   var header = $("meta[name='_csrf_header']").attr("content");
-           var token = $("meta[name='_csrf']").attr("content");
-	        
-       }) */
-
-       var sel_file;
-       $(document).ready(function() {
-    	    $("#uploadphoto").on("change", fileChange);
-    	});
-       function fileChange(e) {
-    		e.preventDefault();
-    		var files = e.target.files;
-    	    var filesArr = Array.prototype.slice.call(files);
-    	    filesArr.forEach(function(f) {
-    	        if(!f.type.match("image.*")) {
-    	            alert("확장자는 이미지 확장자만 가능합니다.");
-    	            return;
-    	        }
-    	        sel_file = f;
-
-    	        var reader = new FileReader();
-    	        reader.onload = function(e) {
-    	        	$("#userphoto").css("background-image","URL("+e.target.result+")")
-					$("#userphoto").css("background-size","cover")
-    	        }
-    	        reader.readAsDataURL(f);
-    	    });
-
-    	    var file = files[0]
-    	    console.log(file)
-    	    var formData = new FormData();
-    	    formData.append("file", file);
-    			$.ajax({
-    	    	url: '/uploadAjax',
-    			  data: formData,
-    			  dataType:'text',
-    			  processData: false,
-    			  contentType: false,
-    			  type: 'POST',
-    			  success: function(data){
-    				alert("프로필 이미지가 변경 되었습니다.")
-    			  }
-    			})
-
-    	 		function checkImageType(fileName){
-    	 			var pattern = /jpg$|gif$|png$|jpeg$/i;
-    	 			return fileName.match(pattern);
-    	 		}
-
-    	 		function getOriginalName(fileName){
-    	 			if(checkImageType(fileName)){
-    	 				return;
-    	 			}
-    	 			var idx = fileName.indexOf("_") + 1 ;
-    	 			return fileName.substr(idx);
-
-    	 		}
-    	 		function getImageLink(fileName){
-    	 			if(!checkImageType(fileName)){
-    	 				return;
-    	 			}
-    	 			var front = fileName.substr(0,12);
-    	 			var end = fileName.substr(14);
-    	 			return front + end;
-    	 		}
+        //console.log($("ufilename").val()+"맨처음 들어왔을때");
+        
+        //페이지 벗어나려 할 때
+        var checkUnload = true;
+        $(window).on("beforeunload", function(){
+        	let ufilename = $("#ufilename").val();
+            if(checkUnload){
+            	if(ufilename===null||ufilename===""){
+            		return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+            	} else{
+            		deleteFile(ufilename);
+            		return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+            	}
+            }
+        });
+        
+        // 서버에 파일 업로드
+        $("#uploadphoto").on("change", fileChange);
+        function fileChange(e){
+        	e.preventDefault();
+        	var files = e.target.files;
+        	var file = files[0];
+        	var formData = new FormData();
+     	    formData.append("file", file);
+     	    console.log(formData.get('file'));
+     	    // 파일 업로드 AJAX 통신 메서드 호출
+     	    uploadFile(formData);
+        }
+    	
+    	//파일 업로드 AJAX 통신
+    	function uploadFile(formData){
+    		$.ajax({
+    			url:"${pageContext.request.contextPath}/files/upload",
+    			data:formData,
+    			dataType:"text",
+    			processData:false,
+    			contentType:false,
+    			type:"POST",
+    			beforeSend: function(xhr){
+    				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+    			},
+    			success:function(data){
+    				printFiles(data);
+    			}
+    		})
     	}
-       
-       
+		
+    	// 첨부파일 출력
+    	function printFiles(data){
+    		// 파일 정보 처리
+    	    var fileInfo = getFileInfo(data);
+    		$("#ufilename").val(fileInfo.fullName);
+    		$("#ufilepath").val(fileInfo.imgSrc);
+    		console.log(fileInfo.fullName);
+    		console.log(fileInfo.imgSrc);
+    		$("#profile").attr("src",fileInfo.imgSrc);
+			$("#userphoto_menu").hide();
+        	$("#photobtn").show()
+    	}
+    	
+    	// 프로필사진 등록
+   		$("#profileform").submit(function (event) {
+   			let dbufilename = $("#dbufilename").val();
+   			deleteFile(dbufilename);
+   			checkUnload = false;
+    	});
+    	
+    	
+    	// 파일 삭제 (db삭제 or 서버에서 사진삭제)
+    	function deleteFileWrtPage() {
+    		let ufilename = $("#ufilename").val();
+    		let dbufilename = $("#dbufilename").val();
+    		let f = document.createElement("form");
+    		f.setAttribute("method", "post");
+    		
+    		var delconfirm = confirm("정말 삭제하시겠습니까?")
+    		if(delconfirm){
+    			if(ufilename===null || ufilename===""){
+    				if(dbufilename===null||dbufilename===""){
+    					alert("삭제할 사진이 없습니다.")
+    				} else{
+    					checkUnload = false;
+    					deleteFile(dbufilename);
+		    			f.setAttribute("action","${pageContext.request.contextPath}/user/mypage/delProfile")
+		    			document.body.appendChild(f);
+		    			var i = document.createElement("input");
+		    			i.setAttribute("type","hidden");
+		    			i.setAttribute("name","${_csrf.parameterName}");
+		    			i.setAttribute("value","${_csrf.token}");
+		    			f.appendChild(i);
+		    			f.submit();    					
+    				}
+	    		} else {
+	    			checkUnload = false;
+	    			// 사진편집이 실행 되었을 경우
+	    			console.log(ufilename);
+	    			console.log("사진편집");
+	    			f.setAttribute("action","${pageContext.request.contextPath}/user/mypage/delPreviewProfile");
+	    			document.body.appendChild(f);
+	    			var i = document.createElement("input");
+	    			i.setAttribute("type","hidden");
+	    			i.setAttribute("name","ufilename");
+	    			i.setAttribute("value",ufilename);
+	    			f.appendChild(i);
+	    			var csrf = document.createElement("input");
+	    			csrf.setAttribute("type","hidden");
+	    			csrf.setAttribute("name","${_csrf.parameterName}");
+	    			csrf.setAttribute("value","${_csrf.token}");
+	    			f.appendChild(csrf);
+	    			f.submit();
+	    		}
+    		} else {
+    			alert("삭제가 취소되었습니다.")
+    		}
+    	}
+    	
+    	// 서버 파일 삭제 AJAX 통신
+    	function deleteFile(dbufilename) {
+    	    $.ajax({
+    	        url: "${pageContext.request.contextPath}/files/delete",
+    	        type: "post",
+    	        data: {fileName: dbufilename},
+    	        dataType: "text",
+    	        beforeSend: function(xhr){
+    				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+    			},
+    	        success: function (result) {
+    	            if (result === "DELETED") {
+    	            	console.log("삭제됨");
+    	            }
+    	        }
+    	    });
+    	}
+    	
+    	// 파일 정보 처리
+    	function getFileInfo(fullName) {
+
+    	    var originalFileName;   // 화면에 출력할 파일명
+    	    var imgSrc;             // 썸네일 or 파일아이콘 이미지 파일 출력 요청 URL
+    	    var originalFileUrl;    // 원본파일 요청 URL
+    	    var uuidFileName;       // 날짜경로를 제외한 나머지 파일명 (UUID_파일명.확장자)
+
+    	    // 이미지 파일이면
+    	    if (checkImageType(fullName)) {
+    	        imgSrc = "${pageContext.request.contextPath}/files/display?fileName=" + fullName; // 썸네일 이미지 링크
+    	        uuidFileName = fullName.substr(14);
+    	        var originalImg = fullName.substr(0, 12) + fullName.substr(14);
+    	        // 원본 이미지 요청 링크
+    	        originalFileUrl = "${pageContext.request.contextPath}/files/display?fileName=" + originalImg;
+    	    } else {
+    	        alert("이미지 파일만 선택해주세요.")
+    	        return false;
+    	    }
+    	    originalFileName = uuidFileName.substr(uuidFileName.indexOf("_") + 1);
+    	    return {originalFileName: originalFileName, imgSrc: imgSrc, originalFileUrl: originalFileUrl, fullName: fullName};
+    	}
+
+    	// 이미지 파일 유무 확인
+    	function checkImageType(fullName) {
+    	    var pattern = /jpg$|gif$|png$|jpge$/i;
+    	    return fullName.match(pattern);
+    	}
+    	
     </script>
 </body>
 

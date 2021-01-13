@@ -70,7 +70,19 @@
 		update users set urank=#{urank} where uno=#{uno}
 		]]>
 	</update>
-
+	
+	<!-- 프로필 사진 업데이트 -->
+	<update id="updateProfile" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update users set ufilename=#{ufilename}, ufilepath=#{ufilepath} where uno=#{uno}
+		]]>
+	</update>
+	<!-- 프로필 사진 없애기 -->
+	<update id="deleteProfile" flushCache="true">
+		<![CDATA[
+		update users set ufilename=null, ufilepath=null where uno=#{uno}
+		]]>
+	</update>
 	
 	<!-- ####### 여기부터 시큐리티 ####### -->
 	<!-- 유저 정보 가져오기 -->

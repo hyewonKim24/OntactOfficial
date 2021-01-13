@@ -53,7 +53,7 @@ public class UsersServiceImpl implements UsersService{
 			 throw new AlreadyExistingCurlException(regReq.getCurl()+" is duplicate id.");
 		}
 	}
-	
+	@Override
 	public String findCno(String curl) throws Exception {
 		return companydao.findCno(curl);
 	}
@@ -105,17 +105,31 @@ public class UsersServiceImpl implements UsersService{
 		return deptdao.dnameChk(dno);
 	}
 	// 마이페이지 정보 수정
+	@Override
 	public int updateUrank(HashMap<String, String> paramMap) throws Exception {
 		return usersDao.updateUrank(paramMap);
 	}
+	@Override
 	public int updateUtell(HashMap<String, String> paramMap) throws Exception {
 		return usersDao.updateUtell(paramMap);
 	}
+	@Override
 	public int updateCname(HashMap<String, String> paramMap) throws Exception {
 		return companydao.updateCname(paramMap);
 	}
+	@Override
 	public int updateCtel(HashMap<String, String> paramMap) throws Exception {
 		return companydao.updateCtel(paramMap);
+	}
+	// 마이페이지 프로필사진 변경
+	@Override
+	public int updateProfile(HashMap<String, String> paramMap) throws Exception{
+		return usersDao.updateProfile(paramMap);
+	}
+	// 마이페이지 프로필사진 삭제
+	@Override
+	public int deleteProfile(String uno) throws Exception{
+		return usersDao.deleteProfile(uno);
 	}
 	
 	
