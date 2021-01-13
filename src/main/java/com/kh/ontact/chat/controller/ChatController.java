@@ -82,7 +82,10 @@ public class ChatController {
 		String chatno=null;
 		
 		try {
-			//채팅방만들기
+			//채팅방이 있으면 해당 채팅방으로
+
+			
+			//채팅방이 없으면 채팅방 만들기
 			chatno = chatService.insertChat(chatname);
 			System.out.println(chatno+"chat insert");
 			mdto.setChatno(chatno);

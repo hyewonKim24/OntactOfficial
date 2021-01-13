@@ -1,5 +1,8 @@
 package com.kh.ontact.project.boardall.model.service;
 
-public interface BoardAllService {
+import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 
+public interface BoardAllService {
+	int insertBoardAll(BoardAllDto dto) throws Exception;
+	
 }

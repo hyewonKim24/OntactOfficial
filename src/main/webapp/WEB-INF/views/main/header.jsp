@@ -547,9 +547,7 @@ input:focus {
 			success:function(object){
 				$("#chat-alarm-count").html('');
 				$("#chat-alarm-counts").html(''); 
-				console.log(object+"성공");
 				if(object==0 || object==null){
-				console.log(object+"없음");
 				$("#chat-alarm-count").remove();
 				$("#chat-alarm-counts").remove(); 
 				}else{
@@ -566,7 +564,7 @@ input:focus {
 				console.log("실패");
 			}
 		});
-				setTimeout("allChatAlert()", 2000); 
+				setTimeout(allChatAlert, 2000); 
 		}
 		//	timerID = setInterval("allChatAlert()", 1000); // 2초 단위로 갱신 처리
 
@@ -585,7 +583,7 @@ input:focus {
 						console.log(object[i].chatno+"성공");
 					var printHTML = "<div class='chat-name'>";
 					printHTML += "<a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
-						" target='_blank' onClick=\"window.open(this.href, \"\", \"width=480, height=650\"); return false;\">";
+						" target='_blank' onClick=\"window.open(this.href,\'\', \'width=480, height=650\'); return false;\">";
 					printHTML += "<span class='chat-users-icon'>";
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/svg/users.svg' width='35px' height='35px'></span>";
 					printHTML += "<div class='chat-content-wrap'>";
@@ -642,7 +640,7 @@ input:focus {
 					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></span>";
 					html += "<span class='tel-all-desc'> ";
 					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname +" </a>";
-					html += " <a href='${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"' onClick= \"window.open(this.href, '', 'width=350, height=488'); return false;\">";
+					html += " <a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"\" onClick= \"window.open(this.href, \'\', \'width=350, height=488\'); return false;\">";
 //	오류ㅠㅠ				html += " <a href='javascript:openNewWindow('${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"')>";
 					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/chat-03.svg' width='30px' height='25px' class='tel-chat-icon'></a>";
 					html += "</span></span></div></form>";

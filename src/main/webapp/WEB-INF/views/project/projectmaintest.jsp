@@ -490,19 +490,19 @@
 			color: #505050;
 		}
 		
-		#task-radio-01:checked + label{
+		.task-radio-01:checked + label{
 			background-color: #F27781;
 			color:#fff;	
 		}
-		#task-radio-02:checked + label{
+		.task-radio-02:checked + label{
 			background-color: #f17a19;
 			color:#fff;	
 		}
-		#task-radio-03:checked + label{
+		.task-radio-03:checked + label{
 			background-color:  #50b766;
 			color:#fff;	
 		}
-		#task-radio-04:checked + label{
+		.task-radio-04:checked + label{
 			background-color: #4aaefb;
 			color:#fff;	
 		}
@@ -530,7 +530,7 @@
 			margin:12px;
 			
 		}
-		#task-02{
+		.task-02{
 			display:inline-block;
 			height: 45px;
 			width: 650px;
@@ -553,6 +553,15 @@
 			border: 1px solid #e7e7e7;
 			border-radius: 5px;
 		}
+		.task-res-list{
+			padding:5px;
+			width: 150px;
+			height: 20px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 5px;
+			cursor: pointer;
+		}
 		
 		.task-res-add-wrap{
 			width: 200px;
@@ -565,9 +574,6 @@
 			z-index: 999;
 		    position: absolute;
    			 top: 33px;
-		}
-		.task-res-list{
-			cursor: pointer;
 		}
 		.task-03{
 			display:inline-block;
@@ -1168,9 +1174,15 @@
                     </div>
                     
                     <!-- 혜원 )  업무 글작성 부분 -->
+                    <%-- <c:if test="${not empty taskSuccess}">
+                    	<script>
+                    		alert("1개의 글이 등록되었습니다");
+                    	</script>
+                    </c:if> --%>
                     <div id="task" class="writemenu">
                     <form name="task_frm" id="task_frm">
                     	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	 <input type="hidden" name="pno" id="pno" value="${pno}">
                         <div class="textbody">
                             <div class="title">
                                 <input type="text" class="title_detail" name="tasktitle" id="tasktitle" placeholder="업무명을 입력하세요.(50자 이내)">
@@ -1178,17 +1190,17 @@
                             <div id="task-01">
                             	<img src="${pageContext.request.contextPath}/resources/img/svg/clock-history.svg" width="20px" height="20px" id="task-icon01">
 	                            	<div class="task-radio-wrap">
-	                            	<input type="radio" class="task-radio" name="task-radio" id="task-radio-01" value="t01"> 
-	                            	<label for="task-radio-01" class="t-label">요청</label>
-	                            	<input type="radio" class="task-radio" name="task-radio" id="task-radio-02" value="t02">
-									<label for="task-radio-02" class="t-label">진행</label>
-	                            	<input type="radio" class="task-radio" name="task-radio" id="task-radio-03" value="t03"> 
-	                            	<label for="task-radio-03" class="t-label">완료</label>
-	                            	<input type="radio" class="task-radio" name="task-radio" id="task-radio-04" value="t04"> 
-	                            	<label for="task-radio-04" class="t-label">보류</label>
+	                            	<input type="radio" class="task-radio task-radio-01" name="taskradio" id="task-radio01" value="1"> 
+	                            	<label for="task-radio01" class="t-label">요청</label>
+	                            	<input type="radio" class="task-radio task-radio-02" name="taskradio" id="task-radio02" value="2">
+									<label for="task-radio02" class="t-label">진행</label>
+	                            	<input type="radio" class="task-radio task-radio-03" name="taskradio" id="task-radio03" value="3"> 
+	                            	<label for="task-radio03" class="t-label">완료</label>
+	                            	<input type="radio" class="task-radio task-radio-04" name="taskradio" id="task-radio04" value="4"> 
+	                            	<label for="task-radio04" class="t-label">보류</label>
 	                            	</div>
                             </div>
-                            <div id="task-02">
+                            <div class="task-02">
                         	    <img src="${pageContext.request.contextPath}/resources/img/svg/person-plus-fill.svg" width="20px" height="20px" class="task-icon02">
                           		<div class="task-res-wrap">
                           			<input type="text" class="task-res" name="taskname" placeholder="담당자 추가">
@@ -1225,8 +1237,8 @@
 									<div class="task-rate-wrap">
 									 <a class="workPrgs">
 									<div class="workPrgrs_bg">
-										<strong id="PROGRESS_PER" class="txt">0%</strong>
-										<input type="hidden" name="trate" id="trate">
+										<strong class="txt PROGRESS_PER">0%</strong>
+										<input type="hidden" name="trate" class="trate">
 										<span id="PROGRESS" class="bar percent0"></span>
 										<div class="pcnt0" data="0" style="width:5%;display:block">
 											<span class="pcnt">
@@ -1280,7 +1292,7 @@
                           	</div>
                           	
                             	
-                            <textarea class="content_detail2" placeholder="업무내용을 입력하세요" id="task-content" name="task-content"></textarea>
+                            <textarea class="content_detail2" placeholder="업무내용을 입력하세요" id="task-content" name="taskcontent"></textarea>
                         </div>
                         <div class="textfooter">
                             <div class="textfooter_func_wrap">
@@ -1346,53 +1358,61 @@
 	    $('#task-end-date').datepicker(); 
 	    
 	    $(".task-res").click(function (){
-	    	$(".task-res-add-wrap").toggle();
+	    	$p=$(this).parents(".task-02");
+	    	$p.find(".task-res-add-wrap").toggle();
+	    });
+	    $(".task-res-list").click(function(){
+	    	$p=$(this).parents(".task-02");
+	    	$(".task-res").val($(this).text());
+	    	$p.find(".task-res-add-wrap").hide();
 	    });
 	    
 	    $(".task-pri").click(function (){
-	    	$(".task-pri-add-wrap").toggle();
+	    	$p=$(this).parents(".task-pri-wrap");
+	    	$p.find(".task-pri-add-wrap").toggle();
 	    });
+	    
 	    $(".pcnt0").click(function(){
-	    	$(".bar").css("background-color","#7099de");
-	    	$(".bar").css("width","8px");
-	    	$("#PROGRESS_PER").html("0%");
-	    	$("#trate").val("0");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	   		var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("background-color","#7099de");
+	    	$p.find(".bar").css("width","8px");
+	    	$p.find(".PROGRESS_PER").html("0%");
+	    	$p.find(".trate").val("0");
 	    });
 	    $(".pcnt20").click(function(){
-	    	$(".bar").css("background-color","#7099de");
-	    	$(".bar").css("width","30px");
-	    	$("#PROGRESS_PER").html("20%");
-	    	$("#trate").val("20");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	    	var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("background-color","#7099de");
+	    	$p.find(".bar").css("width","30px");
+	    	$p.find(".PROGRESS_PER").html("20%");
+	    	$p.find(".trate").val("20");
 	    });
 	    $(".pcnt40").click(function(){
-	    	$(".bar").css("background-color","#7099de");
-	    	$(".bar").css("width","60px");
-	    	$("#PROGRESS_PER").html("40%");
-	    	$("#trate").val("40");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	    	var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("background-color","#7099de");
+	    	$p.find(".bar").css("width","60px");
+	    	$p.find(".PROGRESS_PER").html("40%");
+	    	$p.find(".trate").val("40");
 	    });
 	    $(".pcnt60").click(function(){
-	    	$(".bar").css("background-color","#7099de");
-	    	$(".bar").css("width","90px");
-	    	$("#PROGRESS_PER").html("60%");
-	    	$("#trate").val("60");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	    	var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("background-color","#7099de");
+	    	$p.find(".bar").css("width","90px");
+	    	$p.find(".PROGRESS_PER").html("60%");
+	    	$p.find(".trate").val("60");
 	    });
 	    $(".pcnt80").click(function(){
-	    	$(".bar").css("background-color","#7099de");
-	    	$(".bar").css("width","120px");
-	    	$("#PROGRESS_PER").html("80%");
-	    	$("#trate").val("80");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	    	var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("ba	ckground-color","#7099de");
+	    	$p.find(".bar").css("width","120px");
+	    	$p.find(".PROGRESS_PER").html("80%");
+	    	$p.find(".trate").val("80");
 	    });
 	    $(".pcnt100").click(function(){
-	    	$(".bar").css("width","150px");
-	    	$(".bar").css("background-color","#6db47c");
-	    	$("#PROGRESS_PER").html("100%");
-	    	$("#trate").val("100");
-	    	console.log("val값:"+$("#PROGRESS_PER").val());
+	    	var $p=$(this).parents(".workPrgrs_bg");
+	    	$p.find(".bar").css("width","150px");
+	    	$p.find(".bar").css("background-color","#6db47c");
+	    	$p.find(".PROGRESS_PER").html("100%");
+	    	$p.find(".trate").val("100");
 	    });
 	    $("#lv1").click(function(){
 	    	$(".task-pri").val("낮음");
@@ -1406,10 +1426,7 @@
 	    	$(".task-pri").val("높음");
 	    	$(".task-pri-add-wrap").hide();
 	    });
-	    $(".task-res-list").click(function(){
-	    	$(".task-res").val($(this).text());
-	    	$(".task-res-add-wrap").hide();
-	    });
+	    
 	    
 	    
 	});
@@ -1423,15 +1440,15 @@
 	    	//마감일시
 	    	var tend = $("#task-end-date").val();
 	    	//달성률
-	    	var trate = $("#PROGRESS_PER").val();
+	    	var trate = $(".PROGRESS_PER").val();
 	    	//우선순위
 	    	var tpri = $(".task-pri").val();
 	    	//글내용
 	    	var tcontent = $("#task-content").val();
 	    	//담당자
 	    	var tres = $(".task-res").val();
-	    	//공개여부
-	    	var open
+	    	//pno
+	    	var pno = $("#pno").val();
 	    	
 	    	var frm=document.task_frm;
 			frm.action="${pageContext.request.contextPath}/project/taskinsert";
@@ -1532,12 +1549,16 @@
                     </div>
                 </div>
             </div>
+            
+            <!--  혜원 ) 업무 내용 출력  -->
+            ${pno}
+            <c:forEach items="${tasklist}" var="tlist" varStatus="e">
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
                         <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
-                        <div class="writer">이혜림</div>
-                        <div class="writeDate">202012-18-17:34</div>
+                        <div class="writer">${tlist.uname }</div>
+                        <div class="writeDate">${tlist.boardalldto.bdate}</div>
                         <img src="">
                     </div>
                     <div class="option">
@@ -1549,7 +1570,7 @@
                         </div>
                         <div class="editDropdown">
                             <ul>
-                                <li><a href="">글 삭제</a></li>
+                                <li><a href="${pageContext.request.contextPath}/project/taskdelete?bno=${tlist.bno}&pno=${pno}">글 삭제</a></li>
                                 <li><a href="">다른 프로젝트에 올리기</a></li>
                             </ul>
                         </div>
@@ -1557,15 +1578,562 @@
                 </div>
 
                 <div class="boardResult">
-                    일반 글 작성 내용입니다<br>
-                    일반 글 작성 내용입니다<br>
-                    일반 글 작성 내용입니다<br>
-                    일반 글 작성 내용입니다<br>
-                    일반 글 작성 내용입니다<br>
-                    일반 글 작성 내용입니다<br>
-                    <div class="replyCount">댓글 10개</div>
-                </div>
+					<!-- 혜원 ) 업무 내용 뿌리기 -->
+                    <div class="task_wrap">
+                    	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	 <input type="hidden" name="pno" id="pno" value="${pno}">
+                        <div class="textbody">
+                            <div class="title">
+                            ${tlist.boardalldto.bname}
+                            </div>
+                            <div id="task-01">
+                            	<img src="${pageContext.request.contextPath}/resources/img/svg/clock-history.svg" width="20px" height="20px" id="task-icon01">
+	                            	<div class="task-radio-wrap">
+	                            	<input type="radio" class="task-radio task-radio-01" name="taskradio${e.count}" id="task-radio01-${e.count}" value="1"> 
+	                            	<label for="task-radio01-${e.count}" class="t-label">요청</label>
+	                            	<input type="radio" class="task-radio task-radio-02" name="taskradio${e.count}" id="task-radio02-${e.count}" value="2">
+									<label for="task-radio02-${e.count}" class="t-label">진행</label>
+	                            	<input type="radio" class="task-radio task-radio-03" name="taskradio${e.count}" id="task-radio03-${e.count}" value="3"> 
+	                            	<label for="task-radio03-${e.count}" class="t-label">완료</label>
+	                            	<input type="radio" class="task-radio task-radio-04" name="taskradio${e.count}" id="task-radio04-${e.count}" value="4"> 
+	                            	<label for="task-radio04-${e.count}" class="t-label">보류</label>
+	                            	</div>
+                            </div>
+                            <c:if test="${tlist.tstate eq 1}">
+                            	<script>
+                            	$(function() {
+							    	var count=${e.count};
+							    	$("#task-radio01-"+count).prop("checked", true);
+							    });
+                            	</script>	
+                            </c:if>
+                            <c:if test="${tlist.tstate eq 2}">
+                            	<script>
+                            	$(function() {
+							    	var count=${e.count};
+							    	$("#task-radio02-"+count).prop("checked", true);
+							    });
+                            	</script>	
+                            </c:if>
+                            <c:if test="${tlist.tstate eq 3}">
+                            	<script>
+                            	$(function() {
+							    	var count=${e.count};
+							    	$("#task-radio03-"+count).prop("checked", true);
+							    });
+                            	</script>	
+                            </c:if>
+                            <c:if test="${tlist.tstate eq 4}">
+                            	<script>
+                            	$(function() {
+							    	var count=${e.count};
+							    	$("#task-radio04-"+count).prop("checked", true);
+							    });
+                            	</script>	
+                            </c:if>
+                            <!-- 업무 상태 누르면 ajax로 값 update  -->
+                            <script>
+                            $(function() {
+                            	var count=${e.count};
+                            	var pno=${pno};
+                            	var bno=${tlist.bno};
+                            	console.log("pno랑 bno"+pno+"/"+bno);
+                            	$("#task-radio01-"+count).click(function(){
+                            		//업무 상태 변경
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/taskstate01",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$("#task-radio02-"+count).click(function(){
+                            		//업무 상태 변경
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/taskstate02",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log(data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$("#task-radio03-"+count).click(function(){
+                            		//업무 상태 변경
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/taskstate03",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log(data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$("#task-radio04-"+count).click(function(){
+                            		//업무 상태 변경
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/taskstate04",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log(data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+						    });
+                            </script>
+                            
+                            <div class="task-02">
+                        	    <img src="${pageContext.request.contextPath}/resources/img/svg/person-plus-fill.svg" width="20px" height="20px" class="task-icon02">
+                          		<div class="task-res-wrap">
+                          			<input type="text" class="task-res task-res${e.count }" name="taskname"  value="${tlist.taskmanager}">
+                          			<input type="hidden" class="task-res-uno-c" name="taskuno">
+                          			 <!-- 업무담당자 모달 /  해당 project 유저 list 뿌리기-->
+                          			 <div class="task-res-add-wrap">
+                          				<div class="task-add">
+	                          				<ul>
+	                          					<li class="task-res-list task-res-list${e.count}">김혜원 <input type="hidden" class="taks-res-uno" value="10"></li>
+	                          					<li class="task-res-list task-res-list${e.count}">이혜림 <input type="hidden" class="taks-res-uno" value="20"></li>
+	                          					<li class="task-res-list task-res-list${e.count}">오은실 <input type="hidden" class="taks-res-uno" value="30"></li>
+	                          					<li class="task-res-list task-res-list${e.count}">이윤진 <input type="hidden" class="taks-res-uno" value="40"></li>
+	                          					<li class="task-res-list task-res-list${e.count}">김봉영 <input type="hidden" class="taks-res-uno" value="50"></li>
+	                          				</ul>
+                          				</div>
+                          			</div>
+                          		</div>
+                          	</div>
+                          	<!-- 업무 담당자 변경 ajax update  -->
+                            <script>
+                            $(function() {
+                            	var count=${e.count};
+                            	var pno=${pno};
+                            	var bno=${tlist.bno};
+                            	$(".task-res-list"+count).click(function(){
+                            		console.log(bno+"값");
+                            		var taskres =$(".task-res"+count).val();
+                            		console.log(taskres+"담당자 변경값");
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/taskresupdate",
+                						data: {
+                							bno : bno,
+                							pno : pno,
+                							taskres : taskres
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+						    });
+                            </script>
+                          	
+                          	
+                          	
+                            <div class="task-03">
+                        	    <img src="${pageContext.request.contextPath}/resources/img/svg/calendar-5.svg" width="20px" height="20px" class="task-icon02">
+                          		<div class="task-start-wrap">
+                          			<input type="text" name="taskstartdate" id="task-start-date${e.count}" class="task-schedule"  placeholder="시작일시 추가" value="${tlist.tstart}">
+                          		</div>
+                          	</div>
+                            <div class="task-03">
+                        	    <img src="${pageContext.request.contextPath}/resources/img/svg/calendar-5.svg" width="20px" height="20px" class="task-icon02">
+                          		<div class="task-start-wrap">
+                          			<input type="text" name="taskenddate" id="task-end-date${e.count}" class="task-schedule" placeholder="마감일시 추가" value="${tlist.tend}">
+                          		</div>
+                          	</div>
+                          	<script>
+                          //input을 datepicker로 선언
+                          	var count=${e.count};
+                    	    $.datepicker.setDefaults({
+                    	        dateFormat: 'yy-mm-dd' //Input Display Format 변경
+                    	        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    	        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+                    	        ,changeYear: true //콤보박스에서 년 선택 가능
+                    	        ,changeMonth: true //콤보박스에서 월 선택 가능                
+                    	        // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    	        // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+                    	        // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+                    	        // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+                    	        ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+                    	        ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+                    	        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+                    	        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+                    	        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+                    	        ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    	        ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
+                    	    });                    
+                    	    //값 변경되면 ajax update
+                    	    $('#task-start-date'+count).datepicker({
+                    	    	    onSelect: function(dateText) {
+			                    	    	alert('값변경 감지'+dateText);
+                    	    	        console.log("Selected date: " + dateText + "; input's current value: " + this.value);
+                    	    	        var pno=${pno};
+                                    	var bno=${tlist.bno};
+                                    	var tstart =dateText;
+                                    	console.log(tstart+"값");
+                                    		$.ajax({
+                        						url: "${pageContext.request.contextPath}/project/tstartupdate",
+                        						data: {
+                        							bno : bno,
+                        							pno : pno,
+                        							tstart : tstart
+                        						},
+                        						dataType: "json",
+                        						success:function(data){
+                        							console.log("ajax:"+data+"성공");
+                        						},
+                        						error:function(){
+                        							console.log("update 실패");
+                        						}
+                                    	});
+                    	    	        $(this).change();
+                    	    	    }
+                    	    	})
+                    	    	.on("change", function() {
+                    	    	    console.log("Got change event from field");
+                    	    	});
+                    	    	
+                    	    //값 변경되면 ajax update
+                    	     $('#task-end-date'+count).datepicker({
+                    	    	    onSelect: function(dateText) {
+                    	    	        var pno=${pno};
+                                    	var bno=${tlist.bno};
+                                    	var tend =dateText;
+                                    		$.ajax({
+                        						url: "${pageContext.request.contextPath}/project/tendupdate",
+                        						data: {
+                        							bno : bno,
+                        							pno : pno,
+                        							tend : tend
+                        						},
+                        						dataType: "json",
+                        						success:function(data){
+                        							console.log("ajax:"+data+"성공");
+                        						},
+                        						error:function(){
+                        							console.log("update 실패");
+                        						}
+                                    	});
+                    	    	        $(this).change();
+                    	    	    }
+                    	    	})
+                    	    	.on("change", function() {
+                    	    	    console.log("Got change event from field");
+                    	    	});
 
+                          	</script>
+                          	
+                          	
+                          	
+                          	
+                            <div class="task-04">
+                        	    <img src="${pageContext.request.contextPath}/resources/img/svg/bar-chart-line-fill.svg" width="20px" height="20px" class="task-icon02">
+									<div class="task-rate-wrap">
+									 <a class="workPrgs">
+									<div class="workPrgrs_bg">
+										<strong class="txt PROGRESS_PER">${tlist.trate}%</strong>
+										
+										<input type="hidden" name="trate" class="trate">
+										<span id="PROGRESS" class="bar percent0 ${e.count}"></span>
+										<div class="pcnt0 pcnt0${e.count}" data="0" style="width:5%;display:block">
+											<span class="pcnt">
+												<button>0%</button>
+											</span>
+										</div>
+										<div class="pcnt20 pcnt20${e.count}" data="20" style="left:5%;">
+											<span class="pcnt">
+												<button>20%</button>
+											</span>
+										</div>
+										<div class="pcnt40 pcnt40${e.count}" data="40">
+											<span class="pcnt">
+												<button>40%</button>
+											</span>
+										</div>
+										<div class="pcnt60 pcnt60${e.count}" data="60">
+											<span class="pcnt">
+												<button>60%</button>
+											</span>
+										</div>
+										<div class="pcnt80 pcnt80${e.count}" data="80">
+											<span class="pcnt">
+												<button>80%</button>
+											</span>
+										</div>
+										<div class="pcnt100 pcnt100${e.count}" data="100">
+											<span class="pcnt">
+												<button>100%</button>
+											</span>
+										</div>
+									</div>
+		                          </a>
+                          		</div>
+                        	</div>
+                          		<c:if test="${tlist.trate eq 0}">
+										<script>
+										    $(function() {
+										    	var count=${e.count};
+										    	$("."+count).css("width","8px");
+										    });
+											</script>
+										</c:if>
+										<c:if test="${tlist.trate eq 20}">
+											<script>
+										    $(function() {
+										    	var count=${e.count};
+										    	$("."+count).css("width","30px");
+										    });
+											</script>
+										</c:if>
+										<c:if test="${tlist.trate eq 40}">
+										<script>
+										    $(function() {
+										    	var count=${e.count};
+										    	$("."+count).css("width","60px");
+										    });
+											</script>
+										</c:if>
+										<c:if test="${tlist.trate eq 60}">
+											<script>
+										    $(function() {
+										    	console.log("60퍼")
+										    	var count=${e.count};
+										    	$("."+count).css("width","90px");
+										    });
+											</script>
+										</c:if>
+										<c:if test="${tlist.trate eq 80}">
+											<script>
+										    $(function() {
+										    	var count=${e.count};
+										    	$("."+count).css("width","120px");
+										    });
+											</script>
+										</c:if>
+										<c:if test="${tlist.trate eq 100}">
+											<script>
+										    $(function() {
+										    	var count=${e.count};
+										    	$("."+count).css("width","150px");
+										    	$("."+count).css("background-color","#6db47c");
+										    });
+											</script>
+										</c:if>
+							<!-- 업무 달성률 누르면 ajax로 값 update  -->
+                            <script>
+                            $(function() {
+                            	var count=${e.count};
+                            	var pno=${pno};
+                            	var bno=${tlist.bno};
+                            	$(".pcnt0"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate00",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".pcnt20"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate20",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".pcnt40"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate40",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".pcnt60"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate60",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".pcnt80"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate80",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".pcnt100"+count).click(function(){
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tasktrate100",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("달성률 ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+						    });
+                            </script>
+										
+                            <div class="task-05">
+                        	    <img src="${pageContext.request.contextPath}/resources/img/svg/flag-2.svg" width="20px" height="20px" class="task-icon02">
+                          		<div class="task-pri-wrap">
+                          			<input type="text" class="task-pri pri-val${e.count}" name="taskpri" placeholder="우선순위 추가" value="${tlist.tpriority }">
+                          			<div class="task-pri-add-wrap">
+                          				<div class="task-pri-add">
+	                          				<button type="button" class="task-pri lv1-${e.count}" id="lv1" value="lv1">낮음</button> <br>
+	                          				<button type="button" class="task-pri lv2-${e.count}" id="lv2" value="lv2">보통</button> <br>
+	                          				<button type="button" class="task-pri lv3-${e.count}" id="lv3" value="lv3">높음</button>
+                          				</div>
+                          			</div>
+                          		</div>
+                          	</div>
+                          	<!-- 업무 우선순위 누르면 ajax로 값 update  -->
+                            <script>
+                            $(function() {
+                            	var count=${e.count};
+                            	var pno=${pno};
+                            	var bno=${tlist.bno};
+                            	$(".lv1-"+count).click(function(){
+                            		$(".pri-val"+count).val("낮음");
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tprilv1",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".lv2-"+count).click(function(){
+                            		$(".pri-val"+count).val("보통");
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tprilv2",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+                            	$(".lv3-"+count).click(function(){
+                            		$(".pri-val"+count).val("높음");
+                            		$.ajax({
+                						url: "${pageContext.request.contextPath}/project/tprilv3",
+                						data: {
+                							bno : bno,
+                							pno : pno
+                						},
+                						dataType: "json",
+                						success:function(data){
+                							console.log("ajax:"+data+"성공");
+                						},
+                						error:function(){
+                							console.log("update 실패");
+                						}
+                					});
+                            	});
+						    });
+                            </script>
+                          	
+							<!-- 업무 글 content -->                          	
+                          	${tlist.tmemo}
+                        </div>
+                </div>
+                 <div class="replyCount">댓글 10개</div>
+        
+         
                 <div class="threeBtn">
                     <ul>
                         <li>
@@ -1619,6 +2187,7 @@
                 </div>
             </div>
         </div>
+ </c:forEach>
         <div class="rightBar">
             <a href="#">
                 <div id="prevbtn">

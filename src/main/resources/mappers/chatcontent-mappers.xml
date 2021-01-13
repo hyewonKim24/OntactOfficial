@@ -14,7 +14,7 @@
 		<result property="chatfix" column="chatfix" />
 		<result property="chatimg" column="chatimg" />
 		<result property="chatfilepath" column="chatfilepath" />
- 	<collection property="usersdto" resultMap="resultUsers"></collection>
+ 		<collection property="usersdto" resultMap="resultUsers"></collection>
  </resultMap>
 	
  	<resultMap type="UsersDto" id="resultUsers">

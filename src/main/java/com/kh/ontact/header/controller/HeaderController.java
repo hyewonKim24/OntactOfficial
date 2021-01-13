@@ -121,9 +121,6 @@ public class HeaderController {
 			count=chatalertService.AllChatAlert(uno);
 			if(count==null) 
 				count=0;
-			
-			System.out.println("채팅count:"+count);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

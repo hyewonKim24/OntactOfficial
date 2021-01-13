@@ -3,7 +3,7 @@
 <!-- namespace는 dao에서 호출할때 사용함. -->
 <mapper namespace="BoardAll">
 
-	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->	
 
 	
 	<resultMap type="BoardAllDto" id="resultBoardAll">
@@ -19,9 +19,16 @@
 	</resultMap>
 	
 	<!-- boardAll 추가 -->
-	<insert id="insertBoardAll">
+	<insert id="insertBoardAllTask">
 	 <![CDATA[
+	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},'2','0',sysdate)
 		]]>
 	</insert>
+	
+	<delete id="deleteBoardall" parameterType="string">
+	 <![CDATA[
+	 	delete from boardall where bno=#{bno}
+		]]>
+	</delete>
 	
 </mapper>

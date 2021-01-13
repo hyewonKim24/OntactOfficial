@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+
 import lombok.Data;
 
 /*BNO         NOT NULL VARCHAR2(20)   
@@ -18,11 +20,16 @@ TASKMANAGER          VARCHAR2(20)   */
 @Data
 @Component
 public class TaskDto {
+	private String bno;
 	private String tstate;
 	private Date tstart;
 	private Date tend;
 	private String trate;
 	private String tpriority;
 	private String taskmanager;
-	
+	private String tmemo;
+	private String uname;
+	private BoardAllDto boardalldto;
+
+
 }

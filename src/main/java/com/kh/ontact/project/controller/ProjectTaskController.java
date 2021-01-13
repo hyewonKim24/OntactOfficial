@@ -1,13 +1,28 @@
 package com.kh.ontact.project.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.task.model.dto.TaskDto;
+import com.kh.ontact.project.task.model.service.TaskService;
+import com.kh.ontact.users.model.dto.CustomUserDetails;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 @Controller
 public class ProjectTaskController {
+	@Autowired
+	TaskService taskService;
 	
 	//혜원 코드
 	@RequestMapping(value="/project/projecttest",method=RequestMethod.GET)
@@ -19,26 +34,294 @@ public class ProjectTaskController {
 	//업무 내용 insert
 		@RequestMapping(value="/project/taskinsert",method=RequestMethod.POST)
 		public ModelAndView taskinsert(ModelAndView mv, @RequestParam(name = "tasktitle") String tasktitle,
-				@RequestParam(name = "taskname") String taskname,@RequestParam(name = "taskstartdate") String taskstartdate,
-				@RequestParam(name = "taskenddate") String taskenddate,@RequestParam(name = "trate") String trate,
-				@RequestParam(name = "taskpri") String taskpri,@RequestParam(name = "taskopen") String taskopen) {
-				System.out.println("제목"+tasktitle);
-				System.out.println("taskname"+taskname);
-				System.out.println("taskstartdate"+taskstartdate);
-				System.out.println("taskenddate"+taskenddate);
-				System.out.println("trate"+trate);
-				System.out.println("taskpri"+taskpri);
-				System.out.println("taskopen"+taskopen);
-				//값 다 들어오는지 확인
+				@RequestParam(name = "taskradio") String taskradio,
+				@RequestParam(name = "taskname") String taskname,@RequestParam(name = "taskstartdate") Date taskstartdate,
+				@RequestParam(name = "taskenddate") Date taskenddate,@RequestParam(name = "trate") String trate,
+				@RequestParam(name = "taskpri") String taskpri,@RequestParam(name = "taskopen") int taskopen,
+				@RequestParam(name = "pno") String pno,@RequestParam(name = "taskcontent") String taskcontent,
+				BoardAllDto dto,TaskDto tdto, Authentication authentication) {
+				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+				String uno=userdetail.getUno();
 				
+				dto.setPno(pno);
+				dto.setBname(tasktitle);
+				dto.setUno(uno);
+				dto.setBopen(taskopen);
 				
+				tdto.setTaskmanager(taskname);
+				tdto.setTend(taskenddate);
+				tdto.setTstart(taskstartdate);
+				tdto.setTpriority(taskpri);
+				tdto.setTstate(taskradio);
+				tdto.setTmemo(taskcontent);
 				
-				
-			
-			
-				mv.setViewName("project/projectmaintest");
+				try {
+					int rs =taskService.insertTask(tdto, dto);
+					System.out.println(rs+"업무 insert 성공");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				mv.addObject("pno", pno);
+				mv.setViewName("redirect:/project/projectDetail");
 			return mv;
 		}
+		
+		//프로젝트 디테일로 들어가기
+		@RequestMapping(value="/project/projectDetail",method=RequestMethod.GET)
+		public ModelAndView projectDetail(ModelAndView mv, @RequestParam(name = "pno") String pno) {
+			System.out.println("pno"+pno);
+			//pno확인
+			List<TaskDto> list = new ArrayList<TaskDto>();
+			try {
+				list = taskService.ListTaskAll(pno);
+				System.out.println(list);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			mv.addObject("tasklist", list);
+			mv.addObject("pno", pno);
+			mv.setViewName("project/projectmaintest");
+			return mv;
+		}
+		
+		// task 글 삭제
+		@RequestMapping(value="/project/taskdelete",method=RequestMethod.GET)
+		public ModelAndView taskdelete(ModelAndView mv, @RequestParam(name = "bno") String bno,
+				@RequestParam(name = "pno") String pno) {
+			System.out.println("bno"+bno);
+			System.out.println("pno"+pno);
+			try {
+				int rs =taskService.deleteTask(bno);
+				System.out.println(rs+"개 삭제 : task");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			mv.addObject("pno", pno);
+			mv.setViewName("redirect:/project/projectDetail");
+			return mv;
+		}
+		
+		//업무 state ajax변경 -01
+		@ResponseBody
+		@RequestMapping(value="/project/taskstate01")
+		public int taskstate01(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.taskStateUpdate01(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 state ajax변경 -02
+		@ResponseBody
+		@RequestMapping(value="/project/taskstate02")
+		public int taskstate02(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.taskStateUpdate02(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 state ajax변경 -03
+		@ResponseBody
+		@RequestMapping(value="/project/taskstate03")
+		public int taskstate03(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.taskStateUpdate03(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 state ajax변경  -04
+		@ResponseBody
+		@RequestMapping(value="/project/taskstate04")
+		public int taskstate04(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.taskStateUpdate04(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		
+		
+		//업무 달성률 ajax변경  -00
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate00")
+		public int tasktrate00(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate00(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 달성률 ajax변경  -20
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate20")
+		public int tasktrate20(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate20(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 달성률 ajax변경  -40
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate40")
+		public int tasktrate40(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate40(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 달성률 ajax변경  -60
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate60")
+		public int tasktrate60(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate60(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 달성률 ajax변경  -80
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate80")
+		public int tasktrate80(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate80(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 달성률 ajax변경  -100
+		@ResponseBody
+		@RequestMapping(value="/project/tasktrate100")
+		public int tasktrate100(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.trateUpdate100(bno);
+				System.out.println(rs+"업데이트 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 우선순위 ajax변경  -Lv1
+		@ResponseBody
+		@RequestMapping(value="/project/tprilv1")
+		public int tprilv1(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.tpriLv1(bno);
+				System.out.println(rs+"업데이트 업무 우선순위 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 우선순위 ajax변경  -Lv2
+		@ResponseBody
+		@RequestMapping(value="/project/tprilv2")
+		public int tprilv2(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.tpriLv2(bno);
+				System.out.println(rs+"업데이트 업무 우선순위 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 우선순위 ajax변경  -Lv3
+		@ResponseBody
+		@RequestMapping(value="/project/tprilv3")
+		public int tprilv3(ModelAndView mv,String bno,String pno) {
+			int rs =0;
+			try {
+				rs=taskService.tpriLv3(bno);
+				System.out.println(rs+"업데이트 업무 우선순위 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 담당자 변경
+		@ResponseBody
+		@RequestMapping(value="/project/taskresupdate")
+		public int taskResUpdate(ModelAndView mv,String bno,String pno,String taskres) {
+			int rs =0;
+			TaskDto dto= new TaskDto();
+			dto.setBno(bno);
+			dto.setTaskmanager(taskres);
+			try {
+				rs=taskService.tResUpdate(dto);
+				System.out.println(rs+"업무 담당자 변경 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 시작일 변경
+		@ResponseBody
+		@RequestMapping(value="/project/tstartupdate")
+		public int tstartUpdate(ModelAndView mv,String bno,String pno,Date tstart) {
+			int rs =0;
+			TaskDto dto= new TaskDto();
+			dto.setBno(bno);
+			dto.setTstart(tstart);
+			try {
+				rs=taskService.tstartUpdate(dto);
+				System.out.println(rs+"업무 시작날짜 변경 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		//업무 시작일 변경
+		@ResponseBody
+		@RequestMapping(value="/project/tendupdate")
+		public int tendUpdate(ModelAndView mv,String bno,String pno,Date tend) {
+			int rs =0;
+			TaskDto dto= new TaskDto();
+			dto.setBno(bno);
+			dto.setTend(tend);
+			try {
+				rs=taskService.tendUpdate(dto);
+				System.out.println(rs+"업무 마지막 날짜 변경 ajax");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return rs;
+		}
+		
 		
 	
 }
