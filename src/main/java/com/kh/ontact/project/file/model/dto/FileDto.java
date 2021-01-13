@@ -1,10 +1,8 @@
-package com.kh.ontact.projectDept.model.dto;
+package com.kh.ontact.project.file.model.dto;
 
-import java.util.List;
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
-
-import com.kh.ontact.dept.model.dto.DeptDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class ProjectDeptDto {
+public class FileDto {
+	private String fno;
 	private String pno;
-	private String dno;
-	
+	private String fname;
+	private Date fdate;
+	private String fsize;
+	private String fpath;
 }

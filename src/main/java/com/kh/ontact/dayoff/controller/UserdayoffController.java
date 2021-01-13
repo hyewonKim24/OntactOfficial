@@ -147,7 +147,8 @@ public class UserdayoffController {
 		
 		System.out.println("캘린더 진입2");
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-		String dno=userdetail.getDno(); // 해당 부서의 휴가현황만 볼 수 있도록
+//		String dno=userdetail.getDno(); // 해당 부서의 휴가현황만 볼 수 있도록
+		String dno = "1";
 		System.out.println("세션 값 확인" + dno);
 
 	    Gson gson = new Gson();

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <meta charset=utf-8 />
+    <title>Auto Resize Textarea</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            font-size: 14px;
+            font-family: Noto Sans KR;
+            line-height: 1.15;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .header {
+            position: relative;
+            width: 100%;
+            height: 60px;
+        }
+
+        .header div {
+            width: 1200px;
+            height: 60px;
+            margin: 0 auto;
+        }
+
+        /* 본문 */
+        .main {
+            position: relative;
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        /* 프로젝트 글 */
+        .contents {
+            position: relative;
+            width: 700px;
+            height: 100%;
+            margin: 0 20px;
+            left: 210px;
+        }
+
+        /* 글 쓰기 부분 */
+        .write {
+            /* 여기 높이 변경 */
+            min-height: 300px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .writemenu {
+            /* 여기 높이 없앰 */
+            display: none;
+        }
+
+        .write .tabs {
+            display: none;
+        }
+
+        .tabslabel {
+            display: inline-block;
+            padding: 15px 26.1px;
+            font-weight: 600;
+            text-align: center;
+            color: #bbb;
+            width: 118px;
+        }
+
+        #line {
+            border-top: 1px solid green;
+        }
+
+        .tabslabel:hover {
+            color: #2e9cdf;
+            cursor: pointer;
+        }
+
+        .textbody {
+            /* 여기 높이 auto로 */
+            height: auto;
+            margin-top: 10px;
+            margin: 17px 25px;
+        }
+
+        .title {
+            width: 100%;
+            border-bottom: 1px solid #bbb;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .title_detail {
+            border: none;
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .title_detail:focus {
+            outline: none;
+        }
+
+        .content_detail {
+            width: 100%;
+            min-height: 20px;
+            font-size: 30px;
+            overflow-y: hidden;
+            resize: none;
+        }
+
+        .textfooter {
+            /* 여기 포지션 삭제 */
+            height: 46px;
+            border: 1px solid black;
+            padding: 10px 20px;
+            bottom: 0px;
+            width: 658px;
+        }
+
+        /*input 클릭시, label 스타일*/
+        .tabs:checked+.tabslabel {
+            color: #23D9D9;
+            border: 1px solid #ddd;
+            border-top: 2px solid #2e9cdf;
+        }
+
+        #tab1:checked~#commonboard,
+        #tab2:checked~#task,
+        #tab3:checked~#schedule,
+        #tab4:checked~#todo {
+            display: block;
+        }
+
+        /* 글 작성 부분 */
+        .boardHeader {
+            height: 60px;
+            padding: 25px 12px 0 25px;
+        }
+
+        .writeInfo {
+            width: 200px;
+            height: 40px;
+            float: left;
+        }
+
+        .profileImg {
+            width: 40px;
+            float: left;
+            margin-right: 25px;
+        }
+
+        .writer {
+            height: 18px;
+            font-size: 14px;
+            font-weight: 700;
+            padding-top: 5px;
+        }
+
+        .writeDate {
+            font-size: 12px;
+            font-weight: 400;
+            padding-top: 5px;
+            color: #c0c0c0;
+        }
+
+        .option {
+            width: 60px;
+            height: 40px;
+            padding-top: 7px;
+            margin: 0;
+            float: right;
+        }
+
+        .fixNotice {
+            width: 18px;
+            margin-top: 3px;
+            margin-right: 20px;
+            float: left;
+        }
+
+        .editoption {
+            width: 5px;
+            height: 20px;
+            margin-top: 3px;
+        }
+
+        .editDropdown {
+            display: none;
+            width: 145px;
+            height: 65px;
+            border: 1px solid #e7e7e7;
+            box-sizing: border-box;
+            font-size: 12px;
+            float: right;
+            margin-top: 6px;
+        }
+
+        .editDropdown ul {
+            padding: 8px 0;
+        }
+
+        .editDropdown ul li {
+            padding: 6px 15px;
+        }
+
+        .boardResult {
+            width: 650px;
+            padding: 7px 25px;
+        }
+
+        .replyCount {
+            width: 650px;
+            height: 25px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #c0c0c0;
+            text-align: right;
+        }
+
+        .threeBtn {
+            width: 650px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 25px;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        .threeBtn ul li {
+            float: left;
+        }
+
+        .threeBtn ul li a {
+            vertical-align: middle;
+            padding-right: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #787878;
+        }
+
+        /* 댓글 작성 부분 */
+        .reply {
+            width: 700px;
+            padding: 10px 0;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        .replyMore {
+            background-color: white;
+            border: none;
+            font-size: 14px;
+            color: #5A3673;
+            padding: 10px 15px 20px 15px;
+        }
+
+        .defaultReply {
+            width: 670px;
+            margin: 0 15px;
+            padding-bottom: 10px;
+        }
+
+        .replayPfImg {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+
+        .replayPfImg2 {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+
+        .replyTitle {
+            height: 13px;
+            font-size: 13px;
+            font-weight: 700;
+            padding-right: 10px;
+        }
+
+        .replyDate {
+            font-size: 13px;
+            color: #c0c0c0;
+        }
+
+        .replyEdit {
+            float: right;
+        }
+
+        .replyEdit a {
+            color: #c0c0c0;
+            font-size: 12px;
+        }
+
+        #replyResult {
+            width: 643px;
+            margin-top: 5px;
+        }
+
+        .replyFrom {
+            margin: 10px 0 10px 15px;
+        }
+
+        .replyFrom input {
+            width: 550px;
+            height: 30px;
+            margin: 5px 5px 5px 0;
+            box-sizing: border-box;
+            vertical-align: middle;
+            border: 1px solid #c0c0c0;
+        }
+
+        #replyReg {
+            width: 60px;
+            height: 30px;
+            background-color: #5A3673;
+            border-radius: 3px;
+            color: #e7e7e7;
+            border: none;
+        }
+
+
+        .wrap {
+            width: 500px;
+
+        }
+
+        .wrap textarea {
+            width: 92%;
+            resize: none;
+            overflow-y: hidden;
+            /* prevents scroll bar flash */
+            padding: 1.1em;
+            /* prevents text jump on Enter keypress */
+            padding-bottom: 0.2em;
+            line-height: 1.6;
+            border: none;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.wrap').on('keyup', 'textarea', function (e) {
+                $(this).css('height', 'auto');
+                $(this).height(this.scrollHeight);
+            });
+            $('.wrap').find('textarea').keyup();
+        });
+    </script>
+</head>
+
+<body>
+    <p>Source Code From <a href="http://jsfiddle.net/chim/53eAy/">chim</a>(http://stackoverflow.com/users/673282)</p>
+    <div class="main">
+        <div class="contents">
+            <div class="wrap">
+                <div class="write" id="write">
+                    <input id="tab1" type="radio" name="tabs" class="tabs" checked>
+                    <!--디폴트 메뉴-->
+                    <label for="tab1" class="tabslabel">글작성</label>
+                    <input id="tab2" type="radio" name="tabs" class="tabs">
+                    <label for="tab2" class="tabslabel">업무</label>
+                    <input id="tab3" type="radio" name="tabs" class="tabs">
+                    <label for="tab3" class="tabslabel">일정</label>
+                    <input id="tab4" type="radio" name="tabs" class="tabs">
+                    <label for="tab4" class="tabslabel">할일</label>
+                    <div id="line"></div>
+                    <div id="commonboard" class="writemenu">
+                        <div class="textbody">
+                            <div><input type="text" style="width: 92%;"></div>
+                            <textarea>안녕하세요</textarea>
+                        </div>
+                        <div class="textfooter">
+                            사이드메뉴
+                        </div>
+                    </div>
+                    <div id="task" class="writemenu">
+                        <div class="textbody">sss</div>
+                        <div class="textfooter">
+                            사이드메뉴
+                        </div>
+                    </div>
+                    <div id="schedule" class="writemenu">
+                        <div class="textbody">sss</div>
+                        <div class="textfooter">
+                            사이드메뉴
+                        </div>
+                    </div>
+                    <div id="todo" class="writemenu">
+                        <div class="textbody">sss</div>
+                        <div class="textfooter">
+                            사이드메뉴
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="one">
+                    <div class="boardHeader">
+                        <div class="writeInfo">
+                            <span><img src="./user-3.png" class="profileImg"></span>
+                            <div class="writer">이혜림</div>
+                            <div class="writeDate">202012-18-17:34</div>
+                            <img src="">
+                        </div>
+                        <div class="option">
+                            <div>
+                                <a href=""><img src="./push-pin.png" class="fixNotice"></a>
+                            </div>
+                            <div>
+                                <a href="" id="dropdown"><img src="./more-1.png" class="editoption"></a>
+                            </div>
+                            <div class="editDropdown">
+                                <ul>
+                                    <li><a href="">글 삭제</a></li>
+                                    <li><a href="">다른 프로젝트에 올리기</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="boardResult">
+                        일반 글 작성 내용입니다<br>
+                        일반 글 작성 내용입니다<br>
+                        일반 글 작성 내용입니다<br>
+                        일반 글 작성 내용입니다<br>
+                        일반 글 작성 내용입니다<br>
+                        일반 글 작성 내용입니다<br>
+                        <div class="replyCount">댓글 10개</div>
+                    </div>
+
+                    <div class="threeBtn">
+                        <ul>
+                            <li>
+                                <a href=""><img src="./like.png" class="like"
+                                        style="width: 19px; padding-right: 10px;  padding-bottom : 5px; vertical-align: middle;">좋아요</a>
+                            </li>
+                            <li>
+                                <a href=""><img src="./chat-03.png" class="replyReg"
+                                        style="width: 17px; padding-right: 10px;vertical-align: middle;">댓글작성</a>
+                            </li>
+                            <li>
+                                <a href=""><img src="./bookmark.png" class="save"
+                                        style="width: 13px; padding-right: 10px; vertical-align: middle;">담아두기</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="reply">
+                    <button class="replyMore">이전 댓글 더보기</button>
+                    <div class="defaultReply">
+                        <span>
+                            <img src="./user-3.png" class="replayPfImg">
+                        </span>
+                        <span class="replyTitle">이혜림</span>
+                        <span class="replyDate">202012-18-17:34</span>
+                        <span class="replyEdit">
+                            <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                            <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                        </span>
+                        <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                    </div>
+
+                    <div class="defaultReply">
+                        <span>
+                            <img src="./user-3.png" class="replayPfImg">
+                        </span>
+                        <span class="replyTitle">이혜림</span>
+                        <span class="replyDate">202012-18-17:34</span>
+                        <span class="replyEdit">
+                            <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                            <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                        </span>
+                        <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                    </div>
+                    <div class="replyFrom">
+                        <span>
+                            <img src="./user-2.png" class="replayPfImg2">
+                        </span>
+                        <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
+                        <button id="replyReg">등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

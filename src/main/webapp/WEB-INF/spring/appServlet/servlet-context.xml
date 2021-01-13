@@ -15,13 +15,19 @@
    <!-- Enables the Spring MVC @Controller programming model -->
    <annotation-driven />
 
-   <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-      up static resources in the ${webappRoot}/resources directory -->
-   <resources mapping="/resources/**" location="/resources/" />
-   <!-- Multipart 파일 업로드 관련 bean 등록 -->
-   <beans:bean id="multipartResolver"
-      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-   </beans:bean>
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<!-- Multipart 파일 업로드 관련 bean 등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/> 
+    	<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
+	<beans:bean id = "uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="G:\_z_es\spring\ontact\src\main\webapp\resources\profile">
+		</beans:constructor-arg>
+	</beans:bean>
 
    <!-- WebSocket -->
    <beans:bean id="echoHandler" class="com.kh.ontact.chat.controller.EchoHandler" />

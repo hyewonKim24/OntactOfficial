@@ -1,16 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Dept">
 	<resultMap type="DeptDto" id="resultDept">
-		<id property="dno" column="dno"/>
-		<result property="cno" column="cno"/>
-		<result property="dname" column="dname"/>
+		<id property="dno" column="dno" />
+		<result property="cno" column="cno" />
+		<result property="dname" column="dname" />
+		<collection property="usersdto" resultMap="resultUsers"></collection>
 	</resultMap>
-	<!-- project insert : 부서 보관함 목록 뿌리기 -->
-	<select id="selectListDeptDname" resultType="DeptDto">
-		select dno, dname from dept
+	<resultMap type="UsersDto" id="resultUsers">
+		<result property="cno" column="cno" />
+	</resultMap>
+	
+	<!-- 윤진 / project insert modal : 부서 보관함 목록 뿌리기 -->
+	<select id="selectListDept" resultMap="resultDept" resultType="arrayList">
+		select distinct d.dno, d.dname
+		from dept d ,users u
+		where d.cno = u.cno and u.cno = #{cno}
+		order by d.dno
 	</select>
 	
+	<!-- 은실 / 마이페이지 부서 가져오기 -->
+	<select id="dnameChk" resultType="string">
+		<![CDATA[
+		select dname from dept where dno=#{dno}
+		]]>
+	</select>
 	
 	<!-- 혜림 조직도 -->
 	<!-- 부서 전체 -->

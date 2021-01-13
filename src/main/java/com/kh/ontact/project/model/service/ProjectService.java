@@ -1,5 +1,6 @@
 package com.kh.ontact.project.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ontact.project.model.dto.ProjectDto;
@@ -17,6 +18,12 @@ public interface ProjectService {
 	public ProjectDto selectOneTeam(String uno) throws Exception;
 	
 	//프로젝트 생성
-	public void insertProject(ProjectDto pj, ProjectMemberDto pjm, ProjectDeptDto pjd) throws Exception;
+	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception;
+	
+	//미보관 프로젝트
+	public List<ProjectDto> selectListPjUns(String uno) throws Exception;
+
+	// 부서별 보관함 프로젝트 목록
+	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap) throws Exception;
 
 }

@@ -18,7 +18,7 @@ public class UsersDto {
 	private String dno;
 	private String uemail;
 	private String uname;
-	private int utell;
+	private String utell;
 	private String upwd;
 	private String utmppwd;
 	private String urank;

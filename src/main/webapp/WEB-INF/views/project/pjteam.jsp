@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="pjsidebar.jsp" %> 
+<%@ include file="pjsidebar.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -34,23 +35,6 @@ body {
 
 #pj_board a {
 	text-decoration: none;
-}
-
-#pj_board>#pj_board_top {
-	display: flex;
-}
-
-#pj_board>#pj_board_top>#section_company {
-	width: 50%;
-}
-
-#pj_board>#pj_board_top>#section_team {
-	width: 50%;
-}
-
-#pj_board>#pj_board_top>#section_project {
-	display: flex;
-	flex-direction: column;
 }
 
 #pj_board_bottom>#section_project>.pj_board_list {
@@ -275,29 +259,6 @@ body {
 }
 </style>
 <script>
-	//div 랜덤 배경색
-	/* window.onload = function () {
-		function backgroundColor() { // div 랜덤 배경색
-		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
-		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
-		    var color = backgroundColor[randome];
-		    return color;
-		};
-		$.each(listpj, function(index, listpj) {
-            var color = backgroundColor();
-            var proDiv = '';
-            
-           	proDiv += '<div class="pj_box" style="background-color:' + color + '";>'
-            proDiv += '<div class="proDiv-title">' + listpj.pname;
-            proDiv += '<input type="hidden" value="' + listpj.pno + '"></div>';
-            proDiv += '<div class="proDiv-contents">' + listpj.pdesc + '</div>'
-            proDiv += '<div class="proDiv-star"><i class="far fa-star"></i></div>'
-            proDiv += '</div>'
-            $('.pj_box').prepend(proDiv);
-        });  */
-	
-	//<div id="pj_project" class="pj_box">
-	
 	$(document).ready(function() {
 		$(".pj_team_list").mouseover(function() {
 			$(this).css("overflow-y", "scroll");
@@ -335,22 +296,6 @@ body {
 	//         }
 	//     }
 	// };
-
-	/* 	$.ajax({
-	 url: "${pageContext.request.contextPath}/project/all/list",
-	 type: "GET",
-	 contentType: "application/json; charset=utf-8;",
-	 dataType: "json",
-	 success: function(data){
-	 console.log("aaa");
-	 for(var i =0; i<data.length; i++){
-	 $('.result').append('<span>' + data[i].pname + '</span>');
-	 }
-	 },
-	 error: function(){
-	 alert("projectlist err");
-	 }
-	 }); */
 </script>
 
 <body>
@@ -385,61 +330,29 @@ body {
 	</div>
 	<!-- Section -->
 	<section id="pj_board">
-		<div id="pj_board_top">
-			<div id="section_company">
-				<div class="pj_title">All</div>
-				<c:if test="${!empty pjc}">
-					<a href="#">
-						<div id="pj_company" class="pj_box">
-							<div>${pjc.cname}</div>
-							<div class="pj_team_list"></div>
-							<div>
-								<span>${pjc.ucnt}</span> <span>명 참여중</span>
-							</div>
-							<button type="button" title="선택" class="pjCheck"></button>
-						</div>
-					</a>
-				</c:if>
-			</div>
-			<div id="section_team">
-				<div class="pj_title">Team</div>
-				<c:if test="${!empty pjd}">
-					<a href="#">
-						<div id="pj_team" class="pj_box">
-							<div>${pjd.dname}</div>
-							<div class="pj_team_list"></div>
-							<div>
-								<span>${pjd.ucnt}</span> <span>명 참여중</span>
-							</div>
-						</div>
-					</a>
-				</c:if>
-			</div>
-		</div>
-		<hr>
 		<div id="pj_board_bottom">
 			<div id="section_project">
 				<div class="pj_title">
-					<span>Project</span> <span><a href="#" id="pj_edit">편집</a></span>
-				</div>
+					<c:if test="${!empty dname}">
+					<span>${dname}</span> <span><a href="#" id="pj_edit">편집</a></span>
+				</div></c:if>
 				<div class="pj_board_list">
 					<!-- 프로젝트가 하나도 없을 경우
 					<c:if test="${empty listpj}">
 					</c:if> -->
-					<!-- 프로젝트가 있는 경우 -->
-					<c:if test="${!empty listpj}">
-						<c:forEach var="listpj" items="${listpj}" varStatus="status">
-							<!-- project Detail -->
-							<a href="${pageContext.request.contextPath}/project/projectDetail?pno=${listpj.pno}">
+					<!-- 부서보관함에 프로젝트가 있는 경우 -->
+				<c:if test="${!empty pjteam}">
+						<c:forEach var="pjteam" items="${pjteam}" varStatus="status">
+							<a href="#">
 								<div id="pj_project" class="pj_box">
-									<div>${listpj.pname}</div>
+									<div>${pjteam.pname}</div>
 									<div class="pj_team_list">
-										<div>${listpj.pjteam}</div>
+										<div>${pjteam.pjteam}</div>
 									</div>
 									<div>
-										<span>${listpj.pjmembercnt}</span> <span>명 참여중</span>
+										<span>${pjteam.pjmembercnt}</span> <span>명 참여중</span>
 									</div>
-									 <c:if test="${listpj.popen == 0 }">
+									<c:if test="${pjteam.popen == 0 }">
 										<span> <img src="${pageContext.request.contextPath}/resources/img/locked-4-white.png" class="lock_1">
 										</span>
 									</c:if>

@@ -1,5 +1,6 @@
 package com.kh.ontact.project.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,30 @@ public class ProjectServiceImpl implements ProjectService{
 
 	// 프로젝트 생성
 	@Override
-	public void insertProject(ProjectDto pj, ProjectMemberDto pjm, ProjectDeptDto pjd) throws Exception {
+	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception {
 		pjDao.insertProject(pj);
-		pjmDao.insertProjectMember(pjm);
-		pjdDao.insertProjectDept(pjd);
+		pjmDao.insertProjectMember(uno);
+		if(dno!=null) {
+			String [] array = dno.split(",");
+			for(int i=0; i<array.length; i++ ) {
+				dno = array[i];
+				pjdDao.insertProjectDept(dno);	
+			}
+		} else {
+			pjdDao.insertProjectDept(dno);
+		}
 	}
-
+	
+	// 미보관 프로젝트
+	@Override
+	public List<ProjectDto> selectListPjUns(String uno) throws Exception{
+		return pjDao.selectListPjUns(uno);
+	}
+	
+	// 부서별 보관함 프로젝트 목록
+	@Override
+	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap)throws Exception{
+		return pjDao.selectListPjTeam(paramMap);
+	}
 	
 }

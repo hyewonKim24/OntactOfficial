@@ -1,21 +1,29 @@
 package com.kh.ontact.users.controller;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ontact.company.model.dto.CompanyDto;
@@ -35,12 +44,14 @@ import com.kh.ontact.users.exception.AlreadyExistingEmailException;
 import com.kh.ontact.users.exception.NotExistingCurlException;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
+import com.kh.ontact.users.model.service.EmailService;
 import com.kh.ontact.users.model.service.UsersService;
 import com.kh.ontact.users.util.GuestRegisterRequest;
 import com.kh.ontact.users.util.PwdRegisterRequest;
 import com.kh.ontact.users.util.RegisterRequest;
 
 @Controller
+@EnableAsync
 public class UsersMainController {
 	@Autowired
 	UsersService usersService;
@@ -49,7 +60,7 @@ public class UsersMainController {
 	BCryptPasswordEncoder pwdEncoder;
 
 	@Autowired
-	private JavaMailSender mailSender;
+	EmailService emailService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UsersMainController.class);
 
@@ -135,7 +146,6 @@ public class UsersMainController {
 	}
 
 	// 가입 인증번호 메일 발송
-	@Async
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheckGET(String uemail) throws Exception {
@@ -154,14 +164,7 @@ public class UsersMainController {
 		String content = "안녕하세요. 본 메일은 '온택트' 가입 시," + "<br>" + "본인 확인을 위해 발송되는 메일입니다." + "<br><br>" + "인증번호는 "
 				+ checkNum + "입니다." + "<br>" + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 		try {
-			mailSend(setFrom, toMail, title, content);
-//			MimeMessage message = mailSender.createMimeMessage();
-//			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-//			helper.setFrom(setFrom);
-//			helper.setTo(toMail);
-//			helper.setSubject(title);
-//			helper.setText(content, true);
-//			mailSender.send(message);
+			emailService.mailSend(setFrom, toMail, title, content);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,24 +291,6 @@ public class UsersMainController {
 		return sb.toString();
 	}
 
-	// 메일 보내는 메소드
-	@Async
-	private void mailSend(String setFrom, String toMail, String title, String content) {
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper;
-		try {
-			helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content, true);
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	// 비밀번호 찾기(임시비밀번호 발급)
 	@RequestMapping(value = "/pwdforgetmail", method = RequestMethod.POST)
 	public ModelAndView updateTmppwd(@Valid PwdRegisterRequest regReq, BindingResult bindingResult, UsersDto userdto)
@@ -350,7 +335,7 @@ public class UsersMainController {
 			// 비밀번호 업데이트
 			usersService.updateTmppwd(userdto);
 			// 메일 발송
-			mailSend(setFrom, toMail, title, content);
+			emailService.mailSend(setFrom, toMail, title, content);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -359,17 +344,164 @@ public class UsersMainController {
 		mv.setViewName("users/login");
 		return mv;
 	}
-	
+
 	// 마이페이지 - 계정정보
 	@RequestMapping(value = "/user/mypage/detail", method = RequestMethod.GET)
-	public String selectOneUser(UsersDto userdto) {
-		return "users/myinfo";
+	public ModelAndView selectOneUser(UsersDto userdto) {
+		ModelAndView mv = new ModelAndView();
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String dno = user.getDno();
+		String cno = user.getCno();
+		String dname = null;
+		try {
+			if (dno == null) {
+				dname = "미지정";
+			} else {
+				dname = usersService.dnameChk(dno);
+			}
+			mv.addObject("company", usersService.findCompany(cno));
+			System.out.println(usersService.findCompany(cno));
+			mv.addObject("dname", dname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.setViewName("users/myinfo");
+		return mv;
 	}
-	
+
+	// 프로필 사진 등록 요청
+//	@RequestMapping(value = "/user/mypage/mypicture", method = RequestMethod.POST)
+//	public String photoUpload(@RequestParam(name="image", required = false) MultipartFile report, HttpServletRequest request, ModelAndView mv) {
+//		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+//				.getPrincipal();
+//		String path = null;
+//		try {
+//			if(report!=null&&!report.equals("")) {
+//				saveFile(report, request);
+//				path = user.getUfilepath();
+//				System.out.println(path);
+//				System.out.println(user.getUfilename());
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return "users/myinfo";
+//	}
+
+
 	// 마이페이지 - 계정정보 업데이트
-	@RequestMapping(value = "/user/mypage/upduser", method = RequestMethod.GET)
-	public String updateUser(UsersDto userdto) {
-		return "users/pwdsetting";
+	@ResponseBody
+	@RequestMapping(value = "/user/mypage/updutell", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public String updateUtell(@RequestParam(required = false) String utell) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String uno = user.getUno();
+		String result = "aaa";
+		String tell_chk = "(^[0-9]*$)";
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		try {
+			Pattern pattern_symbol = Pattern.compile(tell_chk);
+			Matcher matcher_symbol = pattern_symbol.matcher(utell);
+			if (matcher_symbol.find()) {
+				paramMap.put("uno", uno);
+				paramMap.put("utell", utell);
+				logger.info("utell : " + utell + "원래 utell : " + user.getUtell() + "업데이트");
+				// 업데이트
+				usersService.updateUtell(paramMap);
+				user.setUtell(utell);
+				result = "변경";
+			} else {
+//				result = "숫자만 입력해주세요.";
+				System.out.println(matcher_symbol.find());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/user/mypage/updurank", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public String updateUrank(@RequestParam(required = false) String urank) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String uno = user.getUno();
+		String result = "aaa";
+		String urank_chk = "[!@#$%^&*(),.?\\\":{}|<>]";
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		try {
+			Pattern pattern_symbol = Pattern.compile(urank_chk);
+			Matcher matcher_symbol = pattern_symbol.matcher(urank);
+			if (!matcher_symbol.find()) {
+				paramMap.put("uno", uno);
+				paramMap.put("urank", urank);
+				logger.info("urank : " + urank + "원래 urank : " + user.getUrank() + "업데이트");
+				// 업데이트
+				usersService.updateUrank(paramMap);
+				user.setUrank(urank);
+				result = "변경";
+			} else {
+				System.out.println(matcher_symbol.find());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/user/mypage/updcname", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public String updateCname(@RequestParam(required = false) String cname) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String cno = user.getCno();
+		String result = "aaa";
+		String cname_chk = "[!@#$%^&*(),.?\\\":{}|<>]";
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		try {
+			Pattern pattern_symbol = Pattern.compile(cname_chk);
+			Matcher matcher_symbol = pattern_symbol.matcher(cname);
+			if (!matcher_symbol.find()) {
+				paramMap.put("cno", cno);
+				paramMap.put("cname", cname);
+				// 업데이트
+				usersService.updateCname(paramMap);
+				result = "변경";
+			} else {
+				System.out.println(matcher_symbol.find());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/user/mypage/updctel", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public String updateCtel(@RequestParam(required = false) String ctel) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String cno = user.getCno();
+		String result = "aaa";
+		String tell_chk = "(^[0-9]*$)";
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		try {
+			Pattern pattern_symbol = Pattern.compile(tell_chk);
+			Matcher matcher_symbol = pattern_symbol.matcher(ctel);
+			if (matcher_symbol.find()) {
+				paramMap.put("cno", cno);
+				paramMap.put("ctel", ctel);
+				// ctel 업데이트
+				usersService.updateCtel(paramMap);
+				result = "변경";
+			} else {
+				System.out.println(matcher_symbol.find() + "실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	// 마이페이지 - 비밀번호 변경 페이지로 이동
@@ -380,13 +512,13 @@ public class UsersMainController {
 
 	// 마이페이지 - 비밀번호 변경
 	@RequestMapping(value = "/user/mypage/updpwd", method = RequestMethod.POST)
-	public ModelAndView updatePwdCheck(@RequestParam String nowpwd,UsersDto userdto) {
+	public ModelAndView updatePwdCheck(@RequestParam String nowpwd, UsersDto userdto) {
 		ModelAndView mv = new ModelAndView();
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		String realpwd = user.getPassword(); // 현재 비밀번호 값
 		String upwd = nowpwd; // 사용자가 입력한 현재 비밀번호
-		System.out.println(realpwd+"그리고"+nowpwd);
+		System.out.println(realpwd + "그리고" + nowpwd);
 		System.out.println(userdto.getUpwd());
 		if (!pwdEncoder.matches(upwd, realpwd)) {
 			logger.info("비밀번호 틀림");
@@ -406,8 +538,8 @@ public class UsersMainController {
 				e.printStackTrace();
 			}
 		}
-			mv.addObject("success", "비밀번호 변경이 되었습니다.");
-			mv.setViewName("users/pwdsetting");
+		mv.addObject("success", "비밀번호 변경이 되었습니다.");
+		mv.setViewName("users/pwdsetting");
 		return mv;
 	}
 

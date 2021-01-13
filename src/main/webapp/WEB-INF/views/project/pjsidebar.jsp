@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
@@ -140,6 +141,17 @@ body {
 	vertical-align: middle;
 	height: 13px;
 }
+#sidebar_pjteam {
+	display: flex;
+	flex-direction: column;
+}
+#sidebar_pjteam ul {
+	min-height: 100px;
+}
+/*조직도*/
+#orgchart{
+	clear:both;
+}
 
 /*modal_새프로젝트 생성 모달*/
 .sb-modal {
@@ -241,19 +253,19 @@ to {
 	letter-spacing: -1px;
 }
 
-.sb-modal-body>input:nth-child(2) {
+.sb-modal-body textarea {
 	width: 90%;
 	overflow: auto;
 	padding: 10px;
 	min-height: 36px;
 	height: 55px;
 	max-height: 100px;
-	overflow: scroll;
 	font-size: 14px;
 	border: 1px solid #d9d9d9;
 	margin: 0px auto 10px auto;
 	box-sizing: border-box;
 	letter-spacing: -1px;
+	overflow-x:hidden;
 }
 
 /*관리자 승인 참여*/
@@ -370,36 +382,75 @@ input:checked+.slider:before {
 }
 </style>
 <script>
-	$(document).ready(
-	function() {
+	$(document).ready(function() {
 		$("#pj_sidebar").mouseover(function() {
 			$(this).css("overflow-y", "scroll");
 			// $(this).animate();
 		});
 		$("#pj_sidebar").mouseout(function() {
 			$(this).css("overflow-y", "hidden");
+		});		
+
+		//프로젝트 생성  모달 부서목록 체크박스
+		$("#new_pj_btn").click(function() {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/project/pjteam",
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(data) {
+					$("#pjteam").html("");
+					for (var i = 0; i < data.length; i++) {
+						$("#pjteam").append('<input type="checkbox" name="dno" value="'+ data[i].dno + '">'+data[i].dname+'<br>');
+					}
+				},
+				error : function() {
+					alert("newpj modal : pjteam load error");
+				}
+			})
 		});
 		
-		//<input type="checkbox" name="${d.dname}" value="${d.dname}">
-		$("#new_pj_btn").click(
-			function() {
-				$.ajax({
-					url : "${pageContext.request.contextPath}/project/all/newpjmodal",
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(data) {
-						$("#pjteam").html("");
-						for (var i = 0; i < data.length; i++) {
-							$("#pjteam").append('<input type="checkbox" name="pjteam" value="'+ data[i].dname + '">'+data[i].dname+'<br>');
-						}
-					},
-					error : function() {
-						alert("pjteam load error");
-					}
-				})
+		//프로젝트 생성 모달 부서 체크박스
+		$('input:checkbox[name="dno"]').is(":checked") ==  true
+		
+		//프로젝트 생성 모달 null 체크
+		var pname = $('#pname').val();
+		$('#pj_new_btn').click(function(){
+			if(pname.val()=='' || pname.val() == null){
+				alert("프로젝트 이름을 기입해주세요.");
 				return false;
-			});
-//경로 추가하고 현재페이지 색 바뀌는 것 추가해야함		
+			} else {
+				window.location.replace=("${pageContext.request.contextPath}/project/all/ins");
+				return true;
+			}
+		});
+		
+		//관리자 승인 버튼 값 변화
+		$("input[id='popen']:checkbox").click( function (){ 
+			if ($("input[id='popen']:checkbox").is(":checked")){
+				$(this).val('0');
+			} else {
+				$( "input[id='popen']:checkbox" ).removeAttr( ":checked"); 
+				$(this).val('1');
+			}
+		});
+		
+		
+		//sidebar 부서목록
+		$.ajax({
+			url: "${pageContext.request.contextPath}/project/pjteam",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			success : function(data) {
+				$("#pjteam").html("");
+				for (var i = 0; i < data.length; i++) {
+					$(".sidebar_teamlist").append('<a href="${pageContext.request.contextPath}/project/pjteam/list?dname='+ data[i].dname +'"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;" xml:space="preserve"><path d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z"/></svg>'+ data[i].dname +'</a>');
+				}
+			},
+			error : function() {
+				alert("sidebar : pjteam load error");
+			}
+		});
+	//경로 추가하고 현재페이지 색 바뀌는 것 추가해야함		
 
 	});
 	// modal
@@ -430,7 +481,7 @@ input:checked+.slider:before {
 		<button type="button" id="new_pj_btn" onclick="newpjmodal">+&nbsp;새
 			프로젝트</button>
 		<ul>
-			<li><a href="#"> <svg version="1.1" class="pj_btn"
+			<li><a href="${pageContext.request.contextPath}/project/all/list"> <svg version="1.1" class="pj_btn"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 50 35" style="enable-background: new 0 0 50 35;"
@@ -440,9 +491,9 @@ input:checked+.slider:before {
                             <rect y="17" width="50" height="3" />
                             <rect y="31" width="50" height="3" />
                         </g>
-                    </svg> 전체 <span class="pj_sb_alarm">00</span>
+                    </svg>전체 <span class="pj_sb_alarm">00</span>
 			</a></li>
-			<li><a href="#"> <svg version="1.1" class="pj_btn"
+			<li><a href="${pageContext.request.contextPath}/project/uns/list"> <svg version="1.1" class="pj_btn"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
@@ -640,110 +691,43 @@ input:checked+.slider:before {
                     </svg> 내 게시물
 			</a></li>
 		</ul>
-		<ul>
-			<li><span class="sec_title">부서 보관함&nbsp;</span> <a href="#">
+		<ul id="sidebar_pjteam">
+			<li><span class="sec_title">부서 보관함&nbsp;</span> 
+				<a href="#">
 					<svg class="sb_add_btn" data-name="Capa 1"
 						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
                         <path
 							d="M52.35,1V1H.6V46.55h0V57.63H59.7V1ZM44,32.66a7,7,0,0,1-1.24.09H33.31v9.54a6.49,6.49,0,0,1,0,1,3.43,3.43,0,0,1-3.38,3.05h0a3.41,3.41,0,0,1-3.34-2.93,6,6,0,0,1-.07-1V32.75H17c-.37,0-.63,0-.88,0a3.4,3.4,0,0,1,.3-6.8h10V16.37a6.15,6.15,0,0,1,.15-1.42,3.38,3.38,0,0,1,6.51-.16,5.09,5.09,0,0,1,.19,1.47v9.66h9.63a6.57,6.57,0,0,1,1.13.07,3.39,3.39,0,0,1,2.77,3.41A3.34,3.34,0,0,1,44,32.66Z" />
                     </svg>
-			</a></li>
-			<li><a href="#"> <svg version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-						xml:space="preserve">
-                        <path
-							d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0
-	c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177
-	C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5
-	H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083
-	c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953
-	c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z" />
-                    </svg> 기획부
-			</a></li>
-			<li><a href="#"> <svg version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-						xml:space="preserve">
-                        <path
-							d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0
-	c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177
-	C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5
-	H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083
-	c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953
-	c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z" />
-                    </svg> 마케팅부
-			</a></li>
-			<li><a href="#"> <svg version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-						xml:space="preserve">
-                        <path
-							d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0
-	c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177
-	C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5
-	H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083
-	c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953
-	c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z" />
-                    </svg> 영업부
-			</a></li>
-			<li><a href="#"> <svg version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-						xml:space="preserve">
-                        <path
-							d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0
-	c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177
-	C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5
-	H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083
-	c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953
-	c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z" />
-                    </svg> 개발부
-			</a></li>
-			<li><a href="#"> <svg version="1.1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-						xml:space="preserve">
-                        <path
-							d="M57.49,21.5H54v-6.268c0-1.507-1.226-2.732-2.732-2.732H26.515l-5-7H2.732C1.226,5.5,0,6.726,0,8.232v43.687l0.006,0
-	c-0.005,0.563,0.17,1.114,0.522,1.575C1.018,54.134,1.76,54.5,2.565,54.5h44.759c1.156,0,2.174-0.779,2.45-1.813L60,24.649v-0.177
-	C60,22.75,58.944,21.5,57.49,21.5z M2,8.232C2,7.828,2.329,7.5,2.732,7.5h17.753l5,7h25.782c0.404,0,0.732,0.328,0.732,0.732V21.5
-	H12.731c-0.144,0-0.287,0.012-0.426,0.036c-0.973,0.163-1.782,0.873-2.023,1.776L2,45.899V8.232z M47.869,52.083
-	c-0.066,0.245-0.291,0.417-0.545,0.417H2.565c-0.243,0-0.385-0.139-0.448-0.222c-0.063-0.082-0.16-0.256-0.123-0.408l10.191-27.953
-	c0.066-0.245,0.291-0.417,0.545-0.417H54h3.49c0.38,0,0.477,0.546,0.502,0.819L47.869,52.083z" />
-                    </svg> 디자인부
-			</a></li>
+				</a>
+			</li>
+			<li class="sidebar_teamlist"></li>
 		</ul>
 		<ul>
-			<li><a href="#"> <svg version="1.1"
+			<li class="orgchart">
+				<a href="#"> 
+					<svg version="1.1"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 						viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;"
 						xml:space="preserve">
                         <g>
-                            <path
-							d="M54.319,37.839C54.762,35.918,55,33.96,55,32c0-9.095-4.631-17.377-12.389-22.153c-0.473-0.29-1.087-0.143-1.376,0.327
-		c-0.29,0.471-0.143,1.086,0.327,1.376C48.724,15.96,53,23.604,53,32c0,1.726-0.2,3.451-0.573,5.147C51.966,37.051,51.489,37,51,37
-		c-3.86,0-7,3.141-7,7s3.14,7,7,7s7-3.141,7-7C58,41.341,56.509,39.024,54.319,37.839z M51,49c-2.757,0-5-2.243-5-5s2.243-5,5-5
-		s5,2.243,5,5S53.757,49,51,49z" />
-                            <path
-							d="M38.171,54.182C35.256,55.388,32.171,56,29,56c-6.385,0-12.527-2.575-17.017-7.092C13.229,47.643,14,45.911,14,44
-		c0-3.859-3.14-7-7-7s-7,3.141-7,7s3.14,7,7,7c1.226,0,2.378-0.319,3.381-0.875C15.26,55.136,21.994,58,29,58
-		c3.435,0,6.778-0.663,9.936-1.971c0.51-0.211,0.753-0.796,0.542-1.307C39.267,54.213,38.681,53.971,38.171,54.182z M2,44
-		c0-2.757,2.243-5,5-5s5,2.243,5,5s-2.243,5-5,5S2,46.757,2,44z" />
-                            <path
-							d="M4,31.213c0.024,0.002,0.048,0.003,0.071,0.003c0.521,0,0.959-0.402,0.997-0.93c0.712-10.089,7.586-18.52,17.22-21.314
-		C23.142,11.874,25.825,14,29,14c3.86,0,7-3.141,7-7s-3.14-7-7-7c-3.851,0-6.985,3.127-6.999,6.975
-		C11.42,9.922,3.851,19.12,3.073,30.146C3.034,30.696,3.449,31.175,4,31.213z M29,2c2.757,0,5,2.243,5,5s-2.243,5-5,5s-5-2.243-5-5
-		S26.243,2,29,2z" />
-                        </g>
-                    </svg> 조직도
-			</a></li>
+                            <path d="M54.319,37.839C54.762,35.918,55,33.96,55,32c0-9.095-4.631-17.377-12.389-22.153c-0.473-0.29-1.087-0.143-1.376,0.327
+					c-0.29,0.471-0.143,1.086,0.327,1.376C48.724,15.96,53,23.604,53,32c0,1.726-0.2,3.451-0.573,5.147C51.966,37.051,51.489,37,51,37
+					c-3.86,0-7,3.141-7,7s3.14,7,7,7s7-3.141,7-7C58,41.341,56.509,39.024,54.319,37.839z M51,49c-2.757,0-5-2.243-5-5s2.243-5,5-5
+					s5,2.243,5,5S53.757,49,51,49z" />
+		                     <path d="M38.171,54.182C35.256,55.388,32.171,56,29,56c-6.385,0-12.527-2.575-17.017-7.092C13.229,47.643,14,45.911,14,44
+					c0-3.859-3.14-7-7-7s-7,3.141-7,7s3.14,7,7,7c1.226,0,2.378-0.319,3.381-0.875C15.26,55.136,21.994,58,29,58
+					c3.435,0,6.778-0.663,9.936-1.971c0.51-0.211,0.753-0.796,0.542-1.307C39.267,54.213,38.681,53.971,38.171,54.182z M2,44
+					c0-2.757,2.243-5,5-5s5,2.243,5,5s-2.243,5-5,5S2,46.757,2,44z" />
+		                    <path d="M4,31.213c0.024,0.002,0.048,0.003,0.071,0.003c0.521,0,0.959-0.402,0.997-0.93c0.712-10.089,7.586-18.52,17.22-21.314
+					C23.142,11.874,25.825,14,29,14c3.86,0,7-3.141,7-7s-3.14-7-7-7c-3.851,0-6.985,3.127-6.999,6.975
+					C11.42,9.922,3.851,19.12,3.073,30.146C3.034,30.696,3.449,31.175,4,31.213z M29,2c2.757,0,5,2.243,5,5s-2.243,5-5,5s-5-2.243-5-5
+					S26.243,2,29,2z"/>
+	                        </g>
+	                </svg> 조직도
+				</a>
+			</li>
 		</ul>
 	</nav>
 	<!-- Modal -->
@@ -754,11 +738,10 @@ input:checked+.slider:before {
 				<span class="close">&times;</span>
 				<h3>프로젝트 만들기</h3>
 			</div>
-			<form action="${pageContext.request.contextPath}/project/all/ins"
-				method="post">
+			<form action="${pageContext.request.contextPath}/project/all/ins" method="get">
 				<div class="sb-modal-body">
-					<input type="text" placeholder="프로젝트 이름을 입력하세요."> <input
-						type="textarea" placeholder="프로젝트 설명을 입력할 수 있습니다.">
+					<input type="text" id="pname" placeholder="프로젝트 이름을 입력하세요." name="pname" />
+					<textarea placeholder="프로젝트 설명을 입력할 수 있습니다." name="pdesc" cols="50" rows="3"></textarea>
 					<div class="pj_secret">
 						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -775,8 +758,11 @@ input:checked+.slider:before {
                    s-2-0.897-2-2v-6c0-1.103,0.897-2,2-2s2,0.897,2,2V38z" />
                         </g>
                     </svg>
-						관리자 승인 후 참여 가능 <label class="switch"> <input
-							type="checkbox"> <span class="slider round"></label>
+						관리자 승인 후 참여 가능 
+						<label class="switch"> 
+							<input id="popen" type="checkbox" value="1" name="popen">
+							<span class="slider round">
+						</label>
 					</div>
 					<div class="pj_select_team">
 						<div>부서보관함 선택</div>

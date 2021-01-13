@@ -1,12 +1,16 @@
 package com.kh.ontact.users.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
+import com.kh.ontact.dept.model.dao.DeptDao;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
 import com.kh.ontact.users.exception.NotExistingCurlException;
@@ -14,7 +18,6 @@ import com.kh.ontact.users.model.dao.UsersAuthDao;
 import com.kh.ontact.users.model.dao.UsersDao;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.util.GuestRegisterRequest;
-import com.kh.ontact.users.util.PwdRegisterRequest;
 import com.kh.ontact.users.util.RegisterRequest;
 
 @Service("usersService")
@@ -26,7 +29,11 @@ public class UsersServiceImpl implements UsersService{
 	CompanyDao companydao;
 	@Autowired
 	UsersAuthDao usersAuthDao;
+	@Autowired
+	DeptDao deptdao;
 
+	private static final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
+	
 	//비즈니스 가입
 	@Override
 	public void joinBusiness(UsersDto userdto, CompanyDto companydto) throws Exception {
@@ -85,7 +92,32 @@ public class UsersServiceImpl implements UsersService{
 		System.out.println(result+"행이 업데이트 되었습니다.");
 		return result;
 	}
-
+	
+	// 마이페이지 정보 뿌리기
+	@Override
+	public CompanyDto findCompany(String cno) throws Exception {
+		logger.info("cno: "+companydao.findCompany(cno));
+		return companydao.findCompany(cno);
+	}
+	@Override
+	public String dnameChk(String dno) throws Exception{
+		logger.info("dname: "+deptdao.dnameChk(dno));
+		return deptdao.dnameChk(dno);
+	}
+	// 마이페이지 정보 수정
+	public int updateUrank(HashMap<String, String> paramMap) throws Exception {
+		return usersDao.updateUrank(paramMap);
+	}
+	public int updateUtell(HashMap<String, String> paramMap) throws Exception {
+		return usersDao.updateUtell(paramMap);
+	}
+	public int updateCname(HashMap<String, String> paramMap) throws Exception {
+		return companydao.updateCname(paramMap);
+	}
+	public int updateCtel(HashMap<String, String> paramMap) throws Exception {
+		return companydao.updateCtel(paramMap);
+	}
+	
 	
 	
 	//여기부터 시큐리티

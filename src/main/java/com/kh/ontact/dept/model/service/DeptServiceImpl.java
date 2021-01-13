@@ -14,8 +14,8 @@ public class DeptServiceImpl implements DeptService{
 	private DeptDao deptDao;
 	
 	//윤진 - 프로젝트
-	public List<DeptDto> selectListDeptDname(){
-		return deptDao.selectListDeptDname();
+	public List<DeptDto> selectListDept(String cno){
+		return deptDao.selectListDept(cno);
 	}
 	
 	//혜림- 조직도
