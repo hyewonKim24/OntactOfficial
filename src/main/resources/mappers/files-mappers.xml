@@ -14,10 +14,9 @@
 		<result property="fpath" column="fpath" />
 	</resultMap>
 	
-	<!-- 파일추가, fdate/fsize/fpath 어떻게 처리할지 -->
-	<insert id="addFile">
+	<insert id="addFile" flushCache="true" parameterType="hashMap">
 		 <![CDATA[
-		 	insert into files(fname,pno,bno,uno) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno})
+		 	insert into files(fname,pno,bno,uno,fsize,fpath) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno},#{fsize},#{fpath})
 		 ]]>
 	</insert>
 	

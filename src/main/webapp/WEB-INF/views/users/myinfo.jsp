@@ -496,33 +496,6 @@
                         </li>
                     </ul>
                 </form>
-            <!-- 테스트 -->
-            <div class="form-group">
-                    <div class="fileDrop">
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
-                    </div>
-                </div>
-             <div class="box-footer">
-                <ul class="mailbox-attachments clearfix uploadedFileList">
-                <li>
-	                <span class="mailbox-attachment-icon has-img">
-	            		<img src="${imgSrc}" alt="Attachment" class="imgsrc">
-	        		</span>
-	        		<div class="mailbox-attachment-info">
-			            <a href="${originalFileUrl}" class="mailbox-attachment-name">
-			                <i class="fa fa-paperclip"></i>
-			            </a>
-			            <a href="${fullName}" class="btn btn-default btn-xs pull-right delBtn">
-			                <i class="fa fa-fw fa-remove"></i>
-			            </a>
-	       			 </div>
-	       			 </li>
-          		</ul>
-          	</div>
             </div>
         </article>
     </section>
@@ -803,7 +776,7 @@
     		}
     	}
     	
-    	// 서버 파일 삭제 AJAX 통신
+    	// 서버파일 삭제 AJAX 통신
     	function deleteFile(dbufilename) {
     	    $.ajax({
     	        url: "${pageContext.request.contextPath}/files/delete",

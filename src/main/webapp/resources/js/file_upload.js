@@ -43,28 +43,25 @@ function uploadFile(formData){
 }
 
 //첨부파일 출력
-function printFiles(data){
-	// 파일 정보 처리
+function printFiles(data) {
+    // 파일 정보 처리
     var fileInfo = getFileInfo(data);
-    // Handlebars 파일 템플릿에 파일 정보들을 바인딩하고 HTML 생성
-    //var html = fileTemplate(fileInfo);
-    var html = "<li>";
-    html += "<span class='mailbox-attachment-icon has-img'>";
-    html += "<img src='"+fileInfo.imgSrc+"' alt='Attachment' class='imgsrc'>";
+    var html = "<li><span class='boardimg'>";
+    html += "<img src='" + fileInfo.imgSrc + "' alt='Attachment' class='imgsrc'>";
     html += "</span>"
-    html += "<div class='mailbox-attachment-info'>"
-    html += "<a href='"+fileInfo.originalFileUrl+"' class='mailbox-attachment-name'>"
-    html += "<i class='fa fa-paperclip'></i>"+fileInfo.originalFileName+"</a>"
-    html += "<a href='"+fileInfo.fullName+"' class='btn btn-default btn-xs pull-right delBtn'>"
+    html += "<div class='boardimg-info'>"
+    html += "<a href='" + fileInfo.originalFileUrl + "' class='boardimg-name'>"
+    html += "<i class='fa fa-paperclip'></i>" + fileInfo.originalFileName + "</a>"
+    html += "<a href='" + fileInfo.fullName + "' class='boardimg-delbtn'>"
     html += "<i class='fa fa-fw fa-remove'></i></a></div></li>"
     // Handlebars 파일 템플릿 컴파일을 통해 생성된 HTML을 DOM에 주입
-    $(".uploadedFileList").append(html);
+    $('.uploadedFileList').append(html);
     // 이미지 파일인 경우 파일 템플릿에 lightbox 속성 추가
     if (fileInfo.fullName.substr(12, 2) === "s_") {
         // 마지막에 추가된 첨부파일 템플릿 선택자
-        var that = $(".uploadedFileList li").last();
+        var that = $('.uploadedFileList li').last();
         // lightbox 속성 추가
-        that.find(".mailbox-attachment-name").attr("data-lightbox", "uploadImages");
+        that.find(".boardimg-name").attr("data-lightbox", "uploadImages");
         // 파일 아이콘에서 이미지 아이콘으로 변경
         that.find(".fa-paperclip").attr("class", "fa fa-camera");
     }

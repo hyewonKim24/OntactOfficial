@@ -11,7 +11,7 @@
 	
 	<insert id="insertCommonboard">
 		 <![CDATA[
-		 	insert into commonboard(bno, bdesc) values (BNO_SE.NEXTVAL,#{bdesc})
+		 	insert into commonboard(bno, bdesc) values (BNO_SE.CURRVAL,#{bdesc})
 		 ]]>
 	</insert>
 	

@@ -1,6 +1,7 @@
 package com.kh.ontact.project.files.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -20,4 +21,5 @@ public class FilesDto {
 	private Date fdate;
 	private String fsize;
 	private String fpath;
+	private List<FilesDto> filelist;
 }

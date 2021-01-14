@@ -1,14 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <!DOCTYPE html>
     <html lang="en">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <sec:csrfMetaTags />
         <title>Document</title>
         <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+       	<link href="${pageContext.request.contextPath}/resources/css/lightbox.min.css" rel="stylesheet">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/lightbox.min.js"></script>
+        <script src="https://kit.fontawesome.com/22634e2e1a.js" crossorigin="anonymous"></script>
         <style>
             * {
                 margin: 0;
@@ -766,6 +773,26 @@
                 right: 20px;
                 width: 25px;
             }
+            /* 파일 css */
+            .imgsrc{
+            width:150px;
+            height:150px;
+            }
+            .uploadedFileList,
+            .uploadedFileList_task{
+            display:flex;
+            flex-wrap: wrap;
+            }
+            .uploadedFileList li,
+            .uploadedFileList_task li{
+            width:150px;
+            overflow:hidden;
+            margin-right:7px;
+            }
+            .boardimg img{
+            border:1px solid #e7e7e7;
+            box-sizing:border-box;
+            }
         </style>
     </head>
 
@@ -848,20 +875,32 @@
                                 </g>
                             </svg>할일</label>
                         <div id="line"></div>
+                        
+                        
                         <div id="commonboard" class="writemenu">
+                       <form id="commonboardForm" method="post" action="${pageContext.request.contextPath}/project/commonboard/ins">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	<%-- <input type="hidden" name="pno" id="pno" value="${pno}"> --%>
+                    	<input type="hidden" name="pno" id="pno" value="1">
                             <div class="textbody">
                                 <div class="title">
-                                    <input type="text" class="title_detail" placeholder="제목 입력(선택)">
+                                    <input type="text" name="bname" class="title_detail" placeholder="제목 입력(선택)">
                                 </div>
-                                <textarea class="content_detail" placeholder="내용을 입력하세요"></textarea>
+                                <textarea class="content_detail" name="bdesc" placeholder="내용을 입력하세요"></textarea>
+                                <ul class="uploadedFileList"></ul>
                             </div>
                             <div class="textfooter">
                                 <div class="textfooter_func_wrap">
-                                    <a href=""><img
+                                    <a href="">
+                                    <label class="file" for="uploadfile" style="cursor:pointer;"><img
                                             src="${pageContext.request.contextPath}/resources/img/attachment.png"
-                                            class="textfooter_func"></a>
-                                    <a href=""><img src="${pageContext.request.contextPath}/resources/img/picture-2.png"
-                                            class="textfooter_func"></a>
+                                            class="textfooter_func"></label>
+	                           		<input type="file" id="uploadfile" name="files" multiple="multiple" style="display:none;">
+                                    </a>
+                                    <%-- <a href="">
+                                    <label class="file" for="uploadphoto" style="cursor:pointer;"><img src="${pageContext.request.contextPath}/resources/img/picture-2.png" class="textfooter_func"></label>
+	                            	<input type="file" id="uploadphoto" accept="image/*" multiple="multiple" name="image" style="display:none;">
+                                    </a> --%>
                                 </div>
                                 <div class="textfooter_side">
                                     <div class="public">
@@ -875,6 +914,7 @@
                                     </div>
                                     <div class="public_setting" style="display: none;">
                                         <h1 class="public_setting_title">게시물 공개 대상</h1>
+                                        <input type="hidden" id="taskopen" name="bopen" value="0"/>
                                         <ul>
                                             <li class="set_li">
                                                 <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"
@@ -893,25 +933,31 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>
-                                    <button class="writebtn">올리기</button>
+                                   </div>
                                 </div>
+                                    <button type="submit" id="writebtn" class="writebtn">올리기</button>
+                                    <button type="button" id="check">값확인용</button>
                             </div>
+                       </form> 
                         </div>
+                        
+                        
                         <div id="task" class="writemenu">
                             <div class="textbody">
                                 <div class="title">
                                     <input type="text" class="title_detail" placeholder="제목 입력(선택)">
                                 </div>
                                 <textarea class="content_detail2" placeholder="내용을 입력하세요"></textarea>
+                                <ul class="uploadedFileList_task"></ul>
                             </div>
                             <div class="textfooter">
                                 <div class="textfooter_func_wrap">
-                                    <a href=""><img
+                                    <a href="">
+                                    <label class="file" for="uploadfile_task" style="cursor:pointer;"><img
                                             src="${pageContext.request.contextPath}/resources/img/attachment.png"
-                                            class="textfooter_func"></a>
-                                    <a href=""><img src="${pageContext.request.contextPath}/resources/img/picture-2.png"
-                                            class="textfooter_func"></a>
+                                            class="textfooter_func"></label>
+	                           		<input type="file" id="uploadfile_task" name="file" multiple="multiple" style="display:none;">
+                                    </a>
                                 </div>
                                 <div class="textfooter_side">
                                     <div class="public">
@@ -948,6 +994,10 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
+                        
+                        
                         <div id="schedule" class="writemenu">
                             <div class="textbody">
                                 <div class="title">
@@ -998,6 +1048,10 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
+                        
+                        
                         <div id="todo" class="writemenu">
                             <div class="textbody">
                                 <div class="title">
@@ -1142,17 +1196,6 @@
                     </span>
                     <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
                     <button id="replyReg">등록</button>
-                </div>
-                <!-- 테스트 -->
-                <span class="mailbox-attachment-icon has-img">
-                	<img src="${imgSrc}" alt=Attachment">
-                </span>
-                <div class="mailbox-attachment-info">
-                	<a href="${originalFileUrl }" class="mailbox-attachment-name">
-                		${originalFileName}
-                	</a>
-                	<a href="${fileName }" class="btn btn-default btn-xs pull-right delBtn">
-                	</a>
                 </div>
             </div>
 
@@ -1322,10 +1365,12 @@
                 $('.set_li').on('click', function () {
                     $(".public").show();
                     $(".public_admin").hide();
+                    $("#taskopen").val("0");
                 })
                 $('.set_li_admin').on('click', function () {
                     $(".public").hide();
                     $(".public_admin").show();
+                    $("#taskopen").val("1");
                 })
             })
             //게시글 작성 상자 늘어나기
@@ -1367,6 +1412,239 @@
                 $(this).css('color', '#333333');
                 $(".prevsvg").css('fill', '#111111');
             });
+            
+            
+// 은실 파일
+            
+let header = $("meta[name='_csrf_header']").attr("content");
+let token = $("meta[name='_csrf']").attr("content");
+
+$("#uploadfile").on("change", fileChange);
+$("#uploadfile_task").on("change", fileChangeTask);
+
+function fileChange(e) {
+    e.preventDefault();
+    let files = e.target.files;
+    for (let file of files) {
+        let size = file.size
+        let formData = new FormData();
+        formData.append("file", file);
+        console.log(formData.get('file'));
+        // 파일 업로드 AJAX 통신 메서드 호출
+        uploadFile(formData, size);
+    }
+}
+
+function fileChangeTask(e) {
+    e.preventDefault();
+    let files = e.target.files;
+    for (let file of files) {
+        let size = file.size
+        let formData = new FormData();
+        formData.append("file", file);
+        console.log(formData.get('file'));
+        // 파일 업로드 AJAX 통신 메서드 호출
+        uploadFileTask(formData, size);
+    }
+}
+
+//파일 업로드 AJAX 통신
+function uploadFile(formData, size) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/files/upload",
+        data: formData,
+        dataType: "text",
+        processData: false,
+        contentType: false,
+        type: "POST",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        },
+        success: function (data) {
+            printFiles(data, size);
+        }
+    })
+}
+
+//★바뀜 task용
+//파일 업로드 AJAX 통신
+function uploadFileTask(formData, size) {
+  $.ajax({
+      url: "${pageContext.request.contextPath}/files/upload",
+      data: formData,
+      dataType: "text",
+      processData: false,
+      contentType: false,
+      type: "POST",
+      beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      },
+      success: function (data) {
+          printFilesTask(data, size);
+      }
+  })
+}
+
+//★바뀜 task용
+//첨부파일 출력
+function printFilesTask(data, size) {
+  // 파일 정보 처리
+  console.log("printfiles : "+size);
+  var fileInfo = getFileInfo(data);
+  var html = "<li><span class='boardimg'>";
+  html += "<img src='" + fileInfo.imgSrc + "' alt='Attachment' class='imgsrc'>";
+  html += "</span>"
+  html += "<div class='boardimg-info'>"
+  html += "<a href='" + fileInfo.originalFileUrl + "' class='boardimg-name'>"
+  html += "<i class='fa fa-paperclip'></i>" + fileInfo.originalFileName + "</a>"
+  html += "<a href='" + fileInfo.fullName + "' class='boardimg-delbtn'>"
+  html += "<i class='fa fa-fw fa-remove'></i></a></div>"
+  html += "<input type='hidden' value='" + size + "' name='fsize'></li>" >
+      // Handlebars 파일 템플릿 컴파일을 통해 생성된 HTML을 DOM에 주입
+      $('.uploadedFileList_task').append(html);
+  // 이미지 파일인 경우 파일 템플릿에 lightbox 속성 추가
+  if (fileInfo.fullName.substr(12, 2) === "s_") {
+      // 마지막에 추가된 첨부파일 템플릿 선택자
+      var that = $('.uploadedFileList_task li').last();
+      // lightbox 속성 추가
+      that.find(".boardimg-name").attr("data-lightbox", "uploadImages");
+      // 파일 아이콘에서 이미지 아이콘으로 변경
+      that.find(".fa-paperclip").attr("class", "fa fa-camera");
+  }
+}
+
+
+//첨부파일 출력
+function printFiles(data, size) {
+    // 파일 정보 처리
+    console.log("printfiles : " + size);
+    var fileInfo = getFileInfo(data);
+    var html = "<li><span class='boardimg'>";
+    html += "<img src='" + fileInfo.imgSrc + "' alt='Attachment' class='imgsrc'>";
+    html += "</span>"
+    html += "<div class='boardimg-info'>"
+    html += "<input type='hidden' value='" + size + "' id='fsize'>"
+    html += "<a href='" + fileInfo.originalFileUrl + "' class='boardimg-name'>"
+    html += "<i class='fa fa-paperclip'></i>" + fileInfo.originalFileName + "</a>"
+    html += "<a href='" + fileInfo.fullName + "' class='boardimg-delbtn'>"
+    html += "<i class='fa fa-fw fa-remove'></i></a></div></li>"
+        // Handlebars 파일 템플릿 컴파일을 통해 생성된 HTML을 DOM에 주입
+        $('.uploadedFileList').append(html);
+    // 이미지 파일인 경우 파일 템플릿에 lightbox 속성 추가
+    if (fileInfo.fullName.substr(12, 2) === "s_") {
+        // 마지막에 추가된 첨부파일 템플릿 선택자
+        var that = $('.uploadedFileList li').last();
+        // lightbox 속성 추가
+        that.find(".boardimg-name").attr("data-lightbox", "uploadImages");
+        // 파일 아이콘에서 이미지 아이콘으로 변경
+        that.find(".fa-paperclip").attr("class", "fa fa-camera");
+    }
+}
+
+
+
+// 파일 정보 처리
+function getFileInfo(fullName) {
+
+    var originalFileName;   // 화면에 출력할 파일명
+    var imgSrc;             // 썸네일 or 파일아이콘 이미지 파일 출력 요청 URL
+    var originalFileUrl;    // 원본파일 요청 URL
+    var uuidFileName;       // 날짜경로를 제외한 나머지 파일명 (UUID_파일명.확장자)
+
+
+    // 이미지 파일이면
+    if (checkImageType(fullName)) {
+        imgSrc = "${pageContext.request.contextPath}/files/display?fileName=" + fullName; // 썸네일 이미지 링크
+        uuidFileName = fullName.substr(14);
+        var originalImg = fullName.substr(0, 12) + fullName.substr(14);
+        // 원본 이미지 요청 링크
+        originalFileUrl = "${pageContext.request.contextPath}/files/display?fileName=" + originalImg;
+    } else {
+        imgSrc = "${pageContext.request.contextPath}/resources/img/attachment.png"; // 파일 아이콘 이미지 링크
+        uuidFileName = fullName.substr(12);
+        // 파일 다운로드 요청 링크
+        originalFileUrl = "${pageContext.request.contextPath}/files/display?fileName=" + fullName;
+    }
+    originalFileName = uuidFileName.substr(uuidFileName.indexOf("_") + 1);
+
+    return { originalFileName: originalFileName, imgSrc: imgSrc, originalFileUrl: originalFileUrl, fullName: fullName };
+}
+
+// 이미지 파일 유무 확인
+function checkImageType(fullName) {
+    let type = fullName.slice(fullName.lastIndexOf(".") + 1).toLowerCase();
+    let check = true;
+    if (!(type == "gif" || type == "jpg" || type == "jpeg" || type == "png")) {
+        check = false;
+    }
+    return check;
+}
+
+// 파일 삭제 버튼 클릭 이벤트
+$(document).on("click", ".boardimg-delbtn", function (event) {
+    event.preventDefault();
+    var that = $(this);
+    deleteFileWrtPage(that);
+});
+// 파일 삭제(입력페이지) : 첨부파일만 삭제처리
+function deleteFileWrtPage(that) {
+    var url = "${pageContext.request.contextPath}/files/delete";
+    deleteFile(url, that);
+}
+// 파일 삭제 AJAX 통신
+function deleteFile(url, that) {
+    $.ajax({
+        url: url,
+        type: "post",
+        data: { fileName: that.attr("href") },
+        dataType: "text",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        },
+        success: function (result) {
+            if (result === "DELETED") {
+                alert("삭제되었습니다.");
+                that.parents("li").remove();
+            }
+        }
+    });
+}
+
+//게시글 저장 버튼 클릭 이벤트 처리
+$("#writebtn").click(function (event) {
+	console.log("드러옴");
+    //event.preventDefault();
+    var that = $(this);
+    filesSubmit(that);
+});
+//게시글 입력/수정 submit 처리시에 첨부파일 정보도 함께 처리
+function filesSubmit(that) {
+    var str = "";
+    $(".boardimg-delbtn").each(function (index) {
+        str += "<input type='hidden' name='filelist[" + index + "].fname' value='" + $(this).attr('href') + "'>"
+    });
+    $(".boardimg-name").each(function (index) {
+        let par = $(this).parent();
+        let size = par.find('#fsize').val();
+        str += "<input type='hidden' name='filelist[" + index + "].fpath' value='" + $(this).attr('href') + "'>"
+        //str += "<input type='hidden' name='fpath[" + index + "]' value='" + $(this).attr("href") + "'>"
+        str += "<input type='hidden' name='filelist[" + index + "].fsize' value='" + size + "'>"
+        //str += "<input type='hidden' name='fsize[" + index + "]' value='" + size + "'>"
+    });
+    that.append(str);
+    that.get(0).submit();
+}
+
+$("#check").click(function(){
+	$(".boardimg-delbtn").each(function (index) {
+		console.log($(this).attr("href"));
+	});
+	$(".boardimg-name").each(function (index) {
+		console.log($(this).attr("href"));
+	});
+})
+			
+			
         </script>
     </body>
 
