@@ -155,10 +155,10 @@ public class UsercommuteController {
 			java.sql.Timestamp t2 = java.sql.Timestamp.valueOf(day2);
 			System.out.println("결과확인 " + t2);
 			
-			SimpleDateFormat fourteen_format = new SimpleDateFormat("HHmm"); 
+			SimpleDateFormat sdf = new SimpleDateFormat("HHmm"); 
 			
-			String s1 = fourteen_format.format(t1);
-			String s2 = fourteen_format.format(t2);
+			String s1 = sdf.format(t1);
+			String s2 = sdf.format(t2);
 			int qrT = Integer.parseInt(s1);
 			int standardT = Integer.parseInt(s2);
 			

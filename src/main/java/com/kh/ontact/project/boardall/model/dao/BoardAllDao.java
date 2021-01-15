@@ -26,5 +26,10 @@ public class BoardAllDao {
 				+ "", pno);
 	}
 	
+//	혜림 BoardAll 스케줄 추가 
+	public int insertBoardAllSchedule(BoardAllDto dto) throws Exception {
+		return sqlSession.insert("BoardAll.insertBoardAllSchedule",dto);
+	}
+	
 	
 }

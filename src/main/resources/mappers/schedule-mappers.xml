@@ -14,6 +14,7 @@
 		<result property="send" column="send" />
 		<result property="splace" column="splace" />
 		<result property="smemo" column="smemo" />
+		<result property="attendee" column="attendee" />
 		<result property="uno" column="uno" />
 		<result property="uname" column="uname" />
 		<result property="tstart" column="tstart" />
@@ -21,23 +22,43 @@
 		<result property="taskmanager" column="taskmanager" />
 	</resultMap>
 
-	<!-- boardall 인서트 -->
+	<!-- boardall 인서트
 	<insert id="insertBoardAllSche">
 	 <![CDATA[
 	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},'3', 0, sysdate)
 		]]>
-	</insert>
+	</insert> -->
 	
-	<!-- shedule 인서트 -->
+	<!-- 프로젝트 일정 글-->
 	<insert id="insertSchedule" flushCache="true" statementType="PREPARED">  
 		<![CDATA[
-		 insert into task values (bno_se.currval,#{sstart}, #{send}, #{splace}, #{smemo}, #{attendee}) 
+		 insert into schedule values (bno_se.currval,#{sstart}, #{send}, #{splace}, #{smemo}, #{attendee}) 
 		]]>
 	</insert>
 	
+	<select id="selectOneSchedule" resultMap="resultSchedule">
+		<![CDATA[
+		 	select * from schedule where bno = #{bno}
+		 ]]>
+	</select>
+	
+	<update id="updateSchedule">
+		<![CDATA[
+		 	update schedule set attendee=#{attendee} where bno=#{bno}
+		 ]]>
+	</update>
+	
+	<delete id="deleteSchedule">
+		<![CDATA[
+		 	delete from schedule where bno=#{bno}
+		]]>
+	</delete>
+	
+	
+	<!-- 전체 일정 -->
 	<!-- 일정 : 내가 등록한 일정 + 초대받은 일정(1, 1) , 내가 등록한 일정(1, 0), 내가 초대받은 일정(0, 1), 
 		전체는 where절을 사라지게 -->
-	<select id="selectSche" resultMap="resultSchedule">
+	<select id="selectAllSche" resultMap="resultSchedule">
 		select p.pno as pno, p.pname as pname,b.bno as bno, b.bname as bname,
 		b.btype as btype,
 		sv.sstart as sstart, sv.send as send, sv.splace as splace, sv.smemo as smemo,
@@ -56,7 +77,7 @@
 	</select>
 
 	<!--업무 : 내업무 (5), 요청한 업무(1), 전체 업무 where 절 사라지게 -->
-	<select id="selectTaskSche" resultMap="resultSchedule">
+	<select id="selectAllTask" resultMap="resultSchedule">
 
 		select p.pno as pno, p.pname as pname, b.bno as bno, b.bname as bname,
 		b.btype as btype,
