@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Commonboard">
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="CommonboardDto" id="resultCommonBoard">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="bno" column="bno"/>
+		<result property="bdesc" column="bdesc" />
+	</resultMap>
+	
+	<insert id="insertCommonboard">
+		 <![CDATA[
+		 	insert into commonboard(bno, bdesc) values (BNO_SE.CURRVAL,#{bdesc})
+		 ]]>
+	</insert>
+	
+	<select id="selectOneCommonboard" resultMap="resultCommonBoard">
+		<![CDATA[
+		 	select * from commonboard
+		 ]]>
+	</select>
+	
+	<update id="updateCommonboard">
+		<![CDATA[
+		 	update commonboard set bdesc=#{bdesc} where bno=#{bno}
+		 ]]>
+	</update>
+	
+	<delete id="deleteCommonboard">
+		<![CDATA[
+		 	delete from commonboard where bno=#{bno}
+		]]>
+	</delete>
+	
+	
+</mapper>

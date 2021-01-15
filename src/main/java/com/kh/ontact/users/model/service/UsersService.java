@@ -23,6 +23,8 @@ public interface UsersService {
 	public int updateUtell(HashMap<String, String> paramMap) throws Exception;
 	public int updateCname(HashMap<String, String> paramMap) throws Exception;
 	public int updateCtel(HashMap<String, String> paramMap) throws Exception;
+	public int updateProfile(HashMap<String, String> paramMap) throws Exception;
+	public int deleteProfile(String uno) throws Exception;
 	
 	//시큐리티
 	void countFailure(String username);
