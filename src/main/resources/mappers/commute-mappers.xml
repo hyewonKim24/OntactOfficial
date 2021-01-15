@@ -3,7 +3,7 @@
 <mapper namespace="CommuteMapper">
 	<resultMap type="CommuteDto" id="resultCommute">
 		<!-- property에는 vo의 필드명, column에는 db tabel의 컬럼명 두개를 map으로 연결한다 -->
-		<id property="uno" column="uno" />
+		<result property="uno" column="uno" />
 		<result property="dname" column="dname" />
 		<result property="uname" column="uname" />
 		<result property="cdate" column="cdate" />
@@ -16,87 +16,85 @@
 	</resultMap>
 	
 	<!-- 출퇴근 시간 기간별 조회 -->
-	<select id="allListCount" resultType="int">
-	<![CDATA[
-		select count(*) from commute where uno = #{uno}
-		]]>
+	<select id="allListCount" resultType="int" >
+
+		select count(cstate) from commute where uno= #{uno}
+
 	</select>
 	<select id="selectDailyCommute" 
 		resultType="arraylist"
 		resultMap="resultCommute">
-		<![CDATA[
 		select * from commute where uno = #{uno}
-		]]>
 	</select>
 	
 	<!-- 출퇴근 시간 기간별 조회 : 정상, 지각, 기타 -->
-	<select id="listCount" resultType="int">
-	<![CDATA[
-		select count(*) from commute 
-		where cstate = #{cstate} 
+	<select id="listCount" resultType="int" parameterType ="java.util.HashMap">
+		select count(cstate) from commute 
+		where cstate = '${cstate}' 
 		and cdate between to_date('${startdate}', 'yyyy-mm-dd') and to_date('${enddate}', 'yyyy-mm-dd')
-		and uno =#{uno}
-		]]>
+		and uno ='${uno}'
+	
 	</select>
 	<select id="searchDailyCommute" 
 		parameterType ="java.util.HashMap"
 		resultType="arraylist"
 		resultMap="resultCommute">
-		<![CDATA[
+
 		select * from commute 
-		where cstate = '${cstate}'
-		and cdate between to_date('${startdate}', 'yyyy-mm-dd') and to_date('${enddate}', 'yyyy-mm-dd')
-		and uno = '${uno}'
-		]]>
+		where cstate = #{cstate}
+		and cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+		and uno = #{uno}
+
 	</select>
 	
 	<!-- 출근 시간 삽입 -->
 	<insert id="insertEnter" flushCache="true" statementType="PREPARED">  
-	<![CDATA[
-	insert into commute values('47', #{dname}, #{uname}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
+	
+	insert into commute values(#{uno}, #{dname}, #{uname}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
 			null, null, #{creason})
-			]]>
+	
 	</insert>
 	
 	<!-- 퇴근 시간 삽입 -->
 	<update id="updateLeave" flushCache="true" statementType="PREPARED">
-	<![CDATA[
+	
 		update commute 
 		set cendtime = to_char(to_date( '${cendtime}', 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
-			cworktime = TRUNC((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss')-to_date(cstarttime,'yyyy-mm-dd hh24:mi:ss'))*24-1) || '시간' ||
-						TRUNC(mod((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss') - to_date(cstarttime, 'yyyy-mm-dd hh24:mi:ss'))*24,1)*60) || '분' 
+			cworktime = TRUNC((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss')-to_date(cstarttime,'yyyy-mm-dd hh24:mi:ss'))*24-1) || '.' ||
+						TRUNC(mod((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss') - to_date(cstarttime, 'yyyy-mm-dd hh24:mi:ss'))*24,1)*60)
 		where uname = '${uname}' and to_date(cdate, 'yyyy-mm-dd hh24:mi:ss') = to_date(sysdate, 'yyyy-mm-dd')
-		]]>
+	
 		<!-- 여기 date 형식으로 비교하는거 질문 -->
 	</update>
 	
 	<!-- 월 근무내역 조회 -->
 	<!-- 기본값 -->
 	<select id="mAllCount" resultType="int">
-	<![CDATA[
+	
 		select count(*) from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno='47' 
-			]]>
+			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno} 
+	
 			<!-- #{uno}  -->
 			
 	</select>
 	<select id="selectMonthCommute" 
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		<![CDATA[
+		
 		select to_char(c.cdate, 'yyyy-mm-dd') as cdate, c.cworktime as cworktime, o.owtime as owtime, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno= '47'
-			]]>
+			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno}
+			order by cdate desc
+			
 			<!-- #{uno} --> 
 	</select>
 	
 	<select id="msearchCount" resultType="int">
-	<![CDATA[
+	
 		select count(*) from commute c, overwork o
-			where c.uno = o.uno and c.cdate = o.owdate and c.uno = '47'
-			and c.cdate between to_date('2021-01-01', 'yyyy-mm-dd') and to_date('2021-01-04', 'yyyy-mm-dd')
-			]]>
+			where c.uno = o.uno and c.cdate = o.owdate and c.uno = #{uno}
+			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+		
 		<!-- 	where c.uname = o.uname and c.cdate = o.owdate and c.uname= #{uno} 
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd'); -->
 	</select>
@@ -104,21 +102,21 @@
 		parameterType ="java.util.HashMap"
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		<![CDATA[
+		
 		select c.cdate as cdate, c.cworktime as cworktime, o.owtime as owtime, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
-			where c.uno = o.uno and c.cdate = o.owdate and c.uno= '47'
-			and c.cdate between to_date('2021-01-01', 'yyyy-mm-dd') and to_date('2021-01-04', 'yyyy-mm-dd')
-			]]>
+			where c.uno = o.uno and c.cdate = o.owdate and c.uno= #{uno}
+			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+		
 	</select>
 	<select id="testCommute" 
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		<![CDATA[
+		
 		select to_char(c.cdate, 'yy/mm/dd') as cdate, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno= '47'
-			]]>
+			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno}
+		
 			<!-- #{uno} --> 
 	</select>
 	<resultMap type="map" id="monthlyMapper">

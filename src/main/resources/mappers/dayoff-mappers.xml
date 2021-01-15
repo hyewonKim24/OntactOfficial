@@ -27,10 +27,10 @@
 	
 	<!-- 휴가 신청 내역 조회-->
 	<select id="allListCount" resultType="int">
-		select count(*) from dayoff where dno = '1' order by offstart
+		select count(dfno) from dayoff where uno = #{uno} order by offstart
 	</select>
 	<select id="selectDayoff" resultType="arraylist" resultMap="resultDayoff">
-		select * from dayoff where dno = '1' order by offstart
+		select * from dayoff where uno = #{uno} order by offstart
 	</select>
 	
 	<select id="searchDayoff" parameterType ="java.util.HashMap"
@@ -54,7 +54,7 @@
 	</update>
 	 
 	<select id="selectDfCalendar" resultType="arraylist" resultMap="resultDayoff">
-		select  offstart, offend, uname, offreason from dayoff where dno ='1' order by offstart
+		select  offstart, offend, uname, offreason from dayoff where dno =#{dno} order by offstart
 	</select>
 	
 </mapper>

@@ -185,8 +185,8 @@ public class UsersServiceImpl implements UsersService{
 			public int listCount() {
 			return usersDao.listCount();
 		}
-		public List<UsersDto> selectOgUser(int startPage, int limit) {
-			return usersDao.selectOrgani(startPage, limit);
+		public List<UsersDto> selectOgUser(int startPage, int limit, String dname) {
+			return usersDao.selectOrgani(startPage, limit, dname);
 		}
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
