@@ -384,8 +384,8 @@
 
 /* 여기서부터 혜림 파트 : 일정 작성 부분 */
         /* 일정 작성 부분 */
-        .schedate,
-        .schepeople {
+        .schepeople,
+        .schedate {
             width: 648px;
             height: 38px;
             border-bottom: 1px solid #dadbdb;
@@ -408,12 +408,56 @@
             box-sizing: border-box;
             border: 1px solid #dadbdb;
         }
-        #schePname {
+        .schepeople img{
+        	vertical-align : middle;
+        	
+        }
+        /* 참석자 모달 리스트 */
+        .task-res-wrap{
+			position:absolute;
+			display:inline-block;
+			width: 350px;
+			height: 30px;
+		}
+		.task-res{
+			width: 150px;
+			height: 25px;
+			line-height: 25px;
+			border: 1px solid #dadbdb;
+			box-sizing: border-box;
+			margin-left:5px;
+		}
+		.task-res-list{
+			padding:5px;
+			width: 150px;
+			height: 20px;
+			line-height: 25px;
+			cursor: pointer;
+			text-align: center;
+		}
+		
+		.task-res-add-wrap{
+			width: 148px;
+			height: 100px;
+			overflow: scroll;
+			display:none;
+			background-color: #fff;
+			border: 1px solid #787878;
+			/* border-radius: 5px; */
+			z-index: 999;
+		    position: absolute;
+   			top: 30px;
+   			box-sizing: border-box;
+   			margin-left:8px;
+		}
+		#schePname {
             width: 135px;
             height: 28px;
             box-sizing: border-box;
             border: 1px solid #dadbdb;
         }
+        /* 참석자 모달 리스트 끝 */
+		
         .scheplace{
             width: 648px;
             border-bottom: 1px solid #dadbdb;
@@ -947,6 +991,17 @@
         }
     </style>
     <script>
+    var result='${message}';
+	console.log(result);
+	if(result == "success") {
+        alert("신청이 완료되었습니다");
+    } 
+	var test ='${userlist}';
+		console.log(test.uname);	
+	
+	for(i=0; i<test.length; i++){
+	}
+	
         // date picker
         $(function() {
             //input을 datepicker로 선언
@@ -978,17 +1033,27 @@
         });
 
         $(function() {
-    $("#scheStime, #scheEtime").timepicker({
-        timeFormat: 'h:mm p',
-        interval: 60,
-        minTime: '10',
-        maxTime: '6:00pm',
-        defaultTime: '11',
-        startTime: '10:00',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true        
-    });
+    		$("#scheStime, #scheEtime").timepicker({
+		        timeFormat: 'hh:mm',
+		        interval: 60,
+		        minTime: '08',
+		        maxTime: '22:00',
+		        defaultTime: '08',
+		        startTime: '08:00',
+		        dynamic: false,
+		        dropdown: true,
+		        scrollbar: true        
+    	});
+   
+    		$(".task-res").click(function (){
+    	    	$p=$(this).parents(".schepeople");
+    	    	$p.find(".task-res-add-wrap").toggle();
+    	    });
+    	    $(".task-res-list").click(function(){
+    	    	$p=$(this).parents(".schepeople");
+    	    	$(".task-res").val($(this).text());
+    	    	$p.find(".task-res-add-wrap").hide();
+    	    });
 });
 
     </script>
@@ -1164,6 +1229,9 @@
 
                     <!-- 혜림 : 일정 입력화면-->
                     <div id="schedule" class="writemenu">
+                    <form id="scheduelBoardForm" method="get" action="${pageContext.request.contextPath}/project/schedule/ins">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	 <input type="hidden" name="pno" id="pno" value="${pno}">
                         <div class="textbody">
                             <div class="title">
                                 <input type="text" class="title_detail" placeholder="일정 제목을 입력하세요" name="bname">
@@ -1179,8 +1247,21 @@
                             </div>
                             <div class="schepeople">
                                 <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
-                                <input type="text" id="schePname" name="attendee">
-
+                                <!-- <input type="text" id="schePname" name="attendee"> -->
+								<div class="task-res-wrap">
+                          			<input type="text" class="task-res task-res${e.count }" name="taskname"  value="${tlist.taskmanager}">
+                          			<input type="hidden" class="task-res-uno-c" name="taskuno">
+                          			 <!-- 업무담당자 모달 /  해당 project 유저 list 뿌리기-->
+                          			 <div class="task-res-add-wrap">
+                          				<div class="task-add">
+	                          				<ul>
+	                          					<c:forEach items="${userlist}" var="ulist">
+	                          					<li class="task-res-list task-res-list${e.count}">${ulist.uname}<input type="hidden" class="taks-res-uno" value="${ulist.uno}"></li>
+	                          					</c:forEach>
+	                          				</ul>
+                          				</div>
+                          			</div>
+                          		</div>
                             </div>
                             <div class="scheplace">
                                 <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
@@ -1225,9 +1306,11 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <button class="writebtn">올리기</button>
                             </div>
+                           <button type="submit" class="writebtn">올리기</button>
+                           
                         </div>
+                        </form>
                     </div>
                     <div id="todo" class="writemenu">
                         <div class="textbody">

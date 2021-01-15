@@ -1,5 +1,6 @@
 package com.kh.ontact.project.schedule.model.dto;
 
+
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
@@ -19,10 +20,11 @@ import lombok.NoArgsConstructor;
 @Component
 public class ScheduleDto {
 	private int bno;
-	private Date sstart;
-	private Date send;
+	private String sstart;
+	private String send;
 	private String splace;
 	private String smemo;
+	private String attendee;
 
 	private String pno;
 	private String pname;

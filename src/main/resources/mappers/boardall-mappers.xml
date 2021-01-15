@@ -70,4 +70,11 @@
 		]]>
 	</select>
 	
+	<!-- 혜림 : boardAll Scheduel 추가 -->
+	<insert id="insertBoardAllSchedule">
+	 <![CDATA[
+	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},'3','0',sysdate)
+		]]>
+	</insert>
+	
 </mapper>
