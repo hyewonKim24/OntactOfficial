@@ -45,7 +45,7 @@ public interface UsersService {
 	public int listCountFirst();
 	public List<UsersDto> selectOgFirst(int startPage, int limit);
 	public int listCount();
-	public List<UsersDto> selectOgUser(int startPage, int limit);
+	public List<UsersDto> selectOgUser(int startPage, int limit, String dname);
 	public int updateDept(UsersDto u); 
 		
 }

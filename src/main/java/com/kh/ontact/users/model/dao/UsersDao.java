@@ -93,10 +93,10 @@ public class UsersDao {
 		public int listCount() {
 			return sqlSession.selectOne("Users.listCount");
 		}
-		public List<UsersDto> selectOrgani(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+		public List<UsersDto> selectOrgani(int startPage, int limit, String dname) { // 특정 페이지 단위의 게시글 조
 			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
-			return sqlSession.selectList("Users.selectOgUser",null,row);
+			return sqlSession.selectList("Users.selectOgUser",dname,row);
 		}
 		//부서 수정
 		public int updateDept(UsersDto u) { // 글 수정 

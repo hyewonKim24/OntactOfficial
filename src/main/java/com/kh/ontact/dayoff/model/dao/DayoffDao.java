@@ -15,8 +15,8 @@ public class DayoffDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int allListCount() {
-		return sqlSession.selectOne("DayoffMapper.allListCount");
+	public int allListCount(String uno) {
+		return sqlSession.selectOne("DayoffMapper.allListCount", uno);
 	}
 	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno) { // 특정 페이지 단위의 게시글 조
 		int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19

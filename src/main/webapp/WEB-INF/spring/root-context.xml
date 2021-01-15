@@ -10,14 +10,14 @@
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
-		<!-- <property name="url"
+		<property name="url"
 					value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="ontact" />
-		<property name="password" value="2020" /> -->
-		<property name="url"
+		<property name="password" value="2020" /> 
+	<!-- <property name="url"
 			 value="jdbc:oracle:thin:@ontact.c2n11ty0kygx.ap-northeast-2.rds.amazonaws.com:1521:orcl" />
 		<property name="username" value="ontactAdmin" />
-		<property name="password" value="ontact2020" />
+		<property name="password" value="ontact2020" /> -->
 	</bean>
 
 	<bean id="sqlSessionFactory"

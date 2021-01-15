@@ -15,8 +15,8 @@ public class OverworkDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int listCount() {
-		return sqlSession.selectOne("OverworkMapper.listCount");
+	public int listCount(String uno) {
+		return sqlSession.selectOne("OverworkMapper.listCount", uno);
 	}
 	public List<OverworkDto> selectOverwork(int startPage, int limit, String uno) {
 		System.out.println("overwork 다오까지 왔는데,,");

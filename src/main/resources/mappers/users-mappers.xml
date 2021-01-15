@@ -20,6 +20,7 @@
 		<result property="uauthority" column="uauthority" />
 		<result property="enabled" column="enabled" />
 		<result property="failure_cnt" column="failure_cnt"/>
+		<!-- <result property="dname" column="dname"/> -->
 	</resultMap>
 	
 	<!-- 비즈니스 가입 -->
@@ -158,7 +159,7 @@
 		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
 		]]>
 	</select>
-	
+
 	<!--  해당 프로젝트 유저 list 출력-->
 	<select id="listTaskRes" resultType="arraylist" resultMap="resultUsers">
 	 	<![CDATA[
@@ -168,6 +169,7 @@
     	where pm.pno=#{pno}
 		]]>
 	</select>
+
 	
 	<!-- 혜림 조직도 부서별 직원리스트 조회 -->
 	<!-- 미분류 상태 -->
@@ -179,15 +181,17 @@
 		select uno, uname, urank, uemail from users where dno = null;
 	</select>
 	<!-- 부서로 분류된 후 -->
-	<select id="listCount" resultType="int">
-		select count(*) from users where dno = '1' 
+	<select id="listCount" resultType="int"> 
+		select count(*) 
+		from users u, dept d 
+		where u.dno = d.dno and d.dname = #{dname}
 	</select>
 	
 	<select id="selectOgUser"
 		resultMap="resultUsers">
 		select u.uno, d.dname, u.uname, u.urank, u.uemail 
 		from users u, dept d 
-		where u.dno = d.dno and d.dno = '1'
+		where u.dno = d.dno and d.dname = #{dname}
 	</select>
 	<!-- <resultMap type="map" id="resultUsersMap">
 		<id property="u_uno" column="uno" />
