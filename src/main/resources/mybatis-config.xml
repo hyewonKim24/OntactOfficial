@@ -25,5 +25,7 @@
  		
   		 <typeAlias type="com.kh.ontact.project.boardall.model.dto.BoardAllDto" alias="BoardAllDto" />
  		<typeAlias type="com.kh.ontact.project.task.model.dto.TaskDto" alias="TaskDto" /> 
+ 		<typeAlias type="com.kh.ontact.project.reply.model.dto.ReplyDto" alias="ReplyDto" /> 
+ 		<typeAlias type="com.kh.ontact.alert.model.dto.AlertDto" alias="AlertDto" /> 
 	</typeAliases>
 </configuration>

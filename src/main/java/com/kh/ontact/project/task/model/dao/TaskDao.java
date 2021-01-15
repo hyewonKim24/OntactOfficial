@@ -1,6 +1,8 @@
 package com.kh.ontact.project.task.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,46 +21,46 @@ public class TaskDao {
 	public List<TaskDto> ListTaskAll(String pno) throws Exception{
 		return sqlSession.selectList("Task.ListTaskAll", pno);
 	}
-	public int deleteTask(String bno) throws Exception{
+	public int deleteTask(int bno) throws Exception{
 		return sqlSession.delete("Task.deleteTask",bno);
 	}
-	public int taskStateUpdate01(String bno) throws Exception{
+	public int taskStateUpdate01(int bno) throws Exception{
 		return sqlSession.update("Task.taskStateUpdate01", bno);
 	}
-	public int taskStateUpdate02(String bno) throws Exception{
+	public int taskStateUpdate02(int bno) throws Exception{
 		return sqlSession.update("Task.taskStateUpdate02", bno);
 	}
-	public int taskStateUpdate03(String bno) throws Exception{
+	public int taskStateUpdate03(int bno) throws Exception{
 		return sqlSession.update("Task.taskStateUpdate03", bno);
 	}
-	public int taskStateUpdate04(String bno) throws Exception{
+	public int taskStateUpdate04(int bno) throws Exception{
 		return sqlSession.update("Task.taskStateUpdate04", bno);
 	}
-	public int trateUpdate00(String bno) throws Exception{
+	public int trateUpdate00(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate00", bno);
 	}
-	public int trateUpdate20(String bno) throws Exception{
+	public int trateUpdate20(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate20", bno);
 	}
-	public int trateUpdate40(String bno) throws Exception{
+	public int trateUpdate40(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate40", bno);
 	}
-	public int trateUpdate60(String bno) throws Exception{
+	public int trateUpdate60(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate60", bno);
 	}
-	public int trateUpdate80(String bno) throws Exception{
+	public int trateUpdate80(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate80", bno);
 	}
-	public int trateUpdate100(String bno) throws Exception{
+	public int trateUpdate100(int bno) throws Exception{
 		return sqlSession.update("Task.trateUpdate100", bno);
 	}
-	public int tpriLv1(String bno) throws Exception{
+	public int tpriLv1(int bno) throws Exception{
 		return sqlSession.update("Task.tpriLv1", bno);
 	}
-	public int tpriLv2(String bno) throws Exception{
+	public int tpriLv2(int bno) throws Exception{
 		return sqlSession.update("Task.tpriLv2", bno);
 	}
-	public int tpriLv3(String bno) throws Exception{
+	public int tpriLv3(int bno) throws Exception{
 		return sqlSession.update("Task.tpriLv3", bno);
 	}
 	public int tResUpdate(TaskDto dto) throws Exception{
@@ -69,6 +71,9 @@ public class TaskDao {
 	}
 	public int tendUpdate(TaskDto dto) throws Exception{
 		return sqlSession.update("Task.tendUpdate", dto);
+	}
+	public List<Integer> taskStateList(String pno) throws Exception{
+		return sqlSession.selectList("Task.taskStateList", pno);
 	}
 	
 

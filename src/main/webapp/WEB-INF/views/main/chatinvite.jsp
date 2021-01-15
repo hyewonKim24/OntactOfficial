@@ -135,18 +135,18 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                	 </c:if>
               <c:if test="${not empty ulist }">
                 <c:forEach items="${ulist}" var="list">
-												<form
-													action="${pageContext.request.contextPath}/chat/chatroomnew"
-													method="post" id="chatfrm1">
-													<div class="tel-other">
-														<input type="hidden" name="chatuname" value="${list.uname }">
-														<span class="invite-names"> ${list.uname }  <span>
-															
-														</span>
-														</span>
-													</div>
-												</form>
-											</c:forEach>
+					<form
+						action="${pageContext.request.contextPath}/chat/chatroomnew"
+						method="post" id="chatfrm1">
+						<div class="tel-other">
+							<input type="hidden" name="chatuname" value="${list.uname }">
+							<span class="invite-names"> ${list.uname }  <span>
+								
+							</span>
+							</span>
+						</div>
+					</form>
+				</c:forEach>
                </c:if>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ include file="../main/header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+       <!-- 차트 그리기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
+    	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" 
+    	crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -93,6 +98,8 @@
             box-shadow: 1px 1px 3px 1px #e7e7e7;
             float: left;
         }
+        
+        
 
         /* 글 쓰기 부분 */
         .write {
@@ -470,7 +477,29 @@
             color: #787878;
         }
         
-        /* 업무 부분  */
+        /* 업무 리포트 */
+       	.task-report-wrap{
+        	position: relative;	
+            width: 700px;
+            height: 100%;
+            box-shadow: 1px 1px 3px 1px #e7e7e7;
+            float: left;
+        }
+        #report-title{
+        	font-size:20px;
+        	font-weight: bold;
+        	text-align: center;
+        	margin:20px;
+        }
+        
+        #taskChart{
+        	width: 500px !important;
+        	height: 250px !important;
+        	margin:0 auto;
+        	padding-bottom: 15px;
+        }
+        
+        /* 업무 css */
 		.task-radio{
 			display:none;
 			margin:10px;
@@ -514,7 +543,7 @@
 		#task-01{
 			display:inline-block;
 			height: 50px;
-			width: 650px;
+			width: 600px;
 			border:none;
 			border-bottom: 1px solid #dadbdb;
 		}
@@ -533,7 +562,7 @@
 		.task-02{
 			display:inline-block;
 			height: 45px;
-			width: 650px;
+			width: 600px;
 			border:none;
 			border-bottom: 1px solid #dadbdb;
 		}
@@ -558,13 +587,12 @@
 			width: 150px;
 			height: 20px;
 			line-height: 25px;
-			border: 1px solid #e7e7e7;
-			border-radius: 5px;
 			cursor: pointer;
+			text-align: center;
 		}
 		
 		.task-res-add-wrap{
-			width: 200px;
+			width: 162px;
 			height: 100px;
 			overflow: scroll;
 			display:none;
@@ -578,7 +606,7 @@
 		.task-03{
 			display:inline-block;
 			height: 45px;
-			width: 650px;
+			width: 600px;
 			border:none;
 			border-bottom: 1px solid #dadbdb;
 			z-index:-2;
@@ -604,7 +632,7 @@
 		.task-04{
 			display:inline-block;
 			height: 45px;
-			width: 650px;
+			width: 600px;
 			border:none;
 			border-bottom: 1px solid #dadbdb;
 		}
@@ -692,11 +720,13 @@
 			cursor: pointer;
 			display: inline-block;
 			z-index:1000;
+			width:5%;
 		}
 		.pcnt20{
 			cursor: pointer;
 			display: inline-block;
 			z-index:999;
+			left:5%;
 		}
 		.pcnt40{
 			cursor: pointer;
@@ -729,7 +759,7 @@
 		.task-05{
 			display:inline-block;
 			height: 45px;
-			width: 650px;
+			width: 600px;
 			border:none;
 			border-bottom: 1px solid #dadbdb;
 			margin-bottom: 15px;
@@ -762,7 +792,43 @@
 		    position: absolute;
    			 top: 33px;
 		}
-
+		/* 댓글 관련 */
+		.replyUpdateText{
+			display:none;
+		}
+		.replyUpdateBtn{
+			display:none;
+		}
+		.replyUpdate{
+			border: none;
+			background: none;
+			color:#432D73;
+			font-size:12px;
+			font-family: Noto Sans KR;
+		}
+		.replyDelete{
+			border: none;
+			background: none;
+			color:#432D73;
+			font-size:12px;
+			font-family: Noto Sans KR;
+		}
+		.replyUpdateBtn{
+			width: 80px;
+		    height: 25px;
+		    border-radius: 3px;
+		    color: #5A3673;
+		    font-size:12px;
+		    border: 1px solid #5A3673;
+		    font-family: Noto Sans KR;
+		}
+		.replyUpdateText{
+			width: 500px;
+		    height: 25px;
+		    box-sizing: border-box;
+		    vertical-align: middle;
+		    border: 1px solid #c0c0c0;
+		}
 
         /* 댓글 작성 부분 */
         .reply {
@@ -1054,6 +1120,16 @@
 <!--     <div class="header">
         <div>헤더 들어갈 자리</div>
     </div> -->
+    
+    	<input type="hidden" value="${chatno}" id="chatno" name="chatno">
+	<sec:authentication property="principal.username" var="username"/>
+	<sec:authentication property="principal.uno" var="uno"/>
+	<sec:authentication property="principal.uname" var="uname"/>
+    	<input type="hidden" value="${uno}" id="uno" name="uno">
+    	<input type="hidden" value="${uname}" id="uname" name="uname">
+	
+	
+	
     <div class="main">
         <nav id="pj_sidebar">
             <button type="button" id="new_pj_btn" onclick="">+&nbsp;새
@@ -1071,9 +1147,16 @@
                         </svg> 전체 <span class="pj_sb_alarm">00</span>
                     </a></li>
         </nav>
-
-
+        
         <div class="contents">
+        <!--  혜원/ 업무리포트  -->
+        <div class="task-report-wrap">
+        	<p id="report-title"> 업무리포트 </p>
+        		<div class="task-report" width="300px" height="300px">
+				<canvas id="taskChart"></canvas>
+				</div>
+        </div>
+      
             <div class="wrap">
                 <div class="write" id="write">
                     <input id="tab1" type="radio" name="tabs" class="tabs" checked>
@@ -1209,11 +1292,9 @@
                           			<div class="task-res-add-wrap">
                           				<div class="task-add">
 	                          				<ul>
-	                          					<li class="task-res-list">김혜원 <input type="hidden" class="taks-res-uno" value="10"></li>
-	                          					<li class="task-res-list">이혜림 <input type="hidden" class="taks-res-uno" value="20"></li>
-	                          					<li class="task-res-list">오은실 <input type="hidden" class="taks-res-uno" value="30"></li>
-	                          					<li class="task-res-list">이윤진 <input type="hidden" class="taks-res-uno" value="40"></li>
-	                          					<li class="task-res-list">김봉영 <input type="hidden" class="taks-res-uno" value="50"></li>
+	                          					<c:forEach items="${userlist}" var="ulist">
+	                          					<li class="task-res-list">${ulist.uname} <input type="hidden" class="taks-res-uno" value="${ulist.uno }"></li>
+	                          					</c:forEach>
 	                          				</ul>
                           				</div>
                           				
@@ -1430,31 +1511,24 @@
 	    
 	    
 	});
+    
+    //글작성 버튼 눌렀을 때 + 소켓 알림
+   		//전역변수로 선언한 socket 불러옴.
+		    // 웹소켓 연결
+			var sock =new WebSocket("ws://" + location.host + "/ontact/alert");
+		    var pno=${pno};
+		    let socketMsg = pno;
+			console.log("msgmsg : " + socketMsg);
 	    function taskSubmit() {
-	    	//제목
-	    	var tasktitle = $("#tasktitle").val();
-	    	//업무상태
-	    	var taskstate = $('input[name="task-radio"]:checked').val();
-	    	//시작일시
-	    	var tstart = $("#task-start-date").val();
-	    	//마감일시
-	    	var tend = $("#task-end-date").val();
-	    	//달성률
-	    	var trate = $(".PROGRESS_PER").val();
-	    	//우선순위
-	    	var tpri = $(".task-pri").val();
-	    	//글내용
-	    	var tcontent = $("#task-content").val();
-	    	//담당자
-	    	var tres = $(".task-res").val();
-	    	//pno
-	    	var pno = $("#pno").val();
+	    	sendMessage();
+	    	function sendMessage() {
+	    		sock.send(pno);
+	    	}
 	    	
 	    	var frm=document.task_frm;
 			frm.action="${pageContext.request.contextPath}/project/taskinsert";
 			frm.method = "post";
-			frm.submit();
-	    	//console.log(tasktitle+"타이틀"+taskstate+"state"+"시작"+tstart+"마감"+tend+"달성률"+trate+"우선순위:"+tpri+"글내용+"+tcontent+"담당자"+tres);
+			frm.submit(); 
 	    }
 </script>
     
@@ -1551,7 +1625,6 @@
             </div>
             
             <!--  혜원 ) 업무 내용 출력  -->
-            ${pno}
             <c:forEach items="${tasklist}" var="tlist" varStatus="e">
             <div class="one">
                 <div class="boardHeader">
@@ -1634,11 +1707,55 @@
                             <!-- 업무 상태 누르면 ajax로 값 update  -->
                             <script>
                             $(function() {
-                            	var count=${e.count};
-                            	var pno=${pno};
-                            	var bno=${tlist.bno};
-                            	console.log("pno랑 bno"+pno+"/"+bno);
-                            	$("#task-radio01-"+count).click(function(){
+                            // 업무리포트 그래프 뿌리기 
+                            var ctx = document.getElementById('taskChart').getContext('2d');
+                        	var count=${e.count};
+                        	var pno=${pno};
+                        	var bno=${tlist.bno};
+                        	report();
+                        	function report(){
+                        		$.ajax({
+                    				url: "${pageContext.request.contextPath}/project/tstatereport",
+                    				data: {
+                    					pno : pno
+                    				},
+                    				dataType: "json",
+                    				success:function(data){
+                    					createChart(data[0],data[1],data[2],data[3]);
+                    					return false;
+                    				},
+                    				error:function(){
+                    					console.log("update 실패");
+                    				}
+                    			});
+                        	};
+                        	function createChart(s1,s2,s3,s4) {
+                    		var myChart = new Chart(ctx, {
+                    	   	type: 'doughnut',
+                    	    data: {
+                    	        labels: ['요청', '진행', '완료', '보류'],
+                    	        datasets: [{
+                    	        	 label: 'Score',
+                    	            data: [ s1,s2,s3,s4 ],
+                    	            backgroundColor: [
+                    	                '#F27781',
+                    	                '#f17a19',
+                    	                '#50b766',
+                    	                '#4aaefb'
+                    	            ],
+                    	        }]
+                    	    },
+                    	    options: { 
+                    	    	
+                    	    	legend: {
+                    	    	  display: true,
+                    	    	  position: 'right',
+                    	    	}
+                    	    }
+                    	});
+                      	};
+
+                      	$("#task-radio01-"+count).click(function(){
                             		//업무 상태 변경
                             		$.ajax({
                 						url: "${pageContext.request.contextPath}/project/taskstate01",
@@ -1649,6 +1766,7 @@
                 						dataType: "json",
                 						success:function(data){
                 							console.log("ajax:"+data+"성공");
+                							report();
                 						},
                 						error:function(){
                 							console.log("update 실패");
@@ -1666,6 +1784,7 @@
                 						dataType: "json",
                 						success:function(data){
                 							console.log(data+"성공");
+                							report();
                 						},
                 						error:function(){
                 							console.log("update 실패");
@@ -1683,6 +1802,7 @@
                 						dataType: "json",
                 						success:function(data){
                 							console.log(data+"성공");
+                							report();
                 						},
                 						error:function(){
                 							console.log("update 실패");
@@ -1700,6 +1820,7 @@
                 						dataType: "json",
                 						success:function(data){
                 							console.log(data+"성공");
+                							report();
                 						},
                 						error:function(){
                 							console.log("update 실패");
@@ -1718,11 +1839,9 @@
                           			 <div class="task-res-add-wrap">
                           				<div class="task-add">
 	                          				<ul>
-	                          					<li class="task-res-list task-res-list${e.count}">김혜원 <input type="hidden" class="taks-res-uno" value="10"></li>
-	                          					<li class="task-res-list task-res-list${e.count}">이혜림 <input type="hidden" class="taks-res-uno" value="20"></li>
-	                          					<li class="task-res-list task-res-list${e.count}">오은실 <input type="hidden" class="taks-res-uno" value="30"></li>
-	                          					<li class="task-res-list task-res-list${e.count}">이윤진 <input type="hidden" class="taks-res-uno" value="40"></li>
-	                          					<li class="task-res-list task-res-list${e.count}">김봉영 <input type="hidden" class="taks-res-uno" value="50"></li>
+	                          					<c:forEach items="${userlist}" var="ulist">
+	                          					<li class="task-res-list task-res-list${e.count}">${ulist.uname}<input type="hidden" class="taks-res-uno" value="${ulist.uno }"></li>
+	                          					</c:forEach>
 	                          				</ul>
                           				</div>
                           			</div>
@@ -1795,7 +1914,6 @@
                     	    //값 변경되면 ajax update
                     	    $('#task-start-date'+count).datepicker({
                     	    	    onSelect: function(dateText) {
-			                    	    	alert('값변경 감지'+dateText);
                     	    	        console.log("Selected date: " + dateText + "; input's current value: " + this.value);
                     	    	        var pno=${pno};
                                     	var bno=${tlist.bno};
@@ -1865,12 +1983,12 @@
 										
 										<input type="hidden" name="trate" class="trate">
 										<span id="PROGRESS" class="bar percent0 ${e.count}"></span>
-										<div class="pcnt0 pcnt0${e.count}" data="0" style="width:5%;display:block">
+										<div class="pcnt0 pcnt0${e.count}" data="0" >
 											<span class="pcnt">
 												<button>0%</button>
 											</span>
 										</div>
-										<div class="pcnt20 pcnt20${e.count}" data="20" style="left:5%;">
+										<div class="pcnt20 pcnt20${e.count}" data="20" >
 											<span class="pcnt">
 												<button>20%</button>
 											</span>
@@ -2151,43 +2269,122 @@
                     </ul>
                 </div>
             </div>
+            
             <div class="reply">
                 <button class="replyMore">이전 댓글 더보기</button>
+                
+                <!-- 댓글 출력  -->
+                <c:forEach items="${replylist}" var="rlist" varStatus="i">
+                <c:if test="${rlist.bno eq tlist.bno}"> 
                 <div class="defaultReply">
                     <span>
                         <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
                     </span>
-                    <span class="replyTitle">이혜림</span>
-                    <span class="replyDate">202012-18-17:34</span>
+                    
+                    <span class="replyTitle">${rlist.uname}</span>
+                    <span class="replyDate">${rlist.rdate}</span>
                     <span class="replyEdit">
-                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
-                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                        <button type="button" class="replyUpdate" id="replyUpdate${i.count}">수정</button>
+                        <button type="button" class="replyDelete" id="replyDelete${i.count}">삭제</button>
                     </span>
-                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                    <div id="replyParent">
+                    <p id="replyResult${i.count}" class="replyResult">${rlist.rdesc}</p>
+                    <br>
+                    <input type="text" class="replyUpdateText" id="replyUpdateText${i.count}" value="${rlist.rdesc}">
+                    <button type="button" class="replyUpdateBtn" id="replayUpdateSubmit${i.count}">수정완료</button>
+                    <input type="hidden" value="${rlist.uno}" id="runo${i.count}">
+                    <input type="hidden" class="rno" value="${rlist.rno}" id="rno${i.count}">
+                    </div>
                 </div>
-
-                <div class="defaultReply">
-                    <span>
-                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
-                    </span>
-                    <span class="replyTitle">이혜림</span>
-                    <span class="replyDate">202012-18-17:34</span>
-                    <span class="replyEdit">
-                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
-                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
-                    </span>
-                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
-                </div>
+                
+                	<script>
+                	//댓글 수정
+                	$(".replyUpdate").click(function(){
+                		var parent = $(this).parent();
+                		var parentDiv = parent.parent();
+                		var rno=parentDiv.find(".rno").val();
+                		console.log(rno+"rno");
+                		console.log("댓글 수정");
+                		parentDiv.find(".replyResult").css("display","none");
+                		parentDiv.find(".replyUpdate").css("display","none");
+                		parentDiv.find(".replyDelete").css("display","none");
+                		parentDiv.find(".replyUpdateText").css("display","inline-block");
+                		parentDiv.find(".replyUpdateBtn").css("display","inline-block");
+                  	});
+                		
+                	$(".replyUpdateBtn").click(function(){
+                		var parent = $(this).parent();
+                		var parentDiv = parent.parent();
+                		var rdesc=parentDiv.find(".replyUpdateText").val();
+                		var rno=parentDiv.find(".rno").val();
+                		console.log(rno+"rno");
+                		console.log(rdesc+"rdesc");
+                		
+                		$.ajax({
+    						url: "${pageContext.request.contextPath}/project/replyupdate",
+    						data: {
+    							rno:rno,
+    							rdesc:rdesc
+    						},
+    						dataType: "json",
+    						success:function(data){
+    							parentDiv.find(".replyResult").css("display","block");
+      							parentDiv.find(".replyUpdateText").css("display","none");
+      							parentDiv.find(".replyUpdateBtn").css("display","none");
+      							parentDiv.find(".replyUpdate").css("display","inline-block");
+      							parentDiv.find(".replyDelete").css("display","inline-block");
+    							parentDiv.find(".replyResult").text(rdesc);
+    						},
+    						error:function(){
+    							console.log("댓글수정 실패");
+    						}
+    					});
+                	});
+              
+                	
+                	//댓글 삭제
+                	$(".replyDelete").click(function(){
+                		var parent = $(this).parent();
+                		var parentDiv = parent.parent();
+                		var rno=parentDiv.find(".rno").val();
+                		
+                		 $.ajax({
+    						url: "${pageContext.request.contextPath}/project/replydelete",
+    						data: {
+    							rno : rno
+    						},
+    						dataType: "json",
+    						success:function(data){
+    							parentDiv.remove();
+    						},
+    						error:function(){
+    							console.log("삭제 실패");
+    						}
+    					}); 
+                	});
+                	</script>
+                	
+                 </c:if>
+                </c:forEach>
+                
+         <!-- 댓글 입력  -->
+				<form action="${pageContext.request.contextPath}/project/replyinsert" id="replyForm" method="get">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <div class="replyFrom">
+                	<input type="hidden" name="pno" value="${pno}">
+                	<input type="hidden" name="bno" value="${tlist.bno}">
                     <span>
                         <img src="${pageContext.request.contextPath}/resources/img/user-2.png" class="replayPfImg2">
                     </span>
-                    <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
-                    <button id="replyReg">등록</button>
+                    <input type="text" name="rdesc" class="replyarea" placeholder="댓글을 입력하세요.">
+                    <button type="submit" id="replyReg">등록</button>
                 </div>
+                </form>
             </div>
-        </div>
+        
  </c:forEach>
+ 
+ 
         <div class="rightBar">
             <a href="#">
                 <div id="prevbtn">
@@ -2322,12 +2519,11 @@
                 </div>
                 <a href="">
                     <div id="pjchatbox">
-                        채팅 &nbsp;<img src="${pageContext.request.contextPath}/resources/img/chat-04-fill.png" id="chatbtn-fill">
+                       		 채팅 &nbsp;<img src="${pageContext.request.contextPath}/resources/img/chat-04-fill.png" id="chatbtn-fill">
                     </div>
                 </a>
             </div>
         </div>
-    </div>
     </div>
     </div>
     <script>
@@ -2367,7 +2563,8 @@
         //작성된 글 더보기 메뉴 (혜림)
         $(".option #dropdown").on("click", function (e) {
             e.preventDefault();
-            $(".editDropdown").toggle();
+           	var $t = $(this).parents(".option");
+            $t.find(".editDropdown").toggle();
         });
 
         //스크롤 숨겼다가 hover하면 나타남

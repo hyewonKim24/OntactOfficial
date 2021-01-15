@@ -132,7 +132,7 @@
 	
 	
 	
-	<!-- 아래부터  혜원 채팅 관련 코드  -->
+	<!-- 혜원 채팅 관련 코드  -->
 	
 	<!-- 해당 cno의 내 정보 빼고 users list 불러오기 -->
 	<select id="ChatUsersList" resultType="arraylist" resultMap="resultUsers" >
@@ -144,6 +144,16 @@
 	<select id="ChatUserDetail" resultType="UsersDto" resultMap="resultUsers">
 	 	<![CDATA[
 		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
+		]]>
+	</select>
+	
+	<!--  해당 프로젝트 유저 list 출력-->
+	<select id="listTaskRes" resultType="arraylist" resultMap="resultUsers">
+	 	<![CDATA[
+		select u.uname, u.uno, u.uemail from users u
+    	inner join project_member pm
+    	on pm.uno=u.uno
+    	where pm.pno=#{pno}
 		]]>
 	</select>
 	

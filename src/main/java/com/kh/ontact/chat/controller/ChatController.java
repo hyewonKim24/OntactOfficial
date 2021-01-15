@@ -81,29 +81,65 @@ public class ChatController {
 		String chatname=uname+","+chatuname;
 		String chatno=null;
 		
+		ChatMemberDto cdto = new ChatMemberDto();
+		List<String> chatnoList = new ArrayList<String>();
+		cdto.setUno(uno);
+		cdto.setCuno(chatuno);
+		
 		try {
 			//채팅방이 있으면 해당 채팅방으로
-
-			
+			chatnoList = chatMemService.SearchChatno(cdto);
+			System.out.println("채팅방번호 리스트"+chatnoList);
+			if(!chatnoList.isEmpty()) {
+				//채팅방이 있을 때
+				System.out.println("우선 여기 들어옴");
+				String chatno1=null;
+				for(String a : chatnoList) {
+					int count = chatMemService.chatmemCount(a);
+					if(count==2) {
+						chatno1=a;
+						System.out.println("채팅방 번호 : "+a);
+						mv.addObject("chatno",chatno1);
+						mv.setViewName("redirect:/chat/chatroomdetail");
+					}else {
+						//채팅방이 없으면 채팅방 만들기
+						chatno = chatService.insertChat(chatname);
+						System.out.println(chatno+"chat insert");
+						mdto.setChatno(chatno);
+						adto.setChatno(chatno);
+						System.out.println("mdto:"+mdto);
+			 			int rs =chatMemService.insertChatMember(mdto);
+			 			int alertrs = chatalertService.insertChatAlertDefault(adto);
+						
+						mv.addObject("chatuno",chatuno);
+						mv.addObject("chatname",chatname);
+						mv.addObject("chatno",chatno);
+						mv.setViewName("redirect:/chat/otherchatadd");
+					}
+				}
+				
+			}else {
 			//채팅방이 없으면 채팅방 만들기
-			chatno = chatService.insertChat(chatname);
+			System.out.println("새로운 채팅방 만들기! ");
+			String chatno2 = chatService.insertChat(chatname);
 			System.out.println(chatno+"chat insert");
-			mdto.setChatno(chatno);
-			adto.setChatno(chatno);
+			mdto.setChatno(chatno2);
+			adto.setChatno(chatno2);
 			System.out.println("mdto:"+mdto);
  			int rs =chatMemService.insertChatMember(mdto);
- 			System.out.println(rs+"채팅멤버 추가");
  			int alertrs = chatalertService.insertChatAlertDefault(adto);
-			System.out.println(alertrs+"alert insert");
+			
+			mv.addObject("chatuno",chatuno);
+			mv.addObject("chatname",chatname);
+			mv.addObject("chatno",chatno2);
+			mv.setViewName("redirect:/chat/otherchatadd");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		mv.addObject("chatuno",chatuno);
-		mv.addObject("chatname",chatname);
-		mv.addObject("chatno",chatno);
-		mv.setViewName("redirect:/chat/otherchatadd");
 		return mv;
+		
+		
 	}
 	
 	//나 외 다른 사람 채팅멤버추가

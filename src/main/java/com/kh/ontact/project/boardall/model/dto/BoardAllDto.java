@@ -1,8 +1,12 @@
 package com.kh.ontact.project.boardall.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.kh.ontact.project.reply.model.dto.ReplyDto;
+import com.kh.ontact.project.task.model.dto.TaskDto;
 
 import lombok.Data;
 
@@ -19,12 +23,17 @@ BDATE           DATE        */
 @Data
 @Component
 public class BoardAllDto {
-	private String bno;
+	private int bno;
 	private String pno;
 	private String uno;
 	private String bname;
 	private int bopen;
 	private int btype;
 	private int bfirst;
-	private Date bdate;	
+	private Date bdate;
+	private String uname;
+	private TaskDto taskdto;
+	private int count;
+	private String runame;
+	private List<ReplyDto> replydto;
 }

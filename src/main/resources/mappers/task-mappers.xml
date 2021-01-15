@@ -17,6 +17,7 @@
 	<result property="tmemo" column="tmemo" />
 	<result property="taskmanager" column="taskmanager" />
 	<result property="uname" column="uname" />
+	<result property="runame" column="runame" />
 	<collection property="boardalldto" resultMap="resultBoardAll"></collection>
 	</resultMap>
 	
@@ -44,8 +45,8 @@
 		select t.bno as bno,u.uname as uname,t.tstate as tstate,t.tstart as tstart,t.tend as tend,t.trate as trate,
 		t.tpriority as tpriority,t.tmemo as tmemo,t.taskmanager as taskmanager,b.pno as pno,
 		b.uno as uno,b.bname as bname,b.bopen as bopen,b.btype as btype,b.bfirst as bfirst,b.bdate as bdate
-		from task t
-		inner join boardall b
+		from boardall b
+		inner join task t
 		    on t.bno=b.bno
 		inner join users u
 		    on b.uno = u.uno
@@ -54,70 +55,70 @@
 		]]>
 	</select>
 	<!-- 업무 타입 update -->
-	<update id="taskStateUpdate01" parameterType="string">
+	<update id="taskStateUpdate01" parameterType="int">
 	 <![CDATA[
 		 update task set tstate=1 where bno=#{bno}
 		]]>
 	</update>
-	<update id="taskStateUpdate02" parameterType="string">
+	<update id="taskStateUpdate02" parameterType="int">
 	 <![CDATA[
 		 update task set tstate=2 where bno=#{bno}
 		]]>
 	</update>
-	<update id="taskStateUpdate03" parameterType="string">
+	<update id="taskStateUpdate03" parameterType="int">
 	 <![CDATA[
 		 update task set tstate=3 where bno=#{bno}
 		]]>
 	</update>
-	<update id="taskStateUpdate04" parameterType="string">
+	<update id="taskStateUpdate04" parameterType="int">
 	 <![CDATA[
 		 update task set tstate=4 where bno=#{bno}
 		]]>
 	</update>
 	<!-- 업무 달성률 update -->
-	<update id="trateUpdate00" parameterType="string">
+	<update id="trateUpdate00" parameterType="int">
 	 <![CDATA[
 		 update task set trate=0 where bno=#{bno}
 		]]>
 	</update>
-	<update id="trateUpdate20" parameterType="string">
+	<update id="trateUpdate20" parameterType="int">
 	 <![CDATA[
 		 update task set trate=20 where bno=#{bno}
 		]]>
 	</update>
-	<update id="trateUpdate40" parameterType="string">
+	<update id="trateUpdate40" parameterType="int">
 	 <![CDATA[
 		 update task set trate=40 where bno=#{bno}
 		]]>
 	</update>
-	<update id="trateUpdate60" parameterType="string">
+	<update id="trateUpdate60" parameterType="int">
 	 <![CDATA[
 		 update task set trate=60 where bno=#{bno}
 		]]>
 	</update>
-	<update id="trateUpdate80" parameterType="string">
+	<update id="trateUpdate80" parameterType="int">
 	 <![CDATA[
 		 update task set trate=80 where bno=#{bno}
 		]]>
 	</update>
-	<update id="trateUpdate100" parameterType="string">
+	<update id="trateUpdate100" parameterType="int">
 	 <![CDATA[
 		 update task set trate=100 where bno=#{bno}
 		]]>
 	</update>
 	
 	<!-- 우선순위 update -->
-	<update id="tpriLv1" parameterType="string">
+	<update id="tpriLv1" parameterType="int">
 	 <![CDATA[
 		 update task set tpriority='낮음' where bno=#{bno}
 		]]>
 	</update>
-	<update id="tpriLv2" parameterType="string">
+	<update id="tpriLv2" parameterType="int">
 	 <![CDATA[
 		 update task set tpriority='보통' where bno=#{bno}
 		]]>
 	</update>
-	<update id="tpriLv3" parameterType="string">
+	<update id="tpriLv3" parameterType="int">
 	 <![CDATA[
 		 update task set tpriority='높음' where bno=#{bno}
 		]]>
@@ -143,10 +144,20 @@
 	<!-- 고정글 update -->
 	
 	<!-- task delete -->
-	<delete id="deleteTask" parameterType="string">
+	<delete id="deleteTask" parameterType="int">
 	 <![CDATA[
 	 	delete from task where bno=#{bno}
 		]]>
 	</delete>
+	
+	<!-- 업무리포트 -->
+	<select id="taskStateList" resultType="int" parameterType="string">
+	 <![CDATA[
+		select count(t.tstate) as count from task t,boardall b
+		where b.pno=#{pno} and t.bno=b.bno group by t.tstate order by t.tstate asc
+		]]>
+	</select>
+	
+
 	
 </mapper>

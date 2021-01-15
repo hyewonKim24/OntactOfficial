@@ -65,6 +65,12 @@ public class UsersDao {
 		return sqlSession.selectOne("Users.ChatUserDetail", uemail);
 	}
 	
+	//해당 프로젝트 유저 리스트
+	public List<UsersDto> listTaskRes(String pno) throws Exception{
+		return sqlSession.selectList("Users.listTaskRes", pno);
+	}
+	
+	
 	//혜림 - 조직도
 		//미분류그룹
 		public int listCountFirst() {

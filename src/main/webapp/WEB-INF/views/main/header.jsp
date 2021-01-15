@@ -957,8 +957,11 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 								</div>
 							</div>
 						</div>
-
-					</div> <!--알림 모달-->
+			
+			
+			
+			<!--알림 모달-->
+					</div> 
 					<div class="alarm-wrap">
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
@@ -981,6 +984,8 @@ S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0
 l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                                     </svg></span> <input type="text"
 				id="alert-search-input" placeholder="미확인 알림 검색">
+				
+				<div class="alert-content"></div>
 		</div>
 	</div>
 	<div class="tel-tab-wrap">
@@ -1001,6 +1006,28 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	</div>
 	</div>
 	</div>
+	
+	<script>
+		 var socket = null;
+		// 전역변수 설정
+		$(document).ready(function(){
+		    // 웹소켓 연결
+			var sock =new WebSocket("ws://" + location.host + "/ontact/alert");
+		    console.log("소켓 연결됨 ")
+		    // 데이터를 전달 받았을때 
+		    sock.onmessage = onMessage; 
+		    
+		});
+		
+		function onMessage(msg) {
+			console.log("메시지 전달 받음"+msg);
+			var data = msg.data;
+			$(".alert-content").append(data + "<br/>");
+		}
+</script>
+	
+	
+	<!-- 내 프로필  -->
 	<div class="my-wrap">
 		<div id="h-profile-top">
 			<!--이미지가 있을 때 이미지 뿌리고 없으면 기본이미지-->

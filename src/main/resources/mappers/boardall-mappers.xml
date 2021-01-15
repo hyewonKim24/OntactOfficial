@@ -16,6 +16,29 @@
 	<result property="btype" column="btype" />
 	<result property="bfirst" column="bfirst" />
 	<result property="bdate" column="bdate" />
+	<result property="uname" column="uname" />
+	<result property="runame" column="runame" />
+	<collection property="taskdto" resultMap="resultTask" ></collection>
+	</resultMap>
+	
+	<resultMap type="TaskDto" id="resultTask">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="bno" column="bno"/>
+	<result property="tstate" column="tstate" />
+	<result property="tstart" column="tstart" />
+	<result property="tend" column="tend" />
+	<result property="trate" column="trate" />
+	<result property="tpriority" column="tpriority" />
+	<result property="tmemo" column="tmemo" />
+	<result property="taskmanager" column="taskmanager" />
+	</resultMap>
+	
+	<resultMap type="ReplyDto" id="resultReply">
+	<id property="rno" column="rno"/>
+	<result property="uno" column="uno" />
+	<result property="bno" column="bno" />
+	<result property="rdate" column="rdate" />
+	<result property="rdesc" column="rdesc" />
 	</resultMap>
 	
 	<!-- boardAll 추가 -->
@@ -25,10 +48,26 @@
 		]]>
 	</insert>
 	
-	<delete id="deleteBoardall" parameterType="string">
+	<delete id="deleteBoardall" parameterType="int">
 	 <![CDATA[
 	 	delete from boardall where bno=#{bno}
 		]]>
 	</delete>
+	
+	<!-- 업무 리스트 뿌리기 -->
+	<select id="ListTaskBoardAll" resultType="map" resultMap="resultBoardAll">
+	<![CDATA[
+		select t.bno as bno,u.uname as uname,t.tstate as tstate,t.tstart as tstart,t.tend as tend,t.trate as trate,
+		t.tpriority as tpriority,t.tmemo as tmemo,t.taskmanager as taskmanager,b.pno as pno,
+		b.uno as uno,b.bname as bname,b.bopen as bopen,b.btype as btype,b.bfirst as bfirst,b.bdate as bdate
+		from boardall b
+		inner join task t
+		    on t.bno=b.bno
+		inner join users u
+		    on b.uno = u.uno
+		where b.pno=#{pno}
+		order by bno desc
+		]]>
+	</select>
 	
 </mapper>

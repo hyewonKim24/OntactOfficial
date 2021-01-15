@@ -155,6 +155,12 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.ChatUserDetail(uemail);
 	}
 	
+	// 프로젝트 유저 리스트
+	@Override
+	public List<UsersDto> listTaskRes(String pno) throws Exception {
+		return usersDao.listTaskRes(pno);
+	}
+	
 	//조직도 - 혜림
 		public int listCountFirst() {
 			return usersDao.listCountFirst();
@@ -171,6 +177,7 @@ public class UsersServiceImpl implements UsersService{
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
+
 		
 	
 

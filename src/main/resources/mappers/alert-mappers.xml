@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Alert">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->	
+	<resultMap type="AlertDto" id="resultAlert">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="pno" column="pno"/>
+	<result property="rno" column="rno" />
+	<result property="uno" column="uno" />
+	<result property="bno" column="bno" />
+	<result property="acount" column="acount" />
+	<result property="adate" column="adate" />
+	</resultMap>
+	
+	<insert id="alertInsert">
+	 <![CDATA[
+		insert into alert(uno,pno,bno,acount) values (#{uno},#{pno},bno_se.currval,1)
+	]]>
+	</insert>
+	
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Reply">
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->	
+	
+	<resultMap type="ReplyDto" id="resultReply">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="rno" column="rno"/>
+	<result property="uno" column="uno" />
+	<result property="bno" column="bno" />
+	<result property="rdate" column="rdate" />
+	<result property="rdesc" column="rdesc" />
+	<result property="uname" column="uname" />
+	</resultMap>
+	
+	<!-- 댓글 추가 -->
+	<insert id="insertReply">
+	 <![CDATA[
+		 insert into reply values(rno_se.nextval,#{uno},#{bno},#{pno},sysdate,#{rdesc})
+		]]>
+	</insert>
+	
+	<!-- 해당 프로젝트의 댓글 조회 -->
+	<select id="ListReply" resultType="map" resultMap="resultReply">
+	 <![CDATA[
+		 select r.rno as rno,r.uno as uno,u.uname as uname,
+		r.bno as bno,r.pno as pno,r.rdate as rdate,r.rdesc as rdesc from reply r
+		inner join users u
+		on r.uno = u.uno
+		where pno=#{pno}
+		 ]]>
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="string">
+	 <![CDATA[
+		 delete from reply where rno=#{rno}
+		 ]]>
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply">
+	 <![CDATA[
+	 update reply set rdesc=#{rdesc},rdate=sysdate where rno=#{rno}
+		 ]]>
+	</update>
+	
+	
+</mapper>

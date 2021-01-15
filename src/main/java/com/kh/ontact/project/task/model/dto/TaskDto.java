@@ -1,10 +1,12 @@
 package com.kh.ontact.project.task.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.reply.model.dto.ReplyDto;
 
 import lombok.Data;
 
@@ -20,7 +22,7 @@ TASKMANAGER          VARCHAR2(20)   */
 @Data
 @Component
 public class TaskDto {
-	private String bno;
+	private int bno;
 	private String tstate;
 	private Date tstart;
 	private Date tend;
@@ -30,6 +32,9 @@ public class TaskDto {
 	private String tmemo;
 	private String uname;
 	private BoardAllDto boardalldto;
+	private int count;
+	private String runame;
+	private List<ReplyDto> replydto;
 
 
 }

@@ -18,6 +18,7 @@ import lombok.Data;
 public class ChatMemberDto {
 	private String chatno;
 	private String uno;
+	private String cuno;
 	private int creatchat;
 	private Date chatstartdate;
 	private Date chatenddate;

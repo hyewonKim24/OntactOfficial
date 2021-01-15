@@ -7,6 +7,7 @@
 		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
 		<id property="chatno" column="chatno" />
 		<result property="uno" column="uno" />
+		<result property="cuno" column="cuno" />
 		<result property="creatchat" column="creatchat" />
 		<result property="chatstartdate" column="chatstartdate" />
 		<result property="chatenddate" column="chatenddate" />
@@ -73,5 +74,25 @@
 		select uno from chatmember where chatno=#{chatno} and uno not in (#{uno}) group by uno
 		]]>
 	</select>
+	
+	<!-- 나랑 상대 uno가 들어있는 chatno 찾기 -->
+	<select id="SearchChatno" resultType="string">
+		<![CDATA[
+		select distinct cm.chatno as chatno from chatmember cm
+		inner join chatmember cm2
+		on cm.chatno=cm2.chatno
+		where cm.uno=#{uno} and cm2.uno=#{cuno}
+		group by cm.chatno,cm2.chatno
+		]]>
+	</select>
+	
+	<!-- 해당 채팅방 멤버수 구하기 -->
+	<select id="chatmemCount" resultType="int">
+		<![CDATA[
+		select count(*) from chatmember 
+		where chatno in (select chatno from chatmember where chatno=#{chatno})
+		]]>
+	</select>
+	
 
 </mapper>

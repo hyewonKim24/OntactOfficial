@@ -35,6 +35,10 @@ public interface UsersService {
 	List<UsersDto> ChatUsersList(UsersDto dto) throws Exception;
 	UsersDto ChatUserDetail(String uemail) throws Exception	;
 	
+	//프로젝트
+	List<UsersDto> listTaskRes(String pno) throws Exception;
+	
+	
 	// 조직도
 	public int listCountFirst();
 	public List<UsersDto> selectOgFirst(int startPage, int limit);
