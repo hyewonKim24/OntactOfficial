@@ -1022,6 +1022,9 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		function onMessage(msg) {
 			console.log("메시지 전달 받음"+msg);
 			var data = msg.data;
+			
+			//메시지가 들어왔을때 ajax를 이용해서 내 알림 숫자 구하기
+			
 			$(".alert-content").append(data + "<br/>");
 		}
 </script>

@@ -78,7 +78,7 @@ public class ProjectTaskController {
 			return mv;
 		}
 		
-		//프로젝트 디테일로 들어가기
+		//프로젝트 디테일로 들어가기 ( task만 가지고 들어감 + 추가 예정 )  
 		@RequestMapping(value="/project/projectDetail",method=RequestMethod.GET)
 		public ModelAndView projectDetail(ModelAndView mv, @RequestParam(name = "pno") String pno) {
 			List<BoardAllDto> blist = new ArrayList<BoardAllDto>();

@@ -29,6 +29,7 @@
 		inner join users u
 		on r.uno = u.uno
 		where pno=#{pno}
+		order by rdate desc
 		 ]]>
 	</select>
 	

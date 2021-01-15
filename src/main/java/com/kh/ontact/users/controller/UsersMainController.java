@@ -295,7 +295,7 @@ public class UsersMainController {
 		// 메일 세팅
 		String setFrom = "ssak.git@gmail.com";
 		String toMail = uemail;
-		String title = "회원가입 인증 이메일입니다.";
+		String title = "[ontact] 요청하신 임시 비밀번호 입니다.";
 		String content = "";
 		content += "<div align='center' style='border 1px solid black; font-family:verdana'>";
 		content += "<h3 style='color:blue;'><strong>";

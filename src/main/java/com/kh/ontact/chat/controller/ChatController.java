@@ -141,6 +141,67 @@ public class ChatController {
 		
 		
 	}
+	//그룹채팅방 만들기 -> 우선 조건 x 그냥 insert만 시켜보기
+	@RequestMapping(value="/chatinvite")
+	public ModelAndView chatinvite(@RequestParam(name = "chatuno") List<String> chatuno,
+			@RequestParam(name = "chatuname") List<String> chatuname,ChatMemberDto mdto,ChatDto dto,ChatAlertDto adto,
+			Authentication authentication,ModelAndView mv ) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno=userdetail.getUno();
+		String uname=userdetail.getUname();
+		mdto.setUno(uno);
+		mdto.setCreatchat(1);
+		adto.setUno(uno);
+		System.out.println("내 uno"+uno);
+		
+		System.out.println("그룹채팅 uno:"+chatuno);
+		System.out.println(chatuno.size()+"사람수");
+		int mcount =chatuno.size()+1;
+		String chatname="그룹채팅("+mcount+")";
+		String chatno=null;
+
+		List<ChatMemberDto> listdto= new ArrayList<ChatMemberDto>();
+		List<ChatAlertDto> listadto= new ArrayList<ChatAlertDto>();
+		ChatMemberDto gdto = null;
+		ChatAlertDto gadto = null;
+		
+		try {
+			//채팅방이 없으면 채팅방 만들기 + 내 uno 멤버 insert.
+			chatno = chatService.insertChat(chatname);
+			System.out.println(chatno+"chat insert");
+			mdto.setChatno(chatno);
+			adto.setChatno(chatno);
+			System.out.println("mdto:"+mdto);
+ 			int rs =chatMemService.insertChatMember(mdto);
+ 			int alertrs = chatalertService.insertChatAlertDefault(adto);
+ 			System.out.println(rs+"채팅방 인서트 추가");
+ 			System.out.println(alertrs+"채팅방 알림추가");
+ 			
+ 			int mrs =0;
+			for(String a : chatuno) {
+				gdto = new ChatMemberDto();
+				gdto.setUno(a);
+				gdto.setCreatchat(0);
+				gdto.setChatno(chatno);
+				gadto.setUno(a);
+				listadto.add(gadto);
+				listdto.add(gdto);
+			}
+			for(int i=0;i<=listdto.size();i++) {
+				mrs =chatMemService.insertChatMember(listdto.get(i)); 
+				System.out.println(mrs+" 그룹채팅 여러명추가");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("chatuno",chatuno);
+		mv.addObject("chatname",chatname);
+		mv.addObject("chatno",chatno);
+		mv.setViewName("main/chatroom");
+		/* mv.setViewName("redirect:/chat/otherschatadd"); */
+		return mv;
+	}
 	
 	//나 외 다른 사람 채팅멤버추가
 	@RequestMapping(value="/otherchatadd")
@@ -168,6 +229,43 @@ public class ChatController {
 		mv.setViewName("main/chatroom");
 		return mv;
 	}
+	
+	// 그룹채팅) 나 외 다른 사람 여러명 채팅멤버추가
+		@RequestMapping(value="/otherschatadd")
+		public ModelAndView otherschatadd(@RequestParam(name = "chatuno") List<String> chatuno,
+			@RequestParam(name = "chatname") String chatname,
+			@RequestParam(name = "chatno") String chatno,List<ChatMemberDto> mdto, List<ChatAlertDto> adto, ModelAndView mv ) {
+			System.out.println("상대 uno list"+chatuno);
+			System.out.println("채팅방 번호"+chatno);
+			ChatMemberDto dto = null;
+			/*
+			 * adto.setUno(chatuno); adto.setChatno(chatno);
+			 */
+			
+			try {
+				int rs =0;
+					for(String a : chatuno) {
+						dto = new ChatMemberDto();
+						dto.setUno(a);
+						dto.setCreatchat(0);
+						/* rs =chatMemService.insertChatMember(dto); */
+					}
+	 			System.out.println(rs+"채팅멤버 추가");
+				/*
+				 * 알림 부분
+				 * int alertrs = chatalertService.insertChatAlertDefault(adto);
+				 * System.out.println(alertrs+"alert insert2");
+				 */
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			mv.addObject("chatname",chatname);
+			mv.addObject("chatno",chatno);
+			mv.setViewName("main/chatroom");
+			return mv;
+		}
 	
 	//메시지 추가 + 채팅 알림 추가
 	@RequestMapping(value="/contentadd" ,method = {RequestMethod.GET, RequestMethod.POST})

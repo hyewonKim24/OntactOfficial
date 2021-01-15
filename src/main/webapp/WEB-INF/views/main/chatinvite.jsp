@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,21 +134,22 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
               <c:if test="${empty ulist }">
                	 검색 결과가 없습니다.
                	 </c:if>
-              <c:if test="${not empty ulist }">
-                <c:forEach items="${ulist}" var="list">
-					<form
-						action="${pageContext.request.contextPath}/chat/chatroomnew"
-						method="post" id="chatfrm1">
-						<div class="tel-other">
-							<input type="hidden" name="chatuname" value="${list.uname }">
-							<span class="invite-names"> ${list.uname }  <span>
-								
-							</span>
-							</span>
-						</div>
-					</form>
+					<form action="${pageContext.request.contextPath}/chat/chatinvite" method="post" id="chatfrm1">
+						<sec:csrfInput /> 
+              			<c:if test="${not empty ulist }">
+              			  <c:forEach items="${ulist}" var="list">
+							<div class="tel-other">
+									<input type="hidden" name="chatuname" value="${list.uname }">
+									<span class="invite-names"> ${list.uname }  
+										<span>
+											<input type="checkbox" name="chatuno" value="${list.uno}"> 
+										</span>
+									</span>
+							</div>
 				</c:forEach>
                </c:if>
+							<button type="submit">대화방 초대하기</button>
+					</form>
             </div>
         </div>
     </div>

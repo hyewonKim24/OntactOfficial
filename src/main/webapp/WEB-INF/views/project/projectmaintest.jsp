@@ -1293,7 +1293,7 @@
                           				<div class="task-add">
 	                          				<ul>
 	                          					<c:forEach items="${userlist}" var="ulist">
-	                          					<li class="task-res-list">${ulist.uname} <input type="hidden" class="taks-res-uno" value="${ulist.uno }"></li>
+	                          					<li class="task-res-list">${ulist.uname}<input type="hidden" class="taks-res-uno" value="${ulist.uno }"></li>
 	                          					</c:forEach>
 	                          				</ul>
                           				</div>
@@ -2271,8 +2271,8 @@
             </div>
             
             <div class="reply">
-                <button class="replyMore">이전 댓글 더보기</button>
-                
+               <!--  <button class="replyMore">이전 댓글 더보기</button> -->
+                <br>
                 <!-- 댓글 출력  -->
                 <c:forEach items="${replylist}" var="rlist" varStatus="i">
                 <c:if test="${rlist.bno eq tlist.bno}"> 
@@ -2283,10 +2283,13 @@
                     
                     <span class="replyTitle">${rlist.uname}</span>
                     <span class="replyDate">${rlist.rdate}</span>
+                    <!-- 내 댓글일 때만 수정,삭제 버튼 보임 -->
+                    <c:if test="${rlist.uno eq uno}">
                     <span class="replyEdit">
                         <button type="button" class="replyUpdate" id="replyUpdate${i.count}">수정</button>
                         <button type="button" class="replyDelete" id="replyDelete${i.count}">삭제</button>
                     </span>
+                    </c:if>
                     <div id="replyParent">
                     <p id="replyResult${i.count}" class="replyResult">${rlist.rdesc}</p>
                     <br>
