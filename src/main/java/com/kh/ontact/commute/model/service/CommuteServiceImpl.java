@@ -15,8 +15,8 @@ public class CommuteServiceImpl implements CommuteService {
 	private CommuteDao commuteDao;
 
 	@Override
-	public int allListCount(String uno) {
-		return commuteDao.allListCount(uno);
+	public int allListCount() {
+		return commuteDao.allListCount();
 	}
 
 	@Override
@@ -25,8 +25,8 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public int listCount(HashMap<String, String> paramMap) {
-		return commuteDao.listCount(paramMap);
+	public int listCount() {
+		return commuteDao.listCount();
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class CommuteServiceImpl implements CommuteService {
 	//월 근무내역
 	
 	@Override
-	public int mAllCount(String uno) {
-		return commuteDao.mAllCount(uno);
+	public int mAllCount() {
+		return commuteDao.mAllCount();
 	}
 
 	@Override

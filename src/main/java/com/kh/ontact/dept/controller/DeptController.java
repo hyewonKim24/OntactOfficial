@@ -33,47 +33,29 @@ public class DeptController {
 	public ModelAndView selectDept(
 			@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "keyword", required = false) String keyword,
-			@RequestParam(name = "dname", required = false) String dname,
 		    ModelAndView mv) {
 			System.out.println("Dept 리스트진입");
 		try {
 			int currentPage = page;
-			int deptlistCount1 = deptServ.listCount();
-			int deptlistCount2 = deptServ.searchlistCount();
-			int listCount1 = usersService.listCountFirst();
-			int listCount2 = usersService.listCount();
-			System.out.println("카운트 미분류" + listCount1 );
-			System.out.println("카운트 분류" + listCount2);
+			int deptlistCount = deptServ.listCount();
+			int userslistCount = usersService.listCount();
+			System.out.println("시험" + deptlistCount);
+			System.out.println("리스트카운트" + userslistCount);
 			
-			int maxPage1 = (int) ((double) listCount1 / LIMIT + 0.9);
-			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
-
-			mv.addObject("deptlistCount", deptlistCount1);
-			mv.addObject("selectDept", deptServ.selectDept());
-			mv.setViewName("/commute/organogram");
-
-//			미분류그룹 default
-			if (dname == null && keyword == null && keyword == "") {
+			int maxPage2 = (int) ((double) userslistCount / LIMIT + 0.9);
+			
+//			if (keyword == null && keyword == ("")){
 				System.out.println("if로 들어옴");
-				mv.addObject("userslistCount", listCount1);
-				mv.addObject("currentPage", currentPage);
-				mv.addObject("maxPage", maxPage1);
-				mv.addObject("selectOgUser", usersService.selectOgFirst(currentPage, LIMIT));
-				System.out.println("결과" + usersService.selectOgFirst(currentPage, LIMIT));
-				mv.setViewName("/commute/organogram");
-			}
-//			분류그룹
-			if (dname != null) {
-				System.out.println("dname이 있는 경우");
-				mv.addObject("userslistCount", listCount2);
+				mv.addObject("deptlistCount", deptlistCount);
+				mv.addObject("userslistCount", userslistCount);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
-				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT, dname));
+				mv.addObject("selectDept", deptServ.selectDept());
+				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT));
+				System.out.println("결과" + usersService.selectOgUser(currentPage, LIMIT));
 				mv.setViewName("/commute/organogram");
-			} 
-//부서검색			
-			if(keyword != null && keyword != "") {
-				mv.addObject("deptlistCount", deptlistCount2);
+			 if (keyword != null && !keyword.equals("")) {
+				System.out.println("else로 들어옴");
 				mv.addObject("list", deptServ.searchDept(keyword));
 				mv.setViewName("/commute/organogram");
 			}

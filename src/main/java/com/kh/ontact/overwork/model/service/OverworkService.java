@@ -7,7 +7,7 @@ import com.kh.ontact.overwork.model.dto.OverworkDto;
 
 public interface OverworkService {
 	
-	public int listCount(String uno);
+	public int listCount();
 	
 	public List<OverworkDto> selectOverwork(int startPage, int limit, String uno);
 	

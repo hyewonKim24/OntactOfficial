@@ -16,8 +16,8 @@ public class DayoffServiceImpl implements DayoffService{
 	private DayoffDao dayoffDao;
 	
 	@Override
-	public int allListCount(String uno) {
-		return dayoffDao.allListCount(uno);
+	public int allListCount() {
+		return dayoffDao.allListCount();
 	}
 
 	@Override

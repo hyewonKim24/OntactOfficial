@@ -256,32 +256,25 @@
     <script>
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
-	        $('.sidenav li.menu>a').on('click', function(){
-			$(this).removeAttr('href');
-			var element = $(this).parent('li');
-			if (element.hasClass('open')) {
-				element.removeClass('open');
-				element.find('li').removeClass('open');
-	            element.find('ul').slideUp();
-			}
-			else {
-				element.addClass('open');
-				element.children('ul').slideDown();
-				element.siblings('li').children('ul').slideUp();
-				element.siblings('li').removeClass('open');
-				element.siblings('li').find('li').removeClass('open');
-	            element.siblings('li').find('ul').slideUp();
-			}
-		    });
-	        
-	        $("#dept").on("click", function(){
-	        	var dname = $("#dname").val();
-	        	console.log(dname);
-	        	$("#depttitle").val(dname);
-	        })
-			
-	    $()
-    	});
+        $('.sidenav li.menu>a').on('click', function(){
+		$(this).removeAttr('href');
+		var element = $(this).parent('li');
+		if (element.hasClass('open')) {
+			element.removeClass('open');
+			element.find('li').removeClass('open');
+            element.find('ul').slideUp();
+		}
+		else {
+			element.addClass('open');
+			element.children('ul').slideDown();
+			element.siblings('li').children('ul').slideUp();
+			element.siblings('li').removeClass('open');
+			element.siblings('li').find('li').removeClass('open');
+            element.siblings('li').find('ul').slideUp();
+		}
+	    });
+	
+    });
     </script>
 </head>
 <body>
@@ -292,17 +285,19 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-                <ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
-						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
-					</ul></li>
-				<li class="menu"><a href="">휴가 관리</a>
-					<ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
-					</ul></li>
-				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
+                    <ul class="hide">
+                        <li><a href="">출퇴근 관리</a></li>
+                        <li><a href="">월 근무내역</a></li>
+                        <li><a href="">시간외 근무신청</a></li>
+                    </ul>
+                </li>
+                <li class="menu"><a href="">휴가 관리</a>
+                    <ul class="hide">
+                        <li><a href="">휴가 신청</a></li>
+                        <li><a href="">휴가 현황</a></li>
+                    </ul>
+                </li>
+                <li ><a href="">조직도</a></li>
             </ul>
         </div>
     <div class="contents">
@@ -322,14 +317,13 @@
                         </li>
                         <c:if test="${not empty selectDept}">
 							<c:forEach var="dp" items="${selectDept}" varStatus="status">
-                        	<li><a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}"id="dept">
-                        	<input type ="hidden" value="${dp.dname}" name="dname" id="dname">${dp.dname} </a></li>
+                        	<li><a href="">${dp.dname} </a></li>
                         	</c:forEach>
                         </c:if>
                     </ul>
                 </div>
                 <div class="notyet">
-                    <div><a href="">미분류그룹 &nbsp; <span>(0)</span></a></div>
+                    <div>미분류그룹 &nbsp; <span>(0)</span></div>
                 </div>
                 <div class="deptEdit">
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
@@ -338,13 +332,11 @@
                 </div>
                 <div class="detail">
                 
-                    <div class="title"><input type="text" id="depttitle" value="" readonly> 총 <span>${userslistCount}</span>명</div>
-                    
+                    <div class="title">경영팀 총 <span>${userslistCount}</span>명</div>
                     <div>
                         <table>
                             <tr>
                                 <th>선택</th>
-                                <th>부서</th>
                                 <th>이름</th>
                                 <th>직급</th>
                                 <th>이메일</th>
@@ -353,7 +345,6 @@
 						<c:forEach var="og" items="${selectOgUser}" varStatus="status">
                             <tr>
                                 <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td>
-                                <td>${og.dname}</td>
                                 <td>${og.uname}</td>
                                 <td>${og.urank}</td>
                                 <td>${og.uemail}</td>

@@ -15,19 +15,17 @@ public class CommuteDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int allListCount(String uno) {
-
-		return sqlSession.selectOne("CommuteMapper.allListCount", uno);
+	public int allListCount() {
+		return sqlSession.selectOne("CommuteMapper.allListCount");
 	}
 	public List<CommuteDto> selectDailyCommute(int startPage, int limit, String uno) { // 특정 페이지 단위의 게시글 조
-		
+		System.out.println("다오까지 왔는데,,");
 		int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 		RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowboun
 		return sqlSession.selectList("CommuteMapper.selectDailyCommute",uno,row);
 	}
-	public int listCount(HashMap<String, String> paramMap) {
-		System.out.println("다오" + paramMap);
-		return sqlSession.selectOne("CommuteMapper.listCount", paramMap);
+	public int listCount() {
+		return sqlSession.selectOne("CommuteMapper.listCount");
 	}
 	public List<CommuteDto> searchDailyCommute(HashMap<String, String> paramMap) { // 특정 페이지 단위의 게시글 조
 		return sqlSession.selectList("CommuteMapper.searchDailyCommute", paramMap);
@@ -44,8 +42,8 @@ public class CommuteDao {
 	
 //	월 근무 내역 
 	//기본
-	public int mAllCount(String uno) {
-		return sqlSession.selectOne("CommuteMapper.mAllCount", uno);
+	public int mAllCount() {
+		return sqlSession.selectOne("CommuteMapper.mAllCount");
 	}
 	public List<CommuteDto> selectMonthCommute(int startPage, int limit, String uno) {
 		int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
@@ -61,7 +59,7 @@ public class CommuteDao {
 	}
 	
 	public List<CommuteDto> testCommute(String uno) {
-		return sqlSession.selectList("CommuteMapper.testCommute", uno);
+		return sqlSession.selectList("CommuteMapper.testCommute");
 	}
 	
 	

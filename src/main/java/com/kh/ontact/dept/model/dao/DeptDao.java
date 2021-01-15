@@ -30,9 +30,6 @@ public class DeptDao {
 	public DeptDto selectDtOne(String dno) { 
 		return sqlSession.selectOne("Dept.selectDtOne", dno);
 	}
-	public int searchlistCount() {
-		return sqlSession.selectOne("Dept.searchlistCount");
-	}
 	public List<DeptDto> searchDept(String keyword) { // 게시글 검색 조회 
 		return sqlSession.selectList("Dept.searchDept", keyword);
 	}

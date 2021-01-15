@@ -30,11 +30,6 @@ public class DeptServiceImpl implements DeptService{
 	}
 	
 	@Override
-	public int searchlistCount() {
-		return deptDao.searchlistCount();
-	}
-	
-	@Override
 	public List<DeptDto> searchDept(String keyword) {  
 		return deptDao.searchDept(keyword);
 	}

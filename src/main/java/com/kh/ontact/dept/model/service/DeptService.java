@@ -13,8 +13,6 @@ public interface DeptService {
 	
 	public List<DeptDto> selectDept();
 
-	public int searchlistCount();
-	
 	public List<DeptDto> searchDept(String keyword);  
 	
 	public DeptDto selectDtOne(String dno);

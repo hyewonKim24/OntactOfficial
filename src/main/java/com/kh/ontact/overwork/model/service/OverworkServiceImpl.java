@@ -15,8 +15,8 @@ public class OverworkServiceImpl implements OverworkService{
 	private OverworkDao overworkDao;
 
 	@Override
-	public int listCount(String uno) {
-		return overworkDao.listCount(uno);
+	public int listCount() {
+		return overworkDao.listCount();
 	}
 
 	@Override

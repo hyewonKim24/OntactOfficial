@@ -33,14 +33,13 @@ public class UseroverworkController {
 			
 		System.out.println("시간외근무 리스트 진입");
 		try {
-			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-			String uno=userdetail.getUno();
-			System.out.println("세션값확인 : " + uno);
-			
 			int currentPage = page;
 //			 한 페이지당 출력할 목록 갯수, 페이징
-			int listCount = overworkServ.listCount(uno);
+			int listCount = overworkServ.listCount();
 			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		    String uno=userdetail.getUno();
+		    System.out.println("세션값확인 : " + uno);
 		      
 			//검색
 			String start =  startdate;
@@ -80,7 +79,6 @@ public class UseroverworkController {
 		    String uno=userdetail.getUno();
 		    String dno = userdetail.getDno();
 		    System.out.println("세션값확인 : " + uno);
-		    
 		    o.setUno(uno);
 		    
 			overworkServ.insertOverwork(o);

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 
-<!-- date picker -->
+<!-- date피커 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -286,7 +285,6 @@ canvas {
 }
 </style>
 <script>
-	
     $(document).ready(function() {
         // 세로드롭다운
         $('.sidenav li.menu>a').on('click', function(){
@@ -368,10 +366,7 @@ canvas {
 		
 		//QR생성
 		  $("#qrcreate").click(function () {
-			var uname = $("#uname").val();
-			var dno = $("#dno").val();	
-		    let today = getTimeStamp() + "," + dno + "," + uname;
-	 
+		    let today = getTimeStamp() + "," + "경영팀" + "," + "김정우";
 		    $text = today;
 		    //입력한 내용 있는지 체크
 		    if ($text !== "") {
@@ -391,10 +386,10 @@ canvas {
 		  });
 		  
 		//출퇴근 스캐너호출 
-		  $('#qrenter').click(function() {
+		$('#qrenter').click(function() {
 				popupOpen('qrenter');
-			});
-		  function popupOpen(url){
+		});
+		function popupOpen(url){
 			  	var name="enter";
 			    var specs = 'width=510, height=700, menubar=no,status=no,toolbar=no';
 			    var newWindow = window.open(url,name,specs);
@@ -420,7 +415,32 @@ canvas {
 			    var myWindow = window.open(url,"qrscanner",popupOption); */
 		}
 		
-		
+		$(function() {
+		    //input을 datepicker로 선언
+		    $.datepicker.setDefaults({
+		        dateFormat: 'yy-mm-dd' //Input Display Format 변경
+		        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+		        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+		        ,changeYear: true //콤보박스에서 년 선택 가능
+		        ,changeMonth: true //콤보박스에서 월 선택 가능                
+		        // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+		        // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+		        // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+		        // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+		        ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+		        ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+		        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+		        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+		        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+		        ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+		        ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
+		    });                    
+		    $('#startD').datepicker(); 
+		    $('#endD').datepicker(); 
+		    //초기값을 오늘 날짜로 설정
+		    $('#startD').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
+		    $('#endD').datepicker('setDate', 'today');          
+		});
 		$("#search").click(function(){
 		    $(this).prop("checked", true);
 		    $("form").submit();
@@ -454,23 +474,21 @@ canvas {
 				<li class="menu"><a href="">근태 관리</a>
 					<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
+						<li><a href="">월 근무내역</a></li>
 						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
 					</ul></li>
 				<li class="menu"><a href="">휴가 관리</a>
 					<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
+						<li><a href="">휴가 현황</a></li>
 					</ul></li>
-				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
+				<li><a href="">조직도</a></li>
 			</ul>
 		</div>
 		<div class="contents">
 			<div class="article">
 				<div class="conTitle">출퇴근 관리</div>
 				<div class="commuteBtn">
-					<input type="hidden" id="uname" value="<sec:authentication property="principal.uname" var="name"/>${name}">
-					<input type="hidden" id="dno" value="<sec:authentication property="principal.dno" var="dno"/>${dno}">
 					<button name="go" id="qrcreate">QR생성</button>
 					<button name="go" id="qrenter">출근하기</button>
 					<button value="" id="qrleave">퇴근하기</button>
@@ -524,14 +542,13 @@ canvas {
 								<th>사유</th>
 							</tr>
 						</thead>
-						<%-- <c:if test="${listCount eq 0}">
+						<c:if test="${listCount eq 0}">
 							<tr>
 								<td colspan="7" align="center"><br> <br> 신청내역이
 									없습니다.<br> <br></td>
 							</tr>
-						</c:if> --%>
-						<%-- <c:if test="${listCount ne 0}"> --%>
-						<c:if test="${not empty list}">
+						</c:if>
+						<c:if test="${listCount ne 0}">
 							<c:forEach var="cm" items="${list}" varStatus="status">
 								<tr>
 									<td>${cm.cdate}</td>

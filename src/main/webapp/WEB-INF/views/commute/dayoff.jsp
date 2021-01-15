@@ -148,36 +148,17 @@
     .option table{
         width: 700px;
         height: 50px;
-        font-size : 14px;
     }
     .option table td{
         height: 50px;
         line-height: 50px;
-       
     }
     .option table td:nth-child(1){
         width: 100px;
-        font-weight : 700;
-        
     }
     .option table td:nth-child(2){
         width: 400px;
-        font-weight : 700;
     }
-     .option table input{
-        height : 32px;
-        border: 1px solid #c0c0c0;
-        box-sizing: border-box;
-    }
-    .option table button{
-        width: 100px;
-        height: 32px;
-        background-color: #5A3673;
-        color:#F2F2F2;
-        border : none;
-        border-radius: 3px;
-    }
-
     .searchgraph{
         width: 930px;
         height: 200px;
@@ -212,18 +193,18 @@
     }
     </style>
      <script>
-     	 var result='${message}';
+     	/* var result='${message}';
 		console.log(result);
 		if(result == "success") {
 	        alert("신청이 완료되었습니다");
-	    } 
+	    } */
 		
-	    /* $('#insertDf').on('click', function(){
+	    $('#insertDf').on('click', function(){
             console.log("들어왔다!!")
             $("#frm").action = "${pageContext.request.contextPath}/dayoff/dayoffins";
         	$("#frm").method = "post";
         	$("#frm").submit();
-        }); */
+        });
 		
         // html dom 이 다 로딩된 후 실행된다.
    $(document).ready(function() {
@@ -315,24 +296,25 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-				<ul class="hide">
+					<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
+						<li><a href="">월 근무내역</a></li>
 						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
 					</ul></li>
 				<li class="menu"><a href="">휴가 관리</a>
 					<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
+						<li><a href="">휴가 현황</a></li>
 					</ul></li>
-				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
+				<li><a href="">조직도</a></li>
             </ul>
         </div>
     <div class="contents">
         <div class="article">
             <div class="conTitle">휴가 신청 및 조회</div>
             <div class="application">
-            <form action = "${pageContext.request.contextPath}/dayoff/dayoffins" method = "get">
+            <form name="frm" id ="frm" >
+           <%--  action = "${pageContext.request.contextPath}/dayoff/dayoffins" method = "post"> --%>
            
                 <table>
                     <tr>
@@ -349,26 +331,26 @@
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname" placeholder="이름을 입력하세요"></td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname"></td>
                         <td></td>
                         <td></td>
                     </tr> 
                     <tr>
                         <td class="title">휴가 시작 일자</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffStart" name="offstart" placeholder="시작일을 선택하세요"></td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffStart" name="offstart" placeholder="시작일을 선택해주세요"></td>
                         <td class="title">휴가 종료 일자</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffEnd" name="offend" placeholder="종료일을 선택하세요"></td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffEnd" name="offend" placeholder="종료일을 선택해주세요"></td>
                         <td class="title" style="width: 50px;">일수</td>
                         <td><input type="text" style="width: 50px; height: 25px;" id="offdays" name="offdays"></td>
                    
                     </tr>
                     <tr>
                         <td class="title">휴가사유</td>
-                        <td colspan="6" style="padding-bottom: 20px;"><input type="text" style="width: 830px; height: 65px;" id="offreason" name="offreason" placeholder="사유를 입력해주세요. (ex) 연차, 병가, 월차 등등)"></td>
+                        <td colspan="6" style="padding-bottom: 20px;"><input type="text" style="width: 830px; height: 65px;" id="offreason" name="offreason"></td>
              
                     </tr>
                     <tr>
-                        <td colspan="6"><button type="submit" id="insertDf" name="insertDf" >신청하기</button></td>
+                        <td colspan="6"><button onclick="go()" id="insertDf" name="insertDf" >신청하기</button></td>
                     <!-- type="submit" -->
                     </tr>
                     </table>
@@ -379,7 +361,7 @@
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" name="startdate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate" placeholder="종료일을 선택하세요"></td>
+                        <td><input type="text" id="startDate" name="startdate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate"></td>
                         <td><button type="submit" value="">조회</button></td>
                     </tr>
                 </table>
@@ -412,7 +394,7 @@
 					<c:if test="${listCount ne 0}">
 						<c:forEach var="df" items="${list}" varStatus="status">
                     <tr>
-                        <td>${df.dno}</td>
+                        <td>${df.dname}</td>
                         <td>${df.uname}</td>
                         <td>${df.offstart}</td>
                         <td>${df.offend}</td>

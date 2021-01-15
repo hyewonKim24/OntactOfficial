@@ -40,13 +40,11 @@
 	</select> -->
 	
 	<!-- 부서 검색 -->
-	<select id="searchlistCount" resultType="int">
-		select count(*) from dept where dname = #{keyword}
-	</select>
 	<select id="searchDept" resultType="arraylist"
 		resultMap="resultDept">
-		select dname from dept where dname = #{keyword} 
+		select dname from dept where dname = #{dname} 
 	</select>
+	
 	<!-- 부서 추가 -->
 	<insert id="insertDept" flushCache="true" statementType="PREPARED">  
 		insert into dept values(DNO_SE.nextval, #{cno}, #{dname}

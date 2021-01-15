@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
     <!-- 차트 그리기 -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
     	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" 
-    	crossorigin="anonymous"></script> -->
-    <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>	
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    	crossorigin="anonymous"></script>
+        
     <style>
     *{
         margin : 0;
@@ -27,13 +27,7 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
-    	color: #111111;
-	}
-	a{
-		text-decoration: none;
-		color: #111111;
-	}
-    
+    }
     .header{
         position: relative;
         width: 100%;
@@ -122,16 +116,9 @@
     }
     .option table td:nth-child(1){
         width: 100px;
-        font-weight : 700;
     }
     .option table td:nth-child(2){
         width: 400px;
-        font-weight : 700;
-    }
-    .option table input{
-        height : 32px;
-        border: 1px solid #c0c0c0;
-        box-sizing: border-box;
     }
     .searchgraph{
         width: 930px;
@@ -148,12 +135,11 @@
     }
     .list{
         width: 930px;
-        max-height: 390px;
+        height: 360px;
     }
     .list table{
         width: 930px;
-        min-height : 90px;
-        max-height : 403px;
+        height: 360px;
         font-size: 14px;
         text-align: center;
     }
@@ -164,9 +150,6 @@
     }
     .list table thead{
         font-weight: 700;
-    }
-    .list table tr:nth-child(3){
-       text-align:center;
     }
     
     </style>
@@ -202,32 +185,32 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-                <ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
-						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
-					</ul></li>
-				<li class="menu"><a href="">휴가 관리</a>
-					<ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
-					</ul></li>
-				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
+                    <ul class="hide">
+                        <li><a href="">출퇴근 관리</a></li>
+                        <li><a href="">월 근무내역</a></li>
+                        <li><a href="">시간외 근무신청</a></li>
+                    </ul>
+                </li>
+                <li class="menu"><a href="">휴가 관리</a>
+                    <ul class="hide">
+                        <li><a href="">휴가 신청</a></li>
+                        <li><a href="">휴가 현황</a></li>
+                    </ul>
+                </li>
+                <li ><a href="">조직도</a></li>
             </ul>
         </div>
     <div class="contents">
         <div class="article">
             <div class="conTitle">월 근무내역</div>
             <div class="option">
-            <form action="<c:url value="/commute/monthlylist"/>" method="get">
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" placeholder="종료일을 선택하세요"></td>
-                        <td><button name="submit">조회</button></td>
+                        <td><input type="text" id="startDate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate"></td>
+                        <td><button value="">조회</button></td>
                     </tr>
                 </table>
-                </form>
             </div>
             <div class="searchgraph">
                 <canvas id="canvas" height="230" width="600"></canvas>
@@ -236,7 +219,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="4" style="text-align: left;">조회결과 ${listCount }건</td>
+                        <td colspan="4" style="text-align: left;">조회결과 00건</td>
                     </tr>
                      <tr>
                         <th>날짜</th>
@@ -256,47 +239,10 @@
                     </tr>
                     </c:forEach>
                     </c:if>
-                        <!-- 앞 페이지 번호 처리 -->
-					<tr >
-						<td colspan="7">
-						<c:if test="${currentPage <= 1}">
-						&lt; &nbsp;
-						</c:if>
-						 	<c:if test="${currentPage > 1}">
-								<c:url var="monthlistprev" value="/commute/monthlylist">
-									<c:param name="page" value="${currentPage-1}" />
-								</c:url>
-								<a href="${monthlistprev}">&lt; &nbsp;</a>
-							</c:if> 
-							<!-- 끝 페이지 번호 처리 -->
-							 <c:set var="endPage" value="${maxPage}" /> 
-							 <c:forEach
-								var="p" begin="${startPage+1}" end="${endPage}">
-								<!-- eq : == / ne : != -->
-								<c:if test="${p eq currentPage}">
-									<font color ="#5A3673"><b>${p} &nbsp;</b></font>
-								</c:if>
-								<c:if test="${p ne currentPage}">
-									<c:url var="monthlistchk" value="/commute/monthlylist">
-										<c:param name="page" value="${p}" />
-									</c:url>
-									<a href="${monthlistchk}">${p} &nbsp;</a>
-								</c:if>
-							</c:forEach> 
-							<c:if test="${currentPage >= maxPage}">  &gt;
-							</c:if>
-							<c:if test="${currentPage < maxPage}">
-								<c:url var="monthlistnext" value="/commute/monthlylist">
-									<c:param name="page" value="${currentPage+1}" />
-								</c:url>
-								<a href="${monthlistnext}"> &gt;</a>
-							</c:if>
-						</td>
-					</tr>
                 </table>
             </div>
         </div>
-     <%--    <div class="row">
+        <div class="row">
             <div class="container">
                 <div style="margin-top:20px; margin-left:80px">
                     <select name="selectMonth" id="selectMonth">
@@ -321,7 +267,7 @@
                     <canvas id="canvas" height="350" width="600"></canvas>
                 </div>
             </div>
-        </div> --%>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -335,6 +281,10 @@
                 ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
                 ,changeYear: true //콤보박스에서 년 선택 가능
                 ,changeMonth: true //콤보박스에서 월 선택 가능                
+                // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+                // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+                // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
                 ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
                 ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
                 ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
@@ -350,11 +300,35 @@
             $('#endDate').datepicker('setDate', 'today');          
         });
         
+            var chartLabels = []; // 받아올 데이터를 저장할 배열 선언
+            var chartData = []; 
+            var month="";
             
-        //그래프 그리기
-        //createChart()함수를 안에다 선언해야지 차트값을 받더라...
-        $(document).ready(function() {
-        /* $('#btn').click(function(){ */
+            function createChart() {
+                var ctx = document.getElementById("canvas").getContext("2d");
+                LineChartDemo = Chart.Line(ctx, {
+                    data : lineChartData,
+                    options : {
+                        scales : {
+                            yAxes : [ {
+                                ticks : {
+                                    beginAtZero : true
+                                }
+                            } ]
+                        }
+                    }
+                });
+            }
+            
+            //selectList로 월을 선택해서 ajax로 받는다.
+            $('#selectMonth').change(function() {
+                var changeMonth = $('#selectMonth option:selected').val();
+                month = changeMonth;
+                console.log('month:'+month);
+            });
+            
+            //버튼을 클릭하면 차트가 그려진다. createChart()함수를 안에다 선언해야지 차트값을 받더라...
+            $('#btn').click(function(){
                 chartLabels = [];
                 chartData=[];
 
@@ -390,34 +364,6 @@
                     
                 });
             })
-            
-            var chartLabels = []; // 받아올 데이터를 저장할 배열 선언
-            var chartData = []; 
-            var month="";
-            
-            function createChart() {
-                var ctx = document.getElementById("canvas").getContext("2d");
-                LineChartDemo = Chart.Line(ctx, {
-                    data : lineChartData,
-                    options : {
-                        scales : {
-                            yAxes : [ {
-                                ticks : {
-                                    beginAtZero : true
-                                }
-                            } ]
-                        }
-                    }
-                });
-            }
-            
-            //selectList로 월을 선택해서 ajax로 받는다.
-            $('#selectMonth').change(function() {
-                var changeMonth = $('#selectMonth option:selected').val();
-                month = changeMonth;
-                console.log('month:'+month);
-            });
-            
 </script>
 </body>
 </html>
