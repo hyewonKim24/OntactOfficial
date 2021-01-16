@@ -26,6 +26,7 @@ import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
 import com.kh.ontact.project.schedule.model.service.ScheduleService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
@@ -42,10 +43,10 @@ public class ScheduleController {
 	//메인화면 이동
 	@RequestMapping("/scheduleboard")
 	public ModelAndView main(ModelAndView mv) {
-		List<UsersDto> ulist= new ArrayList<UsersDto>();
+		List<ProjectMemberDto> ulist= new ArrayList<ProjectMemberDto>();
 		String pno = "1";
 		try{
-			ulist=usersService.listTaskRes(pno);
+			ulist=usersService.listProjectMember(pno);
 			System.out.println("프로젝트 user 리스트"+ulist);
 		} catch (Exception e) {
 			e.printStackTrace();
