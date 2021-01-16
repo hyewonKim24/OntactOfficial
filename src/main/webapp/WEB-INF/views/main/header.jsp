@@ -343,7 +343,7 @@ input:focus {
 	text-align: center;
 }
 
-.chat-content-wrap {
+.chatlist-td{
 	clear:both;
 	display: inline-block;
 	float: right;
@@ -579,25 +579,30 @@ input:focus {
 					$("#chat-scroll-box").html('');
 					var href= "this.href";
 					
+					var printHTML = "<table id='chat-list-table'>";
 					for(var i=0 in object){
 						console.log(object[i].chatno+"성공");
-					var printHTML = "<div class='chat-name'>";
-					printHTML += "<a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
-						" target='_blank' onClick=\"window.open(this.href,\'\', \'width=480, height=650\'); return false;\">";
+						
+					printHTML += "<tr class='chat-name'>";
+					printHTML += "<td><a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
+						" target='_blank' onClick=\"window.open(this.href,\'\', \'width=470, height=650\'); return false;\">";
 					printHTML += "<span class='chat-users-icon'>";
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/svg/users.svg' width='35px' height='35px'></span>";
-					printHTML += "<div class='chat-content-wrap'>";
+					printHTML += "</a></td><td class='chatlist-td'>";
+					printHTML += "<a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
+					" target='_blank' onClick=\"window.open(this.href,\'\', \'width=470, height=650\'); return false;\">";
 					printHTML += "<span class='chat-room-name' >";
-					printHTML += " <p id='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
+					printHTML += " <p class='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
 					printHTML += "<span class='chat-room-count'> "+object[i].mcount +"</span></span></p>";
 					printHTML += "<span class='chat-recent-content'>"+object[i].content+"</span>"
 					if(object[i].chatcount!=null && object[i].chatcount!=0){
-						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span>";
+						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span></a></td>";
 					}
-					printHTML += "</div> </a> </div>";
+					printHTML += " </a> </tr>";
 					
-					$("#chat-scroll-box").append(printHTML);
 					}
+					printHTML += "</table>";
+					$("#chat-scroll-box").append(printHTML);
 				},
 				error:function(){
 					console.log("실패");
@@ -631,22 +636,23 @@ input:focus {
 			url: "${pageContext.request.contextPath}/userlist",
 			success:function(object){
 				$(".tel-all").html('');
+					var html="<table id='tel-list-table'>";
 				for(var i=0 in object){
 					console.log(object+"성공");
-					var html="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
-					html += "<div class='tel-other'>";
+					html+="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
+					html += "<tr class='tel-other'>";
 					html += "<input type='hidden' name='chatuno' value='"+object[i].uno+"'>";
 					html += "<input type='hidden' name='chatuname' value='"+object[i].uname+"'>";
-					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></span>";
-					html += "<span class='tel-all-desc'> ";
+					html += "<td><img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></td>";
+					html += "<td class='tel-all-desc'>";
 					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname +" </a>";
-					html += " <a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"\" onClick= \"window.open(this.href, \'\', \'width=350, height=488\'); return false;\">";
-//	오류ㅠㅠ				html += " <a href='javascript:openNewWindow('${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"')>";
+					html += " <a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"\" onClick= \"window.open(this.href, \'\', \'width=470, height=650\'); return false;\">";
 					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/chat-03.svg' width='30px' height='25px' class='tel-chat-icon'></a>";
-					html += "</span></span></div></form>";
+					html += "</td></tr></form>";
 					
-					$(".tel-all").append(html);
 				}
+					html += "</table>";
+					$(".tel-all").append(html);
 			},
 			error:function(){
 				console.log("실패");
@@ -665,11 +671,27 @@ input:focus {
 		});
 		
 		//채팅 검색기능
-		$("#chat-search-input").keypress(function(event){
-		     if ( event.which == 13 ) {
-		    	 chat-search-form.submit();		         
-		     }
+		$("#chat-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#chat-list-table tr").hide();
+			console.log("검색어:"+c);
+			var temp= $("#chat-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			
+			$(temp).parent().show();
 		});
+		
+		//연락처 검색기능
+		$("#tel-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#tel-list-table tr").hide();
+			console.log("검색어:"+c);
+			var temp= $("#tel-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			
+			$(temp).parent().show();
+		});
+		
 		//연락처 검색기능
 		$("#chat-search-input").keypress(function(event){
 		     if ( event.which == 13 ) {
@@ -677,6 +699,11 @@ input:focus {
 		         
 		         return false;
 		     }
+		});
+		
+		//채팅창 클릭했을 때 모달창 닫기 ㅠㅠ 안먹힘 
+		$(".chat-name").click(function(){
+			$(".chat-wrap").hide();
 		});
 		
 	});
@@ -1009,6 +1036,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	
 	<script>
 		 var socket = null;
+		 
 		// 전역변수 설정
 		$(document).ready(function(){
 		    // 웹소켓 연결
@@ -1024,7 +1052,6 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 			var data = msg.data;
 			
 			//메시지가 들어왔을때 ajax를 이용해서 내 알림 숫자 구하기
-			
 			$(".alert-content").append(data + "<br/>");
 		}
 </script>

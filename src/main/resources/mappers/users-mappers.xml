@@ -23,6 +23,14 @@
 		<!-- <result property="dname" column="dname"/> -->
 	</resultMap>
 	
+	<resultMap type="ProjectMemberDto" id="resultProjectMember">
+		<id property="pno" column="pno" />
+		<result property="uno" column="uno" />
+		<result property="padmin" column="padmin" />
+		<result property="uname" column="uname" />
+	</resultMap>	
+	
+	
 	<!-- 비즈니스 가입 -->
 	<insert id="joinBusiness" flushCache="true">
 		<![CDATA[
@@ -161,11 +169,14 @@
 	</select>
 
 	<!--  해당 프로젝트 유저 list 출력-->
-	<select id="listTaskRes" resultType="arraylist" resultMap="resultUsers">
+	<select id="listProjectMember" resultType="arraylist" resultMap="resultProjectMember">
 	 	<![CDATA[
-		select u.uname, u.uno, u.uemail from users u
+		select u.uname, u.uno, u.uemail, pm.padmin, p.pname 
+		from users u
     	inner join project_member pm
     	on pm.uno=u.uno
+    	inner join project p
+        on p.pno=#{pno}
     	where pm.pno=#{pno}
 		]]>
 	</select>

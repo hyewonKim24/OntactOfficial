@@ -38,7 +38,13 @@
 		select chatno_se.currval from DUAL
 		]]>
 	</select>
-	
+	<!-- 프로젝트 채팅방 찾기 -->
+	<select id="searchProChat" resultType="string">
+ 	<![CDATA[
+		select chatno from chat where pno=#{pno}
+		]]>
+	</select>
+
 	<!-- 프로젝트 채팅방 추가 -->
 	<insert id="insertProChat" parameterType="string">
  	<![CDATA[
@@ -58,7 +64,6 @@
  	<![CDATA[
 		update chat set chatname = #{chatname} where chatno=#{chatno}
 		]]>
-	
 	</update>
 	
 </mapper>

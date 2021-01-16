@@ -5,6 +5,7 @@
 		<id property="pno" column="pno" />
 		<result property="uno" column="uno" />
 		<result property="padmin" column="padmin" />
+		<result property="uname" column="uname" />
 	</resultMap>
 
 	<!-- 프로젝트 생성 : 사원 입력 -->
@@ -13,4 +14,5 @@
 		insert into project_member
 		values(PNO_SE.CURRVAL, #{uno}, #{padmin})
 	</insert>
+	
 </mapper>

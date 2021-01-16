@@ -47,4 +47,9 @@ public class ChatMemberServiceImpl implements ChatMemberService{
 		return chatMemDao.chatmemCount(chatno);
 	}
 
+	@Override
+	public List<String> chatmemName(String chatno) throws Exception {
+		return chatMemDao.chatmemName(chatno);
+	}
+
 }

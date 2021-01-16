@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ontact.alert.model.dao.AlertDao;
 import com.kh.ontact.project.boardall.model.dao.BoardAllDao;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.reply.model.dao.ReplyDao;
 import com.kh.ontact.project.task.model.dao.TaskDao;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 
@@ -21,6 +22,8 @@ public class TaskServiceImpl implements TaskService {
 	BoardAllDao baDao;
 	@Autowired
 	AlertDao alertDao;
+	@Autowired
+	ReplyDao rpDao;
 	
 	@Override
 	public int insertTask(TaskDto tdto,BoardAllDto dto) throws Exception {
@@ -40,9 +43,14 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public int deleteTask(int bno) throws Exception {
-		int rs=0;
-			rs=taskDao.deleteTask(bno);
+		System.out.println("글삭제 서비스 접근");
+		int rs=rpDao.deleteReplyAll(bno); 
+			System.out.println(rs+"댓글삭제");
+			rs+=alertDao.deleteAll(bno);
+			System.out.println(rs+"알림삭제");
+			 rs+=taskDao.deleteTask(bno);
 			rs+=baDao.deleteBoardall(bno);
+			System.out.println(rs+"글삭제");
 		return rs;
 	}
 

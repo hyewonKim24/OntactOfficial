@@ -5,6 +5,8 @@ package com.kh.ontact.chatalert.model.dto;
 //UNO       NOT NULL VARCHAR2(20) 
 //CHATCOUNT NOT NULL NUMBER(20)   
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Data;

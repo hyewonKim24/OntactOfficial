@@ -40,6 +40,13 @@
 		 ]]>
 	</delete>
 	
+	<!-- 해당 글에 있는 댓글 전부 삭제 -->
+	<delete id="deleteReplyAll" parameterType="int">
+	 <![CDATA[
+		delete from reply where bno=#{bno}
+		 ]]>
+	</delete>
+	
 	<!-- 댓글 수정 -->
 	<update id="updateReply">
 	 <![CDATA[

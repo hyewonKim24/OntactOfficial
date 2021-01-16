@@ -28,6 +28,9 @@ public class ChatDao {
 	public int insertProChat(ChatDto c) throws Exception {
 		return sqlSession.insert("Chat.insertProChat",c);
 	}
+	public String searchProChat(String pno) throws Exception{
+		return sqlSession.selectOne("Chat.searchProChat",pno);
+	}
 	public int deleteChat(String chatno) throws Exception {
 		return sqlSession.insert("Chat.deleteChat",chatno);
 	}

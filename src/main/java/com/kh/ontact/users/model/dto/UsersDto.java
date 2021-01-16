@@ -31,7 +31,7 @@ public class UsersDto {
 	private int enabled;
 	private int failure_cnt;
 	private String dname;
-	
+	private int padmin;
 	
 	
 	public UsersDto(String uno, String cno, String uemail, String uname, String upwd, String urank, String uauthority,

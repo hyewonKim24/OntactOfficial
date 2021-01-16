@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.dept.model.dao.DeptDao;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
 import com.kh.ontact.users.exception.NotExistingCurlException;
@@ -171,8 +172,8 @@ public class UsersServiceImpl implements UsersService{
 	
 	// 프로젝트 유저 리스트
 	@Override
-	public List<UsersDto> listTaskRes(String pno) throws Exception {
-		return usersDao.listTaskRes(pno);
+	public List<ProjectMemberDto> listProjectMember(String pno) throws Exception {
+		return usersDao.listProjectMember(pno);
 	}
 	
 	//조직도 - 혜림

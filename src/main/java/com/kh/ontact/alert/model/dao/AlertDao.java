@@ -14,5 +14,9 @@ public class AlertDao {
 	public int alertInsert(BoardAllDto dto) throws Exception {
 		return sqlSession.insert("Alert.alertInsert",dto);
 	}
+	
+	public int deleteAll(int bno) throws Exception {
+		return sqlSession.delete("Alert.deleteAll",bno);
+	}
 
 }

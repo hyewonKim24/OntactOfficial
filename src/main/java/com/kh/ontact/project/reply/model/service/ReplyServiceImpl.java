@@ -27,6 +27,8 @@ public class ReplyServiceImpl implements ReplyService{
 	public int deleteReply(String rno) throws Exception {
 		return rpDao.deleteReply(rno);
 	}
+	
+	
 
 	@Override
 	public int updateReply(ReplyDto dto) throws Exception {

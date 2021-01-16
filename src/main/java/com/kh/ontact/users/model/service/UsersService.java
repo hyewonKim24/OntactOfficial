@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ontact.company.model.dto.CompanyDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.util.GuestRegisterRequest;
 import com.kh.ontact.users.util.PwdRegisterRequest;
@@ -38,7 +39,7 @@ public interface UsersService {
 	UsersDto ChatUserDetail(String uemail) throws Exception	;
 	
 	//프로젝트
-	List<UsersDto> listTaskRes(String pno) throws Exception;
+	List<ProjectMemberDto> listProjectMember(String pno) throws Exception;
 	
 	
 	// 조직도

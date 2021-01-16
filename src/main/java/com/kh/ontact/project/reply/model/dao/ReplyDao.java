@@ -22,6 +22,9 @@ public class ReplyDao {
 	public int deleteReply(String rno) throws Exception{
 		return sqlSession.delete("Reply.deleteReply", rno);
 	}
+	public int deleteReplyAll(int bno) throws Exception{
+		return sqlSession.delete("Reply.deleteReplyAll", bno);
+	}
 	public int updateReply(ReplyDto dto) throws Exception{
 		return sqlSession.update("Reply.updateReply", dto);
 	}

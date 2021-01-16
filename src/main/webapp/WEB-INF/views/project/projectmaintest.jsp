@@ -914,11 +914,10 @@
 
         /* 우측 바 */
         .rightBar {
-            position: absolute;
+            position: relative;
             width: 250px;
             height: 100%;
             background-color: #5A3673;
-            left: 950px;
         }
         /*이전화면 버튼 div*/
         .rightBar #prevbtn {
@@ -2301,6 +2300,9 @@
                 </div>
                 
                 	<script>
+                	$(".replyUpdate").unbind("click"); 
+                	$(".replyUpdateBtn").unbind("click"); 
+                	$(".replyDelete").unbind("click"); 
                 	//댓글 수정
                 	$(".replyUpdate").click(function(){
                 		var parent = $(this).parent();
@@ -2314,6 +2316,7 @@
                 		parentDiv.find(".replyUpdateText").css("display","inline-block");
                 		parentDiv.find(".replyUpdateBtn").css("display","inline-block");
                   	});
+                
                 		
                 	$(".replyUpdateBtn").click(function(){
                 		var parent = $(this).parent();
@@ -2383,9 +2386,10 @@
                     <button type="submit" id="replyReg">등록</button>
                 </div>
                 </form>
-            </div>
+
         
  </c:forEach>
+ </div>
  
  
         <div class="rightBar">
@@ -2520,14 +2524,13 @@
                         </ul>
                     </div>
                 </div>
-                <a href="">
+                <a href="${pageContext.request.contextPath}/chat/projectchat?pno=${pno}" onClick="window.open(this.href,'', 'width=470, height=650'); return false;">
                     <div id="pjchatbox">
                        		 채팅 &nbsp;<img src="${pageContext.request.contextPath}/resources/img/chat-04-fill.png" id="chatbtn-fill">
                     </div>
                 </a>
             </div>
         </div>
-    </div>
     </div>
     <script>
 

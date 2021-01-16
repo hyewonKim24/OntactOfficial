@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.model.dto.UsersDto;
 
 @Repository("usersDao")
@@ -74,8 +75,8 @@ public class UsersDao {
 	}
 	
 	//해당 프로젝트 유저 리스트
-	public List<UsersDto> listTaskRes(String pno) throws Exception{
-		return sqlSession.selectList("Users.listTaskRes", pno);
+	public List<ProjectMemberDto> listProjectMember(String pno) throws Exception{
+		return sqlSession.selectList("Users.listProjectMember", pno);
 	}
 	
 	

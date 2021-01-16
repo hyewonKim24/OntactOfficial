@@ -28,8 +28,7 @@
    <!-- WebSocket -->
    <beans:bean id="echoHandler" class="com.kh.ontact.chat.controller.EchoHandler" />
    <websocket:handlers>
-      <websocket:mapping handler="echoHandler"
-         path="/echo" />
+      <websocket:mapping handler="echoHandler" path="/echo" />
    </websocket:handlers>
    <!-- WebSocket -->
    <beans:bean id="alertHandler" class="com.kh.ontact.alert.controller.AlertHandler" />

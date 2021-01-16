@@ -53,9 +53,9 @@
 			inner join chatcontent t
 			    on t.chatno=c.chatno
 			where a.uno=#{uno} and t.ccno in (select max(ccno) from chatcontent where chatno=c.chatno)
-			group by c.chatname, c.chatno, m.chatno, a.chatcount, t.content
+			group by c.chatname, c.chatno, m.chatno, a.chatcount, t.content,t.chatdate
 			having m.chatno=c.chatno
-			order by chatcount desc
+			order by chatcount desc, t.chatdate desc
 		]]>
 	</select>
 	
@@ -91,6 +91,16 @@
 		<![CDATA[
 		select count(*) from chatmember 
 		where chatno in (select chatno from chatmember where chatno=#{chatno})
+		]]>
+	</select>
+	
+	<!-- 해당 채팅방 참여자 이름 구하기 -->
+	<select id="chatmemName" resultType="string">
+		<![CDATA[
+			select u.uname from chatmember cm
+			 inner join users u
+			 on u.uno = cm.uno
+			 where cm.chatno=#{chatno}
 		]]>
 	</select>
 	

@@ -36,6 +36,9 @@ public class ChatMemberDao {
 	public int chatmemCount(String chatno) throws Exception{
 		return sqlSession.selectOne("ChatMember.chatmemCount",chatno);
 	}
+	public List<String> chatmemName(String chatno) throws Exception{
+		return sqlSession.selectList("ChatMember.chatmemName",chatno);
+	}
 	
 	
 }

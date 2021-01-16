@@ -20,4 +20,10 @@
 	]]>
 	</insert>
 	
+	<delete id="deleteAll">
+	 <![CDATA[
+		delete from alert where bno=#{bno}
+	]]>
+	</delete>
+	
 </mapper>

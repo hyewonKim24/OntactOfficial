@@ -21,6 +21,8 @@ import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 import com.kh.ontact.project.task.model.service.TaskService;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
@@ -35,6 +37,8 @@ public class ProjectTaskController {
 	BoardAllService baService;
 	@Autowired
 	UsersService usersService;
+	@Autowired
+	ProjectMemberService pmService;
 	
 	//혜원 코드
 	@RequestMapping(value="/project/projecttest",method=RequestMethod.GET)
@@ -84,12 +88,12 @@ public class ProjectTaskController {
 			List<BoardAllDto> blist = new ArrayList<BoardAllDto>();
 			List<ReplyDto> rlist = new ArrayList<ReplyDto>();
 			List<TaskDto> list= new ArrayList<TaskDto>();
-			List<UsersDto> ulist= new ArrayList<UsersDto>();
+			List<ProjectMemberDto> ulist= new ArrayList<ProjectMemberDto>();
 			try {
 				list = taskService.ListTaskAll(pno);
 				blist=baService.ListTaskBoardAll(pno);
 				rlist=replyService.ListReply(pno);
-				ulist=usersService.listTaskRes(pno);
+				ulist=usersService.listProjectMember(pno);
 				System.out.println("프로젝트 user 리스트"+ulist);
 				System.out.println("글 blist"+blist+"글 blist");
 				System.out.println("글 replylist"+rlist+"글 replylist");
