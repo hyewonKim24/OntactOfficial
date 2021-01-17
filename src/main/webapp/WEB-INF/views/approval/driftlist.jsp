@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="reset.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 		rel="stylesheet">
@@ -126,25 +126,37 @@
 			line-height: 140%;
 		}
 
+		.board-listheader th {
+			padding: 20px 0;
+			vertical-align: middle;
+			font-size: 12px;
+			border: 1px solid #c0c0c0;
+			background: #e8e8e8;
+		}
+
 		.board-listheader td {
-			padding: 5px 0;
+			padding: 20px 0;
 			vertical-align: middle;
 			font-size: 12px;
 			border: 1px solid #c0c0c0;
 		}
-
 		.board-listheader tbody tr {
 			text-align: center;
+		}	
+		.board-listheader tbody tr td {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+		.section_title{
+			padding-bottom: 10px;
+			display: inline-block;
 		}
 
-
-
-		.apwrite {
+		.apwritebtn{
 			float: right;
 			padding-top: 20px;
 		}
-
-		#apwritebtn {
+		#apwritebtn{
 			width: 100px;
 			line-height: 30px;
 			text-align: center;
@@ -152,26 +164,6 @@
 			background-color: #5A3673;
 			color: #fff;
 			font-size: 12px;
-		}
-		.n_title{
-			padding: 20px 0;
-			font-weight: 600;
-		}
-		.board_apL{
-			font-size: 15px;
-			text-align: left;
-			display: inline-block;
-		}
-		.board_apL td{
-			padding: 7px;
-		}
-		.board_apR{
-			display: inline-block;
-			font-size: 14px;
-			padding-left: 500px;
-		}
-		.board_apR td{
-			border: 1px solid #c0c0c0;
 
 		}
 	</style>
@@ -208,84 +200,75 @@
 
 
 		<div class="page_section">
-			<h2>전자결재 결재함</h2>
+			<h2>전자결재 기안함</h2>
 			<hr>
 			<div class="main_section">
-				<h2>품의서</h2>
-				<table class="board_apL">
-					<tr>
-						<td>문서번호</td>
-						<td>1235124365</td>
-					</tr>
-					<tr>
-						<td>기안부서</td>
-						<td>개발팀</td>
-					</tr>
-					<tr>
-						<td>기안자</td>
-						<td>김또치</td>
-					</tr>
-					<tr>
-						<td>기안 일시</td>
-						<td>2020-10-10</td>
-					</tr>
-				</table>
-
-				<table class="board_apR">
-					<tr>
-						<td style="border: 0; padding-bottom: 10px;">결재</td>
-					</tr>
-					<tr>
-						<td style="padding: 3px 50px; text-align: center;">팀장</td>
-					</tr>
-					<tr>
-						<td style="padding: 30px 0; text-align: center;">text</td>
-					</tr>
-					<tr>
-						<td style="padding: 3px 50px; text-align: center;">누구누구</td>
-					</tr>
-		
-				</table>
-
-				<hr style="border: solid #dedede; border-width: 1px 0 0; ">
-
-				<div class="n_title">OT001-01 디바이스 외주 생산업체선정</div>
-
+				<span class="section_title">결재요청건 ${listCount }건</span>
 				<!-- <table width="100%" align="center" cellpadding="0" cellspacing="0"> -->
-					<table width="100%" class="board-listheader" cellpadding="0" cellspacing="0">
-						<tr>
-							<td>프로젝트</td>
-							<td colspan="3">내용</td>
-						</tr>
-						<tr>
-							<td>장소</td>
-							<td>소회의실</td>
-							<td>일시</td>
-							<td>2020-10-10</td>
-						</tr>
-						<tr>
-							<td>참석자</td>
-							<td colspan="3">김아무개,김둘리,이또치</td>
-						</tr>
-						<tr>
-							<td>회의 내용</td>
-							<td colspan="3"> 1.회의내용</td>
-						</tr>
-						<tr>
-							<td>결정사항</td>
-							<td colspan="3">결정사항</td>
-						</tr>
-						<tr>
-							<td>기타</td>
-							<td colspan="3">결정사항</td>
-						</tr>
+						<table width="100%" class="board-listheader" cellpadding="0" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="40%;">기안제목</th>
+									<!-- <th width="50%;">제목</th> -->
+									<th>기안자</th>
+									<th>결재상태</th>
+									<th>결재요청일</th>
+									<th>반려사유</th>
+								</tr>
+							</thead>
+							<c:if test="${not empty list}">
+						<c:forEach var="vo" items="${list}" varStatus="status">
+							<tr>
+								<td><a href="drift?apno=${vo.apno}&page=${currentPage}">
+								${vo.aptitle }</a></td>
+								<td>${vo.apdrafter }</td>
+								<td>
+								<c:choose>
+								<c:when test="${vo.apstate eq '2' }">반려</c:when>
+								<c:when test="${vo.apstate eq '1' }">결재완료</c:when>
+								<c:when test="${vo.apstate eq '0' }">결재대기</c:when>
+								</c:choose>
+								</td>
+								<td>${vo.apdate }</td>
+								<td>${vo.aprejection }</td>
+							</tr>
+							</c:forEach>
+							</c:if>
 
-					</table>
+						<tr>
+							<td colspan="6"><c:if test="${currentPage <= 1}">
+						&lt; &nbsp;
+						</c:if> <c:if test="${currentPage > 1}">ssss
+									<c:url var="dailyprev" value="/driftlist">
+										<c:param name="page" value="${currentPage-1}" />
+									</c:url>
+									<a href="${dailyprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+								</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
+								<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+									<!-- eq : == / ne : != -->
+									<c:if test="${p eq currentPage}">
+										<font color="red" size="4"><b>${p} &nbsp; &nbsp;
+												&nbsp;</b></font>
+									</c:if>
+									<c:if test="${p ne currentPage}">
+										<c:url var="dailychk" value="/driftlist">
+											<c:param name="page" value="${p}" />
+										</c:url>
+										<a href="${dailychk}">${p} &nbsp; &nbsp; &nbsp;</a>
+									</c:if>
+								</c:forEach> <c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
+							</c:if> <c:if test="${currentPage < maxPage}">
+									<c:url var="dailynext" value="/driftlist">
+										<c:param name="page" value="${currentPage+1}" />
+									</c:url>
+									<a href="${dailynext}">&nbsp; &gt;</a>
+								</c:if></td>
+						</tr>
+						</table>
 			</div>
-			<div class="apwrite">
-				<button type="button" id="apwritebtn" name="apwritebtn">반려</button>
-				<button type="button" id="apwritebtn" name="apwritebtn">결재완료</button>
-			</div>
+				<div class="apwritebtn">
+				<button type="button" id="apwritebtn" name="apwritebtn" onclick="window.location='driftform'">기안작성하기</button>
+				</div>
 
 		</div>
 	</div>

@@ -27,31 +27,50 @@
 			SELECT count(*) FROM APPROVAL
 			]]>
 	</select>
-		<!-- 페이지당 기안 조회 -->
+	<!-- 페이지당 기안 조회 -->
 	<select id="selectList" resultType="arraylist"
 		resultMap="resultApproval">
 		<![CDATA[
-		SELECT * FROM APPROVAL
+		SELECT * FROM APPROVAL ORDER BY apdate DESC
 		]]>
 	</select>
 
 	<!-- 기안 작성 -->
-	<insert id="insertApproval" flushCache="true" parameterType="string" statementType="PREPARED">
-		<![CDATA[
-		INSERT INTO APPROVAL(APNO,DNO,APPERSON,APFORMAT,APDRAFTER,
-			APTITLE,APPTITLE,APPLACE,APATTEND,APCONTENT,APDEC,APETC)
-			values(APNO_SE.NEXTVAL,#{DNO},#{APPERSON},#{APFORMAT},#{APDRAFTER},#{APDATE},#{APTITLE},#{APPTITLE},#{APPLACE},
-			#{APATTEND},#{APCONTENT},#{APDEC},#{APETC})
+	<insert id="insertApproval" flushCache="true"
+		parameterType="string" statementType="PREPARED">
+<![CDATA[
+		insert into approval(apno,dno,uno,
+							apstate,apperson,apformat,
+							apdrafter,apdate,aptitle,apptitle,
+							applace,apattend,apcontent,
+							apdec,apetc)
+			values(APNO_SE.NEXTVAL,#{dno},1,
+			default,#{apperson},#{apformat},
+			#{apdrafter},sysdate,#{aptitle},
+			#{apptitle},#{applace},#{apattend},
+			#{apcontent},#{apdec},#{apetc})
 		]]>
 	</insert>
-	
-	
-<!-- 	<select id="selectOne" parameterType="string" resultType="ApprovalDto">
+	<!-- 결제완료 -->
+	<update id="updatestate" flushCache="true" parameterType="string"
+		statementType="PREPARED">
+			<![CDATA[
+			update approval set apstate = 1 where apno = #{apno}
+			]]>
+	</update>
+	<!-- 반려사유 -->
+	<update id="updateaprejection" flushCache="true" parameterType="string"
+		statementType="PREPARED">
+			<![CDATA[
+			update approval set aprejection = #{aprejection},apstate = 2 where apno = #{apno} 
+			]]>
+	</update>
+	<select id="selectOne" parameterType="string"
+		resultType="ApprovalDto">
 		<![CDATA[
-		SELECT * FROM APPROVAL
-		WHERE aptitle = #{aptitle}
+		select * from approval where apno = #{apno}
 		]]>
-	</select> -->
+	</select>
 
 
 </mapper>

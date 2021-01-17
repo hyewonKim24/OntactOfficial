@@ -48,4 +48,5 @@ public class ApprovalDto {
 	private String apdrafter;
 	private String apptitle;
 	
+	
 }
