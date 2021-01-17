@@ -889,7 +889,7 @@
                        <form id="commonboardForm" method="post" action="${pageContext.request.contextPath}/project/commonboard/ins">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     	<%-- <input type="hidden" name="pno" id="pno" value="${pno}"> --%>
-                    	<input type="hidden" name="pno" id="pno" value="1">
+                    	<input type="hidden" name="pno" id="pno" value="22">
                             <div class="textbody">
                                 <div class="title">
                                     <input type="text" name="bname" class="title_detail" placeholder="제목 입력(선택)">

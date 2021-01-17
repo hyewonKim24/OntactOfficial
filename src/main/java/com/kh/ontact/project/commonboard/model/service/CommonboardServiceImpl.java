@@ -58,9 +58,9 @@ public class CommonboardServiceImpl implements CommonboardService{
 	}
 	
 	// 글+파일삭제
-	public void deleteCommonboard(String bno) throws Exception{
-		filesdao.deleteFiles(bno);
-		commonboardDao.deleteCommonboard(bno);
+	public void deleteCommonboard(int bno) throws Exception{
+//		filesdao.deleteFiles(bno);
+//		commonboardDao.deleteCommonboard(bno);
 		boardalldao.deleteBoardall(bno);
 	}
 	

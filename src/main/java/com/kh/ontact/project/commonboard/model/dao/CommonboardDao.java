@@ -22,7 +22,7 @@ public class CommonboardDao {
 	public void updateCommonboard(CommonboardDto dto) throws Exception{
 		sqlSession.update("Commonboard.updateCommonboard",dto);
 	}
-	public void deleteCommonboard(String bno) throws Exception{
+	public void deleteCommonboard(int bno) throws Exception{
 		sqlSession.delete("Commonboard.deleteCommonboard",bno);
 	}
 	//임시로 만든것

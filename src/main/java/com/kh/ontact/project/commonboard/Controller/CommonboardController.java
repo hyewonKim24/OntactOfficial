@@ -53,7 +53,7 @@ public class CommonboardController {
 		}
 		
 		@RequestMapping("/del")
-		public String deleteCommonboard(@RequestParam String bno) {
+		public String deleteCommonboard(@RequestParam int bno) {
 			 try {
 				commonboardservice.deleteCommonboard(bno);
 			} catch (Exception e) {

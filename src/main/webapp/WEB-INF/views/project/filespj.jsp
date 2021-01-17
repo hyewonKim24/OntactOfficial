@@ -340,10 +340,6 @@
                     <img src="${pageContext.request.contextPath}/resources/img/download-02.png" id="down_img">
                     <span class="title_down_btn btn">다운로드</span>
                 </a>
-            	<a class="title_down" style="cursor:default">
-                    <img src="${pageContext.request.contextPath}/resources/img/download-02.png" id="del_img">
-                    <span class="title_del_btn btn">선택삭제</span>
-                </a>
                 <a class="title_close" style="cursor:pointer">
                     <span class="title_close_btn btn">닫기</span>
                 </a>
@@ -351,6 +347,7 @@
         </div>
         <div class="contents">
             <div class="file_menu">
+            <input type="hidden" id="thispno" value="${pno }">
                 <ul>
                     <!-- <li class="file_format">
                         <div class="file_format_sub">파일 형태</div>
@@ -423,6 +420,7 @@
     
     <script>
     imageChange();
+    projectselec();
     let header = $("meta[name='_csrf_header']").attr("content");
     let token = $("meta[name='_csrf']").attr("content");
     
@@ -436,6 +434,18 @@
 	        }
 	    })
 	}	
+	// 프로젝트 색칠되게 하기
+	function projectselec(){
+		$(".project_list_sub").each(function(index){
+			let list = $(this);
+			let pno = $(this).find('.pno').val();
+			let thispno = $("#thispno").val();
+			if(pno===thispno){
+				list.css("background-color","#f5f5f5");
+			}
+		})
+	}
+    
     		//전체선택
     		var input=$("input[type=checkbox]");
     		var allLength = input.length;
@@ -517,9 +527,12 @@
 	        //파일 이름 정렬
 			$(".file_list_fname").click(function(){
 				let arrow = $(this).children().html();
+				let pno = $('#thispno').val();
+				console.log(pno);
 				if(arrow==="↓"){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fnameasc",
+						url: "${pageContext.request.contextPath}/files/pjfnameasc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -537,7 +550,8 @@
 					})
 				} else {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fnamedesc",
+						url: "${pageContext.request.contextPath}/files/pjfnamedesc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -559,9 +573,11 @@
 			//파일 사이즈 정렬
 			$(".file_list_fsize").click(function(){
 				let arrow = $(this).children().html();
+				let pno = $('#thispno').val();
 				if(arrow==="↓"){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fsizeasc",
+						url: "${pageContext.request.contextPath}/files/pjfsizeasc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -579,7 +595,8 @@
 					})
 				} else {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fsizedesc",
+						url: "${pageContext.request.contextPath}/files/pjfsizedesc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -601,9 +618,11 @@
 			//파일 등록자 정렬
 			$(".file_list_uname").click(function(){
 				let arrow = $(this).children().html();
+				let pno = $('#thispno').val();
 				if(arrow==="↓"){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/unameasc",
+						url: "${pageContext.request.contextPath}/files/pjunameasc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -621,7 +640,8 @@
 					})
 				} else {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/unamedesc",
+						url: "${pageContext.request.contextPath}/files/pjunamedesc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -643,9 +663,11 @@
 			//파일 등록자 정렬
 			$(".file_list_fdate").click(function(){
 				let arrow = $(this).children().html();
+				let pno = $('#thispno').val();
 				if(arrow==="↓"){
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fdateasc",
+						url: "${pageContext.request.contextPath}/files/pjfdateasc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -663,7 +685,8 @@
 					})
 				} else {
 					$.ajax({
-						url: "${pageContext.request.contextPath}/files/fdatedesc",
+						url: "${pageContext.request.contextPath}/files/pjfdatedesc",
+						data: {pno:pno},
 						type: "POST",
 						beforeSend: function (xhr) {
 							xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
@@ -721,6 +744,9 @@
         	//a.attr("href","${pageContext.request.contextPath}/files/pjlist?pno=" + pno);
 			//a.get(0).click();
         })
+        
+      
+        
 			
    </script>
 </body>
