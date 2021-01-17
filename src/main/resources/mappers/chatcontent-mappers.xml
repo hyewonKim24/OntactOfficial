@@ -14,26 +14,29 @@
 		<result property="chatfix" column="chatfix" />
 		<result property="chatimg" column="chatimg" />
 		<result property="chatfilepath" column="chatfilepath" />
- 	<collection property="usersdto" resultMap="resultUsers"></collection>
+ 		<collection property="usersdto" resultMap="resultUsers"></collection>
  </resultMap>
 	
  	<resultMap type="UsersDto" id="resultUsers">
 		<result property="uname" column="uname" />
 	</resultMap> 
 	
-<!-- 채팅방에 대화 가져오기 -->
+	<!-- 내 대화 가져오기(필요없음) -->
  	<select id="mylistChatContent" resultType="arrayList" resultMap="resultChatContent">
 		 <![CDATA[
  		 	select u.uname,u.uno,c.content,c.chatdate
 		 	from chatcontent c, users u 
 		 	where c.chatno=#{chatno} and c.uno=u.uno and c.uno in (#{uno})
+		 	order by chatdate
 		]]>
 	</select> 
+	<!-- 채팅방에 대화 가져오기 -->
  	<select id="otherlistChatContent" resultType="arrayList" resultMap="resultChatContent">
 		 <![CDATA[
  		 	select u.uname,u.uno,c.content,c.chatdate
 		 	from chatcontent c, users u 
 		 	where c.chatno=#{chatno} and c.uno=u.uno
+		 	order by chatdate
 		]]>
 	</select> 
 	

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Files">
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->
+	<resultMap type="FilesDto" id="resultFile">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="fname" column="fname"/>
+		<result property="pno" column="pno" />
+		<result property="bno" column="bno" />
+		<result property="uno" column="uno" />
+		<result property="fdate" column="fdate" />
+		<result property="fsize" column="fsize" />
+		<result property="fpath" column="fpath" />
+		<result property="imgsrc" column="imgsrc" />
+		<result property="foriginalname" column="foriginalname" />
+	</resultMap>
+	
+	<insert id="addFile" flushCache="true" parameterType="hashMap">
+		 <![CDATA[
+		 	insert into files(fname,pno,bno,uno,fsize,fpath,imgsrc,foriginalname) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno},#{fsize},#{fpath},#{imgsrc},#{foriginalname})
+		 ]]>
+	</insert>
+	
+	<select id="getFileboard" resultMap="resultFile">
+		select fname, bno, fpath, imgsrc, foriginalname from files where pno=#{pno}
+	</select>
+	
+	<delete id="deleteFiles">
+		delete from files where bno=#{bno}
+	</delete>
+	
+	<!-- 글 수정 -->
+	<delete id="deleteFile">
+		delete from files where fname=#{fname}
+	</delete>
+	<insert id="replaceFile" flushCache="true" parameterType="hashMap">
+		 insert into files(fname,pno,bno,uno,fsize,fpath,imgsrc,foriginalname) values (#{fname},#{pno},#{bno},#{uno},#{fsize},#{fpath},#{imgsrc},#{foriginalname})
+	</insert>
+	
+	<!-- ******파일 리스트 불러오기****** -->
+	<select id="filelist" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fdate desc
+	</select>
+	
+	<!-- 파일명 내림차순 -->
+	<select id="fnamedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by foriginalname desc
+	</select>
+	<!-- 파일명 오름차순 -->
+	<select id="fnameasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by foriginalname asc
+	</select>
+	<!-- 파일리스트 크기 내림차순 -->
+	<select id="fsizedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fsize desc
+	</select>
+	<!-- 파일리스트 크기 오름차순 -->
+	<select id="fsizeasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fsize asc
+	</select>
+	<!-- 등록자 내림차순 -->
+	<select id="unamedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by uname desc
+	</select>
+	<!-- 등록자 오름차순 -->
+	<select id="unameasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by uname asc
+	</select>
+	<!-- 최근 업로드순 내림차순 -->
+	<select id="fdatedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fdate desc
+	</select>
+	<!-- 최근 업로드순 오름차순 -->
+	<select id="fdateasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fdate asc
+	</select>
+	
+	
+	<resultMap type="FilesDto" id="resultfilelist">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="fname" column="fname"/>
+		<result property="pno" column="pno" />
+		<result property="bno" column="bno" />
+		<result property="uno" column="uno" />
+		<result property="fdate" column="fdate" />
+		<result property="fsize" column="fsize" />
+		<result property="fpath" column="fpath" />
+		<result property="imgsrc" column="imgsrc" />
+		<result property="foriginalname" column="foriginalname" />
+		<result property="pname" column="pname" />
+		<result property="uname" column="uname" />
+	</resultMap>
+	
+	<!-- ******프로젝트별 리스트 불러오기****** -->
+	<select id="pjfilelist" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by fdate desc
+	</select>
+	<!-- 파일명 내림차순 -->
+	<select id="pjfnamedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by foriginalname desc
+	</select>
+	<!-- 파일명 오름차순 -->
+	<select id="pjfnameasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by foriginalname asc
+	</select>
+	<!-- 파일리스트 크기 내림차순 -->
+	<select id="pjfsizedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by fsize desc
+	</select>
+	<!-- 파일리스트 크기 오름차순 -->
+	<select id="pjfsizeasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by fsize asc
+	</select>
+	<!-- 등록자 내림차순 -->
+	<select id="pjunamedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by uname desc
+	</select>
+	<!-- 등록자 오름차순 -->
+	<select id="pjunameasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by uname asc
+	</select>
+	<!-- 최근 업로드순 내림차순 -->
+	<select id="pjfdatedesc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by fdate desc
+	</select>
+	<!-- 최근 업로드순 오름차순 -->
+	<select id="pjfdateasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		inner join project p
+		on f.pno=p.pno
+		where p.pno=#{pno}
+		order by fdate asc
+	</select>
+</mapper>

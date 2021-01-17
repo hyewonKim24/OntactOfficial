@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Task">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->	
+
+	
+	<resultMap type="TaskDto" id="resultTask">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="bno" column="bno"/>
+	<result property="tstate" column="tstate" />
+	<result property="tstart" column="tstart" />
+	<result property="tend" column="tend" />
+	<result property="trate" column="trate" />
+	<result property="tpriority" column="tpriority" />
+	<result property="tmemo" column="tmemo" />
+	<result property="taskmanager" column="taskmanager" />
+	<result property="uname" column="uname" />
+	<result property="runame" column="runame" />
+	<collection property="boardalldto" resultMap="resultBoardAll"></collection>
+	</resultMap>
+	
+	<resultMap type="BoardAllDto" id="resultBoardAll">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="bno" column="bno"/>
+	<result property="pno" column="pno" />
+	<result property="uno" column="uno" />
+	<result property="bname" column="bname" />
+	<result property="bopen" column="bopen" />
+	<result property="btype" column="btype" />
+	<result property="bfirst" column="bfirst" />
+	<result property="bdate" column="bdate" />
+	</resultMap>
+	
+	<!-- boardAll 추가 -->
+	<insert id="insertTask">
+	 <![CDATA[
+		 insert into task values (bno_se.currval,#{tstate},#{tstart},#{tend},#{trate},#{tpriority},#{tmemo},#{taskmanager}) 
+		]]>
+	</insert>
+	
+	<select id="ListTaskAll" resultType="map" resultMap="resultTask">
+	<![CDATA[
+		select t.bno as bno,u.uname as uname,t.tstate as tstate,t.tstart as tstart,t.tend as tend,t.trate as trate,
+		t.tpriority as tpriority,t.tmemo as tmemo,t.taskmanager as taskmanager,b.pno as pno,
+		b.uno as uno,b.bname as bname,b.bopen as bopen,b.btype as btype,b.bfirst as bfirst,b.bdate as bdate
+		from boardall b
+		inner join task t
+		    on t.bno=b.bno
+		inner join users u
+		    on b.uno = u.uno
+		where b.pno=#{pno}
+		order by bno desc
+		]]>
+	</select>
+	<!-- 업무 타입 update -->
+	<update id="taskStateUpdate01" parameterType="int">
+	 <![CDATA[
+		 update task set tstate=1 where bno=#{bno}
+		]]>
+	</update>
+	<update id="taskStateUpdate02" parameterType="int">
+	 <![CDATA[
+		 update task set tstate=2 where bno=#{bno}
+		]]>
+	</update>
+	<update id="taskStateUpdate03" parameterType="int">
+	 <![CDATA[
+		 update task set tstate=3 where bno=#{bno}
+		]]>
+	</update>
+	<update id="taskStateUpdate04" parameterType="int">
+	 <![CDATA[
+		 update task set tstate=4 where bno=#{bno}
+		]]>
+	</update>
+	<!-- 업무 달성률 update -->
+	<update id="trateUpdate00" parameterType="int">
+	 <![CDATA[
+		 update task set trate=0 where bno=#{bno}
+		]]>
+	</update>
+	<update id="trateUpdate20" parameterType="int">
+	 <![CDATA[
+		 update task set trate=20 where bno=#{bno}
+		]]>
+	</update>
+	<update id="trateUpdate40" parameterType="int">
+	 <![CDATA[
+		 update task set trate=40 where bno=#{bno}
+		]]>
+	</update>
+	<update id="trateUpdate60" parameterType="int">
+	 <![CDATA[
+		 update task set trate=60 where bno=#{bno}
+		]]>
+	</update>
+	<update id="trateUpdate80" parameterType="int">
+	 <![CDATA[
+		 update task set trate=80 where bno=#{bno}
+		]]>
+	</update>
+	<update id="trateUpdate100" parameterType="int">
+	 <![CDATA[
+		 update task set trate=100 where bno=#{bno}
+		]]>
+	</update>
+	
+	<!-- 우선순위 update -->
+	<update id="tpriLv1" parameterType="int">
+	 <![CDATA[
+		 update task set tpriority='낮음' where bno=#{bno}
+		]]>
+	</update>
+	<update id="tpriLv2" parameterType="int">
+	 <![CDATA[
+		 update task set tpriority='보통' where bno=#{bno}
+		]]>
+	</update>
+	<update id="tpriLv3" parameterType="int">
+	 <![CDATA[
+		 update task set tpriority='높음' where bno=#{bno}
+		]]>
+	</update> 
+	<!--  담당자 update -->
+	<update id="tResUpdate" parameterType="TaskDto">
+	 <![CDATA[
+		 update task set taskmanager=#{taskmanager} where bno=#{bno}
+		]]>
+	</update> 
+	<!-- 날짜 update -->
+	<update id="tstartUpdate" parameterType="TaskDto">
+	 <![CDATA[
+		 update task set tstart=#{tstart} where bno=#{bno}
+		]]>
+	</update> 
+	<update id="tendUpdate" parameterType="TaskDto">
+	 <![CDATA[
+		 update task set tend=#{tend} where bno=#{bno}
+		]]>
+	</update> 
+	
+	<!-- 고정글 update -->
+	
+	<!-- task delete -->
+	<delete id="deleteTask" parameterType="int">
+	 <![CDATA[
+	 	delete from task where bno=#{bno}
+		]]>
+	</delete>
+	
+	<!-- 업무리포트 -->
+	<select id="taskStateList" resultType="int" parameterType="string">
+	 <![CDATA[
+		select count(t.tstate) as count from task t,boardall b
+		where b.pno=#{pno} and t.bno=b.bno group by t.tstate order by t.tstate asc
+		]]>
+	</select>
+	
+
+	
+</mapper>

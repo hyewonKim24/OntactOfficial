@@ -15,7 +15,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(echohandler, "/echo/{chatno}");
+		registry.addHandler(echohandler, "/echo/{chatno}").setAllowedOrigins("*");
 	}
 
 }

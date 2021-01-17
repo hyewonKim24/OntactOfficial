@@ -31,11 +31,11 @@ public class UploadFileUtils {
 		// 2. 파일 업로드 경로 설정
 		String rootPath = getRootPath(originalFileName, request); // 기본경로 추출(이미지 or 일반파일)
 		String datePath = getDatePath(rootPath); // 날짜 경로 추출, 날짜 폴더 생성
-
+		
 		// 3. 서버에 파일 저장
 		File target = new File(rootPath + datePath, uuidFileName); // 파일 객체 생성(파일 경로-기존 업로드경로+날짜별경로-, 파일명 받아 파일 객체 생성)
 		FileCopyUtils.copy(fileData, target); // 파일 객체에 파일 데이터 복사(임시 디렉토리에 업로드 된 파일을 지정된 디렉토리로 복사)
-
+		logger.info(rootPath+datePath);
 		// 4. 이미지 파일인 경우 썸네일이미지 생성
 		if (MediaUtils.getMediaType(originalFileName) != null) {
 			uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
@@ -82,11 +82,24 @@ public class UploadFileUtils {
 
 		return httpHeaders;
 	}
+	
+	// 파일 다운을 위한 HttpHeader 설정
+	public static HttpHeaders downHttpHeaders(String fileName) throws Exception {
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID 제거
+		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
+		// 파일명 한글 인코딩처리
+		httpHeaders.add("Content-Disposition",
+				"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+		return httpHeaders;
+	}
 
 	// 기본 경로 추출
 	public static String getRootPath(String fileName, HttpServletRequest request) {
 
-		String rootPath = "/resources/upload";
+		String rootPath = "resources/upload";
 		MediaType mediaType = MediaUtils.getMediaType(fileName); // 파일타입 확인
 		if (mediaType != null)
 			return request.getSession().getServletContext().getRealPath(rootPath + "/images"); // 이미지 파일 경로

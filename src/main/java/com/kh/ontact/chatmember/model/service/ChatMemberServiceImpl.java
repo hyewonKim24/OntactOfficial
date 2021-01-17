@@ -37,4 +37,19 @@ public class ChatMemberServiceImpl implements ChatMemberService{
 		return chatMemDao.chatUnoList(c);
 	}
 
+	@Override
+	public List<String> SearchChatno(ChatMemberDto c) throws Exception {
+		return chatMemDao.SearchChatno(c);
+	}
+
+	@Override
+	public int chatmemCount(String chatno) throws Exception {
+		return chatMemDao.chatmemCount(chatno);
+	}
+
+	@Override
+	public List<String> chatmemName(String chatno) throws Exception {
+		return chatMemDao.chatmemName(chatno);
+	}
+
 }

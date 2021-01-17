@@ -20,7 +20,16 @@
 		<result property="uauthority" column="uauthority" />
 		<result property="enabled" column="enabled" />
 		<result property="failure_cnt" column="failure_cnt"/>
+		<!-- <result property="dname" column="dname"/> -->
 	</resultMap>
+	
+	<resultMap type="ProjectMemberDto" id="resultProjectMember">
+		<id property="pno" column="pno" />
+		<result property="uno" column="uno" />
+		<result property="padmin" column="padmin" />
+		<result property="uname" column="uname" />
+	</resultMap>	
+	
 	
 	<!-- 비즈니스 가입 -->
 	<insert id="joinBusiness" flushCache="true">
@@ -70,7 +79,19 @@
 		update users set urank=#{urank} where uno=#{uno}
 		]]>
 	</update>
-
+	
+	<!-- 프로필 사진 업데이트 -->
+	<update id="updateProfile" flushCache="true" parameterType="hashMap">
+		<![CDATA[
+		update users set ufilename=#{ufilename}, ufilepath=#{ufilepath} where uno=#{uno}
+		]]>
+	</update>
+	<!-- 프로필 사진 없애기 -->
+	<update id="deleteProfile" flushCache="true">
+		<![CDATA[
+		update users set ufilename=null, ufilepath=null where uno=#{uno}
+		]]>
+	</update>
 	
 	<!-- ####### 여기부터 시큐리티 ####### -->
 	<!-- 유저 정보 가져오기 -->
@@ -132,7 +153,7 @@
 	
 	
 	
-	<!-- 아래부터  혜원 채팅 관련 코드  -->
+	<!-- 혜원 채팅 관련 코드  -->
 	
 	<!-- 해당 cno의 내 정보 빼고 users list 불러오기 -->
 	<select id="ChatUsersList" resultType="arraylist" resultMap="resultUsers" >
@@ -146,6 +167,20 @@
 		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
 		]]>
 	</select>
+
+	<!--  해당 프로젝트 유저 list 출력-->
+	<select id="listProjectMember" resultType="arraylist" resultMap="resultProjectMember">
+	 	<![CDATA[
+		select u.uname, u.uno, u.uemail, pm.padmin, p.pname 
+		from users u
+    	inner join project_member pm
+    	on pm.uno=u.uno
+    	inner join project p
+        on p.pno=#{pno}
+    	where pm.pno=#{pno}
+		]]>
+	</select>
+
 	
 	<!-- 혜림 조직도 부서별 직원리스트 조회 -->
 	<!-- 미분류 상태 -->
@@ -157,15 +192,17 @@
 		select uno, uname, urank, uemail from users where dno = null;
 	</select>
 	<!-- 부서로 분류된 후 -->
-	<select id="listCount" resultType="int">
-		select count(*) from users where dno = '1' 
+	<select id="listCount" resultType="int"> 
+		select count(*) 
+		from users u, dept d 
+		where u.dno = d.dno and d.dname = #{dname}
 	</select>
 	
 	<select id="selectOgUser"
 		resultMap="resultUsers">
 		select u.uno, d.dname, u.uname, u.urank, u.uemail 
 		from users u, dept d 
-		where u.dno = d.dno and d.dno = '1'
+		where u.dno = d.dno and d.dname = #{dname}
 	</select>
 	<!-- <resultMap type="map" id="resultUsersMap">
 		<id property="u_uno" column="uno" />

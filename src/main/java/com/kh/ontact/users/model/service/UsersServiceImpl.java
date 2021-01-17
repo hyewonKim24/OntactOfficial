@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.dept.model.dao.DeptDao;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
 import com.kh.ontact.users.exception.NotExistingCurlException;
@@ -53,7 +54,7 @@ public class UsersServiceImpl implements UsersService{
 			 throw new AlreadyExistingCurlException(regReq.getCurl()+" is duplicate id.");
 		}
 	}
-	
+	@Override
 	public String findCno(String curl) throws Exception {
 		return companydao.findCno(curl);
 	}
@@ -105,17 +106,31 @@ public class UsersServiceImpl implements UsersService{
 		return deptdao.dnameChk(dno);
 	}
 	// 마이페이지 정보 수정
+	@Override
 	public int updateUrank(HashMap<String, String> paramMap) throws Exception {
 		return usersDao.updateUrank(paramMap);
 	}
+	@Override
 	public int updateUtell(HashMap<String, String> paramMap) throws Exception {
 		return usersDao.updateUtell(paramMap);
 	}
+	@Override
 	public int updateCname(HashMap<String, String> paramMap) throws Exception {
 		return companydao.updateCname(paramMap);
 	}
+	@Override
 	public int updateCtel(HashMap<String, String> paramMap) throws Exception {
 		return companydao.updateCtel(paramMap);
+	}
+	// 마이페이지 프로필사진 변경
+	@Override
+	public int updateProfile(HashMap<String, String> paramMap) throws Exception{
+		return usersDao.updateProfile(paramMap);
+	}
+	// 마이페이지 프로필사진 삭제
+	@Override
+	public int deleteProfile(String uno) throws Exception{
+		return usersDao.deleteProfile(uno);
 	}
 	
 	
@@ -155,6 +170,12 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.ChatUserDetail(uemail);
 	}
 	
+	// 프로젝트 유저 리스트
+	@Override
+	public List<ProjectMemberDto> listProjectMember(String pno) throws Exception {
+		return usersDao.listProjectMember(pno);
+	}
+	
 	//조직도 - 혜림
 		public int listCountFirst() {
 			return usersDao.listCountFirst();
@@ -165,12 +186,13 @@ public class UsersServiceImpl implements UsersService{
 			public int listCount() {
 			return usersDao.listCount();
 		}
-		public List<UsersDto> selectOgUser(int startPage, int limit) {
-			return usersDao.selectOrgani(startPage, limit);
+		public List<UsersDto> selectOgUser(int startPage, int limit, String dname) {
+			return usersDao.selectOrgani(startPage, limit, dname);
 		}
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
+
 		
 	
 

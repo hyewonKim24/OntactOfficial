@@ -12,5 +12,8 @@ public interface ChatMemberService {
 	List<ChatDto> mychatlist(String uno) throws Exception;
 	List<ChatDto> searchchatlist(HashMap<String,String> map) throws Exception;
 	List<String> chatUnoList(ChatMemberDto c) throws Exception;
+	List<String> SearchChatno(ChatMemberDto c) throws Exception;
+	int chatmemCount(String chatno) throws Exception;
+	List<String> chatmemName(String chatno) throws Exception;
 
 }

@@ -24,16 +24,16 @@
 		<beans:property name="maxUploadSize" value="10485760"/> 
     	<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
-	<beans:bean id = "uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="G:\_z_es\spring\ontact\src\main\webapp\resources\profile">
-		</beans:constructor-arg>
-	</beans:bean>
 
    <!-- WebSocket -->
    <beans:bean id="echoHandler" class="com.kh.ontact.chat.controller.EchoHandler" />
    <websocket:handlers>
-      <websocket:mapping handler="echoHandler"
-         path="/echo" />
+      <websocket:mapping handler="echoHandler" path="/echo" />
+   </websocket:handlers>
+   <!-- WebSocket -->
+   <beans:bean id="alertHandler" class="com.kh.ontact.alert.controller.AlertHandler" />
+   <websocket:handlers>
+      <websocket:mapping handler="alertHandler" path="/alert" />
    </websocket:handlers>
 
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources 

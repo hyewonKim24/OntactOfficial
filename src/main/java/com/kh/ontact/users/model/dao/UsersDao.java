@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.model.dto.UsersDto;
 
 @Repository("usersDao")
@@ -47,6 +48,14 @@ public class UsersDao {
 	public int updateUrank(HashMap<String, String> paramMap) {
 		return sqlSession.update("Users.updateUrank",paramMap);
 	}
+	// 마이페이지 프로필 변경
+	public int updateProfile(HashMap<String, String> paramMap) {
+		return sqlSession.update("Users.updateProfile",paramMap);
+	}
+	// 마이페이지 프로필 삭제
+	public int deleteProfile(String uno) {
+		return sqlSession.update("Users.deleteProfile",uno);
+	}
 	
 	
 	
@@ -65,6 +74,12 @@ public class UsersDao {
 		return sqlSession.selectOne("Users.ChatUserDetail", uemail);
 	}
 	
+	//해당 프로젝트 유저 리스트
+	public List<ProjectMemberDto> listProjectMember(String pno) throws Exception{
+		return sqlSession.selectList("Users.listProjectMember", pno);
+	}
+	
+	
 	//혜림 - 조직도
 		//미분류그룹
 		public int listCountFirst() {
@@ -79,10 +94,10 @@ public class UsersDao {
 		public int listCount() {
 			return sqlSession.selectOne("Users.listCount");
 		}
-		public List<UsersDto> selectOrgani(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+		public List<UsersDto> selectOrgani(int startPage, int limit, String dname) { // 특정 페이지 단위의 게시글 조
 			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
-			return sqlSession.selectList("Users.selectOgUser",null,row);
+			return sqlSession.selectList("Users.selectOgUser",dname,row);
 		}
 		//부서 수정
 		public int updateDept(UsersDto u) { // 글 수정 

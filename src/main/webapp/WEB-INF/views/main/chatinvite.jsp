@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +26,17 @@
         .invite-search-wrap{
             width: 100%;
         }
+        
+        /*스크롤바 변경*/
+		::-webkit-scrollbar { width: 5px; height: 0px; }
+		/* 스크롤바의 width */
+		::-webkit-scrollbar-track { background-color: #f0f0f0; }
+		/* 스크롤바의 전체 배경색 */
+		::-webkit-scrollbar-thumb { 
+		    background: linear-gradient(to bottom, #505050, #505050); 
+		}
+		/* 스크롤바 색 */
+		::-webkit-scrollbar-button { display: none; }
         .search-box {
             margin: 10px 12px;
             height: 32px;
@@ -78,21 +90,100 @@
         }
 
         #invite-rs{
-            text-align: center;
             line-height: 40px;
         }
         .tel-my-img{
-        	margin:10px;
+	        line-height: 68px;
+	        width: 100px;
+	        display:inline-block;
+	        float:right;
         }
         .invite-names{
-        line-height: 68px;
-        width: 470px;
-        display:inline-block;
-        float:right;
+	        width: 300px;
+	        height:50px;
+	        line-height:20px;
+	        padding-top:5px;
+	        display:inline-block;
+        }
+        .invite-name{
+        	font-size:13px;
+        	color:#333333;
+        	font-weight: bold;
+        	padding-left:20px;
+        
+        }
+        .invite-email{
+        	font-size:10px;
+        	color:#787878;
+        }
+        .invite-check-wrap{
+	        line-height: 50px;
+	        width: 100px;
+	        display:inline-block;
+	        float:right;
+	        text-align: right;
+	    }
+	    
+	    .invite-check{
+	        border-radius: 70%;
+		    border: 1px solid #bebebe;
+		    width: 15px;
+		    height: 15px;
+		    cursor: pointer;
+        
+        }
+			
+        .invite-img-file{
+      		width: 30px;
+      		height: 30px;
+      		border-radius:15px !important;
+        }
+        .invite-img{
+        	line-height: 50px;
+        	padding:10px;
+        	vertical-align: middle;
+        	margin-left:10px;
         }
       
         .tel-other{
-                	vertical-align: middle;
+           vertical-align: middle;
+        }
+        #submit-wrap{
+            padding: 6px 0;
+		    border-top-color: #e8e8e8;
+		    border-top-width: 1px;
+		    border-top-style: solid;
+		    position: fixed;
+		    text-align: center;
+		    bottom:0px;
+		    background-color: #fff;
+		    height :50px;
+		    width: 100%;
+		    vertical-align: middle;
+        }
+        #resetbtn{
+        	width: 100px;
+        	height: 40px;
+        	border: 1px solid #432D73;
+        	color:#432D73;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #fff;
+        }
+        #submitbtn{
+            width: 100px;
+        	height: 40px;
+        	border: 1px solid #fff;
+        	color:#fff;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #432D73;
+        	margin-left:5px;
+        }
+        #inviteList-table tr:last-child td{
+        	margin-bottom:100px;
+        	background-color: black;
+        	display:none;
         }
     </style>
 </head>
@@ -127,30 +218,57 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                     </svg>
 
                 </span>
-                <input type="text" id="chat-search-input" placeholder="대화상대 검색">
+                <input type="text" id="chat-search-input" placeholder="이름, 이메일으로 대화상대 검색">
             </div>
+			<form action="${pageContext.request.contextPath}/chat/chatinvite" method="post" id="chatfrm1">
             <div id="invite-rs">
               <c:if test="${empty ulist }">
                	 검색 결과가 없습니다.
                	 </c:if>
-              <c:if test="${not empty ulist }">
-                <c:forEach items="${ulist}" var="list">
-												<form
-													action="${pageContext.request.contextPath}/chat/chatroomnew"
-													method="post" id="chatfrm1">
-													<div class="tel-other">
-														<input type="hidden" name="chatuname" value="${list.uname }">
-														<span class="invite-names"> ${list.uname }  <span>
-															
-														</span>
-														</span>
-													</div>
-												</form>
-											</c:forEach>
+						<sec:csrfInput /> 
+						<table id="inviteList-table">
+              			<c:if test="${not empty ulist }">
+              			  <c:forEach items="${ulist}" var="list" varStatus="e">
+							<tr class="tel-other">
+							<td class="invite-img">
+								<c:if test="${not empty list.ufilepath }">
+								<img src="${list.ufilepath }" class="invite-imgs"  width="30px" height="30px" >
+								</c:if>
+								<c:if test="${empty list.ufilepath}">
+								<img src="${pageContext.request.contextPath}/resources/img/user-3.png" 
+								  width="30px" height="30px" class="invite-img-file">
+								</c:if>
+								
+								</td>
+									<td class="invite-names"><input type="hidden" name="chatuname" value="${list.uname }">
+									<p class="invite-name">${list.uname}<br>
+									<span class="invite-email">${list.uemail}</span></p> </td>
+										<td class="invite-check-wrap">
+											<input type="checkbox" class="invite-check" id="check${e.count}" name="chatuno" value="${list.uno}"> 
+											<label for="check${e.count}"></label>
+										</td>
+							</tr>
+				</c:forEach>
                </c:if>
+						</table>
             </div>
+						<div id="submit-wrap">
+							<button type="reset" id="resetbtn">취소</button><button type="submit" id="submitbtn">대화방 초대</button>
+						</div>
+					</form>
         </div>
     </div>
-
+<script>
+	//상대방 검색기능
+	$("#chat-search-input").keyup(function(){
+		var c =$(this).val();
+		$("#inviteList-table tr").hide();
+		console.log("검색어:"+c);
+		var temp= $("#inviteList-table td:contains('"+c+"')");
+		console.log("temp"+temp);
+		
+		$(temp).parent().show();
+	});
+</script>
 </body>
 </html>

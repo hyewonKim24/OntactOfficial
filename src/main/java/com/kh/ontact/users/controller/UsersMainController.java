@@ -1,6 +1,5 @@
 package com.kh.ontact.users.controller;
 
-import java.io.File;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,23 +8,16 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ontact.commons.util.UploadFileUtils;
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
@@ -303,7 +295,7 @@ public class UsersMainController {
 		// 메일 세팅
 		String setFrom = "ssak.git@gmail.com";
 		String toMail = uemail;
-		String title = "회원가입 인증 이메일입니다.";
+		String title = "[ontact] 요청하신 임시 비밀번호 입니다.";
 		String content = "";
 		content += "<div align='center' style='border 1px solid black; font-family:verdana'>";
 		content += "<h3 style='color:blue;'><strong>";
@@ -331,6 +323,7 @@ public class UsersMainController {
 			String inputPass = tempwd;
 			String pwd = pwdEncoder.encode(inputPass);
 			userdto.setUpwd(pwd);
+			System.out.println("임시비번임~ : "+inputPass);
 			System.out.println("암호화된비밀번호:" + userdto.getUpwd());
 			// 비밀번호 업데이트
 			usersService.updateTmppwd(userdto);
@@ -370,25 +363,57 @@ public class UsersMainController {
 		return mv;
 	}
 
-	// 프로필 사진 등록 요청
-//	@RequestMapping(value = "/user/mypage/mypicture", method = RequestMethod.POST)
-//	public String photoUpload(@RequestParam(name="image", required = false) MultipartFile report, HttpServletRequest request, ModelAndView mv) {
-//		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-//				.getPrincipal();
-//		String path = null;
-//		try {
-//			if(report!=null&&!report.equals("")) {
-//				saveFile(report, request);
-//				path = user.getUfilepath();
-//				System.out.println(path);
-//				System.out.println(user.getUfilename());
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "users/myinfo";
-//	}
+	// 프로필 업데이트
+	@RequestMapping(value = "/user/mypage/profile", method = RequestMethod.POST)
+	public String updateProfile(@RequestParam String ufilename, @RequestParam String ufilepath) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String uno = user.getUno();
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		try {
+			paramMap.put("uno", uno);
+			paramMap.put("ufilename", ufilename);
+			paramMap.put("ufilepath", ufilepath);
+			usersService.updateProfile(paramMap);
+			user.setUfilepath(ufilepath);
+			user.setUfilename(ufilename);
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return "redirect:/user/mypage/detail";
+	}
 
+	// 프로필사진 삭제 (DB 삭제)
+	@RequestMapping(value = "user/mypage/delProfile", method = RequestMethod.POST)
+	public String deleteProfile() {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String uno = user.getUno();
+		try {
+			usersService.deleteProfile(uno);
+			user.setUfilepath("");
+			user.setUfilename("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/user/mypage/detail";
+	}
+
+	// 프로필사진 삭제 (사진 삭제)
+	@RequestMapping(value = "user/mypage/delPreviewProfile", method = RequestMethod.POST)
+	public String deleteFile(@RequestParam(value = "ufilename") String fileName, HttpServletRequest request) {
+		//ResponseEntity<String> entity = null;
+		try {
+			UploadFileUtils.deleteFile(fileName, request);
+			// deleteFile()은 이미지 타입 여부를 판별함. 이미지 파일일 경우 원본 이미지 삭제/썸네일 삭제, 일반파일일 경우 파일 삭제처리
+			//entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
+			logger.info("들어옴"+fileName+"나는야 유저");
+		} catch (Exception e) {
+			e.printStackTrace();
+			//entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return "redirect:/user/mypage/detail";
+	}
 
 	// 마이페이지 - 계정정보 업데이트
 	@ResponseBody

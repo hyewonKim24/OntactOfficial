@@ -206,7 +206,23 @@ input:focus {
 	margin-top: 55px;
 	background-color: #e7e7e7;
 }
+/* 채팅 참여자 */
 
+.profileImg {
+    width: 40px;
+    float: left;
+    margin-right: 25px;
+    line-height: 40px;
+	display: block;
+	padding:5px;
+}
+.chat-mem-list{
+	width : 290px;
+	height : 50px;
+	line-height: 40px;
+	display: block;
+	padding:5px;
+}
 /* 채팅 내용 */
 .mycontent{
 	width: 450px;
@@ -266,6 +282,7 @@ input:focus {
     line-height: 1.5;
     font-size: 14px;
     position: relative;
+    margin-top:3px;
 }
 </style>
 <script>
@@ -360,8 +377,9 @@ input:focus {
 			//websocket을 지정한 URL로 연결
 			var chatno=$("#chatno").val();
 			console.log("chatno:"+chatno)
-//			var sock =new WebSocket("ws://" + location.host + "/ontact/echo/"+chatno);
+	//		var sock =new WebSocket("ws://" + location.host + "/ontact/echo/"+chatno);
 			var sock =new WebSocket("ws://localhost:8090/ontact/echo/"+chatno);
+			console.log(sock+"소켓");
 			//websocket 서버에서 메시지를 보내면 자동으로 실행된다.
 			sock.onmessage = onMessage;
 			//websocket 과 연결을 끊고 싶을때 실행하는 메소드
@@ -403,6 +421,7 @@ input:focus {
 				var msg = $("#message").val();
 				var chatno = $("#chatno").val();
 				sock.send(chatno+","+msg);
+				console.log("메시지 보내는 곳");
 				//메시지 지우기 
 				$("#message").val('');
 				
@@ -567,14 +586,18 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 <polygon points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
 	29.698,31.112 31.112,29.698 16.97,15.556 " /></svg>
 		</a>
-		<div class="chat-moa-sub">
+		<!-- <div class="chat-moa-sub">
 
 			<p class="chat-moa-title">모아보기</p>
 			<p>
 				<span>이미지</span> <span>링크</span>
 			</p>
-		</div>
+		</div> -->
 		<p class="chat-moa-title">채팅 참여자</p>
+		<c:forEach items="${chatmemList }" var="clist">
+		<div class="chat-mem-list">
+			<span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>${clist}</div>
+		</c:forEach>
 
 
 	</div>

@@ -29,9 +29,12 @@ public class ChatServiceImpl implements ChatService{
 		return chatno;
 	}
 
+	//프로젝트 채팅방 insert하고 chatno 알아나오기
 	@Override
-	public int insertProChat(ChatDto c) throws Exception{
-		return chatDao.insertProChat(c);
+	public String insertProChat(ChatDto c) throws Exception{
+		int rs= chatDao.insertProChat(c);
+		String chatno =chatDao.chatnoSelect();
+		return chatno;
 	}
 
 	@Override
@@ -47,6 +50,11 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public String selectchatname(String chatno) throws Exception {
 		return chatDao.selectchatname(chatno);
+	}
+
+	@Override
+	public String searchProChat(String pno) throws Exception {
+		return chatDao.searchProChat(pno);
 	}
 	
 

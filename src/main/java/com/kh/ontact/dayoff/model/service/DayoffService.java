@@ -7,7 +7,7 @@ import com.kh.ontact.dayoff.model.dto.DayoffDto;
 
 public interface DayoffService {
 	
-	public int allListCount();
+	public int allListCount(String uno);
 	
 	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno);
 	

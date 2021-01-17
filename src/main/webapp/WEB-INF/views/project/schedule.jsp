@@ -30,6 +30,8 @@ body {
 	font-size: 14px;
 	font-family: Noto Sans KR;
 	line-height: 1.15;
+	color: #111111;
+    background-color: rgb(242, 242, 242);
 }
 
 .header {
@@ -50,47 +52,40 @@ body {
 	height: 100%;
 	margin: 0 auto;
 }
-/* 사이드메뉴 */
+/* 사이드 체크박스 */
 .sidenav {
 	position: relative;
 	width: 210px;
 	height: 100%;
 	float: left;
 }
-
 .sidenav ul, .sidenav ul li a {
 	display: block;
-	color: black;
+	color: #111111;
 }
-
-.sidenav ul li {
+.sidenav .ttl {
 	display: block;
-	font-size: 16px;
+    height: 45px;
+	font-size: 14px;
+    line-height: 45px;
+    color: #787878;
 }
-
-.sidenav ul ul {
-	display: none;
+.sidenav .menu {
+	display: block;
+    height: 40px;
+	font-size: 14px;
+    line-height:40px;
 }
-
-.sidenav>ul>li>a {
-	padding: 19px 20px;
-	z-index: 2;
-	cursor: pointer;
-	font-weight: 700;
-	text-decoration: none;
+.sidenav ul li input{
+    margin-right: 8px;
+    vertical-align: middle;
 }
-
-.sidenav ul ul li {
-	background-color: #e7e7e7;
-}
-
-.sidenav ul ul li a {
-	cursor: pointer;
-	padding: 10px 0;
-	padding-left: 30px;
-	z-index: 1;
-	text-decoration: none;
-	font-size: 13px;
+.sidenav input[type="checkbox"]{
+    width : 18px; 
+    height: 18px; 
+    overflow:hidden; 
+    border:0;
+    background-color:black;
 }
 /* 콘텐츠 */
 .contents {
@@ -98,19 +93,16 @@ body {
 	width: 970px;
 	height: 860px;
 	left: 210px;
-	padding: 40px 0 40px 40px;
-	border-left: 1px solid #e7e7e7;
 	box-sizing: border-box;
 }
 
 .conTitle {
-	width: 930px;
-	height: 40px;
-	line-height: 40px;
-	padding-bottom: 20px;
-	font-size: 32px;
-	border-bottom: 1px solid #e7e7e7;
+	width: 850px;
+	height: 45px;
+	line-height: 45px;
+	font-size: 18px;
 	text-align: left;
+    float: left;
 }
 
 #calendar {
@@ -124,7 +116,7 @@ body {
 /* 출근, 퇴근, qr 스캐너 모달 */
 #gomodal {
 	display: none;
-	position: ;
+	position: absolute;
 	width: 100%;
 	height: 0px;
 	float: left;
@@ -175,9 +167,7 @@ body {
 						var instances = M.Modal.init(elems); */
 
 						var calendarEl = document.getElementById('calendar');
-						var calendar = new FullCalendar.Calendar(
-								calendarEl,
-								{
+						var calendar = new FullCalendar.Calendar(calendarEl,{
 									height : 600,
 									plugins : [ 'interaction', 'dayGrid' ],
 									defaultView : 'dayGridMonth',
@@ -199,36 +189,43 @@ body {
 										var eventObj = info.event;
 										$.ajax({
 											contentType : 'application/json',
-											url : '${pageContext.request.contextPath}/dayoff/calendar',
+											url : '${pageContext.request.contextPath}/schedule/list',
 											dataType : 'json',
 											success : function(result) {
 												var events = [];
-												
 												if (result != null) {
 													$.each(result, function(index, element) {
 														//모달생성
 												        $(".fc-event-container").click(function(){
 												        	$("#gomodal").attr("style", "display:block");
-												        	var uname = element.uname; 
+												        	var bname = element.bname;
+												        	var uname = element.uname;
+												        	ㅍㅁ
+												        	for (var i = 0; i < uname.length; i++) {
+																console.log("이름 확인 : "+uname[i]);
+															}
+												        		/* console.log(index[0].uname); */
+												        	
+												        	
+												        	console.log("확인 render" + element.uname + "," + bname);
 															var startdate = moment(eventObj.start).format('YYYY-MM-DD');
 															var enddate = moment(eventObj.end).format('YYYY-MM-DD');
 															console.log("시작일" + startdate);
-															$(".modal_content #title").text(eventObj.title);
+															/* $(".modal_content #title").text(eventObj.title);
 															$(".modal_content #pname").text(eventObj.title);
 															$(".modal_content #startdate").text(startdate);
-															$(".modal_content #enddate").text(enddate);
-															$(".modal_content #people").text(uname);
-															$(".modal_content #url").text(uname);
+															$(".modal_content #enddate").text(enddate); */
+															
+															for (var i = 0; i < index.length; i++) {
+																$(".modal_content").append('<input type="text" name="uname" value="'+ index[i].uname + '">'+index[i].uname+'<br>');
+															}
+															/* $(".modal_content #url").text(uname); */
 												        });
 														/* $("#successModal").modal("show"); */
-														
-														
 														$(".close").click(function(){
 													        $("#gomodal").attr("style", "display:none");
 													        });
 														/* $(".modal_content .modalTitle").text(eventObj.start); */
-														
-														
 														/* if (eventObj.url) { 
 														 	alert('Clicked '+ eventObj.title + '.\n'
 																	+ 'Will open ' + eventObj.url + ' in a new tab');
@@ -253,33 +250,25 @@ body {
 														var events = [];
 														if (result != null) {
 															$.each(result, function(index, element) {
-																var enddate = element.offend;
-																var startdate = element.offstart;
-																var realmname = element.uname;
-																var description = element.uname + "/" + element.offreason;
-																var reason = "${pageContext.request.contextPath}/commute/dailylist";
-																	console.log("이"+ reason);
-																var array1 = enddate.replace("월",",");
-																var array2 = startdate.replace("월",",");
-																	console.log("날짜"+ array1 + ", " + array2);
-																/* if(enddate==null){
-																	enddate=element.offstart;
-																} */
-																var startdate = moment(array2).format('YYYY-MM-DD');
-																var enddate = moment(array1).format('YYYY-MM-DD');
-																	console.log("날짜" + startdate + "," + enddate);
-																	console.log("이름" + realmname);
+																var sstart = element.sstart;
+																var send = element.send;
+																var bname = element.bname;
+																
+																var startdate = moment(sstart).format('YYYY-MM-DD');
+																var enddate = moment(send).format('YYYY-MM-DD'); 
+																
+																var aaa = startdate + "/" + bname;
+																console.log("확인 event" + startdate + "," + bname);
 																events.push({
-																		title : description,
+																		title : aaa,
 																		start : startdate,
 																		end : enddate,
-																		/* url : reason, */
 																		/* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
 																		color:"#ff3399"   */
 																}); //.push()
-																console.log(event);
+																/* console.log(event); */
 															}); //.each()
-															console.log(events);
+															/* console.log(events); */
 														}//if end  
 														successCallback(events);
 													}//success: function end                          
@@ -298,85 +287,79 @@ body {
 	<div class="main">
 		<div class="sidenav">
 			<ul>
-				<li class="menu"><a href="">근태 관리</a>
-					<ul class="hide">
-						<li><a
-							href="${pageContext.request.contextPath}/commute/dailylist">출퇴근
-								관리</a></li>
-						<li><a href="">월 근무내역</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/overwork/owlist">시간외
-								근무신청</a></li>
-					</ul></li>
-				<li class="menu"><a href="">휴가 관리</a>
-					<ul class="hide">
-						<li><a
-							href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가
-								현황</a></li>
-					</ul></li>
-				<li><a href="">조직도</a></li>
+				<li class="menu">일정</li>
+				<li class="menu"><input type="checkbox" name="sche" value="0" onclick="checkOneS(this)">전체 일정</li>
+				<li class="menu"><input type="checkbox" name="sche" value="1" onclick="checkOneS(this)">내가 등록한 일정</li>
+				<li class="menu"><input type="checkbox" name="sche" value="2" onclick="checkOneS(this)">초대받은 일정</li>
+				
+				<li class="menu">업무</li>
+				<li class="menu"><input type="checkbox" name="task" value="3" onclick="checkOneT(this)">전체 업무</li>
+				<li class="menu"><input type="checkbox" name="task" value="4" onclick="checkOneT(this)">내가 등록한 업무</li>
+				<li class="menu"><input type="checkbox" name="task" value="5" onclick="checkOneT(this)">요청 업무</li>
 			</ul>
 		</div>
 		<div class="contents">
 			<div class="article">
-				<div class="conTitle">휴가현황</div>
+				<div class="conTitle">일정 : 프로젝트 이름</div>
+				<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" onclick="location.href=''">닫기</button>
+				<!-- 달력 -->
 				<div id='calendar'></div>
-				
+				<!-- 달력 모달 -->
 				<div id="gomodal">
 				<div class="modal_layer"></div>
 				<div class="modal_content">
-					<div id="title"></div>
+					<!-- <div id="title"></div>
 					<div id="pname"></div>
 					<div id="startdate"></div>
 					<div id="enddate"></div>
 					<div id="enddate"></div>
 					<div id="people"></div>
-					<div id="url"><a href=""></a></div>
-					<button type="button" class="close" data-dismiss="modal"
+					<div id="url"><a href=""></a></div> -->
+					<!-- <button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
-						</button>
+						</button> -->
 				</div>
 			</div>	
 			</div>
 			
 		</div>
-
-		<!-- <div id="test"></div>
-		<div class="modal fade" id="successModal" tabindex="-1" role="dialog"
-			aria-labelledby="successModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<p></p>
-					</div>
-				</div>
-			</div>
-		</div> -->
-			<script>
-				/* 세로드롭다운 */
-				$('.sidenav li.menu>a').on('click', function() {
-					$(this).removeAttr('href');
-					var element = $(this).parent('li');
-					if (element.hasClass('open')) {
-						element.removeClass('open');
-						element.find('li').removeClass('open');
-						element.find('ul').slideUp();
-					} else {
-						element.addClass('open');
-						element.children('ul').slideDown();
-						element.siblings('li').children('ul').slideUp();
-						element.siblings('li').removeClass('open');
-						element.siblings('li').find('li').removeClass('open');
-						element.siblings('li').find('ul').slideUp();
-					}
-				});
-			</script>
+	</div>
+	<script>
+		function checkOneS(a){
+			var obj1 = document.getElementsByName("sche");
+			for (var i = 0; i < obj1.length; i++) {
+				if (obj1[i] != a) {
+					obj1[i].checked = false;
+				}
+			}
+		}
+		function checkOneT(a){
+			var obj2 = document.getElementsByName("task");
+			for (var i = 0; i < obj2.length; i++) {
+				if (obj2[i] != a) {
+					obj2[i].checked = false;
+				}
+			}
+		}
+		/* $('input[type='checkbox']') */
+		function checkboxArr() {
+		    var checkArr = [];     // 배열 초기화
+		    $("input[type='checkbox']:checked").each(function(i) {
+		        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
+		        console.log("뭐야 : " + checkArr);
+		    })
+		 
+		    $.ajax({
+		        url: 'test_check'
+		        , type: 'post'
+		        , dataType: 'text'
+		        , data: {
+		            valueArrTest: checkArr
+		        }
+		    });
+		}
+	</script>
 </body>
 </html>

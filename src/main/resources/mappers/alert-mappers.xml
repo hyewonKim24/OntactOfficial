@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace는 dao에서 호출할때 사용함. -->
+<mapper namespace="Alert">
+
+	<!-- id에는 사용할 임의의 이름을 기술, type에는 VO의 DTO명을 적어준다. -->	
+	<resultMap type="AlertDto" id="resultAlert">
+	<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+	<id property="pno" column="pno"/>
+	<result property="rno" column="rno" />
+	<result property="uno" column="uno" />
+	<result property="bno" column="bno" />
+	<result property="acount" column="acount" />
+	<result property="adate" column="adate" />
+	<result property="pname" column="pname" />
+	</resultMap>
+	
+	<insert id="alertInsert">
+	 <![CDATA[
+		 insert into alert(uno,pno,bno,acount,acontent) values (#{uno},#{pno},bno_se.currval,1,#{acontent})
+	]]>
+	</insert>
+	
+	<delete id="deleteAll">
+	 <![CDATA[
+		delete from alert where bno=#{bno}
+	]]>
+	</delete>
+	
+	<!-- 글 알림 개수 -->
+	<select id="alertCount" resultType="int">
+	 <![CDATA[
+		select count(*) as count from alert where uno=#{uno} and acount=1
+	]]>
+	</select>
+	
+	<!-- 내 uno 미확인 알림 리스트 -->
+	<select id="alertNotList" resultMap="resultAlert">
+	 <![CDATA[
+		select a.adate as adate ,a.acontent as acontent,p.pname as pname,p.pno as pno,a.bno as bno from alert a
+	    inner join project p
+	    on p.pno=a.pno
+	    where a.uno=#{uno} and a.acount=1
+	    order by adate desc
+	]]>
+	</select>
+	<!-- 내 uno 전체 알림 리스트 -->
+	<select id="alertAllList" resultMap="resultAlert">
+	 <![CDATA[
+		select a.adate as adate ,a.acontent as acontent,p.pname as pname,p.pno as pno,a.bno as bno from alert a
+	    inner join project p
+	    on p.pno=a.pno
+	    where a.uno=#{uno}
+	    order by adate desc
+	]]>
+	</select>
+	
+	<!-- 알림 전체 읽음 -->
+	<update id="alertAllRead" parameterType="string">
+	 <![CDATA[
+		update alert set acount=0 where uno=#{uno}
+	]]>
+	</update>
+</mapper>

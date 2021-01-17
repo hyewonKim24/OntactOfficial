@@ -37,16 +37,16 @@ public class UserdayoffController {
 			System.out.println("데이오프 리스트진입");
 			
 		try {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String uno=userdetail.getUno();
+			System.out.println("세션값확인 : " + uno);
+			//
 			int currentPage = page;
-//			 한 페이지당 출력할 목록 갯수, 페이징
-			int listCount = dayoffServ.allListCount();
+///			 한 페이지당 출력할 목록 갯수, 페이징
+			int listCount = dayoffServ.allListCount(uno);
+			System.out.println(listCount);
 			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
 			
-			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-		    String uno=userdetail.getUno();
-		    System.out.println("세션값확인 : " + uno);
-		    //
-			//검색
 			String start =  startdate;
 			String end = enddate;
 			
@@ -57,6 +57,7 @@ public class UserdayoffController {
 			if (startdate == null && enddate == null) {
 				System.out.println("if 문으로 들어옴");
 				mv.addObject("list", dayoffServ.selectDayoff(currentPage, LIMIT, uno));
+				System.out.println(dayoffServ.selectDayoff(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
@@ -98,7 +99,7 @@ public class UserdayoffController {
 		    System.out.println("세션값확인 : " + uno);
 		    d.setUno(uno);
 		    d.setDno(dno);
-			
+			//
 		    dayoffServ.insertDayoff(d);
 			rttr.addFlashAttribute("message", "success");
 		}catch(Exception e) {
@@ -147,8 +148,8 @@ public class UserdayoffController {
 		
 		System.out.println("캘린더 진입2");
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-//		String dno=userdetail.getDno(); // 해당 부서의 휴가현황만 볼 수 있도록
-		String dno = "1";
+		String dno=userdetail.getDno(); // 해당 부서의 휴가현황만 볼 수 있도록
+//		String dno = "1";
 		System.out.println("세션 값 확인" + dno);
 
 	    Gson gson = new Gson();

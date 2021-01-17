@@ -22,5 +22,16 @@
  		<typeAlias type="com.kh.ontact.projectDept.model.dto.ProjectDeptDto" alias="ProjectDeptDto" />
  		<typeAlias type="com.kh.ontact.dept.model.dto.DeptDto" alias="DeptDto" />
  		<typeAlias type="com.kh.ontact.approval.model.dto.ApprovalDto" alias="ApprovalDto" />
+ 		
+
+ 		<typeAlias type="com.kh.ontact.project.commonboard.model.dto.CommonboardDto" alias="CommonboardDto" />
+ 		<typeAlias type="com.kh.ontact.project.files.model.dto.FilesDto" alias="FilesDto" />
+  		 <typeAlias type="com.kh.ontact.project.boardall.model.dto.BoardAllDto" alias="BoardAllDto" />
+ 		<typeAlias type="com.kh.ontact.project.task.model.dto.TaskDto" alias="TaskDto" /> 
+ 		<typeAlias type="com.kh.ontact.project.reply.model.dto.ReplyDto" alias="ReplyDto" /> 
+ 		<typeAlias type="com.kh.ontact.alert.model.dto.AlertDto" alias="AlertDto" /> 
+
+ 		<typeAlias type="com.kh.ontact.project.schedule.model.dto.ScheduleDto" alias="ScheduleDto" />
+
 	</typeAliases>
 </configuration>

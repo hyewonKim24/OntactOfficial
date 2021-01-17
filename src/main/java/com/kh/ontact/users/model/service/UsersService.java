@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ontact.company.model.dto.CompanyDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.util.GuestRegisterRequest;
 import com.kh.ontact.users.util.PwdRegisterRequest;
@@ -23,6 +24,8 @@ public interface UsersService {
 	public int updateUtell(HashMap<String, String> paramMap) throws Exception;
 	public int updateCname(HashMap<String, String> paramMap) throws Exception;
 	public int updateCtel(HashMap<String, String> paramMap) throws Exception;
+	public int updateProfile(HashMap<String, String> paramMap) throws Exception;
+	public int deleteProfile(String uno) throws Exception;
 	
 	//시큐리티
 	void countFailure(String username);
@@ -35,11 +38,15 @@ public interface UsersService {
 	List<UsersDto> ChatUsersList(UsersDto dto) throws Exception;
 	UsersDto ChatUserDetail(String uemail) throws Exception	;
 	
+	//프로젝트
+	List<ProjectMemberDto> listProjectMember(String pno) throws Exception;
+	
+	
 	// 조직도
 	public int listCountFirst();
 	public List<UsersDto> selectOgFirst(int startPage, int limit);
 	public int listCount();
-	public List<UsersDto> selectOgUser(int startPage, int limit);
+	public List<UsersDto> selectOgUser(int startPage, int limit, String dname);
 	public int updateDept(UsersDto u); 
 		
 }

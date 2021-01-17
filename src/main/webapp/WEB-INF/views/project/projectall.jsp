@@ -429,7 +429,8 @@ body {
 					<!-- 프로젝트가 있는 경우 -->
 					<c:if test="${!empty listpj}">
 						<c:forEach var="listpj" items="${listpj}" varStatus="status">
-							<a href="#">
+							<!-- project Detail -->
+							<a href="${pageContext.request.contextPath}/project/projectDetail?pno=${listpj.pno}">
 								<div id="pj_project" class="pj_box">
 									<div>${listpj.pname}</div>
 									<div class="pj_team_list">

@@ -217,6 +217,17 @@ input:focus {
 	overflow: scroll;
 }
 
+#all-alarm-scroll-box{
+	width:380px;
+	height:445px;
+	overflow: scroll;
+}
+#alarm-scroll-box{
+	width:380px;
+	height:445px;
+	overflow: scroll;
+}
+
 .alarm-wrap {
 	width: 380px;
 	height: 550px;
@@ -314,6 +325,12 @@ input:focus {
 	width: 315px;
 	line-height: 25px;
 }
+.alarm-all-view{
+	background: none;
+	border:none;
+	font-size:13px;
+	font-weight: bold;
+}
 .chat-search {
 	padding-top: 12px;
 	vertical-align: middle;
@@ -343,7 +360,7 @@ input:focus {
 	text-align: center;
 }
 
-.chat-content-wrap {
+.chatlist-td{
 	clear:both;
 	display: inline-block;
 	float: right;
@@ -351,11 +368,34 @@ input:focus {
 	width: 300px;
 	padding-top:10px;
 }
+.alarmlist-td{
+	clear:both;
+	display: inline-block;
+	float: right;
+	height: 50px;
+	width: 300px;
+	padding-top:10px;
+}
+.alarm-name{
+	border-bottom: 1px solid #e7e7e7;
+	height: 75px;
+}
+.alarmlist-name{
+	font-size:14px;
+	font-weight: bold;
+	padding-top:10px;
+	color:#333333;
+}
+.alarmlist-content{
+	font-size:11px;
+	color:#787878;
+}
 
 .chat-name {
 	border-bottom: 1px solid #e7e7e7;
 	height: 75px;
 }
+
 
 .chat-users-icon {
 	margin: 20px;
@@ -405,7 +445,11 @@ input:focus {
 	padding:3px;
 	
 }
-
+/* 알림 모달 */
+.alarmlist-td{
+	line-height: 20px;
+	width: 300px;
+}
 
 /* 프로필 */
 #h-profile-top {
@@ -538,25 +582,23 @@ input:focus {
 
 	$(document).ready(function() {
 		var timerID;
-		allChatAlert();
-		
+ 		allAlertcount(); 
 		//DB에 채팅알림 전체 수 
 		function allChatAlert() {
 		$.ajax({
 			url: "${pageContext.request.contextPath}/chatalertall",
+			async : false,
 			success:function(object){
+				console.log("채팅알림수:"+object);
 				$("#chat-alarm-count").html('');
 				$("#chat-alarm-counts").html(''); 
-				console.log(object+"성공");
 				if(object==0 || object==null){
-				console.log(object+"없음");
 				$("#chat-alarm-count").remove();
 				$("#chat-alarm-counts").remove(); 
 				}else{
 					if(object>9){
 						$("#chat-alarm-count").remove();
 						$("#chat-alarm-counts").append(object);
-						console.log(object+"성공");
 					}else{
 						$("#chat-alarm-counts").remove(); 
 						$("#chat-alarm-count").append(object);
@@ -567,10 +609,45 @@ input:focus {
 				console.log("실패");
 			}
 		});
-				setTimeout("allChatAlert()", 2000); 
+				setTimeout(allChatAlert, 2000); 
 		}
 		//	timerID = setInterval("allChatAlert()", 1000); // 2초 단위로 갱신 처리
-
+	
+		
+		// 글 작성 알림 카운트 ajax 추가
+ 		function allAlertcount(){ 
+		$.ajax({
+					url: "${pageContext.request.contextPath}/alertcount",
+					async : false,
+					success:function(data){
+						console.log("알림추가")
+						$("#alarm-count").html('');
+						$("#alarm-counts").html('');
+						if(data==0 || data==null){
+							$("#alarm-count").remove();
+							$("#alarm-counts").remove();
+						}else{
+							if(data>9){
+								$("#alarm-count").remove();
+								$("#alarm-counts").append(data);
+							}else{
+								$("#alarm-count").append(data);
+								$("#alarm-counts").remove(); 
+							}			
+						}
+						allChatAlert();
+					},
+					error:function(){
+						console.log("실패");
+					}
+				});
+		}  
+		
+/*  		$.when(allAlertcount(),allChatAlert()).done(function(result1, result2){
+ 		    console.log("여러개 함수 순차 실행:"+result1, result2);
+ 		}); */
+		
+		
 		$("#chat-icon").click(function() {
 			$(".chat-wrap").toggle();
 			$(".alarm-wrap").hide();
@@ -582,25 +659,28 @@ input:focus {
 					$("#chat-scroll-box").html('');
 					var href= "this.href";
 					
+					var printHTML = "<table id='chat-list-table'>";
 					for(var i=0 in object){
-						console.log(object[i].chatno+"성공");
-					var printHTML = "<div class='chat-name'>";
-					printHTML += "<a href='${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"'"+
-						" target='_blank' onClick='window.open("+ href +", '', 'width=480, height=650'); return false;'>";
+					printHTML += "<tr class='chat-name'>";
+					printHTML += "<td><a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
+						" target='_blank' onClick=\"window.open(this.href,\'\', \'width=470, height=650\'); return false;\">";
 					printHTML += "<span class='chat-users-icon'>";
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/svg/users.svg' width='35px' height='35px'></span>";
-					printHTML += "<div class='chat-content-wrap'>";
+					printHTML += "</a></td><td class='chatlist-td'>";
+					printHTML += "<a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
+					" target='_blank' onClick=\"window.open(this.href,\'\', \'width=470, height=650\'); return false;\">";
 					printHTML += "<span class='chat-room-name' >";
-					printHTML += " <p id='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
+					printHTML += " <p class='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
 					printHTML += "<span class='chat-room-count'> "+object[i].mcount +"</span></span></p>";
 					printHTML += "<span class='chat-recent-content'>"+object[i].content+"</span>"
 					if(object[i].chatcount!=null && object[i].chatcount!=0){
-						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span>";
+						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span></a></td>";
 					}
-					printHTML += "</div> </a> </div>";
+					printHTML += " </a> </tr>";
 					
-					$("#chat-scroll-box").append(printHTML);
 					}
+					printHTML += "</table>";
+					$("#chat-scroll-box").append(printHTML);
 				},
 				error:function(){
 					console.log("실패");
@@ -609,10 +689,36 @@ input:focus {
 			
 			
 		});
+		//알림 모달 켰을 때 
 		$("#alarm-icon").click(function() {
 			$(".alarm-wrap").toggle();
 			$(".chat-wrap").hide();
 			$(".my-wrap").hide();
+			$(".alarm-tab1").css("border-bottom", "3px solid #432D73");
+			$(".alarm-tab2").css("border", "none");
+			$(".alarm-tab-wrap").show();
+			$(".all-alarm-tab-wrap").hide();
+			$.ajax({
+				url: "${pageContext.request.contextPath}/alertlist",
+				success:function(object){
+					$("#alarm-scroll-box").html('');
+					
+					var printHTML = "<table id='alarm-list-table'>";
+					for(var i=0 in object){
+						printHTML += "<tr class='alarm-name'>";
+						printHTML += "<td><span class='chat-users-icon'>";
+						printHTML += "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px'></span>";
+						printHTML += "</td><td class='alarmlist-td'><p class='alarmlist-name'>"+object[i].pname+"</p>";
+						printHTML +=  "<p class='alarmlist-content'>"+object[i].acontent+"</p></td>";
+/* 						printHTML += "<td class='alarmlist-right'>"+object[i].adate +"</td>";
+ */					}
+					printHTML += "</tr></table>";
+					$("#alarm-scroll-box").append(printHTML);
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
 		});
 		$("#my-icon").click(function() {
 			$(".my-wrap").toggle();
@@ -625,6 +731,7 @@ input:focus {
 			$(".chat-tab-wrap").show();
 			$(".tel-tab-wrap").hide();
 		});
+
 		$(".chat-tab2").click(function() {
 			$(".chat-tab2").css("border-bottom", "3px solid #432D73");
 			$(".chat-tab1").css("border", "none");
@@ -634,29 +741,91 @@ input:focus {
 			url: "${pageContext.request.contextPath}/userlist",
 			success:function(object){
 				$(".tel-all").html('');
+					var html="<table id='tel-list-table'>";
 				for(var i=0 in object){
 					console.log(object+"성공");
-					var html="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
-					html += "<div class='tel-other'>";
+					html+="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
+					html += "<tr class='tel-other'>";
 					html += "<input type='hidden' name='chatuno' value='"+object[i].uno+"'>";
 					html += "<input type='hidden' name='chatuname' value='"+object[i].uname+"'>";
-					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></span>";
-					html += "<span class='tel-all-desc'> ";
+					html += "<td><img src='${pageContext.request.contextPath}/resources/img/svg/user-3.svg' width='35px' height='35px' class='tel-my-img'></td>";
+					html += "<td class='tel-all-desc'>";
 					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname +" </a>";
-					html += " <a href='${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"' onClick= 'window.open(this.href, '', 'width=350, height=488'); return false;'>";
-//					html += " <a href='javascript:openNewWindow('${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"')>";
+					html += " <a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"\" onClick= \"window.open(this.href, \'\', \'width=470, height=650\'); return false;\">";
 					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/chat-03.svg' width='30px' height='25px' class='tel-chat-icon'></a>";
-					html += "</span></span></div></form>";
+					html += "</td></tr></form>";
 					
-					$(".tel-all").append(html);
 				}
+					html += "</table>";
+					$(".tel-all").append(html);
 			},
 			error:function(){
 				console.log("실패");
 			}
 		}); 
 		});
-
+		//알림 모달 
+		$(".alarm-tab1").click(function() {
+			$(".alarm-tab1").css("border-bottom", "3px solid #432D73");
+			$(".alarm-tab2").css("border", "none");
+			$(".alarm-tab-wrap").show();
+			$(".all-alarm-tab-wrap").hide();
+			$.ajax({
+				url: "${pageContext.request.contextPath}/alertlist",
+				success:function(object){
+					$("#alarm-scroll-box").html('');
+					
+					var printHTML = "<table id='alarm-list-table'>";
+					for(var i=0 in object){
+						printHTML += "<tr class='alarm-name'>";
+						printHTML += "<td><span class='chat-users-icon'>";
+						printHTML += "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px'></span>";
+						printHTML += "</td><td class='alarmlist-td'><p class='alarmlist-name'>"+object[i].pname+"</p>";
+						printHTML +=  "<p class='alarmlist-content'>"+object[i].acontent+"</p></td>";
+/* 						printHTML += "<td class='alarmlist-right'>"+object[i].adate +"</td>";
+ */					}
+					printHTML += "</tr></table>";
+					$("#alarm-scroll-box").append(printHTML);
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+		});
+		
+		//전체 알림 탭
+		$(".alarm-tab2").click(function() {
+			$(".alarm-tab2").css("border-bottom", "3px solid #432D73");
+			$(".alarm-tab1").css("border", "none");
+			$(".all-alarm-tab-wrap").show();
+			$(".alarm-tab-wrap").hide();
+			$.ajax({
+				url: "${pageContext.request.contextPath}/alertalllist",
+				success:function(object){
+					$("#all-alarm-scroll-box").html('');
+					
+					var printHTML = "<table id='all-alarm-list-table'>";
+					for(var i=0 in object){
+						printHTML += "<tr class='alarm-name'>";
+						printHTML += "<td><span class='chat-users-icon'>";
+						printHTML += "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px'></span>";
+						printHTML += "</td><td class='alarmlist-td'><p class='alarmlist-name'>"+object[i].pname+"</p>";
+						printHTML +=  "<p class='alarmlist-content'>"+object[i].acontent+"</p></td>";
+/* 						printHTML += "<td class='alarmlist-right'>"+object[i].adate +"</td>";
+ */					}
+					printHTML += "</tr></table>";
+					$("#all-alarm-scroll-box").append(printHTML);
+				},
+				error:function(){
+					console.log("실패");
+				}
+			});
+			
+		});
+		
+		
+		
+		
 		$(".tel-prof-modal").click(function() {
 			$(".prof-info-dim").css("display", "block");
 			$(".prof-info").css("display", "block");
@@ -668,19 +837,49 @@ input:focus {
 		});
 		
 		//채팅 검색기능
-		$("#chat-search-input").keypress(function(event){
-		     if ( event.which == 13 ) {
-		    	 chat-search-form.submit();		         
-		     }
+		$("#chat-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#chat-list-table tr").hide();
+			console.log("검색어:"+c);
+			var temp= $("#chat-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			
+			$(temp).parent().show();
 		});
+		
 		//연락처 검색기능
-		$("#chat-search-input").keypress(function(event){
-		     if ( event.which == 13 ) {
-		         var searchword=$("#chat-search-input").val();
-		         
-		         return false;
-		     }
+		$("#tel-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#tel-list-table tr").hide();
+			console.log("검색어:"+c);
+			var temp= $("#tel-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			
+			$(temp).parent().show();
 		});
+		//미확인 알람 검색기능
+		$("#alert-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#alarm-list-table tr").hide();
+			var temp= $("#alarm-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			$(temp).parent().show();
+		});
+		//전체 알람 검색기능
+		$("#all-alert-search-input").keyup(function(){
+			var c =$(this).val();
+			$("#all-alarm-list-table tr").hide();
+			var temp= $("#all-alarm-list-table td:contains('"+c+"')");
+			console.log("temp"+temp);
+			$(temp).parent().show();
+		});
+		
+		
+		//채팅창 클릭했을 때 모달창 닫기 ㅠㅠ 안먹힘 
+		$(".chat-name").click(function(){
+			$(".chat-wrap").hide();
+		});
+		
 		
 	});
 </script>
@@ -691,9 +890,11 @@ input:focus {
 			<sec:authentication property="principal.username" var="username"/>
 			<sec:authentication property="principal.uno" var="uno"/>
 			<sec:authentication property="principal.uname" var="uname"/>
+			<sec:authentication property="principal.ufilepath" var="ufilepath"/>
 			<sec:csrfInput />
 			<input type="hidden" value='${uname}' name="sessionuserid" id="sessionuserid">
 			<input type="hidden" value="${uno}" id="uno" name="uno">
+			<input type="hidden" value="${ufilepath}" id="ufilepath" name="ufilepath">
 			
 			
 	<div class="header-wrap">
@@ -746,9 +947,9 @@ input:focus {
                         </svg>
 				</a> <a href="#" id="alarm-icon" class="header-right-icon"> 
 						
-						<span class="alarm-count">
-							<!-- 알림 카운트 수  -->
-							3
+						<span class="alarm-count" id="alarm-count">
+						</span> 
+						<span class="alarm-counts" id="alarm-counts">
 						</span> 
 						
 						<!--알림 아이콘--> <svg version="1.1"
@@ -818,7 +1019,7 @@ input:focus {
 									class="chat-tab2">연락처</a> <a
 									href="${pageContext.request.contextPath}/chat/chatinvite"
 									id="chat-add"
-									onClick="window.open(this.href, '', 'width=375, height=520'); return false;">
+									onClick="window.open(this.href, '', 'width=470, height=680'); return false;">
 									<!--새로운 대화창 열림--> <svg id="Layer1" data-name="Layer 1"
 										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
 										width="25px" height="25px" class="icon-middle">
@@ -960,16 +1161,19 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 								</div>
 							</div>
 						</div>
-
-					</div> <!--알림 모달-->
+			
+			
+			
+			<!--알림 모달-->
+					</div> 
 					<div class="alarm-wrap">
 						<div class="chat-alarm-tab">
 							<div class="chat-tab-box">
-								<a href="#" class="chat-tab1">미확인 알림</a> <a href="#"
-									class="chat-tab2">전체 알림</a> <a href="#" class="alarm-all-view">모두
-									읽음</a>
+								<a href="#" class="alarm-tab1">미확인 알림</a> <a href="#"
+									class="alarm-tab2">전체 알림</a>
+									<button type="button" class="alarm-all-view">모두 읽음</button>
 							</div>
-							<div class="chat-tab-wrap">
+							<div class="alarm-tab-wrap">
 								<div class="search-box">
 									<svg version="1.1" id="Capa1"
 										xmlns="http://www.w3.org/2000/svg"
@@ -982,58 +1186,99 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 c4.709,0,9.046-1.577,12.553-4.205l15.832,15.832L53.627,49.385z M2,21C2,10.523,10.523,2,21,2s19,8.523,19,19s-8.523,19-19,19
 S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0.304-0.29,0.445-0.445l14.262,14.262
 l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
-                                    </svg></span> <input type="text"
-				id="alert-search-input" placeholder="미확인 알림 검색">
-		</div>
+                                    </svg><input type="text" id="alert-search-input" placeholder="미확인 알림 검색">
+								</div>
+							<div id="alarm-scroll-box">
+							<!-- 미확인 알림 리스트 -->
+							</div>		
+						</div>
+				<!-- 전체 알림 -->
+				<div class="all-alarm-tab-wrap">
+					<div class="search-box">
+						<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							viewBox="0 0 53.627 53.627"
+							style="enable-background: new 0 0 53.627 53.627;"
+							xml:space="preserve" width="15px" height="15px">
+			                <path
+								d="M53.627,49.385L37.795,33.553C40.423,30.046,42,25.709,42,21C42,9.42,32.58,0,21,0S0,9.42,0,21s9.42,21,21,21
+			c4.709,0,9.046-1.577,12.553-4.205l15.832,15.832L53.627,49.385z M2,21C2,10.523,10.523,2,21,2s19,8.523,19,19s-8.523,19-19,19
+			S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0.304-0.29,0.445-0.445l14.262,14.262
+			l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
+			            </svg>
+						 <input type="text" id="all-alert-search-input" placeholder="전체 알림 검색">
+						</div>
+						<div id="all-alarm-scroll-box">
+						<!-- 전체 알림 리스트 -->
+						</div>
+				</div>
+				</div>
 	</div>
-	<div class="tel-tab-wrap">
-		<div class="search-box">
-			<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
-				xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-				viewBox="0 0 53.627 53.627"
-				style="enable-background: new 0 0 53.627 53.627;"
-				xml:space="preserve" width="15px" height="15px">
-                <path
-					d="M53.627,49.385L37.795,33.553C40.423,30.046,42,25.709,42,21C42,9.42,32.58,0,21,0S0,9.42,0,21s9.42,21,21,21
-c4.709,0,9.046-1.577,12.553-4.205l15.832,15.832L53.627,49.385z M2,21C2,10.523,10.523,2,21,2s19,8.523,19,19s-8.523,19-19,19
-S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0.304-0.29,0.445-0.445l14.262,14.262
-l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
-            </svg>
-			</span> <input type="text" id="all-alert-search-input" placeholder="전체 알림 검색">
-		</div>
-	</div>
-	</div>
-	</div>
+	
+	<script>
+		 var socket = null;
+		 
+		// 전역변수 설정
+		$(document).ready(function(){
+		    // 웹소켓 연결
+			var sock =new WebSocket("ws://" + location.host + "/ontact/alert");
+		    console.log("소켓 연결됨 ")
+		    
+		    // 데이터를 전달 받았을때 
+		    sock.onmessage = onMessage; 
+		    
+		});
+		
+		function onMessage(msg) {
+			console.log("메시지 전달 받음"+msg);
+			var data = msg.data;
+			
+			//메시지가 들어왔을때 ajax를 이용해서 내 알림 숫자 구하기
+			 $.ajax({
+					url: "${pageContext.request.contextPath}/alertcount",
+					async:false,
+					success:function(object){
+						console.log("새글 등록 됐을때 : "+object+"알림추가")
+						$("#alarm-count").html('');
+						$("#alarm-counts").html('');
+						if(object==0 || object==null){
+							$("#alarm-count").remove();
+							$("#alarm-counts").remove(); 
+						}else{
+							if(object>8){
+								var count=object+1;
+								$("#alarm-count").remove();
+								$("#alarm-counts").append(count);
+							}else{
+								var count=object+1;
+								$("#alarm-count").append(count);
+								$("#alarm-counts").remove(); 
+							}			
+						}
+					},
+					error:function(){
+						console.log("실패");
+					}
+				});
+		}
+</script>
+	
+	
+	<!-- 내 프로필  -->
 	<div class="my-wrap">
 		<div id="h-profile-top">
 			<!--이미지가 있을 때 이미지 뿌리고 없으면 기본이미지-->
+			
+			 <c:if test="${not empty ufilepath }">
+				<img src="${ufilepath}" width="40px" height="40px">
+			 </c:if>
+			 <c:if test="${empty ufilepath}">
+			 	<img src="${pageContext.request.contextPath}/resources/img/user-3.png" 
+								  width="40px" height="40px" class="my-img-file">
+			 </c:if>
 			<p>
-				<svg version="1.1" id="Capa1" xmlns="http://www.w3.org/2000/svg"
-					xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-					viewBox="0 0 55 55" style="enable-background: new 0 0 55 55;"
-					xml:space="preserve" fill="#505050" width="40px" height="40px">
-                    <path
-						d="M27.5,0C12.336,0,0,12.337,0,27.5c0,7.976,3.417,15.167,8.86,20.195l-0.072,0.098l0.705,0.604
-	c3.904,3.342,8.655,5.483,13.681,6.26c0.356,0.056,0.715,0.102,1.075,0.144c0.391,0.045,0.782,0.085,1.176,0.112
-	c0.579,0.043,1.162,0.071,1.75,0.078c0.062,0,0.123,0.008,0.185,0.008c0.017,0,0.035-0.002,0.052-0.002
-	c0.03,0,0.059,0.002,0.089,0.002C42.664,55,55,42.663,55,27.5S42.664,0,27.5,0z M27.414,52.998c-0.09,0-0.178-0.006-0.267-0.007
-	c-0.478-0.004-0.954-0.029-1.429-0.06c-5.298-0.368-10.154-2.359-14.074-5.482c0.381-0.36,0.802-0.665,1.266-0.9l9.137-3.921
-	c0.739-0.368,1.191-1.186,1.628-2.063c0.274-0.552,0.243-1.195-0.083-1.721C23.265,38.315,22.699,38,22.079,38l-6.347,0.005
-	c-0.022-0.002-2.195-0.222-3.83-0.924c-0.308-0.132-0.437-0.235-0.474-0.241c0.015-0.042,0.051-0.124,0.141-0.251
-	c2.264-3.224,6.083-9.643,6.214-16.409c0.008-0.379,0.303-9.287,9.332-9.361c5.365,0.044,7.902,3.189,9.086,5.82
-	c0.591,1.313,0.939,2.879,1.065,4.785c0.39,5.9,3.1,11.466,5.305,15.095c0.114,0.188,0.148,0.418,0.096,0.631
-	c-0.049,0.197-0.168,0.361-0.335,0.461c-1.038,0.62-2.389,0.407-2.397,0.404L33.273,38c-0.713,0-1.33,0.45-1.571,1.146
-	c-0.243,0.702-0.028,1.472,0.536,1.917c0.71,0.561,0.992,0.734,1.104,0.794l7.619,4.609c0.654,0.357,1.229,0.845,1.692,1.434
-	C38.231,51.229,32.983,52.986,27.414,52.998z M44.25,46.702c-0.633-0.815-1.415-1.491-2.293-1.969l-7.619-4.609
-	c-0.016-0.009-0.07-0.04-0.19-0.124h5.54c0.436,0.061,2.175,0.222,3.669-0.673c0.627-0.374,1.072-0.977,1.25-1.695
-	c0.181-0.727,0.062-1.511-0.327-2.151c-2.088-3.438-4.655-8.691-5.018-14.189c-0.143-2.147-0.547-3.938-1.237-5.473
-	c-1.424-3.164-4.469-6.947-10.91-7c-10.964,0.09-11.33,11.206-11.332,11.32c-0.125,6.47-4.134,12.855-5.851,15.3
-	c-0.467,0.665-0.616,1.312-0.444,1.921c0.188,0.66,0.719,1.171,1.625,1.56c1.917,0.823,4.322,1.066,4.521,1.081h6.084
-	c-0.167,0.324-0.395,0.735-0.512,0.813l-9.113,3.908l-0.053,0.024c-0.713,0.356-1.349,0.83-1.914,1.395
-    C5.132,41.483,2,34.852,2,27.5C2,13.439,13.439,2,27.5,2S53,13.439,53,27.5C53,35.153,49.606,42.024,44.25,46.702z" />
-                </svg>
 			</p>
-			<p>${uname }</p>
+			<p>${uname } </p>
 		</div>
 		<div id="h-profile-bottom">
 			<p>
@@ -1114,7 +1359,37 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 
 
 	</div>
-
+<script>
+//알림 모두 읽음
+$(document).ready(function() {
+		$(".alarm-all-view").click(function() {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/alertallread",
+			success:function(object){
+				$("#alarm-scroll-box").html('');
+				
+				var printHTML = "<table id='alarm-list-table'>";
+				for(var i=0 in object){
+					printHTML += "<tr class='alarm-name'>";
+					printHTML += "<td><span class='chat-users-icon'>";
+					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px'></span>";
+					printHTML += "</td><td class='alarmlist-td'><p class='alarmlist-name'>"+object[i].pname+"</p>";
+					printHTML +=  "<p class='alarmlist-content'>"+object[i].acontent+"</p></td>";
+	/* 						printHTML += "<td class='alarmlist-right'>"+object[i].adate +"</td>";
+	*/					}
+				printHTML += "</tr></table>";
+				$("#alarm-scroll-box").append(printHTML);
+				$("#alarm-count").remove();
+				$("#alarm-counts").remove(); 
+			},
+			error:function(){
+				console.log("실패");
+			}
+		});
+		
+});
+});
+</script>
 
 </body>
 

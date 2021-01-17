@@ -14,6 +14,8 @@ public class ProjectMemberDto {
 	private String pno;
 	private String uno;
 	private int padmin;
+	private String uname;
+	private String pname;
 	
 	//프로젝트 목록
 	public ProjectMemberDto(String pno, String uno) {

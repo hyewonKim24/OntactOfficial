@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ontact, 서로 연결되는 온라인 공간</title>
+    <link href="/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<style>
+    * {
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+        background-color: rgb(242, 242, 242);
+    }
+
+    a {
+        text-decoration: none;
+        color: #333333;
+    }
+
+    .header {
+        position: relative;
+        width: 100%;
+        height: 60px;
+        background-color: #fff;
+    }
+
+    .header div {
+        width: 1200px;
+        height: 60px;
+        margin: 0 auto;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    /* 본문 */
+    .main {
+        position: relative;
+        width: 1200px;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    /*위 메뉴*/
+    .title {
+        width: 100%;
+        height: 33px;
+        margin: 7px 0;
+        background-color: rgb(242, 242, 242);
+        position: relative;
+        padding:10px 0;
+    }
+    .title_cate{
+    position: relative;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 33px;
+    font-weight: bold;
+    color: #111;
+    cursor: pointer;
+    }
+
+    .title_func {
+        float: right;
+        vertical-align: middle;
+    }
+
+    .contents{
+        width:100%;
+        height:100%;
+        display:flex;
+    }
+    .title_close{
+        width: 70px;
+        background: #555;
+        color: #fff;
+        border-radius: 3px;
+        border-color: #555;
+        text-align: center;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid #d4d4d4;
+    }
+    .title_down{
+        display: inline-block;
+        background: #fff;
+        border-radius: 3px;
+        box-sizing: border-box;
+        border: 1px solid #d4d4d4;
+        position: relative;
+    }
+    .title_down img{
+        width:24px;
+        left:6px;
+        top:2.5px;
+        position:absolute;
+    }
+    .title_down_btn{
+        display: inline-block;
+        height: 31px;
+        line-height: 31px;
+        font-weight: bold;
+        color:#b9b9b9;
+    }
+    .title_down span{
+        padding: 0 8px 0 34px;
+        /* background: url(../img/chat-04.png) no-repeat -40% center; */
+    }
+
+    /* 왼쪽 메뉴 */
+    .file_menu {
+        width: 250px;
+        height: 100%;
+        overflow-x:hidden;
+        overflow-y: hidden;
+        background-color: #fff;
+        border: 1px solid #e2e2e2;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .file_format_sub {
+        padding: 0 19px;
+        height: 49px;
+        line-height: 49px;
+        font-weight: bold;
+        border-bottom: 1px solid #e2e2e2;
+        box-sizing: border-box;
+    }
+
+    .file_tree_sub {
+        padding: 0 19px;
+        height: 49px;
+        line-height: 49px;
+        font-weight: bold;
+        border-bottom: 1px solid #e2e2e2;
+        box-sizing: border-box;
+    }
+
+    .file_tree_search {
+        margin: 14px 14px 10px 14px;
+        padding: 4px 8px;
+        background: #f5f5f5;
+    }
+
+    .file_tree_search_input {
+        width: 100%;
+        font-size: 14px;
+        border: none;
+        background-color: #f5f5f5;
+    }
+
+    .project_all a {
+        position: relative;
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .project_all>a::after {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 19px;
+        width: 200px;
+        height: 1px;
+        background: #e2e2e2;
+    }
+
+    /* .project_all a em{
+        position: relative;
+        width: 14px;
+        height: 14px;
+        margin-top: 13px;
+        border-radius: 2px;
+        background: #5f5ab9;
+    } */
+    .project_list a {
+        padding-left: 9px;
+    }
+
+    .project_all a {
+        padding: 0 20px 0 20px;
+    }
+
+    .project_list_sub {
+        position: relative;
+        padding: 0 20px 0 20px;
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .project_all:hover,
+    .project_list_sub:hover {
+        background-color: #f5f5f5;
+    }
+
+    /*오른쪽 메뉴*/
+    .file_list {
+        width:944px;
+        padding: 0;
+        height: 100%;
+        background: #fff;
+        border: 1px solid #e2e2e2;
+        border-left: none;
+        border-radius: 0 5px 5px 0;
+        -moz-border-radius: 0 5px 5px 0;
+        -webkit-border-radius: 0 5px 5px 0;
+        margin-left:4px;
+    }
+
+    .file_list_index {
+         /* width: 988.31px; */
+        display: flex;
+        padding: 0 9px 0 20px;
+        height: 49px;
+        line-height: 49px;
+        font-weight: bold;
+        color: #888;
+        text-align: center;
+        border-bottom: 1px solid #e2e2e2;
+        position: relative;
+    }
+    .filetable::after{
+        content:"↓";
+        font-size:11px;
+        font-weight: bolder;
+    }
+    input[type="checkbox"]{
+        display:none;
+    }
+    input[type="checkbox"] + label{
+        display:inline-block;
+        width:20px;
+        height:48px;
+        background:url('../img/checked-2-01.png') no-repeat 0 50%;
+        background-size:20px 20px;
+    }
+    input[type="checkbox"]:checked + label{
+        background:url('../img/checked-2-02.png') no-repeat center / contain;
+    }
+    .file_list_fname{
+        width:644.31px;
+    }
+    .file_list_fname2{
+        padding-left:54px;
+        width:590.31px;
+    }
+    .file_list_fsize{
+        width:87px;
+    }
+    .file_list_uname{
+        width:93px;
+    }
+    .file_list_fdate{
+        width:163px;
+    }
+    .file_list_tr{
+        position: relative;
+        padding: 0 9px 0 20px;
+        height: 49px;
+        line-height: 49px;
+        display:flex;
+        cursor:pointer;
+        border-bottom: 1px solid #e2e2e2;
+        color:#333;
+    }
+    .center{
+        text-align: center;
+    }
+    .listfname{
+        /* background-color:gray; */
+        padding-left: 6%;
+        position: relative;
+    /* background-repeat: no-repeat;
+    background-size: 27px 27px;
+    background-position: 20px 50%; */
+    }
+    .ficon{
+        position:absolute;
+        left:20px;
+        top:10px;
+        width:27px;
+        height:27px;
+    }
+    .notfile{
+    margin: 34vh 0;
+    padding-top: 10px;
+    height: 100%;
+    text-align: center;
+    }
+    .notfile h2{
+    margin-top:20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #777;
+    }
+
+</style>
+
+<body>
+    <div class="header">
+        <div>헤더 들어갈 자리</div>
+    </div>
+    <div class="main">
+        <div class="title">
+            <div class="title_cate">전체</div>
+            <div class="title_func">
+                <a class="title_down" style="cursor:default">
+                    <img src="../img/download-02.png">
+                    <span class="title_down_btn">다운로드</span>
+                </a>
+                <a class="title_close" style="cursor:pointer">
+                    <span class="title_down_btn">닫기</span>
+                </a>
+            </div>
+        </div>
+        <div class="contents">
+            <div class="file_menu">
+                <ul>
+                    <li class="file_format">
+                        <div class="file_format_sub">파일 형태</div>
+                    </li>
+                    <li class="file_tree">
+                        <div class="file_tree_sub">프로젝트</div>
+                        <div class="file_tree_search">
+                            <input type="text" placeholder="프로젝트 검색" class="file_tree_search_input" maxlength="50">
+                        </div>
+                        <ul class="project_list">
+                            <li class="project_all">
+                                <a style="cursor:pointer; display:block;">
+                                    <span>전체 프로젝트</span>
+                                </a>
+                            </li>
+                            <li class="project_list_sub">
+                                <a style="cursor:pointer;">
+                                    <span>'ontact' 업무공유방</span>
+                                </a>
+                            </li>
+                            <li class="project_list_sub">
+                                <a style="cursor:pointer; display:block;">
+                                    <span>'ontact' 업무공유방</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="file_list">
+                <div class="file_list_index">
+                    <div class="file_chk">
+                        <input type="checkbox" id="file_list_all">
+                        <label for="file_list_all" class="file_list_all" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="file_list_fname filetable">파일명</div>
+                    <div class="file_list_fsize filetable">크기</div>
+                    <div class="file_list_uname filetable">등록자</div>
+                    <div class="file_list_fdate filetable">최근 업로드순</div>
+                </div>
+                <!-- <div class="notfile">
+                    <img src="../img/important.png" style="width:50px">
+                    <h2>해당 경로에 폴더와 파일이 존재하지 않습니다.</h2>
+                </div> -->
+                <!-- <div class="file_list_tr">
+                <div class="file_chk">
+                        <input type="checkbox" id="file_list_all">
+                        <label for="file_list_all" class="file_list_all" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="file_list_fname2 listfname">
+                        <img src="../img/image.png" class="ficon">
+                        파일명
+                    </div>
+                    <div class="file_list_fsize center">1.18KB</div>
+                    <div class="file_list_uname center">오은실</div>
+                    <div class="file_list_fdate center">2021-01-15 22:30</div>
+                </div>
+                <div class="file_list_tr">
+                    <div class="file_chk">
+                        <input type="checkbox" id="file_list_all">
+                        <label for="file_list_all" class="file_list_all" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="file_list_fname2 listfname">
+                        <img src="../img/download-03.png" class="ficon">
+                        파일명
+                    </div>
+                    <div class="file_list_fsize center">1.18KB</div>
+                    <div class="file_list_uname center">오은실</div>
+                    <div class="file_list_fdate center">2021-01-15 22:30</div>
+                </div> -->
+                <div class="file_pic">
+                    <div class="file_picchk">
+                            <input type="checkbox" id="file_list_all">
+                            <label for="file_list_all" class="file_list_all" style="cursor:pointer;"></label>
+                        </div>
+                        <div class="file_list_fname2 listfname">
+                            <img src="../img/image.png" class="ficon">
+                            파일명
+                        </div>
+                    </div>
+                    <div class="file_list_tr">
+                        <div class="file_chk">
+                            <input type="checkbox" id="file_list_all">
+                            <label for="file_list_all" class="file_list_all" style="cursor:pointer;"></label>
+                        </div>
+                        <div class="file_list_fname2 listfname">
+                            <img src="../img/download-03.png" class="ficon">
+                            파일명
+                        </div>
+                    </div> 
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

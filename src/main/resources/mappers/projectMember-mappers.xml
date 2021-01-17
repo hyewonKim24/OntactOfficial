@@ -5,6 +5,7 @@
 		<id property="pno" column="pno" />
 		<result property="uno" column="uno" />
 		<result property="padmin" column="padmin" />
+		<result property="uname" column="uname" />
 	</resultMap>
 
 	<!-- 프로젝트 생성 : 사원 입력 -->
@@ -13,4 +14,12 @@
 		insert into project_member
 		values(PNO_SE.CURRVAL, #{uno}, #{padmin})
 	</insert>
+	
+	<!-- 알림생성 위한 프로젝트 리스트 ( 내 uno 제외 ) -->
+	<select id="AlertProList" resultType="string">
+		 <![CDATA[
+		SELECT UNO FROM PROJECT_MEMBER WHERE PNO=#{pno} AND UNO NOT IN (#{uno})
+		]]>
+	</select>
+	
 </mapper>

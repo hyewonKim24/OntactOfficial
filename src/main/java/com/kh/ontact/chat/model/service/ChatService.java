@@ -9,6 +9,8 @@ public interface ChatService {
 	String selectchatname(String chatno) throws Exception;
 	String insertChat(String chatname) throws Exception;
 	String chatnoSelect() throws Exception;
-	int insertProChat(ChatDto c) throws Exception;
+	String insertProChat(ChatDto c) throws Exception;
 	int deleteChat(String chatno) throws Exception ;
+	String searchProChat(String pno) throws Exception;
+	
 }

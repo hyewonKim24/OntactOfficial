@@ -160,9 +160,24 @@
     }
     .option table td:nth-child(1){
         width: 100px;
+        font-weight : 700;
     }
     .option table td:nth-child(2){
         width: 400px;
+        font-weight : 700;
+    }
+    .option table input{
+        height : 32px;
+        border: 1px solid #c0c0c0;
+        box-sizing: border-box;
+    }
+    .option table button{
+        width: 100px;
+        height: 32px;
+        background-color: #5A3673;
+        color:#F2F2F2;
+        border : none;
+        border-radius: 3px;
     }
     .searchgraph{
         width: 930px;
@@ -278,17 +293,17 @@
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
-					<ul class="hide">
+				<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="">월 근무내역</a></li>
+						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
 						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
 					</ul></li>
 				<li class="menu"><a href="">휴가 관리</a>
 					<ul class="hide">
 						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="">휴가 현황</a></li>
+						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
 					</ul></li>
-				<li><a href="">조직도</a></li>
+				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
             </ul>
         </div>
     </div>
@@ -312,23 +327,23 @@
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname"></td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname" placeholder="이름을 입력하세요"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">예정일시</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="owstart" name="owdate"></td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="owstart" name="owdate" placeholder="일자를 선택하세요"></td>
                         <td class="title">예상시간</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="owtime" name="owtime"></td>
+                        <td><input type="text" style="width: 200px; height: 25px;" id="owtime" name="owtime" placeholder="시간을 입력하세요 ex) 2시간 -> 2"></td>
                     </tr>
                     <tr>
                         <td class="title">업무내용</td>
-                        <td colspan="3"><input type="text" style="width: 860px; height: 65px;" id="owtitle" name="owtitle"></td>
+                        <td colspan="3"><input type="text" style="width: 860px; height: 65px;" id="owtitle" name="owtitle" placeholder="업무 내용을 입력하세요"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">사유</td>
-                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason"></td>
+                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason" placeholder="사유를 입력하세요"></td>
                     </tr>
                     <tr>
                         <td colspan="4"><button type="submit" name="insertOw" id="insertOw">신청하기</button></td>
@@ -341,7 +356,7 @@
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" name="startdate"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate"></td>
+                        <td><input type="text" id="startDate" name="startdate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate" placeholder="종료일을 선택하세요"></td>
                         <td><button name="submit" >조회</button></td>
                     </tr>
                 </table>
@@ -351,16 +366,16 @@
                 <table>
                     <thead>
 	                    <tr>
-	                        <td colspan="6" style="text-align: left;">조회결과 00건</td>
+	                        <td colspan="7" style="text-align: left;">조회결과 00건</td>
 	                    </tr>
 	                    <tr>
 	                        <th>부서명</th>
 	                        <th>성명</th>
-	                        <th>예정일시</th>
-	                        <th>예정시간</th>
+	                        <th>일자</th>
+	                        <th>시간</th>
 	                        <th>업무내용</th>
 	                        <th>사유</th>
-	                        <th>상태</th>
+	                        <th>승인</th>
 	                    </tr>
 	                 </thead>
 	                <%-- <c:if test="${not empty list}"> --%>
@@ -378,7 +393,7 @@
                     <%-- </c:if> --%>
 			      <!-- 앞 페이지 번호 처리 -->
 					<tr align="center" height="20">
-						<td colspan="5">
+						<td colspan="7">
 						<c:if test="${currentPage <= 1}">
 						&lt; &nbsp;
 						</c:if>
@@ -448,7 +463,7 @@
             $('#startDate').datepicker(); 
             $('#endDate').datepicker(); 
             //초기값을 오늘 날짜로 설정
-            $('#owstart').datepicker('setDate', 'today');
+            /* $('#owstart').datepicker('setDate', 'today'); */
             /* $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
             $('#endDate').datepicker('setDate', 'today') */;          
         });
