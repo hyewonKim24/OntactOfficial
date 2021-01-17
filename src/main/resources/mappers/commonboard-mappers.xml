@@ -9,6 +9,24 @@
 		<result property="bdesc" column="bdesc" />
 	</resultMap>
 	
+	<!-- 임시로 뿌릴려고 만든것 -->
+	<select id="getCommonboard" resultMap="commonListMap">
+		select b.pno, b.bno, b.bname, b.bopen, b.bdate, c.bdesc
+		from commonboard c
+		inner join boardall b
+		on b.bno = c.bno
+		order by bno desc
+	</select>
+	<resultMap type="map" id="commonListMap">
+		<id column="bno" property="bno"/>
+		<result column="pno" property="pno" />
+		<result column="bname" property="bname" />
+		<result column="bopen" property="bopen" />
+		<result column="bdate" property="bdate" />
+		<result column="bdesc" property="bdesc" />
+	</resultMap>
+	
+	
 	<insert id="insertCommonboard">
 		 <![CDATA[
 		 	insert into commonboard(bno, bdesc) values (BNO_SE.CURRVAL,#{bdesc})

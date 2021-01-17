@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <sec:csrfMetaTags />
-        <title>Document</title>
+        <title>ontact, 서로 연결되는 온라인 공간</title>
         <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
@@ -779,20 +779,28 @@
             height:150px;
             }
             .uploadedFileList,
-            .uploadedFileList_task{
+            .uploadedFileList_task,
+            .uploadedFileList-real{
             display:flex;
             flex-wrap: wrap;
             }
             .uploadedFileList li,
-            .uploadedFileList_task li{
+            .uploadedFileList_task li,
+            .uploadedFileList-real li{
             width:150px;
             overflow:hidden;
             margin-right:7px;
             }
-            .boardimg img{
+            .boardimg img,
+            .boardimg-real img{
             border:1px solid #e7e7e7;
             box-sizing:border-box;
+            width:150px;
+            height:150px;
             }
+            /* commonboard css*/
+            /*얘는 혜원이랑 겹침*/
+            
         </style>
     </head>
 
@@ -802,8 +810,7 @@
         </div>
         <div class="main">
             <nav id="pj_sidebar">
-                <button type="button" id="new_pj_btn" onclick="">+&nbsp;새
-                    프로젝트</button>
+                <button type="button" id="new_pj_btn" onclick="">&nbsp;새프로젝트</button>
                 <ul>
                     <li><a href="#">
                             <svg version="1.1" class="pj_btn" xmlns="http://www.w3.org/2000/svg"
@@ -816,6 +823,7 @@
                                 </g>
                             </svg> 전체 <span class="pj_sb_alarm">00</span>
                         </a></li>
+                        </ul>
             </nav>
 
 
@@ -936,7 +944,6 @@
                                    </div>
                                 </div>
                                     <button type="submit" id="writebtn" class="writebtn">올리기</button>
-                                    <button type="button" id="check">값확인용</button>
                             </div>
                        </form> 
                         </div>
@@ -991,6 +998,7 @@
                                         </ul>
                                     </div>
                                     <button class="writebtn">올리기</button>
+                                     <button type="button" id="check">값확인용</button>
                                 </div>
                             </div>
                         </div>
@@ -1104,13 +1112,18 @@
                         </div>
                     </div>
                 </div>
+                
+                
+                
+                
+                <c:forEach items="${blist}" var="blist" varStatus="e">
                 <div class="one">
                     <div class="boardHeader">
                         <div class="writeInfo">
                             <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png"
                                     class="profileImg"></span>
                             <div class="writer">이혜림</div>
-                            <div class="writeDate">202012-18-17:34</div>
+                            <div class="writeDate">${blist.bdate }</div>
                             <img src="">
                         </div>
                         <div class="option">
@@ -1125,20 +1138,36 @@
                             </div>
                             <div class="editDropdown">
                                 <ul>
-                                    <li><a href="">글 삭제</a></li>
+                                    <li>
+                                  		<a href="${pageContext.request.contextPath}/project/commonboard/del?bno=${blist.bno}" class="list_delbtn">글 삭제</a>
+                                    	<input type="hidden" class="bnoval" value="${blist.bno}">
+                                    </li>
                                     <li><a href="">다른 프로젝트에 올리기</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
+                    <!-- 은실 / 보통글&파일리스트 글뿌리는건 고쳐야함-->
                     <div class="boardResult">
-                        일반 글 작성 내용입니다<br>
-                        일반 글 작성 내용입니다<br>
-                        일반 글 작성 내용입니다<br>
-                        일반 글 작성 내용입니다<br>
-                        일반 글 작성 내용입니다<br>
-                        일반 글 작성 내용입니다<br>
+                    	<h2 class="title">${blist.bname }</h2>
+                       	<div class="title_detail">${blist.bdesc }</div>
+                       	<div class="uploadFiles">
+                       		<ul class="uploadedFileList-real">
+					<c:forEach items="${file}" var="file" varStatus="e">
+					<c:if test="${blist.bno eq file.bno }">
+                       			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
+                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
+                       				<div class="boardimg-info-real">
+	                       				<a href="${file.fpath }" class="boardimg-name-real">
+	                       					<i class="fa fa-paperclip"></i>${file.foriginalname }
+	                       				</a>
+                       				</div>
+                       				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
+                       			</li>
+                    </c:if>
+                    </c:forEach>
+                       		</ul>
+                       	</div>
                         <div class="replyCount">댓글 10개</div>
                     </div>
 
@@ -1162,6 +1191,7 @@
                         </ul>
                     </div>
                 </div>
+              </c:forEach>
                 <div class="reply">
                     <button class="replyMore">이전 댓글 더보기</button>
                     <div class="defaultReply">
@@ -1198,7 +1228,7 @@
                     <button id="replyReg">등록</button>
                 </div>
             </div>
-
+	
             <div class="rightBar">
                 <a href="#">
                     <div id="prevbtn">
@@ -1385,7 +1415,8 @@
             //작성된 글 더보기 메뉴 (혜림)
             $(".option #dropdown").on("click", function (e) {
                 e.preventDefault();
-                $(".editDropdown").toggle();
+                var $t = $(this).parents(".option");
+                $t.find(".editDropdown").toggle();
             });
 
             //스크롤 숨겼다가 hover하면 나타남
@@ -1415,6 +1446,7 @@
             
             
 // 은실 파일
+imageChange();
             
 let header = $("meta[name='_csrf_header']").attr("content");
 let token = $("meta[name='_csrf']").attr("content");
@@ -1619,32 +1651,68 @@ $("#writebtn").click(function (event) {
 });
 //게시글 입력/수정 submit 처리시에 첨부파일 정보도 함께 처리
 function filesSubmit(that) {
+	console.log("설마설마"+that)
     var str = "";
+    $(".imgsrc").each(function(index){
+    	str += "<input type='hidden' name='filelist[" + index + "].imgsrc' value='" + $(this).attr('src') + "'>"
+    });
     $(".boardimg-delbtn").each(function (index) {
         str += "<input type='hidden' name='filelist[" + index + "].fname' value='" + $(this).attr('href') + "'>"
     });
     $(".boardimg-name").each(function (index) {
         let par = $(this).parent();
+        let originalFileName = $(this).text();
         let size = par.find('#fsize').val();
         str += "<input type='hidden' name='filelist[" + index + "].fpath' value='" + $(this).attr('href') + "'>"
-        //str += "<input type='hidden' name='fpath[" + index + "]' value='" + $(this).attr("href") + "'>"
         str += "<input type='hidden' name='filelist[" + index + "].fsize' value='" + size + "'>"
-        //str += "<input type='hidden' name='fsize[" + index + "]' value='" + size + "'>"
+        str += "<input type='hidden' name='filelist[" + index + "].foriginalname' value='" + originalFileName + "'>"
     });
     that.append(str);
+    console.log(str);
     that.get(0).submit();
 }
 
-$("#check").click(function(){
-	$(".boardimg-delbtn").each(function (index) {
-		console.log($(this).attr("href"));
-	});
-	$(".boardimg-name").each(function (index) {
-		console.log($(this).attr("href"));
-	});
-})
-			
-			
+// 업로드 된 파일 이미지 설정 변경
+function imageChange(){
+    $(".fnamevalue").each(function(index){
+        let fname = $(this).val();
+        let parent = $(this).parents('.uploadedFileList-real-li');
+        if(fname.substr(12,2)==="s_"){
+            parent.find('.boardimg-name-real').attr("data-lightbox", "uploadImages");
+            parent.find(".fa-paperclip").attr("class", "fa fa-camera");
+        }
+    })
+}		
+
+//게시글 삭제 클릭 이벤트
+$(".list_delbtn").off().on("click", function (e) {
+    $(".list_delbtn").unbind("click"); 
+    e.preventDefault;
+    // 첨부파일명들을 배열에 저장
+    let bno = $(this).next().val();
+    var arr = [];
+    $("."+bno).each(function () {
+        arr.push($(this).attr("data-src"));
+    });
+    // 서버 파일 지우기
+    if(arr.length > 0) {
+    	$.ajax({
+            url: "${pageContext.request.contextPath}/files/deleteAll",
+            type: "post",
+            data: { files : arr },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+            },
+            success: function (result) {
+            }
+        });
+    }
+    alert("삭제되었습니다.");
+    // db 삭제
+    $(this).get(0).click();
+    
+});
+
         </script>
     </body>
 

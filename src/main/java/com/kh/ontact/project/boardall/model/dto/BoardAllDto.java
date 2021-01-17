@@ -1,4 +1,4 @@
-package com.kh.ontact.project.boardall.model.dto;
+﻿package com.kh.ontact.project.boardall.model.dto;
 
 import java.sql.Date;
 import java.util.List;

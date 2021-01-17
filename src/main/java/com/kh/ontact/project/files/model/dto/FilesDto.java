@@ -21,5 +21,10 @@ public class FilesDto {
 	private Date fdate;
 	private String fsize;
 	private String fpath;
+	private String imgsrc;
+	private String foriginalname;
 	private List<FilesDto> filelist;
+	
+	//매퍼 필요
+	private String uname;
 }

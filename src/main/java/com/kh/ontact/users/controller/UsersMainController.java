@@ -323,6 +323,7 @@ public class UsersMainController {
 			String inputPass = tempwd;
 			String pwd = pwdEncoder.encode(inputPass);
 			userdto.setUpwd(pwd);
+			System.out.println("임시비번임~ : "+inputPass);
 			System.out.println("암호화된비밀번호:" + userdto.getUpwd());
 			// 비밀번호 업데이트
 			usersService.updateTmppwd(userdto);
@@ -369,7 +370,6 @@ public class UsersMainController {
 				.getPrincipal();
 		String uno = user.getUno();
 		HashMap<String, String> paramMap = new HashMap<String, String>();
-		logger.info("설마 여기로...?");
 		try {
 			paramMap.put("uno", uno);
 			paramMap.put("ufilename", ufilename);
@@ -403,9 +403,7 @@ public class UsersMainController {
 	@RequestMapping(value = "user/mypage/delPreviewProfile", method = RequestMethod.POST)
 	public String deleteFile(@RequestParam(value = "ufilename") String fileName, HttpServletRequest request) {
 		//ResponseEntity<String> entity = null;
-		logger.info("드루와");
 		try {
-			logger.info("여긴 유저라고ㅠㅠ");
 			UploadFileUtils.deleteFile(fileName, request);
 			// deleteFile()은 이미지 타입 여부를 판별함. 이미지 파일일 경우 원본 이미지 삭제/썸네일 삭제, 일반파일일 경우 파일 삭제처리
 			//entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
@@ -416,25 +414,6 @@ public class UsersMainController {
 		}
 		return "redirect:/user/mypage/detail";
 	}
-
-	// 프로필 사진 등록 요청
-//	@RequestMapping(value = "/user/mypage/mypicture", method = RequestMethod.POST)
-//	public String photoUpload(@RequestParam(name="image", required = false) MultipartFile report, HttpServletRequest request, ModelAndView mv) {
-//		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
-//				.getPrincipal();
-//		String path = null;
-//		try {
-//			if(report!=null&&!report.equals("")) {
-//				saveFile(report, request);
-//				path = user.getUfilepath();
-//				System.out.println(path);
-//				System.out.println(user.getUfilename());
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "users/myinfo";
-//	}
 
 	// 마이페이지 - 계정정보 업데이트
 	@ResponseBody

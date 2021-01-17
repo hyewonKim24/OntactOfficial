@@ -12,12 +12,71 @@
 		<result property="fdate" column="fdate" />
 		<result property="fsize" column="fsize" />
 		<result property="fpath" column="fpath" />
+		<result property="imgsrc" column="imgsrc" />
+		<result property="foriginalname" column="foriginalname" />
 	</resultMap>
 	
 	<insert id="addFile" flushCache="true" parameterType="hashMap">
 		 <![CDATA[
-		 	insert into files(fname,pno,bno,uno,fsize,fpath) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno},#{fsize},#{fpath})
+		 	insert into files(fname,pno,bno,uno,fsize,fpath,imgsrc,foriginalname) values (#{fname},#{pno},BNO_SE.CURRVAL,#{uno},#{fsize},#{fpath},#{imgsrc},#{foriginalname})
 		 ]]>
 	</insert>
 	
+	<select id="getFileboard" resultMap="resultFile">
+		select fname, bno, fpath, imgsrc, foriginalname from files where pno=#{pno}
+	</select>
+	
+	<delete id="deleteFiles">
+		delete from files where bno=#{bno}
+	</delete>
+	
+	<!-- 글 수정 -->
+	<delete id="deleteFile">
+		delete from files where fname=#{fname}
+	</delete>
+	<insert id="replaceFile" flushCache="true" parameterType="hashMap">
+		 insert into files(fname,pno,bno,uno,fsize,fpath,imgsrc,foriginalname) values (#{fname},#{pno},#{bno},#{uno},#{fsize},#{fpath},#{imgsrc},#{foriginalname})
+	</insert>
+	
+	<!-- 파일 리스트 불러오기 -->
+	<select id="filelist" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fdate desc
+	</select>
+	
+	<!-- 파일리스트 파일명 내림차순 -->
+	
+	<!-- 파일리스트 파일명 오름차순 -->
+	<select id="fnameasc" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by foriginalname asc
+	</select>
+	
+	
+	<resultMap type="FilesDto" id="resultfilelist">
+		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
+		<id property="fname" column="fname"/>
+		<result property="pno" column="pno" />
+		<result property="bno" column="bno" />
+		<result property="uno" column="uno" />
+		<result property="fdate" column="fdate" />
+		<result property="fsize" column="fsize" />
+		<result property="fpath" column="fpath" />
+		<result property="imgsrc" column="imgsrc" />
+		<result property="foriginalname" column="foriginalname" />
+		<result property="pname" column="pname" />
+		<result property="uname" column="uname" />
+	</resultMap>
+	
+	<!-- 프로젝트별 불러오기  -->
+	<select id="filelistpj" resultMap="resultfilelist">
+		select f.*, u.uname from files f
+		inner join users u
+		on f.uno=u.uno
+		order by fdate desc
+	</select>
 </mapper>

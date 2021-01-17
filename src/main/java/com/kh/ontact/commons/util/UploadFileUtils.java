@@ -82,6 +82,19 @@ public class UploadFileUtils {
 
 		return httpHeaders;
 	}
+	
+	// 파일 다운을 위한 HttpHeader 설정
+	public static HttpHeaders downHttpHeaders(String fileName) throws Exception {
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID 제거
+		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
+		// 파일명 한글 인코딩처리
+		httpHeaders.add("Content-Disposition",
+				"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+		return httpHeaders;
+	}
 
 	// 기본 경로 추출
 	public static String getRootPath(String fileName, HttpServletRequest request) {
