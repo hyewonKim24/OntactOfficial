@@ -15,4 +15,11 @@
 		values(PNO_SE.CURRVAL, #{uno}, #{padmin})
 	</insert>
 	
+	<!-- 알림생성 위한 프로젝트 리스트 ( 내 uno 제외 ) -->
+	<select id="AlertProList" resultType="string">
+		 <![CDATA[
+		SELECT UNO FROM PROJECT_MEMBER WHERE PNO=#{pno} AND UNO NOT IN (#{uno})
+		]]>
+	</select>
+	
 </mapper>

@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ontact.alert.model.dao.AlertDao;
+import com.kh.ontact.alert.model.dto.AlertDto;
+import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.project.boardall.model.dao.BoardAllDao;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.reply.model.dao.ReplyDao;
 import com.kh.ontact.project.task.model.dao.TaskDao;
 import com.kh.ontact.project.task.model.dto.TaskDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 
 @Service("taskService")
 public class TaskServiceImpl implements TaskService {
@@ -24,15 +28,34 @@ public class TaskServiceImpl implements TaskService {
 	AlertDao alertDao;
 	@Autowired
 	ReplyDao rpDao;
+	@Autowired
+	ProjectMemberService pmService;
+	@Autowired
+	AlertService alertService;
 	
 	@Override
 	public int insertTask(TaskDto tdto,BoardAllDto dto) throws Exception {
 		int rs=0;
 			rs=baDao.insertBoardAllTask(dto);
 			rs+=taskDao.insertTask(tdto);
-			rs+=alertDao.alertInsert(dto);
 			System.out.println(rs+"보드올 인서트");
 			System.out.println(rs+"개 insert 성공");
+			
+			ProjectMemberDto pmdto= new ProjectMemberDto();
+			AlertDto adto = null;
+			pmdto.setUno(dto.getUno());
+			pmdto.setPno(dto.getPno());
+			//알림 기능하게되면 나 제외한 다른 사람들에게 알림추가
+			List<String> plist =pmService.AlertProList(pmdto);
+			System.out.println("프로젝트 리스트:"+plist);
+			for(int i=0;i<plist.size();i++) {
+				adto = new AlertDto();
+				adto.setUno(plist.get(i));
+				adto.setPno(dto.getPno());
+				adto.setAcontent(dto.getUname()+"님이 ["+dto.getBname()+"]글을 1개 등록했습니다.");
+				int ars = alertService.alertInsert(adto);
+				System.out.println(ars+"개 알림등록");
+			}
 		return rs;
 	}
 
@@ -44,12 +67,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public int deleteTask(int bno) throws Exception {
 		System.out.println("글삭제 서비스 접근");
-		int rs=rpDao.deleteReplyAll(bno); 
-			System.out.println(rs+"댓글삭제");
-			rs+=alertDao.deleteAll(bno);
-			System.out.println(rs+"알림삭제");
-			 rs+=taskDao.deleteTask(bno);
-			rs+=baDao.deleteBoardall(bno);
+			int rs=baDao.deleteBoardall(bno);
 			System.out.println(rs+"글삭제");
 		return rs;
 	}

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ontact.alert.model.dto.AlertDto;
+import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.chat.model.dto.ChatDto;
 import com.kh.ontact.chatalert.model.dto.ChatAlertDto;
 import com.kh.ontact.chatalert.model.service.ChatAlertService;
@@ -36,6 +38,9 @@ public class HeaderController {
 	
 	@Autowired
 	private ChatAlertService chatalertService;
+	
+	@Autowired
+	private AlertService alertService;
 	
 	@RequestMapping(value="/header",method=RequestMethod.GET)
 	public ModelAndView header(ModelAndView mv,Authentication authentication,UsersDto dto) {
@@ -127,6 +132,71 @@ public class HeaderController {
 		return count;
 	}
 	
+	//알림 카운트 가져오기
+	@ResponseBody
+	@RequestMapping(value="/alertcount" ,method = {RequestMethod.GET, RequestMethod.POST})
+	public int alertcount(ModelAndView mv,Authentication authentication) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno=userdetail.getUno();
+		int count=0;
+		try {
+			count=alertService.alertCount(uno);
+			System.out.println("count수:"+count);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	//미확인 알림 리스트 ajax로 뿌리기
+	@ResponseBody
+	@RequestMapping(value="/alertlist" ,method = {RequestMethod.GET, RequestMethod.POST})
+	public List<AlertDto> alertlist(ModelAndView mv,Authentication authentication,AlertDto dto) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno=userdetail.getUno();
+		dto.setUno(uno);
+		List<AlertDto> alist = new ArrayList<AlertDto>();
+		try {
+			alist=alertService.alertNotList(uno);
+			System.out.println("알림리스트:"+alist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return alist;
+	}
+	//전체 알림 리스트 ajax로 뿌리기
+	@ResponseBody
+	@RequestMapping(value="/alertalllist" ,method = {RequestMethod.GET, RequestMethod.POST})
+	public List<AlertDto> alertalllist(ModelAndView mv,Authentication authentication,AlertDto dto) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno=userdetail.getUno();
+		dto.setUno(uno);
+		List<AlertDto> alist = new ArrayList<AlertDto>();
+		try {
+			alist=alertService.alertAllList(uno);
+			System.out.println("알림 전체 리스트:"+alist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return alist;
+	}
+	//알림 전체 읽음
+		@ResponseBody
+		@RequestMapping(value="/alertallread" ,method = {RequestMethod.GET, RequestMethod.POST})
+		public List<AlertDto> alertallread(ModelAndView mv,Authentication authentication,AlertDto dto) {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			System.out.println("알림 전체 읽음 들어옴");
+			String uno=userdetail.getUno();
+			dto.setUno(uno);
+			List<AlertDto> alist = new ArrayList<AlertDto>();
+			try {
+				alist = alertService.alertAllRead(uno);
+				System.out.println("모두 읽음 후 알림리스트:"+alist);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return alist;
+		}
 	
 	
 }

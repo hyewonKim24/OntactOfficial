@@ -44,7 +44,9 @@ public class ChatController {
 
 	@Autowired
 	private UsersService usersService;
-
+	
+	
+	//채팅방 초대하기
 	@RequestMapping(value = "/chatinvite", method = RequestMethod.GET)
 	public ModelAndView chatinvite(ModelAndView mv, UsersDto dto) {
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
@@ -91,39 +93,43 @@ public class ChatController {
 			// 채팅방이 있으면 해당 채팅방으로
 			chatnoList = chatMemService.SearchChatno(cdto);
 			System.out.println("채팅방번호 리스트" + chatnoList);
+			int count =0;
 			if (!chatnoList.isEmpty()) {
 				// 채팅방이 있을 때
 				System.out.println("우선 여기 들어옴");
 				String chatno1 = null;
 				for (String a : chatnoList) {
-					int count = chatMemService.chatmemCount(a);
+					count = chatMemService.chatmemCount(a);
+					System.out.println(count+"값 구하기");
 					if (count == 2) {
 						chatno1 = a;
 						System.out.println("채팅방 번호 : " + a);
 						mv.addObject("chatno", chatno1);
 						mv.setViewName("redirect:/chat/chatroomdetail");
-					} else {
-						// 채팅방이 없으면 채팅방 만들기
-						chatno = chatService.insertChat(chatname);
-						System.out.println(chatno + "chat insert");
-						mdto.setChatno(chatno);
-						adto.setChatno(chatno);
-						System.out.println("mdto:" + mdto);
-						int rs = chatMemService.insertChatMember(mdto);
-						int alertrs = chatalertService.insertChatAlertDefault(adto);
+						break;
+				}
+				}
+				if(count!=2) {
+					System.out.println("1대1채팅방이 없을때 ! ");
+					String chatno2 = chatService.insertChat(chatname);
+					System.out.println(chatno + "chat insert");
+					mdto.setChatno(chatno2);
+					adto.setChatno(chatno2);
+					System.out.println("mdto:" + mdto);
+					int rs = chatMemService.insertChatMember(mdto);
+					int alertrs = chatalertService.insertChatAlertDefault(adto);
 
-						mv.addObject("chatuno", chatuno);
-						mv.addObject("chatname", chatname);
-						mv.addObject("chatno", chatno);
-						mv.setViewName("redirect:/chat/otherchatadd");
-					}
+					mv.addObject("chatuno", chatuno);
+					mv.addObject("chatname", chatname);
+					mv.addObject("chatno", chatno2);
+					mv.setViewName("redirect:/chat/otherchatadd");
 				}
 
 			} else {
 				// 채팅방이 없으면 채팅방 만들기
-				System.out.println("새로운 채팅방 만들기! ");
+				System.out.println(" 이건 아예 채팅 리스트 없을때 새로운 채팅방 만들기! ");
 				String chatno2 = chatService.insertChat(chatname);
-				System.out.println(chatno + "chat insert");
+				System.out.println(chatno2 + "chat insert");
 				mdto.setChatno(chatno2);
 				adto.setChatno(chatno2);
 				System.out.println("mdto:" + mdto);
@@ -204,7 +210,7 @@ public class ChatController {
 		mv.addObject("chatuno", chatuno);
 		mv.addObject("chatname", chatname);
 		mv.addObject("chatno", chatno);
-		mv.setViewName("main/chatroom");
+		mv.setViewName("redirect:/chat/chatroomdetail");
 		/* mv.setViewName("redirect:/chat/otherschatadd"); */
 		return mv;
 	}

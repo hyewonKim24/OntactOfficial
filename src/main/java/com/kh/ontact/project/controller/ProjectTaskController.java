@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
@@ -39,6 +40,8 @@ public class ProjectTaskController {
 	UsersService usersService;
 	@Autowired
 	ProjectMemberService pmService;
+	@Autowired
+	AlertService alertService;
 	
 	//혜원 코드
 	@RequestMapping(value="/project/projecttest",method=RequestMethod.GET)
@@ -58,11 +61,13 @@ public class ProjectTaskController {
 				BoardAllDto dto,TaskDto tdto, Authentication authentication) {
 				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 				String uno=userdetail.getUno();
+				String uname=userdetail.getUname();
 				
 				dto.setPno(pno);
 				dto.setBname(tasktitle);
 				dto.setUno(uno);
 				dto.setBopen(taskopen);
+				dto.setUname(uname);
 				
 				tdto.setTaskmanager(taskname);
 				tdto.setTend(taskenddate);
@@ -71,9 +76,15 @@ public class ProjectTaskController {
 				tdto.setTstate(taskradio);
 				tdto.setTmemo(taskcontent);
 				
+				ProjectMemberDto pmdto= new ProjectMemberDto();
+				BoardAllDto badto = null;
+				pmdto.setUno(uno);
+				pmdto.setPno(pno);
+				
 				try {
 					int rs =taskService.insertTask(tdto, dto);
 					System.out.println(rs+"업무 insert 성공");
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

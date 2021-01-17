@@ -5,4 +5,8 @@ import java.util.List;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 
 public interface ProjectMemberService {
+	
+	List<String> AlertProList(ProjectMemberDto dto);
+	
+	
 }

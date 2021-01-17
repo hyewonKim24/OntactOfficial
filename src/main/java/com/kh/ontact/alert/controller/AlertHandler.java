@@ -38,7 +38,6 @@ public class AlertHandler extends TextWebSocketHandler{
 			
 			if(strs != null) {
 				String pno = strs[0];
-				/* String uname = strs[1]; */
 				
 				 for(WebSocketSession sess : sessionList){
 			            sess.sendMessage(new TextMessage(pno+"프로젝트에서"+senderId+"가 글을 1개 등록했습니다"));
