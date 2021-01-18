@@ -90,7 +90,7 @@
 			inner join boardall b on p.pno = b.pno
 			inner join task t on b.bno = t.bno
 			inner join users u on u.uno = b.uno
-			where u.uname =#{uname} or 'taskmanager' like #{attendee}
+			where u.uname =#{uname} or t.taskmanager like #{attendee}
 			order by t.tstart
 		<!-- <if test="paramMap != null"> where b.uno = #{buno} or t.taskmanager 
 			=#{svuno} </if> -->

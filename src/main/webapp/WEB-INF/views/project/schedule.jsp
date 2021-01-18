@@ -165,21 +165,7 @@ body {
 	document.addEventListener('DOMContentLoaded',function() {
 						/* var elems = document.querySelectorAll('.modal');
 						var instances = M.Modal.init(elems); */
-						var checkArr = [];     // 배열 초기화
-						$("input[name='chk']").change(function(){
-							$("input[name=chk]:checked").each(function(i) {
-						        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
-						        console.log("뭐야 : " + checkArr);
-						    });
-							var allData = {"valueChk": checkArr};
-						    $.ajax({
-						        url: '${pageContext.request.contextPath}/schedule/list',
-						        type: 'get',
-						        data: allData,
-						        success : function test()
-						    });
-							console.log(allData);				
-						});
+						
 						
 						var calendarEl = document.getElementById('calendar');
 						var calendar = new FullCalendar.Calendar(calendarEl,{
@@ -199,8 +185,9 @@ body {
 									droppable : true,
 									
 									//해당 일정 클릭하면 모달 생성
-									eventClick : function(info) {
+									eventClick : function test2(info) {
 										console.log(info);
+										
 										var eventObj = info.event;
 										$.ajax({
 											contentType : 'application/json',
@@ -255,9 +242,54 @@ body {
 								}); //ajax end
 							},
 							//달력에 일정 출력
-							events : function test(info, successCallback,failureCallback) {
+							events : function test1(info, successCallback, failureCallback) {
 										console.log(info);
+										var checkArr = [];     // 배열 초기화
+										$("input[name='chk']").change(function(){
+											$("input:checkbox[name=chk]:checked").each(function(i) {
+										        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
+										        console.log("뭐야 : " + checkArr);
+										    });
+											var allData = {"valueChk": checkArr};
+											console.log(allData);				
+										    $.ajax({
+										    	contentType : 'application/json; charset:UTF-8',
+										        url: '${pageContext.request.contextPath}/schedule/list',
+										        type: 'get',
+										        dataType : 'json',
+										        data: allData,
+										        success : function(result) {
+													console.log(result);
+														var events = [];
+														if (result != null) {
+															$.each(result, function(index, element) {
+																console.log(element);
+																var sstart = element.sstart;
+																var send = element.send;
+																var bname = element.bname;
+																
+																var startdate = moment(sstart).format('YYYY-MM-DD');
+																var enddate = moment(send).format('YYYY-MM-DD'); 
+																
+																var aaa = startdate + "/" + bname;
+																console.log("확인 event" + startdate + "," + bname);
+																events.push({
+																		title : aaa,
+																		start : startdate,
+																		end : enddate,
+																		/* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
+																		color:"#ff3399"   */
+																}); //.push()
+																console.log(event); 
+															}); //.each()
+															console.log(events);
+														}//if end  
+														successCallback(events);
+													}//success: function end   
+										    });
+										});
 										
+										/* function test3(){
 										$.ajax({
 												contentType : 'application/json',
 												url : '${pageContext.request.contextPath}/schedule/list',
@@ -282,15 +314,16 @@ body {
 																		start : startdate,
 																		end : enddate,
 																		/* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
-																		color:"#ff3399"   */
+																		color:"#ff3399"  
 																}); //.push()
-																/* console.log(event); */
+																/* console.log(event); 
 															}); //.each()
-															/* console.log(events); */
+															/* console.log(events);
 														}//if end  
 														successCallback(events);
 													}//success: function end                          
-												}); //ajax end
+												}); //ajax end 
+										}*/
 									}, //events:function end
 								});//new FullCalendar end
 						calendar.render();

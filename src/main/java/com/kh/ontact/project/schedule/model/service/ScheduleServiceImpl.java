@@ -64,15 +64,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Override
 	public List<ScheduleDto> selectAllSche(HashMap<String, String> paramMap1) {
-		System.out.println("뿌려보자" + paramMap1.get("uname"));
-		System.out.println("뿌려보자" + paramMap1.get("attendee"));
+		System.out.println("뿌려보자11" + paramMap1.get("uname"));
+		System.out.println("뿌려보자11" + paramMap1.get("attendee"));
 		return scheduleDao.selectAllSche(paramMap1);
 	}
 	
 	@Override
 	public List<ScheduleDto> selectAllTask(HashMap<String, String> paramMap2) {
-		System.out.println("뿌려보자" + paramMap2.get("uname"));
-		System.out.println("뿌려보자" + paramMap2.get("attendee"));
-		return scheduleDao.selectAllSche(paramMap2);
+		System.out.println("뿌려보자22" + paramMap2.get("uname"));
+		System.out.println("뿌려보자22" + paramMap2.get("attendee"));
+		return scheduleDao.selectAllTask(paramMap2);
 	}
 }
