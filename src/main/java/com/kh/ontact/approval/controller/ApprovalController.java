@@ -128,6 +128,7 @@ public class ApprovalController {
 			mv.setViewName("redirect:driftlist");
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
 		}

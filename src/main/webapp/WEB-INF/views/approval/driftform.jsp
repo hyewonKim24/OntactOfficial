@@ -251,8 +251,10 @@ header {
 					<div>
 						기안부서 <select class="opt_bt" name="dno">
 							<option value="선택하세요">선택하세요</option>
-							<option value="12">개발팀</option>
-							<option value="영업팀">영업팀</option>
+							<option value="1">개발팀</option>
+							<option value="2">기획팀</option>
+							<option value="3">영업팀</option>
+							<option value="4">마케팅팀</option>
 						</select> 기안자 <input type="text" name="apdrafter">
 						 기안 일시 <input type="text" id="startDate" onchange="printName()" name="apdate">
 					</div>

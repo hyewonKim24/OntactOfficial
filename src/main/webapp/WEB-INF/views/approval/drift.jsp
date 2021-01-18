@@ -425,7 +425,14 @@ header {
 					</tr>
 					<tr>
 						<td>기안부서</td>
-						<td>${apno.dno }</td>
+						<td>
+						<c:choose>
+								<c:when test="${apno.dno eq '1' }">개발팀</c:when>
+								<c:when test="${apno.dno eq '2' }">기획팀</c:when>
+								<c:when test="${apno.dno eq '3' }">영업팀</c:when>
+								<c:when test="${apno.dno eq '4' }">마케팅팀</c:when>
+						</c:choose>
+						</td>
 					</tr>
 					<tr>
 						<td>기안자</td>
