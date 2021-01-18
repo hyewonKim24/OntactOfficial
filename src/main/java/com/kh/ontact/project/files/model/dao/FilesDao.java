@@ -31,8 +31,8 @@ public class FilesDao {
 	}
 
 	// 글 수정시 개별 파일 삭제
-	public void deleteFile(String fname) throws Exception {
-		sqlSession.delete("Files.getFileboard", fname);
+	public int deleteFile(String fname) throws Exception {
+		return sqlSession.delete("Files.deleteFile", fname);
 	}
 
 	// 글 수정시 파일 추가

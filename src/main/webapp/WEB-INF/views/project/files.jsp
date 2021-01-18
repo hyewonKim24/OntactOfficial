@@ -79,6 +79,22 @@
     font-weight: bold;
     color: #111;
     cursor: pointer;
+    top:10px;
+    }
+    .cate:hover {
+        position:relative;
+        /* top:2px; */
+        left:-10px;
+    	padding:7px 9px;
+    	border:1px solid #e2e2e2;
+    	border-radius:6px;
+    	background:#fff;
+    }
+    .title_cate a :hover: {
+    	padding:15px 9px;
+    	border:1px solid #e2e2e2;
+    	border-radius:6px;
+    	background:#fff;
     }
 
     .title_func {
@@ -102,7 +118,7 @@
         box-sizing: border-box;
         border: 1px solid #d4d4d4;
     }
-    .title_down{
+    .title_btn{
         display: inline-block;
         background: #fff;
         border-radius: 3px;
@@ -110,7 +126,7 @@
         border: 1px solid #d4d4d4;
         position: relative;
     }
-    .title_down img{
+    .title_btn img{
         width:24px;
         left:6px;
         top:2.5px;
@@ -123,9 +139,20 @@
         font-weight: bold;
         color:#b9b9b9;
     }
-    .title_down span{
+    .title_btn span{
         padding: 0 8px 0 34px;
         /* background: url(../img/chat-04.png) no-repeat -40% center; */
+    }
+    .title_func {
+        float: right;
+        vertical-align: bottom;
+    }
+    .class{
+        position: relative;
+        top:10px;
+    } 
+    .class img{
+        width:32px;
     }
 
 
@@ -170,6 +197,10 @@
         border: none;
         background-color: #f5f5f5;
     }
+    
+    .project_all{
+    background-color: #f5f5f5;
+    }
 
     .project_all a {
         position: relative;
@@ -213,12 +244,14 @@
     }
 
     .project_all:hover,
-    .project_list_sub:hover {
+    .project_list_sub:hover,
+    .piclist_tr:hover {
         background-color: #f5f5f5;
     }
 
     /*오른쪽 메뉴*/
-    .file_list {
+    .file_list,
+    .piclist {
         width:944px;
         padding: 0;
         height: 100%;
@@ -246,7 +279,8 @@
     .filetable{
     	cursor:pointer;
     }
-    .arrow{
+    .arrow,
+    .tarrow{
         font-size:11px;
         font-weight: bolder;
     }
@@ -325,6 +359,81 @@
     font-weight: bold;
     color: #777;
     }
+    
+    /*썸네일*/
+    
+    .piclist_index {
+        display: flex;
+        flex-direction:row;
+        padding: 0 9px 0 20px;
+        height: 49px;
+        line-height: 49px;
+        font-weight: bold;
+        color: #888;
+        text-align: center;
+        border-bottom: 1px solid #e2e2e2;
+        position: relative;
+    }
+    .picfdate{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .piclist_wrapper{
+    padding: 20px 0px 0 20px;
+    }
+    .piclist_tr{
+    display: inline-block;
+    margin-bottom: 44px;
+    padding: 0;
+    width: 162.1px;
+    height: 162.1px;
+    border: 1px solid #e2e2e2;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 20px;
+    position:relative;
+    }
+    .picinfo{
+    cursor:pointer;}
+    .picinfo img{
+    display: inline-block;
+    margin-bottom: 44px;
+    padding: 0;
+    width: 162.1px;
+    height: 162.1px;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 20px;
+    position:relative; 
+    }
+    .picchk{
+        position:absolute;
+        top:-3px;
+        left:10px;
+    }
+    .pictext{
+    padding: 0px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 14px;
+    color: #000000;
+    width: 98%;
+    text-align: center;
+    position:absolute;
+    top:170px;
+    border:none;
+    }
+    .class{
+    	cursor:pointer;
+        position: relative;
+        top:10px;
+    } 
+    .class img{
+        width:32px;
+        z-index:-1;
+    }
+    
 
 </style>
 
@@ -334,18 +443,26 @@
     </div>
     <div class="main">
         <div class="title">
-            <div class="title_cate">전체</div>
+            <div class="title_cate">
+            <a href="${pageContext.request.contextPath}/files/list" class="cate">전체</a>
+            </div>
             <div class="title_func">
-                <a class="title_down" style="cursor:default">
+                <a class="title_down title_btn" style="cursor:default">
                     <img src="${pageContext.request.contextPath}/resources/img/download-02.png" id="down_img">
-                    <span class="title_down_btn btn">다운로드</span>
+                    <span class="title_down_btn btn selcbtn">다운로드</span>
                 </a>
-            	<a class="title_down" style="cursor:default">
-                    <img src="${pageContext.request.contextPath}/resources/img/download-02.png" id="del_img">
-                    <span class="title_del_btn btn">선택삭제</span>
+            	<a class="title_del title_btn" style="cursor:default">
+                    <img src="${pageContext.request.contextPath}/resources/img/trash01.png" id="del_img">
+                    <span class="title_del_btn btn selcbtn">선택삭제</span>
+                </a>
+                 <a class="title_list class">
+                    <img src="${pageContext.request.contextPath}/resources/img/list-2-reverse.png">
+                </a>
+                <a class="title_thumb class">
+                    <img src="${pageContext.request.contextPath}/resources/img/storage.png">
                 </a>
                 <a class="title_close" style="cursor:pointer">
-                    <span class="title_close_btn btn">닫기</span>
+                    <span class="title_close_btn btn" style="color:#fff;">닫기</span>
                 </a>
             </div>
         </div>
@@ -387,7 +504,7 @@
                     <div class="file_list_fname filetable">파일명 <span class="arrow">↓</span></div>
                     <div class="file_list_fsize filetable">크기 <span class="arrow">↓</span></div>
                     <div class="file_list_uname filetable">등록자 <span class="arrow">↓</span></div>
-                    <div class="file_list_fdate filetable" style="text-decoration: underline; font-weight:700; color:#111;'">최근 업로드순 <span class="arrow">↓</span></div>
+                    <div class="file_list_fdate filetable" style="text-decoration: underline; font-weight:700; color:#111;">최근 업로드순 <span class="arrow">↓</span></div>
                 </div>
                 
                 <c:if test="${empty flist}" >
@@ -406,23 +523,56 @@
 	                        <label for="file_list_all${e.count}" class="file_list_chk" style="cursor:pointer;"></label>
 	                    </div>
 	                    <div class="file_tr_fname listfname">
-	                        <img src="${pageContext.request.contextPath}/resources/img/download-03.png" class="ficon">
-	                        ${file.foriginalname}
-	                    </div>
+	                        <img src="${pageContext.request.contextPath}/resources/img/download-03.png" class="ficon">${file.foriginalname}</div>
 	                    <div class="file_tr_fsize center">${file.fsize }</div>
 	                    <div class="file_tr_uname center">${file.uname}</div>
 	                    <div class="file_tr_fdate center">${file.fdate}</div>
-	                    <input type="hidden" value="${file.fname }" class="file_list_fname">
 	                </div>
 					</c:forEach>
 				</div>
 				</c:if>
+            </div>
+        	<div class="piclist" style="display:none;">
+                <div class="piclist_index">
+                    <div class="file_chk">
+                        <input type="checkbox" id="thumb_list_all">
+                        <label for="thumb_list_all" class="thumb_list_all" style="cursor:pointer;"></label>
+                    </div>
+                    <div class="picfdate filetable" style="text-decoration: underline; font-weight:700; color:#111;">최근 업로드순<span class="tarrow">↓</span></div>
+                    <div class="picfname filetable">파일명 순<span class="tarrow">↓</span></div>
+                </div>
+                
+                <c:if test="${empty flist}" >
+                <div class="notfile">
+                    <img src="${pageContext.request.contextPath}/resources/img/important.png" style="width:50px">
+                    <h2>해당 경로에 파일이 존재하지 않습니다.</h2>
+                </div>
+                </c:if>
+                
+                <c:if test="${not empty flist}" >
+                <div class="piclist_wrapper">
+                	 <c:forEach items="${flist}" var="file" varStatus="e">
+                    <div class="piclist_tr">
+                        <div class="picinfo">
+                            <img src="${file.imgsrc}" alt="file" class="imgthumb">
+                            <input type="hidden" class="imgfname" value="${file.fname}">
+                        </div>
+                        <div class="file_chk">
+	                        <input type="checkbox" id="thumb_chk${e.count}" class="thumb_chk" name="fname" value="${file.fname}">
+	                        <label for="thumb_chk${e.count}" class="thumb_chk picchk" style="cursor:pointer;"></label>
+                        </div>
+                        <input type="text" maxlength="50" class="pictext" readonly style="cursor:pointer" value="${file.foriginalname}">
+                    </div>
+                    </c:forEach>
+                </div>
+                </c:if>
             </div>
         </div>
     </div>
     
     <script>
     imageChange();
+    thumbChange();
     let header = $("meta[name='_csrf_header']").attr("content");
     let token = $("meta[name='_csrf']").attr("content");
     
@@ -435,23 +585,37 @@
 	            parent.find(".ficon").attr("src", "${pageContext.request.contextPath}/resources/img/image.png");
 	        }
 	    })
-	}	
+	}
+    // 썸네일 파일 이미지 변경
+	function thumbChange(){
+		$(".imgfname").each(function(index){
+			let fname = $(this).val();
+			let img = $(this).parent().find('.imgthumb');
+			if(fname.substr(12,2)!=="s_"){
+				img.attr("src", "${pageContext.request.contextPath}/resources/img/nonepic.png")
+			}
+		})
+	}
+	
     		//전체선택
-    		var input=$("input[type=checkbox]");
+    		var input=$('.file_list').find("input[type=checkbox]");
     		var allLength = input.length;
+    		
             $(document).on("click","#file_list_all",function(){
     		//$("#file_list_all").on('click',function(){
 				if($("#file_list_all").is(":checked")){
 					$(".file_list_chk").prop("checked", true);
 					$(".file_list_tr").css("background-color","#f0ecf8")
-					$(".title_down_btn").css("color","#333");
+					$(".selcbtn").css("color","#333");
 					$("#down_img").attr("src","${pageContext.request.contextPath}/resources/img/download-01.png");
+					$("#del_img").attr("src","${pageContext.request.contextPath}/resources/img/trash02.png");
 				}
 				else{
 					$(".file_list_chk").prop("checked", false);
 					$(".file_list_tr").removeAttr("style");
+					$(".selcbtn").removeAttr("style");
 					$("#down_img").attr("src","${pageContext.request.contextPath}/resources/img/download-02.png")
-					$(".title_down_btn").removeAttr("style");
+					$("#del_img").attr("src","${pageContext.request.contextPath}/resources/img/trash01.png")
 				}
 			});
          // 클릭시 색상 변경+선택
@@ -461,11 +625,11 @@
 				let check = $(this).find(".file_list_chk");
 				
 				if(check.is(":checked")){
-					console.log("li누르는애")
+					//console.log("li누르는애")
 					check.prop("checked",false);
 					$(this).removeAttr("style");
 				} else {
-					console.log("뭐가nnb")
+					//console.log("뭐가nnb")
 					check.prop("checked", true);
 					$(this).css("background-color","#f0ecf8");
 				}
@@ -475,33 +639,69 @@
 					$("#file_list_all").prop("checked",false);
 				}
 				if(checkedinput!=0){
-					console.log(checkedinput+"ㅠㅠ")
-					$(".title_down_btn").css("color","#333");
+					//console.log(checkedinput+"ㅠㅠ")
+					$(".selcbtn").css("color","#333");
 					$("#down_img").attr("src","${pageContext.request.contextPath}/resources/img/download-01.png")
+					$("#del_img").attr("src","${pageContext.request.contextPath}/resources/img/trash02.png")
 				} else {
-					console.log(checkedinput+"0일때")
-					$(".title_down_btn").removeAttr("style");
+					//console.log(checkedinput+"0일때")
+					$(".selcbtn").removeAttr("style");
 					$("#down_img").attr("src","${pageContext.request.contextPath}/resources/img/download-02.png")
+					$("#del_img").attr("src","${pageContext.request.contextPath}/resources/img/trash01.png")
 				}
 			})
 			
 			// 다중파일 다운로드
-			$(document).on("click",".title_down",function(){
-			//$(".title_down").click(function(){
-				var interval = 1000;
-				var checkedinput = $("input:checked").length;
-				if(checkedinput!=0){
-					let check = $("input[class=file_list_chk]:checked");
+		    $(document).on("click", ".title_down", function () {
+		        var interval = 1000;
+		        var checkedinput = $("input:checked").length;
+		        if (checkedinput != 0) {
+		            let check = $("input[name=fname]:checked");
+		            $(check).each(function (index) {
+		                let fname = $(this).val();
+		                setTimeout(function () {
+		                    window.location = "${pageContext.request.contextPath}/files/download?fileName=" + fname;
+		                }, interval * (index + 1));
+		            })
+		        }
+		    }) 
 
-					$(check).each(function (index) {
-						let fname = $(this).parents(".file_list_tr").find(".file_list_fname").val();
-							setTimeout(function(){
-								window.location = "${pageContext.request.contextPath}/files/download?fileName=" + fname;
-							}, interval * (index +1));
-					})
-				}
-			})
-			
+		    // 파일 삭제
+		    $(document).on("click", ".title_del", function (e) {
+		        $("#del_img").unbind("click");
+		        e.preventDefault;
+		        // 첨부파일명들을 배열에 저장
+		        let check = $("input[name=fname]:checked");
+		        let arr = [];
+		        let fname = "";
+		        $(check).each(function (index) {
+		            arr.push($(this).val());
+		            fname += '<input type="hidden" name="fname" value="' + $(this).val() + '">';
+		        })
+		        console.log(fname);
+		        if (arr.length > 0) {
+		            $.ajax({
+		                url: "${pageContext.request.contextPath}/files/deleteAll",
+		                type: "post",
+		                data: { files: arr },
+		                beforeSend: function (xhr) {
+		                    xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+		                },
+		                success: function (result) {
+		                }
+		            });
+		            alert("삭제되었습니다.");
+
+		            var $form = $('<form></form>');
+		            $form.attr('action', '${pageContext.request.contextPath}/files/del');
+		            $form.attr('method', 'post');
+		            $form.appendTo($(this));
+		            let csrf = $('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />');
+		            $form.append(csrf).append(fname);
+		            $form.submit();
+		        }
+		    });
+						
 			// 프로젝트 검색
 	            $(".file_tree_search_input").keyup(function() {
 	                var k = $(this).val();
@@ -721,7 +921,171 @@
         	//a.attr("href","${pageContext.request.contextPath}/files/pjlist?pno=" + pno);
 			//a.get(0).click();
         })
-			
+        
+        
+        // 리스트형 / 썸네일 체인지
+        $('.title_list').click(function(){
+			$('.file_list').css('display','inline');
+			$('.piclist').css('display','none');
+			$('.title_list').children().attr("src","${pageContext.request.contextPath}/resources/img/list-2-reverse.png")
+			$('.title_thumb').children().attr("src","${pageContext.request.contextPath}/resources/img/storage.png")
+			$('.piclist').find("input[type=checkbox]").prop("checked", false);
+			$('.piclist_tr').removeAttr("style");
+		})
+
+		$('.title_thumb').click(function(){
+			$('.file_list').css('display','none');
+			$('.piclist').css('display','inline-block');
+			$('.title_list').children().attr("src","${pageContext.request.contextPath}/resources/img/list-2.png")
+			$('.title_thumb').children().attr("src","${pageContext.request.contextPath}/resources/img/storage-2.png")
+			$('.file_list').find("input[type=checkbox]").prop("checked", false);
+			$('.file_list_tr').removeAttr("style");
+		})
+		
+		// 여기부터 썸네일 함수
+		// 썸네일 : 전체선택
+    $(document).on("click", "#thumb_list_all", function () {
+        //$("#file_list_all").on('click',function(){
+        if ($("#thumb_list_all").is(":checked")) {
+            $(".thumb_chk").prop("checked", true);
+            $(".piclist_tr").css("background-color", "#f0ecf8")
+            $(".selcbtn").css("color", "#333");
+            $("#down_img").attr("src", "${pageContext.request.contextPath}/resources/img/download-01.png");
+            $("#del_img").attr("src", "${pageContext.request.contextPath}/resources/img/trash02.png");
+        }
+        else {
+            $(".thumb_chk").prop("checked", false);
+            $(".piclist_tr").removeAttr("style");
+            $(".selcbtn").removeAttr("style");
+            $("#down_img").attr("src", "${pageContext.request.contextPath}/resources/img/download-02.png")
+            $("#del_img").attr("src", "${pageContext.request.contextPath}/resources/img/trash01.png")
+        }
+    });
+
+    // 썸네일 : 클릭시 색상 변경+선택
+    $(document).on("click", ".piclist_tr", function (e) {
+        //$(".file_list_tr").on('click',function(e){
+        e.stopPropagation()
+        let check = $(this).find(".thumb_chk");
+
+        if (check.is(":checked")) {
+            check.prop("checked", false);
+            $(this).removeAttr("style");
+        } else {
+            check.prop("checked", true);
+            $(this).css("background-color", "#f0ecf8");
+        }
+
+        var checkedinput = $("input:checked").length;
+        if (allLength != checkedinput) {
+            $("#file_list_all").prop("checked", false);
+        }
+        if (checkedinput != 0) {
+            $(".selcbtn").css("color", "#333");
+            $("#down_img").attr("src", "${pageContext.request.contextPath}/resources/img/download-01.png")
+            $("#del_img").attr("src", "${pageContext.request.contextPath}/resources/img/trash02.png")
+        } else {
+            $(".selcbtn").removeAttr("style");
+            $("#down_img").attr("src", "${pageContext.request.contextPath}/resources/img/download-02.png")
+            $("#del_img").attr("src", "${pageContext.request.contextPath}/resources/img/trash01.png")
+        }
+    })
+    
+    //썸네일 파일정렬
+    //파일 등록자 정렬
+	$(".picfdate").click(function(){
+		let arrow = $(this).children().html();
+		if(arrow==="↓"){
+			$.ajax({
+				url: "${pageContext.request.contextPath}/files/fdateasc",
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+				},
+				success: function (list) {
+				    console.log(list);
+                    $(".tarrow").html("↓");
+				    $(".picfdate").children().html("↑");
+				    $(".picfdate").css({'text-decoration':'underline', 'font-weight':'700', 'color':'#111'});
+                    $(".picfname").removeAttr("style");
+				    thumblist(list);
+				}
+			})
+		} else {
+			$.ajax({
+				url: "${pageContext.request.contextPath}/files/fdatedesc",
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+				},
+				success: function (list) {
+				    console.log(list);
+				    $(".tarrow").html("↓");
+				    $(".picfdate").children().html("↓");
+				    $(".picfdate").css({'text-decoration':'underline', 'font-weight':'700', 'color':'#111'});
+				    $(".picfname").removeAttr("style");
+				    thumblist(list);
+				}
+			})				
+		}
+	})        
+
+    //파일 이름 정렬
+	$(".picfname").click(function(){
+		let arrow = $(this).children().html();
+		if(arrow==="↓"){
+			$.ajax({
+				url: "${pageContext.request.contextPath}/files/unameasc",
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+				},
+				success: function (list) {
+				    console.log(list);
+                    $(".tarrow").html("↓");
+				    $(".picfname").children().html("↑");
+				    $(".picfname").css({'text-decoration':'underline', 'font-weight':'700', 'color':'#111'});
+                    $(".picfdate").removeAttr("style");
+				    thumblist(list);
+				}
+			})
+		} else {
+			$.ajax({
+				url: "${pageContext.request.contextPath}/files/unamedesc",
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+				},
+				success: function (list) {
+				    console.log(list);
+				    $(".tarrow").html("↓");
+				    $(".picfname").children().html("↓");
+				    $(".picfname").css({'text-decoration':'underline', 'font-weight':'700', 'color':'#111'});
+				    $(".picfdate").removeAttr("style");
+				    thumblist(list);
+				}
+			})				
+		}
+	})        
+
+	function thumblist(list){
+		 $(".piclist_wrapper").text("");
+		 let html="";
+		 for(let i=0; i<list.length; i++){
+	        html += "<div class='piclist_tr'><div class='picinfo'>"
+	        if(list[i].fname.substr(12,2)==="s_"){
+	        html += "<img src='"+list[i].imgsrc+"' alt='file' class='imgthumb'>"
+	        } else {
+	            html += "<img src='${pageContext.request.contextPath}/resources/img/nonepic.png' alt='file' class='imgthumb'>"
+	        }
+	        html += "<input type='hidden' class='imgfname' value='"+list[i].fname+"'></div><div class='file_chk'>"
+	        html += "<input type='checkbox' id='thumb_chk"+i+"' class='thumb_chk' name='fname' value='"+list[i].fname+"'>"
+	        html += "<label for='thumb_chk"+i+"' class='thumb_chk picchk' style='cursor:pointer;'></label></div>"
+	        html += "<input type='text' maxlength='50' class='pictext' readonly style='cursor:pointer' value='"+list[i].foriginalname+"'></div>"
+		 }
+		 $('.piclist_wrapper').append(html);
+	 };
+		
    </script>
 </body>
 

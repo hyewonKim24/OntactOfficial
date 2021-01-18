@@ -1592,7 +1592,7 @@ function getFileInfo(fullName) {
         // 원본 이미지 요청 링크
         originalFileUrl = "${pageContext.request.contextPath}/files/display?fileName=" + originalImg;
     } else {
-        imgSrc = "${pageContext.request.contextPath}/resources/img/attachment.png"; // 파일 아이콘 이미지 링크
+        imgSrc = "${pageContext.request.contextPath}/resources/img/nonepic.png"; // 파일 아이콘 이미지 링크
         uuidFileName = fullName.substr(12);
         // 파일 다운로드 요청 링크
         originalFileUrl = "${pageContext.request.contextPath}/files/display?fileName=" + fullName;
@@ -1706,10 +1706,10 @@ $(".list_delbtn").off().on("click", function (e) {
             success: function (result) {
             }
         });
-    }
     alert("삭제되었습니다.");
     // db 삭제
     $(this).get(0).click();
+    }
     
 });
 

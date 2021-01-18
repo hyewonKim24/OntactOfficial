@@ -23,7 +23,7 @@ public class CommonboardController {
 		@RequestMapping("/cboard")
 		public ModelAndView getFileboard() {
 			ModelAndView mv = new ModelAndView();
-			String pno = "1";
+			String pno = "22";
 			try {
 				mv.addObject("blist", commonboardservice.getCommonboard());
 				mv.addObject("file", commonboardservice.getFileboard(pno));
