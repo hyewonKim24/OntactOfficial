@@ -20,7 +20,12 @@
         width : 100%;
         height: 100%;
         position: relative;
-    }
+    	color: #111111;
+	}
+	a{
+		text-decoration: none;
+		color: #111111;
+	}
     .header{
         position: relative;
         width: 100%;
@@ -433,7 +438,7 @@
 								<c:url var="dflistprev" value="/dayoff/dflist">
 									<c:param name="page" value="${currentPage-1}" />
 								</c:url>
-								<a href="${dflistprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+								<a href="${dflistprev}">&lt; &nbsp;</a>
 							</c:if> 
 							<!-- 끝 페이지 번호 처리 -->
 							 <c:set var="endPage" value="${maxPage}" /> 
@@ -441,22 +446,22 @@
 								var="p" begin="${startPage+1}" end="${endPage}">
 								<!-- eq : == / ne : != -->
 								<c:if test="${p eq currentPage}">
-									<font color="red" size="4"><b>${p} &nbsp; &nbsp; &nbsp;</b></font>
+									<font color ="#5A3673"><b>${p} &nbsp;</b></font>
 								</c:if>
 								<c:if test="${p ne currentPage}">
 									<c:url var="dflistchk" value="/dayoff/dflist">
 										<c:param name="page" value="${p}" />
 									</c:url>
-									<a href="${dflistchk}">${p} &nbsp; &nbsp; &nbsp;</a>
+									<a href="${dflistchk}">${p} &nbsp;</a>
 								</c:if>
 							</c:forEach> 
-							<c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
+							<c:if test="${currentPage >= maxPage}">&gt;
 							</c:if>
 							<c:if test="${currentPage < maxPage}">
 								<c:url var="dflistnext" value="/dayoff/dflist">
 									<c:param name="page" value="${currentPage+1}" />
 								</c:url>
-								<a href="${dflistnext}">&nbsp; &gt;</a>
+								<a href="${dflistnext}">&gt;</a>
 							</c:if>
 							</td>
 					</tr>

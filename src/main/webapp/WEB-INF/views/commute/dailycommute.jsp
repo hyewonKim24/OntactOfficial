@@ -41,6 +41,11 @@ body {
 	font-size: 14px;
 	font-family: Noto Sans KR;
 	line-height: 1.15;
+	color: #111111;
+}
+a{
+	text-decoration: none;
+	color: #111111;
 }
 
 .header {
@@ -284,8 +289,30 @@ canvas {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.5);
 }
+
+/* input[type="date"]::before {content:attr(data-placeholder);} */
+/* 
+
+input[type=date]::-webkit-datetime-edit-text { 
+	-webkit-appearance: none; display: none; 
+} 
+input[type=date]::-webkit-datetime-edit-month-field{
+ 	-webkit-appearance: none; display: none; 
+} 
+input[type=date]::-webkit-datetime-edit-day-field {
+  	-webkit-appearance: none; display: none; 
+} 
+input[type=date]::-webkit-datetime-edit-year-field {
+   -webkit-appearance: none; display: none; 
+   } */
+
+
+﻿
+
+
 </style>
 <script>
+
 	
     $(document).ready(function() {
         // 세로드롭다운
@@ -489,9 +516,9 @@ canvas {
 							<tr>
 								<td>기간 선택</td>
 								<td>
-								<input type="text" id="startdate" name="startdate">
+								<input type="Date" id="startdate" name="startdate" autocomplete="off" data-placeholder="시작일을 선택하세요" required aria-required="true" style="width:200px; height:30px;"/>
 									&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
-								<input type="text" id="enddate"name="enddate">
+								<input type="Date" id="enddate"name="enddate" autocomplete="off" data-placeholder="종료일을 선택하세요" required aria-required="true" style="width:200px; height:30px;"/>
 								</td>
 							</tr>
 							<tr>
@@ -551,26 +578,25 @@ canvas {
 									<c:url var="dailyprev" value="/commute/dailylist">
 										<c:param name="page" value="${currentPage-1}" />
 									</c:url>
-									<a href="${dailyprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+									<a href="${dailyprev}">&lt; &nbsp; </a>
 								</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
 								<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
 									<!-- eq : == / ne : != -->
 									<c:if test="${p eq currentPage}">
-										<font color="red" size="4"><b>${p} &nbsp; &nbsp;
-												&nbsp;</b></font>
+										<font color ="#5A3673"><b>${p} &nbsp; </b></font>
 									</c:if>
 									<c:if test="${p ne currentPage}">
 										<c:url var="dailychk" value="/commute/dailylist">
 											<c:param name="page" value="${p}" />
 										</c:url>
-										<a href="${dailychk}">${p} &nbsp; &nbsp; &nbsp;</a>
+										<a href="${dailychk}">${p} &nbsp;</a>
 									</c:if>
-								</c:forEach> <c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
+								</c:forEach> <c:if test="${currentPage >= maxPage}"> &gt;
 							</c:if> <c:if test="${currentPage < maxPage}">
 									<c:url var="dailynext" value="/commute/dailylist">
 										<c:param name="page" value="${currentPage+1}" />
 									</c:url>
-									<a href="${dailynext}">&nbsp; &gt;</a>
+									<a href="${dailynext}">&gt;</a>
 								</c:if></td>
 						</tr>
 					</table>
@@ -579,32 +605,7 @@ canvas {
 		</div>
 	</div>
 	<script>
-        $(function() {
-            //input을 datepicker로 선언
-            $.datepicker.setDefaults({
-                dateFormat: 'yy-mm-dd' //Input Display Format 변경
-                ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-                ,changeYear: true //콤보박스에서 년 선택 가능
-                ,changeMonth: true //콤보박스에서 월 선택 가능                
-                // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-                // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-                // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
-                ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
-                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-                ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-                ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
-            });                    
-            $('#startdate').datepicker(); 
-            $('#enddate').datepicker(); 
-            //초기값을 오늘 날짜로 설정
-            $('#startdate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            $('#enddate').datepicker('setDate', 'today');          
-        });
+        
 </script>
 </body>
 </html>

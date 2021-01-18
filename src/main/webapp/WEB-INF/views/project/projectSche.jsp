@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- date picker -->
@@ -409,46 +410,60 @@
             border: 1px solid #dadbdb;
         }
         .schepeople img{
-        	vertical-align : middle;
-        	
+          float: left;
+          padding-right : 10px;
         }
         /* 참석자 모달 리스트 */
-        .task-res-wrap{
+        .sche-res-wrap{
 			position:absolute;
 			display:inline-block;
-			width: 350px;
+			width: 600px;
 			height: 30px;
+            box-sizing: border-box;
 		}
-		.task-res{
-			width: 150px;
-			height: 25px;
-			line-height: 25px;
-			border: 1px solid #dadbdb;
-			box-sizing: border-box;
-			margin-left:5px;
-		}
-		.task-res-list{
+		.sche-res{
 			padding:5px;
-			width: 150px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+		}
+		.sche-res-close{
+            border: 1px solid #e7e7e7;
+            background: white;
+            width: 27px;
+            height: 27px;
+            box-sizing: border-box;
+        }
+		.sche-res-append{
+            padding:5px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+        }
+		.sche-res-list{
+			width: 100px;
 			height: 20px;
 			line-height: 25px;
 			cursor: pointer;
-			text-align: center;
+			padding-top : 5px;
+			text-align : center;
 		}
 		
-		.task-res-add-wrap{
-			width: 148px;
+		.sche-res-add-wrap{
+			width: 110px;
 			height: 100px;
+        	display:none;
 			overflow: scroll;
-			display:none;
 			background-color: #fff;
 			border: 1px solid #787878;
-			/* border-radius: 5px; */
+			border-radius: 3px;
 			z-index: 999;
 		    position: absolute;
-   			top: 30px;
-   			box-sizing: border-box;
-   			margin-left:8px;
+   			top: 33px;
 		}
 		#schePname {
             width: 135px;
@@ -456,8 +471,7 @@
             box-sizing: border-box;
             border: 1px solid #dadbdb;
         }
-        /* 참석자 모달 리스트 끝 */
-		
+        /* 참석자 모달 리스트 끝 */	
         .scheplace{
             width: 648px;
             border-bottom: 1px solid #dadbdb;
@@ -553,6 +567,7 @@
             font-size: 12px;
             float: right;
             margin-top: 6px;
+            z-index:9999;
         }
 
         .editDropdown ul {
@@ -569,7 +584,7 @@
             background-color: white;
         }
 
- /* 여기서부터 혜림 부분: 일정 결과화면        */
+ /* 여기서부터 혜림 부분 시작: 일정 결과화면 */
         .result_wrap{
             width: 650px;
             min-height: 151px;
@@ -599,13 +614,13 @@
             letter-spacing: 5px;
         }
         .rtitle{
-            width: 550px;
+            width:648px;
             height: 40px;
-            margin-left: 100px;
+            
             border-bottom: 1px solid #e7e7e7;
         }
         .rtitle input{
-            width: 548px;
+            width: 648px;
             height: 38px;
             box-sizing: border-box;
             border: none;
@@ -613,20 +628,21 @@
             background-color: #fafafa;
         }
         .rschedate{
-            width: 540px;
+            width: 648px;
             height: 40px;
             line-height: 40px;
-            margin-left: 100px;
+            
             padding-left: 10px;
             border-bottom: 1px solid #e7e7e7;
             box-sizing: border-box;
         }
         .rschedate input{
-            width: 200px;
+            width: 120px;
             height: 30px;
             box-sizing: border-box;
             border: none;
             background-color: #fafafa;
+            
         }
         .rschepeople {
             padding-top: 10px;
@@ -648,11 +664,136 @@
             line-height: 35px;
             font-size: 14px;
             margin-left: 34px;
+            float: left;
         }
+        #attendee-edit{
+            width: 100px;
+            height: 30px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid #e7e7e7;
+            background: none;
+            margin-right: 10px;
+            float: right;
+        }
+
+        /* 참석자 변경 모달 */
+        #attendee-modal{
+            display: none;
+            position: relative;
+            height: 0;
+            width:100%;
+            float: left;
+            z-index: 9999;
+        }
+        .attendee-modal-content{
+            position: relative;
+            width:550px;
+            height: 580px;
+            margin:100px auto;
+            background:#fefefe;
+        }
+        .attendee-title{
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            font-size: 16px;  
+            background:#e7e7e7;
+        }
+        .attendee-search{
+            height: 35px;
+            padding: 10px 0;
+            background:#e7e7e7;
+            letter-spacing: -20px;
+        }
+        .attendee-search input{
+            width: 475px;
+            height: 35px;
+            margin-left: 20px;
+            margin-right: 0;
+            border: none;
+            box-sizing: border-box;  
+            vertical-align:bottom; 
+        }
+        .attendee-search button{
+            height: 35px;
+            margin: 0;
+            border: none;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .attendee-search img{
+            width: 23px;
+        }
+        /* 참석자 선택하면 추가되는 곳 */
+        .pick-attendee input{
+            width: 100px;
+            height: 35px;
+            margin-top: 8px;
+            margin-right: 8px;
+            background-color: #e7e7e7;
+            border: none;  
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: 700;
+        }
+        .attendee-people{
+            padding : 0 20px;
+        }
+        .pick-attendee{
+            padding-left: 10px;
+            height: 40px;
+            line-height: 45px;
+            margin-bottom: 18px;
+        }
+        .userlist_wrap{
+            height: 70px;
+            border-bottom: 1px solid #e7e7e7;   
+        }
+        .userlist_wrap img{
+            width: 40px;
+            height: 40px;
+            padding : 15px 20px 0 10px;
+        }
+        .userlist_wrap span{
+            height: 70px;
+            line-height: 70px;
+            font-weight: 700;
+            
+        }
+        .userlist_wrap .pick{
+            margin-top : 23px;
+            width: 60px;
+            height: 25px;
+            float: right;
+            border: 1px solid #e7e7e7;   
+            color : #a2a2a2; 
+        }
+        .edit-btn{
+            width: 100px;
+            height: 32px;
+            background-color: #5A3673;
+            color:#F2F2F2;
+            border : none;
+            border-radius: 3px;
+        }
+        .modal-btn{
+            padding-top: 17px;
+            text-align: center;
+        }
+        .attendee_modal-layer {
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.5);
+        }
+        /* 모달 끝 */
         .rscheplace{
+            clear: both;
             padding-left: 10px;
         }
-        
         .rscheplace input{
             width: 600px;
             height: 30px;
@@ -671,6 +812,7 @@
             background-color: #fafafa;
         }
 /* 여기까지 혜림 부분 끝 : 일정 결과화면 */
+
         .replyCount {
             width: 650px;
             height: 25px;
@@ -858,9 +1000,9 @@
 
         /*scrollbar*/
         /* width */
-        ::-webkit-scrollbar {
+        /* ::-webkit-scrollbar {
             width: 5px;
-        }
+        } */
 
         /* Track */
         ::-webkit-scrollbar-track {
@@ -994,12 +1136,11 @@
     var result='${message}';
 	console.log(result);
 	if(result == "success") {
-        alert("신청이 완료되었습니다");
+        alert("일정이 등록되었습니다.");
     } 
 	var test ='${userlist}';
-		console.log(test.uname);	
-	
 	for(i=0; i<test.length; i++){
+		console.log(test.uname);	
 	}
 	
         // date picker
@@ -1043,18 +1184,72 @@
 		        dynamic: false,
 		        dropdown: true,
 		        scrollbar: true        
-    	});
-   
-    		$(".task-res").click(function (){
-    	    	$p=$(this).parents(".schepeople");
-    	    	$p.find(".task-res-add-wrap").toggle();
     	    });
-    	    $(".task-res-list").click(function(){
-    	    	$p=$(this).parents(".schepeople");
-    	    	$(".task-res").val($(this).text());
-    	    	$p.find(".task-res-add-wrap").hide();
-    	    });
-});
+        });
+    $(document).ready(function(){  
+    	 var count = 1;
+         var attendeename = $(".sche-res-list").text();
+         console.log("ㄴㅇ" + attendeename);
+         
+         //일정 글 작성 시 : 참석자 리스트 드롭다운 
+         $(".sche-res").click(function (){
+     	    $p=$(this).parents(".schepeople");
+     	    $p.find(".sche-res-add-wrap").toggle();
+     	});
+        //참석자 리스트 클릭시 해당 참석자 추가 
+     	$(".sche-res-list").click(function(){
+     	     $p=$(this).parents(".schepeople");
+     	     var test = $(this).text();
+
+     	     console.log("이름이뭐" + test);
+             $p.find(".sche-res-add-wrap").hide();
+             var add = '<input type="text" class="' + test +' sche-res-append" name="attendee" autocomplete="off" value="'+test+'">'+'<input type="button" class="sche-res-close '+test +'" id="'+ test +'" value="x">';
+             $(".sche-res-wrap").append(add);
+             
+             $(document).on('click','#'+test,function(){
+                 $p=$(this).parent(".sche-res-wrap");
+                 $p.find("."+test).remove();
+             });
+         });
+     
+     	console.log(".sche-res-close"+attendeename);
+     	
+     	//참석자 하나씩 삭제
+     	
+     	
+        //일정글 결과화면 : 참석자 변경 모달생성
+        $("#attendee-edit").click(function(){    
+            $("#attendee-modal").attr("style", "display:block");
+            });
+            $(".close").click(function(){
+            $("#attendee-modal").attr("style", "display:none");
+        });
+
+        $(".pick").click(function(){
+            if($(this).is(":checked") == true){
+                $p=$(this).parent(".userlist_wrap");
+                var user = $p.find("span").text();
+                // var add = '<span>'+ user +'</span>'
+                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendee-child">'
+                $(".pick-attendee").append(add);
+            } else if($(this).is(":checked") == false){
+                $p=$(this).parent(".userlist_wrap");
+                var user = $p.find("span").text();
+                if($("." + user).val() == user){
+                    var aaa = $(".test").val();
+                    console.log(aaa);
+                    $("." + user).remove();
+                 }
+            }
+        })
+        function changeAttendee(){
+            var change = $("input[name='attendee-child']").val();
+            console.log("왜이래" +change)            
+            $("input[name='attendee']").val(change);
+
+        }
+        
+    });
 
     </script>
 </head>
@@ -1234,29 +1429,31 @@
                     	 <input type="hidden" name="pno" id="pno" value="${pno}">
                         <div class="textbody">
                             <div class="title">
-                                <input type="text" class="title_detail" placeholder="일정 제목을 입력하세요" name="bname">
+                                <input type="text" class="title_detail" placeholder="일정 제목을 입력하세요" name="bname" autocomplete="off">
                             </div>
                             <div class="schedate">
                                 <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
-                                <input type="text" id="scheSdate" name="sstart" class="d">
+                                <input type="text" id="scheSdate" name="sstart" class="d" autocomplete="off">
                                 <input type="text" id="scheStime" name="sstarttime" class="t"> &nbsp; &nbsp; ~ &nbsp;
                                 &nbsp;
-                                <input type="text" id="scheEdate" name="send" class="d">
+                                <input type="text" id="scheEdate" name="send" class="d" autocomplete="off">
                                 <input type="text" id="scheEtime" name="sendtime" class="t">&nbsp; &nbsp; &nbsp; 
                                 <!-- <input type="checkbox" id="allday" name="allday"> &nbsp; 종일 -->
                             </div>
                             <div class="schepeople">
                                 <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
-                                <!-- <input type="text" id="schePname" name="attendee"> -->
-								<div class="task-res-wrap">
-                          			<input type="text" class="task-res task-res${e.count }" name="taskname"  value="${tlist.taskmanager}">
-                          			<input type="hidden" class="task-res-uno-c" name="taskuno">
-                          			 <!-- 업무담당자 모달 /  해당 project 유저 list 뿌리기-->
-                          			 <div class="task-res-add-wrap">
-                          				<div class="task-add">
+                                <!-- <input type="text" id="schePname" name="attendee" autocomplete="off"> -->
+                                <div class="sche-res-wrap">
+                                	<input type="text" class="sche-res" placeholder="참석자 추가" autocomplete="off">
+                          			<input type="hidden" class="sche-res-uno-c" name="scheuno">
+                          			 <!-- 업무담당자 모달 /  해당 project 유저 list 뿌리기 -->
+                          			 <div class="sche-res-add-wrap">
+                          				<div class="sche-add">
 	                          				<ul>
-	                          					<c:forEach items="${userlist}" var="ulist">
-	                          					<li class="task-res-list task-res-list${e.count}">${ulist.uname}<input type="hidden" class="taks-res-uno" value="${ulist.uno}"></li>
+	                          					<c:forEach items="${userlist}" var="ulist" varStatus="e">
+	                          					<li class="sche-res-list sche-res-list${e.count}">${ulist.uname}</li>
+	                          					<input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }">
+	                          					
 	                          					</c:forEach>
 	                          				</ul>
                           				</div>
@@ -1351,8 +1548,9 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
-                                <button class="writebtn">올리기</button>
+                                    <button class="writebtn">올리기</button>
+                                  </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -1444,7 +1642,176 @@
                     <button id="replyReg">등록</button>
                 </div>
             </div>
+            
+            <!-- 혜림 : 일정 결과 화면 -->
+			<c:forEach items="${schelist}" var="slist" varStatus="e">
+            <div class="one">
+                <div class="boardHeader">
+                    <div class="writeInfo">
+                        <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+                        <div class="writer">${slist.uname}</div>
+                        <div class="writeschedate">${slist.bdate}</div>
+                        <img src="">
+                    </div>
+                    <div class="option">
+                        <div>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                        </div>
+                        <div>
+                            <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
+                        </div>
+                        <div class="editDropdown">
+                            <ul>
+                                <li><a href="${pageContext.request.contextPath}/project/schedelete?bno=${slist.bno}&pno=${pno}">글 삭제</a></li>
+                                <li><a href="">다른 프로젝트에 올리기</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="boardResult">
+                    <div class="result_wrap">
+                        <!-- 일정, 제목-->
+                        <div class="rtitle">
+                            <input type="text" value="${slist.bname}" readonly>
+                        </div>
+                        <div class="rschedate">
+                            <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
+                            <input type="text" id="scheSdate" name="startdate" class="d" value="${slist.sstart}"> 
+                            &nbsp; &nbsp; ~ &nbsp; &nbsp;
+                            <input type="text" id="scheEdate" name="enddate" class="d" value="${slist.send}">
+                        </div>
+                        <!-- 참가자 -->
+                        <div class="rschepeople">
+                            <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
+                            <div class="attendeecount">참여자 0명</div>
+                            <div class="attendee">${slist.attendees}</div>
+                            <button id="attendee-edit">참석자 변경</button>
+                            <!-- 참석자 모달 -->
+                            <div id="attendee-modal">
+                                <div class="attendee_modal-layer"></div>
+                                <form action="" method="">
+                                    <div class="attendee-modal-content">
+                                        <div class="attendee-title">참석자변경</div>
+                                        <div class="attendee-list">
+                                            <div class="attendee-search">
+                                                <input type="text" placeholder="참석자 이름 검색">
+                                                <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
+                                            </div>
+                                            <div class="attendee-people">
+                                                <!-- 선택된 참가자가 표시됨  -->
+                                                <div class="pick-attendee"></div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>HYELIM</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>TEST1</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>TEST2</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div >
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>test3</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>오은실천재</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="modal-btn">
+                                                <button class="edit-btn close" >취소</button> &nbsp; 
+                                                <button type="submit" class="edit-btn" onclick=" changeAttendee();">확인</button>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- <input type="text" id="schePname"> -->
+                        </div>
+                        <!-- 장소 -->
+                        <div class="rscheplace">
+                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
+                            <input type="text" value="${slist.splace}">
+                            <div id="map"></div>
+                        </div>
+                        <!-- 메모 -->
+                        <div class="rschememo">
+                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
+                        <textarea class="content_detail2" placeholder="${slist.smemo}"></textarea>
+                        </div>
+                    </div>
 
+                    <div class="replyCount">댓글 10개</div>
+                </div>
+
+                <div class="threeBtn">
+                    <ul>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/like.png" class="like"
+                                    style="width: 19px; padding-right: 10px;  padding-bottom : 5px; vertical-align: middle;">좋아요</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/chat-03.png" class="replyReg"
+                                    style="width: 17px; padding-right: 10px;vertical-align: middle;">댓글작성</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/bookmark.png" class="save"
+                                    style="width: 13px; padding-right: 10px; vertical-align: middle;">담아두기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+             <!-- 댓글 출력 -->
+             <div class="reply">
+                <button class="replyMore">이전 댓글 더보기</button>
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+                </c:forEach>
+                
+                <!-- 댓글 입력 -->
+                <div class="replyFrom">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-2.png" class="replayPfImg2">
+                    </span>
+                    <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
+                    <button id="replyReg">등록</button>
+                </div>
+            </div>
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
@@ -1468,43 +1835,100 @@
                         </div>
                     </div>
                 </div>
-                <!-- 혜림 : 일정 결과 화면 -->
+
                 <div class="boardResult">
-                    <div class="result_wrap">
-                        <!-- 일정, 제목-->
-                        <div class="rstart">
-                            <span id="month">01월</span><br>
-                            <span id="day">14</span>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    <div class="replyCount">댓글 10개</div>
+                </div>
+
+                <div class="threeBtn">
+                    <ul>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/like.png" class="like"
+                                    style="width: 19px; padding-right: 10px;  padding-bottom : 5px; vertical-align: middle;">좋아요</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/chat-03.png" class="replyReg"
+                                    style="width: 17px; padding-right: 10px;vertical-align: middle;">댓글작성</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/bookmark.png" class="save"
+                                    style="width: 13px; padding-right: 10px; vertical-align: middle;">담아두기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="reply">
+                <button class="replyMore">이전 댓글 더보기</button>
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+                <div class="replyFrom">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-2.png" class="replayPfImg2">
+                    </span>
+                    <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
+                    <button id="replyReg">등록</button>
+                </div>
+            </div>
+            <div class="one">
+                <div class="boardHeader">
+                    <div class="writeInfo">
+                        <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+                        <div class="writer">이혜림</div>
+                        <div class="writeschedate">202012-18-17:34</div>
+                        <img src="">
+                    </div>
+                    <div class="option">
+                        <div>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
                         </div>
-                        <div class="rtitle">
-                            <input type="text" value="제목 부분입니다">
+                        <div>
+                            <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
                         </div>
-                        <div class="rschedate">
-                            <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
-                            <input type="text" id="scheSdate" name="startdate" class="d" value="2021년 01월 14일 (목) 14:20"> 
-                            &nbsp; &nbsp; ~ &nbsp; &nbsp;
-                            <input type="text" id="scheEdate" name="enddate" class="d" value="2021년 01월 20일 (수) 15:20">
-                        </div>
-                        <!-- 참가자 -->
-                        <div class="rschepeople">
-                            <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
-                            <div class="attendeecount">참여자 0명</div>
-                            <div class="attendee">이혜림, 오은실, 김봉영</div>
-                            <!-- <input type="text" id="schePname"> -->
-                        </div>
-                        <!-- 장소 -->
-                        <div class="rscheplace">
-                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
-                            <input type="text" value="대한민국 서울특별시 종로구 종로3가 ">
-                            <div id="map"></div>
-                        </div>
-                        <!-- 메모 -->
-                        <div class="rschememo">
-                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
-                        <textarea class="content_detail2" placeholder="메모부분입니다."></textarea>
+                        <div class="editDropdown">
+                            <ul>
+                                <li><a href="">글 삭제</a></li>
+                                <li><a href="">다른 프로젝트에 올리기</a></li>
+                            </ul>
                         </div>
                     </div>
+                </div>
 
+                <div class="boardResult">
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
+                    일반 글 작성 내용입니다<br>
                     <div class="replyCount">댓글 10개</div>
                 </div>
 

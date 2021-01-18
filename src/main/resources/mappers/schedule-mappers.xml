@@ -10,11 +10,15 @@
 		<result property="pname" column="pname" />
 		<result property="bname" column="bname" />
 		<result property="btype" column="btype" />
+		<result property="bopen" column="bopen" />
+		<result property="bdate" column="bdate" />
+		<result property="bfirst" column="bfirst" />
 		<result property="sstart" column="sstart" />
 		<result property="send" column="send" />
 		<result property="splace" column="splace" />
 		<result property="smemo" column="smemo" />
 		<result property="attendee" column="attendee" />
+		<result property="attendees" column="attendees" />
 		<result property="uno" column="uno" />
 		<result property="uname" column="uname" />
 		<result property="tstart" column="tstart" />
@@ -30,7 +34,7 @@
 	</insert> -->
 	
 	<!-- 프로젝트 일정 글-->
-	<insert id="insertSchedule" flushCache="true" statementType="PREPARED">  
+	<insert id="insertSchedule" flushCache="true" statementType="PREPARED" parameterType="java.util.List">  
 		<![CDATA[
 		 insert into schedule values (bno_se.currval,#{sstart}, #{send}, #{splace}, #{smemo}, #{attendee}) 
 		]]>
@@ -53,44 +57,43 @@
 		 	delete from schedule where bno=#{bno}
 		]]>
 	</delete>
+	<select id="ListScheduleAll" resultType="map" resultMap="resultSchedule">
+		<![CDATA[
+		select b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, s.sstart, s.send, s.splace, s.smemo, listagg(s.attendee, ',') within group(order by s.attendee) as attendees
+			from boardall b
+			inner join schedule s on b.bno = s.bno
+			inner join users u on u.uno = b.uno
+			where pno = #{pno}
+			group by b.bno,b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, s.sstart, s.send, s.splace, s.smemo
+			order by b.bno
+		]]>
+	</select>
 	
-	
-	<!-- 전체 일정 -->
-	<!-- 일정 : 내가 등록한 일정 + 초대받은 일정(1, 1) , 내가 등록한 일정(1, 0), 내가 초대받은 일정(0, 1), 
-		전체는 where절을 사라지게 -->
+	<!-- 전체 일정 보기, u.uname null : 내가 포함된 일정, attendees null : 내가 등록한 일정 -->
 	<select id="selectAllSche" resultMap="resultSchedule">
-		select p.pno as pno, p.pname as pname,b.bno as bno, b.bname as bname,
-		b.btype as btype,
-		sv.sstart as sstart, sv.send as send, sv.splace as splace, sv.smemo as smemo,
-		sv.uno as uno, sv.votetype as votetype, u.uname as uname
-		from project p
-		inner join boardall b on p.pno = b.pno
-		inner join (select s.bno, s.sstart, s.send, s.splace, s.smemo, v.uno,
-		v.votetype
-		from schedule s left outer join vote v on s.bno = v.bno)sv on b.bno =
-		sv.bno
-		inner join users u on u.uno = sv.uno
-		where b.uno = '1' or sv.uno = '0'
-		<!-- <if test="paramMap != null"> where b.uno = '1' or sv.uno = '0' </if> -->
-		order by b.bno
-
+		select p.pno, p.pname, bs.bno, bs.pno, bs.uno, u.uname, bs.bname, bs.bopen, bs.btype, bs.bfirst, bs.bdate, bs.sstart, bs.send, bs.splace, bs.smemo, bs.attendees
+    		from project p 
+   			 inner join (select b.bno, b.pno, b.uno, b.bname, b.bopen, b.btype, b.bfirst, b.bdate,
+                s.sstart, s.send, s.splace, s.smemo, listagg(s.attendee, ',') within group(order by s.attendee) attendees
+                from boardall b inner join schedule s on b.bno = s.bno
+                group by b.bno, b.pno, b.uno, b.bname, b.bopen, b.btype, b.bfirst, b.bdate,s.sstart, s.send, s.splace, s.smemo
+                )bs on p.pno = bs.pno
+    		inner join users u on u.uno = bs.uno
+    		where uname = #{uname} or attendees like #{attendee}
+   		 	order by bs.sstart
 	</select>
 
 	<!--업무 : 내업무 (5), 요청한 업무(1), 전체 업무 where 절 사라지게 -->
 	<select id="selectAllTask" resultMap="resultSchedule">
-
-		select p.pno as pno, p.pname as pname, b.bno as bno, b.bname as bname,
-		b.btype as btype,
-		t.tstart as tstart, t.tend as tend, t.taskmanager as taskmanager, u.uname as
-		uname
-		from project p
-		inner join boardall b on p.pno = b.pno
-		inner join task t on b.bno = t.bno
-		inner join users u on u.uno = t.taskmanager
+		select p.pno, p.pname, b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, t.tstart, t.tend, t.tmemo, t.taskmanager
+			from project p 
+			inner join boardall b on p.pno = b.pno
+			inner join task t on b.bno = t.bno
+			inner join users u on u.uno = b.uno
+			where u.uname =#{uname} or 'taskmanager' like #{attendee}
+			order by t.tstart
 		<!-- <if test="paramMap != null"> where b.uno = #{buno} or t.taskmanager 
 			=#{svuno} </if> -->
-		order by b.bno
-
 	</select>
 
 

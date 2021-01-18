@@ -165,7 +165,22 @@ body {
 	document.addEventListener('DOMContentLoaded',function() {
 						/* var elems = document.querySelectorAll('.modal');
 						var instances = M.Modal.init(elems); */
-
+						var checkArr = [];     // 배열 초기화
+						$("input[name='chk']").change(function(){
+							$("input[name=chk]:checked").each(function(i) {
+						        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
+						        console.log("뭐야 : " + checkArr);
+						    });
+							var allData = {"valueChk": checkArr};
+						    $.ajax({
+						        url: '${pageContext.request.contextPath}/schedule/list',
+						        type: 'get',
+						        data: allData,
+						        success : function test()
+						    });
+							console.log(allData);				
+						});
+						
 						var calendarEl = document.getElementById('calendar');
 						var calendar = new FullCalendar.Calendar(calendarEl,{
 									height : 600,
@@ -240,16 +255,19 @@ body {
 								}); //ajax end
 							},
 							//달력에 일정 출력
-							events : function(info, successCallback,failureCallback) {
+							events : function test(info, successCallback,failureCallback) {
 										console.log(info);
+										
 										$.ajax({
 												contentType : 'application/json',
 												url : '${pageContext.request.contextPath}/schedule/list',
 												dataType : 'json',
 												success : function(result) {
+													console.log(result);
 														var events = [];
 														if (result != null) {
 															$.each(result, function(index, element) {
+																console.log(element);
 																var sstart = element.sstart;
 																var send = element.send;
 																var bname = element.bname;
@@ -276,7 +294,14 @@ body {
 									}, //events:function end
 								});//new FullCalendar end
 						calendar.render();
-					});
+					
+						
+
+	});
+	
+
+	
+	
 </script>
 
 </head>
@@ -288,14 +313,14 @@ body {
 		<div class="sidenav">
 			<ul>
 				<li class="menu">일정</li>
-				<li class="menu"><input type="checkbox" name="sche" value="0" onclick="checkOneS(this)">전체 일정</li>
-				<li class="menu"><input type="checkbox" name="sche" value="1" onclick="checkOneS(this)">내가 등록한 일정</li>
-				<li class="menu"><input type="checkbox" name="sche" value="2" onclick="checkOneS(this)">초대받은 일정</li>
+				<li class="menu"><input type="checkbox" name="chk" class="sche" value="1" onclick="checkOneS(this)" >전체 일정</li>
+				<li class="menu"><input type="checkbox" name="chk" class="sche" value="2" onclick="checkOneS(this)">내가 등록한 일정</li>
+				<li class="menu"><input type="checkbox" name="chk" class="sche" value="3" onclick="checkOneS(this)">초대받은 일정</li>
 				
 				<li class="menu">업무</li>
-				<li class="menu"><input type="checkbox" name="task" value="3" onclick="checkOneT(this)">전체 업무</li>
-				<li class="menu"><input type="checkbox" name="task" value="4" onclick="checkOneT(this)">내가 등록한 업무</li>
-				<li class="menu"><input type="checkbox" name="task" value="5" onclick="checkOneT(this)">요청 업무</li>
+				<li class="menu"><input type="checkbox" name="chk" class="task" value="4" onclick="checkOneT(this)" >전체 업무</li>
+				<li class="menu"><input type="checkbox" name="chk" class="task" value="5" onclick="checkOneT(this)">내가 등록한 업무</li>
+				<li class="menu"><input type="checkbox" name="chk" class="task" value="6" onclick="checkOneT(this)">요청 업무</li>
 			</ul>
 		</div>
 		<div class="contents">
@@ -327,39 +352,29 @@ body {
 		</div>
 	</div>
 	<script>
-		function checkOneS(a){
-			var obj1 = document.getElementsByName("sche");
-			for (var i = 0; i < obj1.length; i++) {
-				if (obj1[i] != a) {
-					obj1[i].checked = false;
-				}
+	function checkOneS(a){
+		var obj1 = document.getElementsByClassName('sche');
+		for (var i = 0; i < obj1.length; i++) {
+			if (obj1[i] != a) {
+				obj1[i].checked = false;
 			}
 		}
-		function checkOneT(a){
-			var obj2 = document.getElementsByName("task");
-			for (var i = 0; i < obj2.length; i++) {
-				if (obj2[i] != a) {
-					obj2[i].checked = false;
-				}
+	}
+	function checkOneT(a){
+		var obj2 = document.getElementsByClassName('task');
+		for (var i = 0; i < obj2.length; i++) {
+			if (obj2[i] != a) {
+				obj2[i].checked = false;
 			}
 		}
+	}
 		/* $('input[type='checkbox']') */
-		function checkboxArr() {
-		    var checkArr = [];     // 배열 초기화
-		    $("input[type='checkbox']:checked").each(function(i) {
-		        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
-		        console.log("뭐야 : " + checkArr);
-		    })
-		 
-		    $.ajax({
-		        url: 'test_check'
-		        , type: 'post'
-		        , dataType: 'text'
-		        , data: {
-		            valueArrTest: checkArr
-		        }
-		    });
-		}
+		/* $("input[name='chk']").change(function(){
+			
+		}) */
+		
+		
+	
 	</script>
 </body>
 </html>

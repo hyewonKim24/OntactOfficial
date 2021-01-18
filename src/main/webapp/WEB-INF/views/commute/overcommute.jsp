@@ -22,10 +22,12 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
-    }
-   a {
-   	text-decoration: none;
-   }
+   		color: #111111;
+	}
+	a{
+		text-decoration: none;
+		color: #111111;
+	}
     .header{
         position: relative;
         width: 100%;
@@ -401,7 +403,7 @@
 								<c:url var="owlistprev" value="/overwork/owlist">
 									<c:param name="page" value="${currentPage-1}" />
 								</c:url>
-								<a href="${owlistprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
+								<a href="${owlistprev}">&lt; &nbsp;</a>
 							</c:if> 
 							<!-- 끝 페이지 번호 처리 -->
 							 <c:set var="endPage" value="${maxPage}" /> 
@@ -409,22 +411,22 @@
 								var="p" begin="${startPage+1}" end="${endPage}">
 								<!-- eq : == / ne : != -->
 								<c:if test="${p eq currentPage}">
-									<font color="red" ><b>${p} &nbsp; &nbsp; &nbsp;</b></font>
+									<font color ="#5A3673" ><b>${p} &nbsp;</b></font>
 								</c:if>
 								<c:if test="${p ne currentPage}">
 									<c:url var="owlistchk" value="/overwork/owlist">
 										<c:param name="page" value="${p}" />
 									</c:url>
-									<a href="${owlistchk}">${p} &nbsp; &nbsp; &nbsp;</a>
+									<a href="${owlistchk}">${p} &nbsp;</a>
 								</c:if>
 							</c:forEach> 
-							<c:if test="${currentPage >= maxPage}">  &nbsp; &gt;
+							<c:if test="${currentPage >= maxPage}">&gt;
 							</c:if>
 							<c:if test="${currentPage < maxPage}">
 								<c:url var="owlistnext" value="/overwork/owlist">
 									<c:param name="page" value="${currentPage+1}" />
 								</c:url>
-								<a href="${owlistnext}"> &nbsp; &gt;</a>
+								<a href="${owlistnext}">&gt;</a>
 							</c:if>
 							</td>
 					</tr>
