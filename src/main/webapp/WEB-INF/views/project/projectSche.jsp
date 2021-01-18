@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- 장소 검색 API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8f272dc1ba4f98e1be5c993c17cae5d&libraries=services"></script>
     <!-- date picker -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
@@ -17,8 +19,6 @@
     <!-- time picker -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-    <!-- 장소 검색 API -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3e9fb6cf6741a615c9c49efff9506f9&libraries=services"></script>
     
 
     <style>
@@ -479,11 +479,22 @@
             padding-bottom: 10px;
             margin-bottom: 17px;
         }
+        #locationSearch{
+        	background-color: white;
+        	border: none;
+        	border-bottom: 1px solid #dadbdb;
+        	vertical-align : middle;
+        	height : 28px;
+        	box-sizing: border-box;
+        	letter-spacing : -4px;
+        	
+        }
         #location{
-            width: 500px;
+            width: 567px;
             height: 28px;
             box-sizing: border-box;
             border: none;
+            border-bottom: 1px solid #dadbdb;
         }
         .sche_icon{
             width: 15px;
@@ -491,9 +502,18 @@
             vertical-align: middle;
         }
         #map{
-            width: 85%;
+            width: 93%;
             height: 200px;
-            margin-left: 50px;
+            margin-left: 25px;
+        }
+        #aabbcc{
+        	width: 600px;
+            height: 28px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid #dadbdb;
+            margin-left : 25px;
+            margin-bottom : 10px;
         }
         #calendaricon{
             vertical-align: top;
@@ -1175,8 +1195,8 @@
 
         $(function() {
     		$("#scheStime, #scheEtime").timepicker({
-		        timeFormat: 'hh:mm',
-		        interval: 60,
+		        timeFormat: 'HH:mm',
+		        interval: 30,
 		        minTime: '08',
 		        maxTime: '22:00',
 		        defaultTime: '08',
@@ -1249,6 +1269,56 @@
 
         }
         
+            var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                    level: 5 // 지도의 확대 레벨
+                };
+            // 지도를 생성합니다    
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+        $("#locationSearch").click(function(){
+    		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+           
+            // 장소 검색 객체를 생성합니다
+            var ps = new kakao.maps.services.Places();
+            // 키워드로 장소를 검색합니다
+    		var keyword = $("#location").val();
+    		console.log("위치정보 : " + keyword);
+            ps.keywordSearch(keyword, placesSearchCB);
+            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+
+    	});
+          function placesSearchCB(data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    var bounds = new kakao.maps.LatLngBounds();
+                    for (var i = 0; i < data.length; i++) {
+                        displayMarker(data[i]);
+                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                    }
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                    map.setBounds(bounds);
+                }
+            }
+
+            // 지도에 마커를 표시하는 함수입니다
+            function displayMarker(place) {
+                // 마커를 생성하고 지도에 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(place.y, place.x)
+                });
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                    infowindow.open(map, marker);
+                    console.log("마커위의" + place.place_name);
+                    $("#aabbcc").val(place.place_name);
+                });
+            }
     });
 
     </script>
@@ -1462,7 +1532,9 @@
                             </div>
                             <div class="scheplace">
                                 <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
-                                <input type="text" id="location" name="splace">
+                                <button id="locationSearch"><img src="${pageContext.request.contextPath}/resources/img/search.png" style="width:16px; height:16px; margin:0; padding:0;"></button>
+                                <input type="text" id="location" placeholder="장소를 입력해주세요">
+                                <input type="text" name="splace" id="aabbcc">
                                 <div id="map"></div>
                             </div>
                             <div class="schememo">
@@ -1662,7 +1734,7 @@
                         </div>
                         <div class="editDropdown">
                             <ul>
-                                <li><a href="${pageContext.request.contextPath}/project/schedelete?bno=${slist.bno}&pno=${pno}">글 삭제</a></li>
+                                <li><a href="${pageContext.request.contextPath}/project/schedule/del?bno=${slist.bno}&pno=${pno}">글 삭제</a></li>
                                 <li><a href="">다른 프로젝트에 올리기</a></li>
                             </ul>
                         </div>
@@ -1677,15 +1749,18 @@
                             <input type="text" value="${slist.bname}" readonly>
                         </div>
                         <div class="rschedate">
+                        
                             <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
+                            <%-- <fmt:formatDate pattern="yyyy년mm월dd일" value="${slist.sstart}"/> --%>
                             <input type="text" id="scheSdate" name="startdate" class="d" value="${slist.sstart}"> 
                             &nbsp; &nbsp; ~ &nbsp; &nbsp;
+                            <%-- <fmt:formatDate pattern="yyyy년mm월dd일" value="${slist.send}"/> --%>
                             <input type="text" id="scheEdate" name="enddate" class="d" value="${slist.send}">
                         </div>
                         <!-- 참가자 -->
                         <div class="rschepeople">
                             <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
-                            <div class="attendeecount">참여자 0명</div>
+                            <div class="attendeecount">참여자 <span>${slist.count}</span>명</div>
                             <div class="attendee">${slist.attendees}</div>
                             <button id="attendee-edit">참석자 변경</button>
                             <!-- 참석자 모달 -->
@@ -1742,7 +1817,6 @@
                         <div class="rscheplace">
                             <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
                             <input type="text" value="${slist.splace}">
-                            <div id="map"></div>
                         </div>
                         <!-- 메모 -->
                         <div class="rschememo">
@@ -2129,8 +2203,9 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+    <!-- </div>
+    </div> -->
+    
     <script>
 
         //게시글 작성 공개여부 설정
@@ -2193,49 +2268,8 @@
             $(this).css('color', '#333333');
             $(".prevsvg").css('fill', '#111111');
         });
-
-        // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-        var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = {
-                center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-        // 지도를 생성합니다    
-        var map = new kakao.maps.Map(mapContainer, mapOption);
-        // 장소 검색 객체를 생성합니다
-        var ps = new kakao.maps.services.Places();
-        // 키워드로 장소를 검색합니다
-        ps.keywordSearch('서울 kh 정보교육원', placesSearchCB);
-        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        function placesSearchCB(data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
-                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                // LatLngBounds 객체에 좌표를 추가합니다
-                var bounds = new kakao.maps.LatLngBounds();
-                for (var i = 0; i < data.length; i++) {
-                    displayMarker(data[i]);
-                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                }
-                // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-                map.setBounds(bounds);
-            }
-        }
-
-        // 지도에 마커를 표시하는 함수입니다
-        function displayMarker(place) {
-            // 마커를 생성하고 지도에 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.y, place.x)
-            });
-            // 마커에 클릭이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'click', function () {
-                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-                infowindow.open(map, marker);
-            });
-        }
+        
+	
     </script>
 </body>
 

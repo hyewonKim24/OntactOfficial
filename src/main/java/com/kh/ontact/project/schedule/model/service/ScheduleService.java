@@ -16,7 +16,7 @@ public interface ScheduleService {
 	
 	public int updateSchedule(ScheduleDto s);
 	
-	public int deleteSchedule(String bno) ;
+	public int deleteSchedule(int bno) ;
 	
 	public List<ScheduleDto> ListScheduleAll(String pno) throws Exception;
 

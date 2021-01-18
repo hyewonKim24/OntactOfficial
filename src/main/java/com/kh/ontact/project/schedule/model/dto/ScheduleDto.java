@@ -42,4 +42,5 @@ public class ScheduleDto {
 	private Date tstart;
 	private Date tend;
 	private String taskmanager;
+	private int count;
 }

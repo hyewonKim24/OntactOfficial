@@ -45,15 +45,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	@Override
-	public void selectOneSchedule(ScheduleDto s) { // 글 입력 
+	public void selectOneSchedule(ScheduleDto s) {  
 		 scheduleDao.selectOneSchedule(s);
 	}
 	@Override
-	public int updateSchedule(ScheduleDto s) { // 글 입력 
+	public int updateSchedule(ScheduleDto s) {  
 		return scheduleDao.updateSchedule(s);
 	}
 	@Override
-	public int deleteSchedule(String bno) { // 글 입력 
+	public int deleteSchedule(int bno) { 
 		return scheduleDao.deleteSchedule(bno);
 	}
 	

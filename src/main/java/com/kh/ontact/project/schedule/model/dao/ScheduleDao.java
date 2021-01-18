@@ -17,17 +17,17 @@ public class ScheduleDao {
 	private SqlSession sqlSession;
 	
 //	프로젝트 일정 글 
-	public int insertSchedule(ScheduleDto s) { // 글 입력 
+	public int insertSchedule(ScheduleDto s) {  
 		return sqlSession.insert("ScheduleMapper.insertSchedule",s);
 	}
-	public void selectOneSchedule(ScheduleDto s) { // 글 입력 
+	public void selectOneSchedule(ScheduleDto s) {  
 		sqlSession.insert("ScheduleMapper.selectOneSchedule",s);
 	}
 	
-	public int updateSchedule(ScheduleDto s) { // 글 입력 
+	public int updateSchedule(ScheduleDto s) { 
 		return sqlSession.insert("ScheduleMapper.updateSchedule",s);
 	}
-	public int deleteSchedule(String bno) { // 글 입력 
+	public int deleteSchedule(int bno) {  
 		return sqlSession.insert("ScheduleMapper.deleteSchedule",bno);
 	}
 	public List<ScheduleDto> ListScheduleAll(String pno) throws Exception{

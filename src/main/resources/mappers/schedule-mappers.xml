@@ -24,6 +24,7 @@
 		<result property="tstart" column="tstart" />
 		<result property="tend" column="tend" />
 		<result property="taskmanager" column="taskmanager" />
+		<result property="count" column="count"/>
 	</resultMap>
 
 	<!-- boardall 인서트
@@ -57,9 +58,12 @@
 		 	delete from schedule where bno=#{bno}
 		]]>
 	</delete>
+	<select id="attendeeCount" resultType="int" >
+		select count(cstate) from commute where uno= #{uno}
+	</select>
 	<select id="ListScheduleAll" resultType="map" resultMap="resultSchedule">
 		<![CDATA[
-		select b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, s.sstart, s.send, s.splace, s.smemo, listagg(s.attendee, ',') within group(order by s.attendee) as attendees
+		select b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, s.sstart, s.send, s.splace, s.smemo, count(s.attendee) as count, listagg(s.attendee, ',') within group(order by s.attendee) as attendees
 			from boardall b
 			inner join schedule s on b.bno = s.bno
 			inner join users u on u.uno = b.uno
@@ -68,6 +72,8 @@
 			order by b.bno
 		]]>
 	</select>
+	
+	
 	
 	<!-- 전체 일정 보기, u.uname null : 내가 포함된 일정, attendees null : 내가 등록한 일정 -->
 	<select id="selectAllSche" resultMap="resultSchedule">
@@ -79,7 +85,7 @@
                 group by b.bno, b.pno, b.uno, b.bname, b.bopen, b.btype, b.bfirst, b.bdate,s.sstart, s.send, s.splace, s.smemo
                 )bs on p.pno = bs.pno
     		inner join users u on u.uno = bs.uno
-    		where uname = #{uname} or attendees like #{attendee}
+    		where p.pno = #{pno} and (uname = #{uname} or attendees like #{attendee})
    		 	order by bs.sstart
 	</select>
 

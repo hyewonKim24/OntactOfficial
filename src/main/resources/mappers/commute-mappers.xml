@@ -17,9 +17,7 @@
 	
 	<!-- 출퇴근 시간 기간별 조회 -->
 	<select id="allListCount" resultType="int" >
-
 		select count(cstate) from commute where uno= #{uno}
-
 	</select>
 	<select id="selectDailyCommute" 
 		resultType="arraylist"

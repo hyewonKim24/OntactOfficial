@@ -108,7 +108,25 @@ public class ScheduleController {
 		}
 		return "redirect:/scheduleboard";
 	}
-	//
+	
+	// task 글 삭제
+	@RequestMapping(value="/project/schedule/del",method=RequestMethod.GET)
+	public ModelAndView deleteSchedule(ModelAndView mv, @RequestParam(name = "bno") int bno,
+			@RequestParam(name = "pno") String pno) {
+				System.out.println("bno"+bno);
+				System.out.println("pno"+pno);
+				try {
+					int rs =scheduleServ.deleteSchedule(bno);
+					System.out.println(rs+"개 삭제 : task");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				mv.addObject("pno", pno);
+				mv.setViewName("redirect:/scheduleboard");
+				return mv;
+			}
+			
+	
 //	전체 일정 (캘린더)
 	@RequestMapping(value = "/schedule", method = RequestMethod.GET)
 	public String calendarlist(ModelAndView mv) {
@@ -127,10 +145,15 @@ public class ScheduleController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uname=userdetail.getUname(); // 해당 부서의 휴가현황만 볼 수 있도록
 			System.out.println("11세션 값 확인 " + uname);
+			String pno = "22";
+			
+			
 //			List<String> valueArr = request.getParameter("chk");
 			//
 			HashMap<String, String> paramMap1 = new HashMap<String, String>();
 			HashMap<String, String> paramMap2 = new HashMap<String, String>();
+			paramMap1.put("pno", pno);
+			paramMap2.put("pno", pno);
 			List<ScheduleDto> array1 = null;
 			List<ScheduleDto> array2 = null;
 			for (int i =0; i < valueChk.length; i++) {
