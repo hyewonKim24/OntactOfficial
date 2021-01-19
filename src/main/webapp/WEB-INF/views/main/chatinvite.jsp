@@ -144,6 +144,10 @@
         	vertical-align: middle;
         	margin-left:10px;
         }
+        .invite-imgs{
+       	    border-radius: 90px;
+    		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+        }
       
         .tel-other{
            vertical-align: middle;

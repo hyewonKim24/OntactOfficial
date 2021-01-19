@@ -27,5 +27,6 @@ public class AlertDto {
 	private String acontent;
 	private int count;
 	private String pname;
+	private String fdate;
 
 }

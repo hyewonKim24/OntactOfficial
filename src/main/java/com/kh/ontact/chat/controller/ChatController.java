@@ -1,5 +1,6 @@
 package com.kh.ontact.chat.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,7 +160,6 @@ public class ChatController {
 		mdto.setUno(uno);
 		mdto.setCreatchat(1);
 		adto.setUno(uno);
-		System.out.println(chatuno.size() + "사람수");
 		int mcount = chatuno.size() + 1;
 		String chatname = "그룹채팅(" + mcount + ")";
 		String chatno = null;
@@ -171,14 +171,10 @@ public class ChatController {
 		try {
 			// 채팅방이 없으면 채팅방 만들기 + 내 uno 멤버 insert.
 			chatno = chatService.insertChat(chatname);
-			System.out.println(chatno + "chat insert");
 			mdto.setChatno(chatno);
 			adto.setChatno(chatno);
-			System.out.println("mdto:" + mdto);
 			int rs = chatMemService.insertChatMember(mdto);
 			int alertrs = chatalertService.insertChatAlertDefault(adto);
-			System.out.println(rs + "채팅방 인서트 추가");
-			System.out.println(alertrs + "채팅방 알림추가");
 
 			int mrs = 0;
 			int ars = 0;
@@ -300,16 +296,24 @@ public class ChatController {
 		mdto.setUno(uno);
 		adto.setChatno(chatno);
 		adto.setUno(uno);
-
+		String formatdate=null;
 		try {
 			conlist = chatConService.otherlistChatContent(mdto);
 			System.out.println("내용 list:" + conlist);
+			
+			for(int i=0;i<conlist.size();i++) {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				formatdate = format1.format(conlist.get(i).getChatdate());
+				conlist.get(i).setFdate(formatdate);
+			}
+			
 			chatname = chatService.selectchatname(chatno);
-			System.out.println("chatname:" + chatname);
 			int rs = chatalertService.updateChatAlertReset(adto);
 			System.out.println("알림 카운트 reset" + rs);
 			chatmemList = chatMemService.chatmemName(chatno);
 			System.out.println("채팅방 멤버 list:"+chatmemList);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

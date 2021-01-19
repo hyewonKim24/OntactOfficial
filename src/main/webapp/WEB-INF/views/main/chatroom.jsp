@@ -171,12 +171,12 @@ input:focus {
 /* 채팅방 모아보기 모달 */
 .chat-moa {
 	display: none;
-	width: 290px;
+	width: 220px;
 	height: 665px;
 	background-color: #fff;
 	position: fixed;
 	top: 0;
-	left: 185px;
+	left: 255px;
 	z-index: 100;
 }
 
@@ -505,7 +505,7 @@ input:focus {
 								<strong> ${list.usersdto.uname}</strong><br>
 						</div>
 						<p class="other-content-wrap"> ${list.content}</p> 
-						<span class="other-content-date">${list.chatdate }</span>
+						<span class="other-content-date">${list.fdate }</span>
 					</div>
 				</c:if>
 				<c:if test="${list.usersdto.uname eq uname}">

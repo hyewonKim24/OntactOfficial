@@ -1,7 +1,9 @@
 package com.kh.ontact.header.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,8 +158,14 @@ public class HeaderController {
 		String uno=userdetail.getUno();
 		dto.setUno(uno);
 		List<AlertDto> alist = new ArrayList<AlertDto>();
+		String alertdate= null;
 		try {
 			alist=alertService.alertNotList(uno);
+			for(int i=0;i<alist.size();i++) {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd / HH:mm");
+				alertdate = format1.format(alist.get(i).getAdate());
+				alist.get(i).setFdate(alertdate);
+			}
 			System.out.println("알림리스트:"+alist);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,25 +180,60 @@ public class HeaderController {
 		String uno=userdetail.getUno();
 		dto.setUno(uno);
 		List<AlertDto> alist = new ArrayList<AlertDto>();
+		String alertdate= null;
 		try {
 			alist=alertService.alertAllList(uno);
+			for(int i=0;i<alist.size();i++) {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd / HH:mm");
+				alertdate = format1.format(alist.get(i).getAdate());
+				alist.get(i).setFdate(alertdate);
+			}
 			System.out.println("알림 전체 리스트:"+alist);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return alist;
 	}
-	//알림 전체 읽음
+	//미확인 탭에서 전체 읽음
 		@ResponseBody
 		@RequestMapping(value="/alertallread" ,method = {RequestMethod.GET, RequestMethod.POST})
 		public List<AlertDto> alertallread(ModelAndView mv,Authentication authentication,AlertDto dto) {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			System.out.println("알림 전체 읽음 들어옴");
 			String uno=userdetail.getUno();
+			String alertdate= null;
 			dto.setUno(uno);
 			List<AlertDto> alist = new ArrayList<AlertDto>();
 			try {
 				alist = alertService.alertAllRead(uno);
+				for(int i=0;i<alist.size();i++) {
+					SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd / HH:mm");
+					alertdate = format1.format(alist.get(i).getAdate());
+					alist.get(i).setFdate(alertdate);
+				}
+				System.out.println("모두 읽음 후 알림리스트:"+alist);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return alist;
+		}
+		//알림 전체 읽음
+		@ResponseBody
+		@RequestMapping(value="/alertallreadtab2" ,method = {RequestMethod.GET, RequestMethod.POST})
+		public List<AlertDto> alertallreadtab2(ModelAndView mv,Authentication authentication,AlertDto dto) {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			System.out.println("알림 전체 읽음 들어옴");
+			String uno=userdetail.getUno();
+			String alertdate= null;
+			dto.setUno(uno);
+			List<AlertDto> alist = new ArrayList<AlertDto>();
+			try {
+				alist = alertService.alertallreadtab2(uno);
+				for(int i=0;i<alist.size();i++) {
+					SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd / HH:mm");
+					alertdate = format1.format(alist.get(i).getAdate());
+					alist.get(i).setFdate(alertdate);
+				}
 				System.out.println("모두 읽음 후 알림리스트:"+alist);
 			} catch (Exception e) {
 				e.printStackTrace();

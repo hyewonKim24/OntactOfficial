@@ -39,5 +39,11 @@ public class AlertServiceImpl implements AlertService {
 		System.out.println("알림 전체 읽음:"+rs);
 		return alertDao.alertNotList(uno);
 	}
+	@Override
+	public List<AlertDto> alertallreadtab2(String uno) throws Exception {
+		int rs= alertDao.alertAllRead(uno);
+		System.out.println("알림 전체 읽음:"+rs);
+		return alertDao.alertAllList(uno);
+	}
 
 }

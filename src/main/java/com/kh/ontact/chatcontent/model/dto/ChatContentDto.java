@@ -29,6 +29,7 @@ public class ChatContentDto {
 	private int chatfix;
 	private String chatimg;
 	private String chatfilepath;
+	private String fdate;
 	
 	private UsersDto usersdto;
 	

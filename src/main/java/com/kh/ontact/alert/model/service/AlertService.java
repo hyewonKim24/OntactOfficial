@@ -7,15 +7,11 @@ import com.kh.ontact.alert.model.dto.AlertDto;
 public interface AlertService {
 	
 	int alertInsert(AlertDto dto) throws Exception ;
-	
 	int deleteAll(int bno) throws Exception;
-	
 	int alertCount(String uno) throws Exception;
 	
 	List<AlertDto> alertNotList(String uno) throws Exception ;
-	
 	List<AlertDto> alertAllList(String uno) throws Exception ;
-	
 	List<AlertDto> alertAllRead(String uno) throws Exception;
-
+	List<AlertDto> alertallreadtab2(String uno) throws Exception ;
 }

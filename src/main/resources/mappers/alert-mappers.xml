@@ -37,7 +37,7 @@
 	<!-- 내 uno 미확인 알림 리스트 -->
 	<select id="alertNotList" resultMap="resultAlert">
 	 <![CDATA[
-		select a.adate as adate ,a.acontent as acontent,p.pname as pname,p.pno as pno,a.bno as bno from alert a
+		select a.adate as adate ,a.acontent as acontent,a.acount as acount, p.pname as pname,p.pno as pno,a.bno as bno from alert a
 	    inner join project p
 	    on p.pno=a.pno
 	    where a.uno=#{uno} and a.acount=1
@@ -47,7 +47,7 @@
 	<!-- 내 uno 전체 알림 리스트 -->
 	<select id="alertAllList" resultMap="resultAlert">
 	 <![CDATA[
-		select a.adate as adate ,a.acontent as acontent,p.pname as pname,p.pno as pno,a.bno as bno from alert a
+		select a.adate as adate ,a.acontent as acontent,a.acount as acount, p.pname as pname,p.pno as pno,a.bno as bno from alert a
 	    inner join project p
 	    on p.pno=a.pno
 	    where a.uno=#{uno}

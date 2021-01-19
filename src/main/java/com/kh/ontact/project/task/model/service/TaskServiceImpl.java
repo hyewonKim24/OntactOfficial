@@ -33,6 +33,7 @@ public class TaskServiceImpl implements TaskService {
 	@Autowired
 	AlertService alertService;
 	
+	//업무 글 등록 + 알림 등록 
 	@Override
 	public int insertTask(TaskDto tdto,BoardAllDto dto) throws Exception {
 		int rs=0;
