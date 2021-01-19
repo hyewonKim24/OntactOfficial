@@ -1,5 +1,6 @@
 package com.kh.ontact.project.task.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import com.kh.ontact.alert.model.dto.AlertDto;
 import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.project.boardall.model.dao.BoardAllDao;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.files.model.dao.FilesDao;
+import com.kh.ontact.project.files.model.dto.FilesDto;
 import com.kh.ontact.project.reply.model.dao.ReplyDao;
 import com.kh.ontact.project.task.model.dao.TaskDao;
 import com.kh.ontact.project.task.model.dto.TaskDto;
@@ -32,10 +35,12 @@ public class TaskServiceImpl implements TaskService {
 	ProjectMemberService pmService;
 	@Autowired
 	AlertService alertService;
+	@Autowired
+	FilesDao filesdao;
 	
 	//업무 글 등록 + 알림 등록 
 	@Override
-	public int insertTask(TaskDto tdto,BoardAllDto dto) throws Exception {
+	public int insertTask(FilesDto file, TaskDto tdto,BoardAllDto dto) throws Exception {
 		int rs=0;
 			rs=baDao.insertBoardAllTask(dto);
 			rs+=taskDao.insertTask(tdto);
@@ -57,6 +62,27 @@ public class TaskServiceImpl implements TaskService {
 				int ars = alertService.alertInsert(adto);
 				System.out.println(ars+"개 알림등록");
 			}
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			int listsize = file.getFilelist().size();
+			System.out.println(listsize);
+			//파일이 있다면
+			if(listsize!=0) {
+				int result = 0;
+				for(int i=0; i<listsize; i++) {
+					paramMap.put("pno", dto.getPno());
+					paramMap.put("uno", dto.getUno());
+					paramMap.put("fname", file.getFilelist().get(i).getFname());
+					paramMap.put("fsize", file.getFilelist().get(i).getFsize());
+					paramMap.put("fpath", file.getFilelist().get(i).getFpath());
+					paramMap.put("imgsrc", file.getFilelist().get(i).getImgsrc());
+					paramMap.put("foriginalname", file.getFilelist().get(i).getForiginalname());
+					System.out.println("맵"+paramMap);
+					result += filesdao.addFile(paramMap);
+				}
+				System.out.println(result+"행 파일이 추가되었습니다.");
+			}
+			//파일이 있다면
 		return rs;
 	}
 

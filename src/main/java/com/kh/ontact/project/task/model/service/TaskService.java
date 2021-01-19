@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.files.model.dto.FilesDto;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 
 public interface TaskService {
 
-	int insertTask(TaskDto tdto,BoardAllDto dto) throws Exception;
+	public int insertTask(FilesDto file, TaskDto tdto,BoardAllDto dto) throws Exception;
 	List<TaskDto> ListTaskAll(String pno) throws Exception;
 	int deleteTask(int bno) throws Exception;
 	

@@ -22,6 +22,7 @@ import com.kh.ontact.chatalert.model.dto.ChatAlertDto;
 import com.kh.ontact.chatmember.model.dto.ChatMemberDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
+import com.kh.ontact.project.files.model.dto.FilesDto;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
@@ -62,7 +63,7 @@ public class ProjectTaskController {
 				@RequestParam(name = "taskenddate") Date taskenddate,@RequestParam(name = "trate") String trate,
 				@RequestParam(name = "taskpri") String taskpri,@RequestParam(name = "taskopen") int taskopen,
 				@RequestParam(name = "pno") String pno,@RequestParam(name = "taskcontent") String taskcontent,
-				BoardAllDto dto,TaskDto tdto, Authentication authentication) {
+				BoardAllDto dto,TaskDto tdto,FilesDto file, Authentication authentication) {
 				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 				String uno=userdetail.getUno();
 				String uname=userdetail.getUname();
@@ -86,7 +87,7 @@ public class ProjectTaskController {
 				pmdto.setPno(pno);
 				
 				try {
-					int rs =taskService.insertTask(tdto, dto);
+					int rs =taskService.insertTask(file, tdto, dto);
 					System.out.println(rs+"업무 insert 성공");
 					
 				} catch (Exception e) {

@@ -12,8 +12,8 @@
         <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
-       	<link href="${pageContext.request.contextPath}/resources/css/lightbox.min.css" rel="stylesheet">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+       	<link href="${pageContext.request.contextPath}/resources/css/lightbox.min.css" rel="stylesheet">
         <script src="${pageContext.request.contextPath}/resources/js/lightbox.min.js"></script>
         <script src="https://kit.fontawesome.com/22634e2e1a.js" crossorigin="anonymous"></script>
         <style>
@@ -1170,6 +1170,79 @@
                        	</div>
                         <div class="replyCount">댓글 10개</div>
                     </div>
+                    
+                    <!-- 글 수정 -->
+                    <div class="boardedit" style="background-color:white;">
+                    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	<div class="title">
+                           <input type="text" name="bname" class="title_detail" placeholder="제목 입력(선택)" value="${blist.bname }">
+                        </div>
+                        <textarea class="content_detail" name="bdesc" placeholder="내용을 입력하세요">${blist.bdesc }</textarea>
+                       	<div class="uploadFiles">
+                       		<ul class="uploadedFileList-real">
+					<c:forEach items="${file}" var="file" varStatus="e">
+					<c:if test="${blist.bno eq file.bno }">
+                       			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
+                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
+                       				<div class="boardimg-info-real">
+	                       				<a href="${file.fpath }" class="boardimg-name-real">
+	                       					<i class="fa fa-paperclip"></i>${file.foriginalname }
+	                       				</a>
+	                       				<a href='${file.fname}' class='boardimg-delbtn'><i class='fa fa-fw fa-remove'></i></a>
+                       				</div>
+                       				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
+                       			</li>
+                    </c:if>
+                    </c:forEach>
+                       		</ul>
+                       		<div class="textfooter">
+                                <div class="textfooter_func_wrap">
+                                    <a href="">
+                                    <label class="file" for="uploadfile" style="cursor:pointer;"><img
+                                            src="${pageContext.request.contextPath}/resources/img/attachment.png"
+                                            class="textfooter_func"></label>
+	                           		<input type="file" id="uploadfile" name="files" multiple="multiple" style="display:none;">
+                                    </a>
+                                </div>
+                                <div class="textfooter_side">
+                                    <div class="public">
+                                        <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+                                            &#9660;</span>
+                                    </div>
+                                    <div class="public_admin" style="display: none;">
+                                        <img
+                                            src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+                                            &#9660;</span>
+                                    </div>
+                                    <div class="public_setting" style="display: none;">
+                                        <h1 class="public_setting_title">게시물 공개 대상</h1>
+                                        <input type="hidden" id="taskopen" name="bopen" value="0"/>
+                                        <ul>
+                                            <li class="set_li">
+                                                <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"
+                                                    class="setimg">
+                                                <div class="p_set_con">
+                                                    <strong>전체공개</strong>
+                                                    <span>전체 사람들에게 공개됩니다.</span>
+                                                </div>
+                                            </li>
+                                            <li class="set_li_admin">
+                                                <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
+                                                    class="setimg">
+                                                <div class="p_set_con">
+                                                    <strong>관리자만</strong>
+                                                    <span>프로젝트 관리자에게만 공개됩니다.</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                   </div>
+                                </div>
+                                    <button type="submit" id="writebtn" class="writebtn">수정하기</button>
+                            </div>
+                    	 </div>
+                   <!--  글 수정 끝 -->  
+                    
+                    
 
                     <div class="threeBtn">
                         <ul>
@@ -1651,7 +1724,6 @@ $("#writebtn").click(function (event) {
 });
 //게시글 입력/수정 submit 처리시에 첨부파일 정보도 함께 처리
 function filesSubmit(that) {
-	console.log("설마설마"+that)
     var str = "";
     $(".imgsrc").each(function(index){
     	str += "<input type='hidden' name='filelist[" + index + "].imgsrc' value='" + $(this).attr('src') + "'>"
