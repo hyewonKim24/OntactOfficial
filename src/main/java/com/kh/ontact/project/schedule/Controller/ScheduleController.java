@@ -46,15 +46,13 @@ public class ScheduleController {
 	@Autowired
 	UsersService usersService;
 	
-	//메인화면 이동
-	@RequestMapping("/scheduleboard")
-	public ModelAndView main(ModelAndView mv) {
+	//스케줄 디테일로 들어가기
+	@RequestMapping(value="/scheduleboard" ,method=RequestMethod.GET)
+	public ModelAndView main(ModelAndView mv, @RequestParam(name = "pno") String pno) {
 		List<BoardAllDto> blist = new ArrayList<BoardAllDto>();
 		List<ReplyDto> rlist = new ArrayList<ReplyDto>();
 		List<ScheduleDto> list= new ArrayList<ScheduleDto>();
 		List<ProjectMemberDto> ulist= new ArrayList<ProjectMemberDto>();
-		//
-		String pno = "22";
 		try{
 			blist=baService.ListTaskBoardAll(pno);
 			rlist=replyService.ListReply(pno);
@@ -69,20 +67,27 @@ public class ScheduleController {
 		mv.addObject("replylist", rlist);
 		mv.addObject("userlist", ulist);
 		mv.addObject("pno", pno);
-		mv.setViewName("project/projectSche");
+		mv.setViewName("project/projectmaintest");
+//		mv.setViewName("project/projectSche");
 		return mv;
 	}
-	
+	//
 	//프로젝트 일정 
-	@RequestMapping(value = "/project/schedule/ins", method = RequestMethod.GET)
-	public String insertSchedule(BoardAllDto alldto, ScheduleDto s,
+	@RequestMapping(value = "/project/schedule/ins", method = RequestMethod.POST)
+	public ModelAndView insertSchedule(ModelAndView mv, BoardAllDto alldto, ScheduleDto s,
+			@RequestParam(name = "bname") String bname,
+			@RequestParam(name = "bopen") int bopen,
 			@RequestParam(name = "sstart") String sstart,
 			@RequestParam(name = "sstarttime") String sstarttime,
 			@RequestParam(name = "send") String send,
 			@RequestParam(name = "sendtime") String sendtime,
+			@RequestParam(name = "splace",required = false) String splace,
+			@RequestParam(name = "smemo",required = false) String smemo,
 			@RequestParam(name = "attendee", required = false) String attendee,
-			Authentication authentication, RedirectAttributes rttr) {
-		
+			@RequestParam(name = "pno") String pno,
+			Authentication authentication) {
+		 	System.out.println("공개여부" + bopen);
+		 	System.out.println("프로젝트 넘버 " + pno);
 		try {
 			System.out.println("프로젝트 일정 글 인서트진입");
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
@@ -94,24 +99,34 @@ public class ScheduleController {
 			String end = send + " " + sendtime;
 			System.out.println(end);
 			
+			alldto.setPno(pno);
 		    alldto.setUno(uno);
+		    alldto.setBname(bname);
+		    alldto.setBopen(bopen);
+		    
 		    s.setSstart(start);
 		    s.setSend(end);
+		    s.setSplace(splace);
+		    s.setSmemo(smemo);
 		    s.setAttendee(attendee);
 		    
 		    scheduleServ.insertSchedule(alldto, s, attendee);
-			rttr.addFlashAttribute("message", "success");
+			mv.addObject("message", "success");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
-			rttr.addFlashAttribute("msg", e.getMessage());
-			return "redirect:erropage";
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("/errorpage");
 		}
-		return "redirect:/scheduleboard";
+		mv.addObject("pno", pno);
+		mv.setViewName("redirect:/project/projectDetail");
+		return mv;
 	}
 	
 	// schedule 글 삭제
 	@RequestMapping(value="/project/schedule/del",method=RequestMethod.GET)
-	public ModelAndView deleteSchedule(ModelAndView mv, @RequestParam(name = "bno") int bno,
+	public ModelAndView deleteSchedule(ModelAndView mv, 
+			@RequestParam(name = "bno") int bno,
 			@RequestParam(name = "pno") String pno) {
 				System.out.println("bno"+bno);
 				System.out.println("pno"+pno);

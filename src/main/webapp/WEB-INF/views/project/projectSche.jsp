@@ -727,7 +727,7 @@
             letter-spacing: -20px;
         }
         .attendee-search input{
-            width: 475px;
+            width: 410px;
             height: 35px;
             margin-left: 20px;
             margin-right: 0;
@@ -1152,31 +1152,32 @@
             width: 25px;
         }
         
-        #wrap {
-  border: 1px solid red;
-  width: 100%;
-  min-height: 768px;
-  position: relative;
-}
-        
-        #mask {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  background-color: #000;
-  display: none;
-}
+         /* 참석자 모달 변경 */
+		.layer {
+		    position: fixed;
+		    width: 40%;
+		    left: 50%;
+		    margin-left: -21%; /* half of width */
+		    height: 580px;
+		    top: 40%;
+		    margin-top: -150px; /* half of height */
+		    overflow: auto;
+		
+		    /* decoration */
+		    border: 1px solid #dadbdb;
+		    background-color: rgb(255, 255, 255);
+		    box-sizing: border-box;
+		}
+		@media (max-width: 600px) {
+		    .layer {
+		        width: 80%;
+		        margin-left: -40%;
+		    }
+		}
+		.hide {
+		    display: none;
+		}
 
-.ModalPopup {
-  border: 1px solid blue;
-  width: 100px;
-  height: 100px;
-  display: none;
-  position: absolute;
-  z-index: 10000;
-  background-color: #fff;
-}
 
     </style>
     <script>
@@ -1262,16 +1263,16 @@
      	console.log(".sche-res-close"+attendeename);
      	
      	//참석자 하나씩 삭제
-     	
-     	
-        //일정글 결과화면 : 참석자 변경 모달생성
-        $("#attendee-edit").click(function(){    
-            $("#attendee-modal").attr("style", "display:block");
-            });
-            $(".close").click(function(){
-            $("#attendee-modal").attr("style", "display:none");
-        });
 
+        $('.js-open').click(function () {
+            var $layer = $('.js-layer');
+            $layer.removeClass('hide');
+        });
+        $('.close').click(function () {
+            var $layer = $('.js-layer');
+            $layer.addClass('hide');
+        });
+        
         $(".pick").click(function(){
             if($(this).is(":checked") == true){
                 $p=$(this).parent(".userlist_wrap");
@@ -1373,7 +1374,9 @@
                                 <rect y="31" width="50" height="3" />
                             </g>
                         </svg> 전체 <span class="pj_sb_alarm">00</span>
-                    </a></li>
+                    </a>
+                </li>
+           </ul>
         </nav>
 
 
@@ -1523,7 +1526,7 @@
 
                     <!-- 혜림 : 일정 입력화면-->
                     <div id="schedule" class="writemenu">
-                    <form id="scheduelBoardForm" method="get" action="${pageContext.request.contextPath}/project/schedule/ins">
+                    <form id="scheduelBoardForm" method="get" action="${pageContext.request.contextPath}/project/schedule/ins?pno=${pno}">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     	 <input type="hidden" name="pno" id="pno" value="${pno}">
                         <div class="textbody">
@@ -1610,6 +1613,10 @@
                         </div>
                         </form>
                     </div>
+                    
+                    
+                    
+                    
                     <div id="todo" class="writemenu">
                         <div class="textbody">
                             <div class="title">
@@ -1657,6 +1664,10 @@
                     </div>
                 </div>
             </div>
+            
+            
+            
+            
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
@@ -1769,8 +1780,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
                 <div class="boardResult">
                     <div class="result_wrap">
                         <!-- 일정, 제목-->
@@ -1791,23 +1800,26 @@
                             <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
                             <div class="attendeecount">참여자 <span>${slist.count}</span>명</div>
                             <div class="attendee">${slist.attendees}</div>
-                            <button id="attendee-edit">참석자 변경</button>
+                            <button class="js-open  open-button">참석자 변경</button>
                             <!-- 참석자 모달 -->
-                            <div id="wrap">
+                            <div class="js-layer  layer  hide">
                             <!-- <div id="attendee-modal"> -->
                                 <!-- <div class="attendee_modal-layer"></div> -->
-                                <form action="" method="">
 		                             <div class="ModalPopup">
+		                             
                                     <!-- <div class="attendee-modal-content"> -->
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
+                              			  
                                             <div class="attendee-search">
                                                 <input type="text" placeholder="참석자 이름 검색">
                                                 <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
                                             </div>
                                             <div class="attendee-people">
                                                 <!-- 선택된 참가자가 표시됨  -->
+                                                <form action="" method="">
                                                 <div class="pick-attendee"></div>
+                                                </form>
                                                 <div class="userlist_wrap">
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
                                                     <span>HYELIM</span>
@@ -1838,27 +1850,29 @@
                                                 <button type="submit" class="edit-btn" onclick=" changeAttendee();">확인</button>
                                                 </div> 
                                             </div>
+                                            
                                         </div>
                                     </div>
-                                </form>
+                                
                             </div>
                             <div id="mask"></div>
                             <!-- <input type="text" id="schePname"> -->
-                        </div>
-                        <!-- 장소 -->
-                        <div class="rscheplace">
-                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
-                            <input type="text" value="${slist.splace}">
-                        </div>
-                        <!-- 메모 -->
-                        <div class="rschememo">
-                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
-                        <textarea class="content_detail2" placeholder="${slist.smemo}"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="replyCount">댓글 10개</div>
+	                        </div>
+	                        <!-- 장소 -->
+	                        <div class="rscheplace">
+	                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
+	                            <input type="text" value="${slist.splace}">
+	                        </div>
+	                        <!-- 메모 -->
+	                        <div class="rschememo">
+	                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
+	                        	<textarea class="content_detail2" placeholder="${slist.smemo}"></textarea>
+	                        </div>
+                    	</div>
+                	</div>
                 </div>
+				</c:forEach>
+                <div class="replyCount">댓글 10개</div>
 
                 <div class="threeBtn">
                     <ul>
@@ -1877,8 +1891,7 @@
                     </ul>
                 </div>
             </div>
-            
-            
+
              <!-- 댓글 출력 -->
              <div class="reply">
                 <button class="replyMore">이전 댓글 더보기</button>
@@ -1907,7 +1920,6 @@
                     </span>
                     <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
                 </div>
-                </c:forEach>
                 
                 <!-- 댓글 입력 -->
                 <div class="replyFrom">
@@ -1918,6 +1930,9 @@
                     <button id="replyReg">등록</button>
                 </div>
             </div>
+            
+            
+            
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
@@ -2268,8 +2283,6 @@
         });
         $('.wrap').find('textarea').keyup();
 
-
-
         //작성된 글 더보기 메뉴 (혜림)
         $(".option #dropdown").on("click", function (e) {
             e.preventDefault();
@@ -2300,35 +2313,6 @@
             $(this).css('color', '#333333');
             $(".prevsvg").css('fill', '#111111');
         });
-        
-        jQuery.fn.center = function() {
-        	  this.css('top', Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + 'px');
-        	  this.css('left', Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + 'px');
-        	  return this;
-        	}
-
-        	function wrapWindowByMask() {
-        	  var maskHeight = $(document).height();
-        	  var maskWidth = $(window).width();
-
-        	  $('#mask').css({
-        	    'width': maskWidth,
-        	    'height': maskHeight
-        	  });
-        	  $('#mask').fadeTo(10, 0.8);
-
-        	  $('.ModalPopup').show();
-        	  $('.ModalPopup').center();
-        	}
-
-        	$(function() {
-        	  $('.openMask').click(function(e) {
-        	    e.preventDefault();
-        	    wrapWindowByMask();
-        	  });
-        	});
-        	
-	
     </script>
 </body>
 

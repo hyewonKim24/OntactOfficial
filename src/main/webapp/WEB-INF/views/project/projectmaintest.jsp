@@ -13,10 +13,16 @@
     <title>Document</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- 장소 검색 API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8f272dc1ba4f98e1be5c993c17cae5d&libraries=services"></script>
+    <!-- date picker -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-       <!-- 차트 그리기 -->
+     <!-- time picker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
     	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" 
     	crossorigin="anonymous"></script>
@@ -906,7 +912,505 @@
 				font-family: Noto Sans KR;
 			}
 
-			/* 윤진 :할일 글 입력창*/
+
+/* 혜림 일정 글 작성 css */
+        .schepeople,
+        .schedate {
+            width: 648px;
+            height: 38px;
+            border-bottom: 1px solid #dadbdb;
+            box-sizing: border-box;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .schedate .d {
+            width: 120px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+            margin-right: 10px;
+        }
+
+        .schedate .t {
+            width: 80px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+        }
+        .schepeople img{
+          float: left;
+          padding-right : 10px;
+        }
+/* 참석자 모달 리스트 */
+        .sche-res-wrap{
+			position:absolute;
+			display:inline-block;
+			width: 600px;
+			height: 30px;
+            box-sizing: border-box;
+		}
+		.sche-res{
+			padding:5px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+		}
+		.sche-res-close{
+            border: 1px solid #e7e7e7;
+            background: white;
+            width: 27px;
+            height: 27px;
+            box-sizing: border-box;
+        }
+		.sche-res-append{
+            padding:5px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+        }
+		.sche-res-list{
+			width: 100px;
+			height: 20px;
+			line-height: 25px;
+			cursor: pointer;
+			padding-top : 5px;
+			text-align : center;
+		}
+		
+		.sche-res-add-wrap{
+			width: 110px;
+			height: 100px;
+        	display:none;
+			overflow: scroll;
+			background-color: #fff;
+			border: 1px solid #787878;
+			border-radius: 3px;
+			z-index: 999;
+		    position: absolute;
+   			top: 33px;
+		}
+		#schePname {
+            width: 135px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+        }
+/* 참석자 모달 리스트 끝 */	
+        .scheplace{
+            width: 648px;
+            border-bottom: 1px solid #dadbdb;
+            box-sizing: border-box;
+            padding-bottom: 10px;
+            margin-bottom: 17px;
+        }
+        #location{
+            width: 600px;
+            height: 28px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid #dadbdb;
+        }
+        .sche_icon{
+            width: 15px;
+            padding: 5px;
+            vertical-align: middle;
+        }
+        #map{
+            width: 93%;
+            height: 200px;
+            margin-left: 25px;
+        }
+        #aabbcc{
+        	width: 600px;
+            height: 28px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid #dadbdb;
+            margin-left : 25px;
+            margin-bottom : 10px;
+        }
+        #calendaricon{
+            vertical-align: top;
+            padding-top: 0;
+        }
+        .schememo textarea{
+            width: 600px;
+        }
+/* 혜림 css : 일정 작성 부분 끝  */
+
+/* 혜림 css : 일정 글 결과화면 시작*/
+        .result_wrap{
+            width: 650px;
+            min-height: 151px;
+            background-color: #fafafa;
+            border: 1px solid #e7e7e7;
+        }
+        .rstart{
+            width: 80px;
+            height: 60px;
+            padding: 10px;
+            float: left;
+            text-align: center;
+            border-right: 1px solid #e7e7e7;
+            border-bottom: 1px solid #e7e7e7;
+        }
+        #month{
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        #day{
+            height: 30px;
+            line-height: 30px;
+            font-size: 30px;
+            letter-spacing: 5px;
+        }
+        .rtitle{
+            width:648px;
+            height: 40px;
+            
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .rtitle input{
+            width: 648px;
+            height: 38px;
+            box-sizing: border-box;
+            border: none;
+            padding-left: 10px;
+            background-color: #fafafa;
+        }
+        .rschedate{
+            width: 648px;
+            height: 40px;
+            line-height: 40px;
+            
+            padding-left: 10px;
+            border-bottom: 1px solid #e7e7e7;
+            box-sizing: border-box;
+        }
+        .rschedate input{
+            width: 120px;
+            height: 30px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #fafafa;
+            
+        }
+        .rschepeople {
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .rschepeople img{
+            float: left;
+        }
+        .attendeecount{
+            width: 200px;
+            height: 25px;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-left: 34px;
+        }
+        .attendee{
+            height: 35px;
+            line-height: 35px;
+            font-size: 14px;
+            margin-left: 34px;
+            float: left;
+        }
+        .open-button{
+            width: 100px;
+            height: 30px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid #e7e7e7;
+            background: none;
+            margin-right: 10px;
+            float: right;
+        }
+		/* 참석자 모달 변경 */
+		.layer {
+		    position: fixed;
+		    width: 40%;
+		    left: 50%;
+		    margin-left: -21%; /* half of width */
+		    height: 580px;
+		    top: 40%;
+		    margin-top: -150px; /* half of height */
+		    overflow: auto;
+		
+		    /* decoration */
+		    border: 1px solid #dadbdb;
+		    background-color: rgb(255, 255, 255);
+		    box-sizing: border-box;
+		}
+		@media (max-width: 600px) {
+		    .layer {
+		        width: 80%;
+		        margin-left: -40%;
+		    }
+		}
+		.hide {
+		    display: none;
+		}
+		
+        /* 참석자 변경 모달 */
+        /* #attendee-modal{
+            display: none;
+           	position: relative; 
+            height: 0;
+            width:100%;
+            float: left; 
+            z-index: 9999;
+        }
+        .attendee-modal-content{
+            position: relative;
+            width:550px;
+            height: 580px;
+            margin:100px auto;
+            background:#fefefe;
+        } */
+        .attendee-title{
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            font-size: 16px;  
+            background:#e7e7e7;
+        }
+        .attendee-search{
+            height: 35px;
+            padding: 10px 0;
+            background:#e7e7e7;
+            letter-spacing: -20px;
+        }
+        .attendee-search input{
+            width: 410px;
+            height: 35px;
+            margin-left: 20px;
+            margin-right: 0;
+            border: none;
+            box-sizing: border-box;  
+            vertical-align:bottom; 
+        }
+        .attendee-search button{
+            height: 35px;
+            margin: 0;
+            border: none;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .attendee-search img{
+            width: 23px;
+        }
+        /* 참석자 선택하면 추가되는 곳 */
+        .pick-attendee input{
+            width: 100px;
+            height: 35px;
+            margin-top: 8px;
+            margin-right: 8px;
+            background-color: #e7e7e7;
+            border: none;  
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: 700;
+        }
+        .attendee-people{
+            padding : 0 20px;
+        }
+        .pick-attendee{
+            padding-left: 10px;
+            height: 40px;
+            line-height: 45px;
+            margin-bottom: 18px;
+        }
+        .userlist_wrap{
+            height: 70px;
+            border-bottom: 1px solid #e7e7e7;   
+        }
+        .userlist_wrap img{
+            width: 40px;
+            height: 40px;
+            padding : 15px 20px 0 10px;
+        }
+        .userlist_wrap span{
+            height: 70px;
+            line-height: 70px;
+            font-weight: 700;
+            
+        }
+        .userlist_wrap .pick{
+            margin-top : 23px;
+            width: 60px;
+            height: 25px;
+            float: right;
+            border: 1px solid #e7e7e7;   
+            color : #a2a2a2; 
+        }
+        .edit-btn{
+            width: 100px;
+            height: 32px;
+            background-color: #5A3673;
+            color:#F2F2F2;
+            border : none;
+            border-radius: 3px;
+        }
+        .modal-btn{
+            padding-top: 17px;
+            text-align: center;
+        }
+        .attendee_modal-layer {
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.5);
+        }
+        /* 모달 끝 */
+        .rscheplace{
+            clear: both;
+            padding-left: 10px;
+        }
+        .rscheplace input{
+            width: 600px;
+            height: 30px;
+            font-size: 14px;
+            box-sizing: border-box;
+            border: none;
+            margin-left: 3px;
+            background-color: #fafafa;
+        }
+        .rschememo{
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .rschememo textarea{
+            width: 605px;
+            background-color: #fafafa;
+        }
+        /* 댓글 갯수  */
+        .replyCount {
+            width: 650px;
+            height: 25px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #c0c0c0;
+            text-align: right;
+        }
+		/* 좋아요 댓글 담아두기 버튼 */
+        .threeBtn {
+            width: 650px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 25px;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        .threeBtn ul li {
+            float: left;
+        }
+
+        .threeBtn ul li a {
+            vertical-align: middle;
+            padding-right: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #787878;
+        }
+
+        /* 댓글 출력 부분 */
+        .reply {
+            width: 700px;
+            padding: 10px 0;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        .replyMore {
+            background-color: #f2f2f2;
+            border: none;
+            font-size: 14px;
+            color: #5A3673;
+            padding: 10px 15px 20px 15px;
+        }
+
+        .defaultReply {
+            width: 670px;
+            margin: 0 15px;
+            padding-bottom: 10px;
+        }
+
+        .replayPfImg {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+
+        .replayPfImg2 {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+
+        .replyTitle {
+            height: 13px;
+            font-size: 13px;
+            font-weight: 700;
+            padding-right: 10px;
+        }
+
+        .replyschedate {
+            font-size: 13px;
+            color: #c0c0c0;
+        }
+
+        .replyEdit {
+            float: right;
+        }
+
+        .replyEdit a {
+            color: #c0c0c0;
+            font-size: 12px;
+        }
+
+        #replyResult {
+            width: 643px;
+            margin-top: 5px;
+        }
+		/* 댓글 입력 부분 */
+        .replyFrom {
+            margin: 10px 0 10px 15px;
+        }
+
+        .replyFrom input {
+            width: 550px;
+            height: 30px;
+            margin: 5px 5px 5px 0;
+            box-sizing: border-box;
+            vertical-align: middle;
+            border: 1px solid #c0c0c0;
+        }
+
+        #replyReg {
+            width: 60px;
+            height: 30px;
+            background-color: #5A3673;
+            border-radius: 3px;
+            color: #e7e7e7;
+            border: none;
+            font-family: Noto Sans KR;
+        }
+/* 혜림 css : 일정 글 결과화면 끝*/
+
+
+
+/* 윤진 :할일 글 입력창*/
 			.todoinput {
 				width: 100%;
 			}
@@ -1111,9 +1615,9 @@
 				margin-top: 10px;
 			}
 
-			/* 윤진 : 우측 바 */
+/* 윤진 : 우측 바 */
 			.rightBar {
-				position: fixed;
+				
 				width: 250px;
 				height: 100%;
 				margin: 80px 0 0 950px;
@@ -1484,7 +1988,7 @@
 							</div>
 						</div>
 
-						<!-- 혜원 )  업무 글작성 부분 -->
+<!-- 혜원 )  업무 글작성 부분 -->
 						<%-- <c:if test="${not empty taskSuccess}">
 							<script>
 								alert("1개의 글이 등록되었습니다");
@@ -1790,62 +2294,276 @@
 									frm.submit();
 								}
 							</script>
+<!-- 혜원 업무 글 작성 부분 끝 -->
 
+							
+<!-- 혜림 일정 글 작성 부분 -->
+				<div id="schedule" class="writemenu">
+                    <form id="scheduelBoardForm" name="sche_frm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    	 <input type="hidden" name="pno" id="pno" value="${pno}">
+                        <div class="textbody">
+                            <div class="title">
+                                <input type="text" class="title_detail" placeholder="일정 제목을 입력하세요" name="bname" autocomplete="off">
+                            </div>
+                            <div class="schedate">
+                                <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
+                                <input type="text" id="scheSdate" name="sstart" class="d schedatepick" autocomplete="off">
+                                <input type="text" id="scheStime" name="sstarttime" class="t "> &nbsp; &nbsp; ~ &nbsp;
+                                &nbsp;
+                                <input type="text" id="scheEdate" name="send" class="d schedatepick" autocomplete="off">
+                                <input type="text" id="scheEtime" name="sendtime" class="t">&nbsp; &nbsp; &nbsp; 
+                                <!-- <input type="checkbox" id="allday" name="allday"> &nbsp; 종일 -->
+                            </div>
+                            <div class="schepeople">
+                                <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
+                                <!-- <input type="text" id="schePname" name="attendee" autocomplete="off"> -->
+                                <div class="sche-res-wrap">
+                                	<input type="text" class="sche-res" placeholder="참석자 추가" autocomplete="off">
+                          			<input type="hidden" class="sche-res-uno-c" name="scheuno">
+                          			 <!-- 업무담당자 모달 /  해당 project 유저 list 뿌리기 -->
+                          			 <div class="sche-res-add-wrap">
+                          				<div class="sche-add">
+	                          				<ul>
+	                          					<c:forEach items="${userlist}" var="ulist" varStatus="e">
+	                          					<li class="sche-res-list sche-res-list${e.count}">${ulist.uname}</li>
+	                          					<input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }">
+	                          					
+	                          					</c:forEach>
+	                          				</ul>
+                          				</div>
+                          			</div>
+                          		</div>
+                            </div>
+                            <div class="scheplace">
+                                <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
+                                <input type="text" id="location" placeholder="장소를 입력해주세요">
+                                <input type="text" name="splace" id="aabbcc">
+                                <div id="map"></div>
+                            </div>
+                            <div class="schememo">
+                                <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
+                            <textarea class="content_detail2" placeholder="내용을 입력하세요" name="smemo"></textarea>
+                            </div>
+                        </div>
+                        <div class="textfooter">
+                            <div class="textfooter_func_wrap">
+                                <a href=""><img src="${pageContext.request.contextPath}/resources/img/attachment.png" class="textfooter_func"></a>
+                                <a href=""><img src="${pageContext.request.contextPath}/resources/img/picture-2.png" class="textfooter_func"></a>
+                            </div>
+                            <div class="textfooter_side">
+                                <div class="public">
+                                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+                                        &#9660;</span>
+                                </div>
+                                <div class="public_admin" style="display: none;">
+                                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+                                        &#9660;</span>
+                                </div>
+                                <div class="public_setting" style="display: none;">
+                                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+                                    <input type="hidden" id="taskopen" name="bopen" value="0" />
+                                    <ul>
+                                        <li class="set_li">
+                                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+                                            <div class="p_set_con">
+                                                <strong>전체공개</strong>
+                                                <span>전체 사람들에게 공개됩니다.</span>
+                                            </div>
+                                        </li>
+                                        <li class="set_li_admin">
+                                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+                                            <div class="p_set_con">
+                                                <strong>관리자만</strong>
+                                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           <button class="writebtn" onclick="insertSchedule()">올리기</button>
+                        </div>
+                        </form>
+                    </div>
+                    <script>
+					    var result='${message}';
+						console.log(result);
+						if(result == "success") {
+					        alert("일정이 등록되었습니다.");
+					    } 
+						var test ='${userlist}';
+						for(i=0; i<test.length; i++){
+							console.log(test.uname);	
+						}
+						function insertSchedule(){
+							var frm = document.sche_frm;
+							frm.action = "${pageContext.request.contextPath}/project/schedule/ins";
+							frm.method = "post";
+							frm.submit();
+						}
+						
+	
+				        // 일정 글 date picker
+				        $(function() {
+				        	
+				        	$('.schedatepick').datepicker({
+				                dateFormat: 'yy-mm-dd' //Input Display Format 변경
+				                ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+				                ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+				                ,changeYear: true //콤보박스에서 년 선택 가능
+				                ,changeMonth: true //콤보박스에서 월 선택 가능                
+				                // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+				                // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+				                // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+				                // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+				                ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+				                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+				                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+				                ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+				                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+				                ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+				                ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
+				            });                    
+				            /* $('#scheSdate').datepicker();
+				            $('#scheEdate').datepicker();  */
+				            //초기값을 오늘 날짜로 설정
+				            $('.schedatepick').datepicker('setDate', 'today');
+				            $('.schedatepick').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
+				                    
+				        });
+						/* 일정 글 타임 피커  */				
+				        $(function() {
+				    		$("#scheStime, #scheEtime").timepicker({
+						        timeFormat: 'HH:mm',
+						        interval: 30,
+						        minTime: '08',
+						        maxTime: '22:00',
+						        defaultTime: '08',
+						        startTime: '08:00',
+						        dynamic: false,
+						        dropdown: true,
+						        scrollbar: true        
+				    	    });
+				        });
+						
+				    $(document).ready(function(){  
+				    	 var count = 1;
+				         var attendeename = $(".sche-res-list").text();
+				         console.log("ㄴㅇ" + attendeename);
+				         
+				         //일정 글 작성 : 참석자 리스트 드롭다운 
+				         $(".sche-res").click(function (){
+				     	    $p=$(this).parents(".schepeople");
+				     	    $p.find(".sche-res-add-wrap").toggle();
+				     	});
+				         
+				        //일정 글 작성 : 참석자 리스트 클릭시 해당 참석자 추가 
+				     	$(".sche-res-list").click(function(){
+				     	     $p=$(this).parents(".schepeople");
+				     	     var test = $(this).text();
+				             $p.find(".sche-res-add-wrap").hide();
+				             var add = '<input type="text" class="' + test +' sche-res-append" name="attendee" autocomplete="off" value="'+test+'">'+'<input type="button" class="sche-res-close '+test +'" id="'+ test +'" value="x">';
+				             $(".sche-res-wrap").append(add);
+				             
+				             $(document).on('click','#'+test,function(){
+				                 $p=$(this).parent(".sche-res-wrap");
+				                 $p.find("."+test).remove();
+				             });
+				         });
+				     	console.log(".sche-res-close"+attendeename);
+				     	
+				     	//일정 글 작성 : 장소 검색 API
+				        var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+			            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			                mapOption = {
+			                    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+			                    level: 5 // 지도의 확대 레벨
+			                };
+			            // 지도를 생성합니다    
+			            var map = new kakao.maps.Map(mapContainer, mapOption);
+			        	$("#location").keyup(function(){
+			    		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+			           
+			            // 장소 검색 객체를 생성합니다
+			            var ps = new kakao.maps.services.Places();
+			            // 키워드로 장소를 검색합니다
+			    		var keyword = $("#location").val();
+			    		console.log("위치정보 : " + keyword);
+			            ps.keywordSearch(keyword, placesSearchCB);
+			            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+			
+			    		});
+			           function placesSearchCB(data, status, pagination) {
+			                if (status === kakao.maps.services.Status.OK) {
+			                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			                    // LatLngBounds 객체에 좌표를 추가합니다
+			                    var bounds = new kakao.maps.LatLngBounds();
+			                    for (var i = 0; i < data.length; i++) {
+			                        displayMarker(data[i]);
+			                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+			                    }
+			                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			                    map.setBounds(bounds);
+			                }
+			            }
+			
+			            // 지도에 마커를 표시하는 함수입니다
+			            function displayMarker(place) {
+			                // 마커를 생성하고 지도에 표시합니다
+			                var marker = new kakao.maps.Marker({
+			                    map: map,
+			                    position: new kakao.maps.LatLng(place.y, place.x)
+			                });
+			                // 마커에 클릭이벤트를 등록합니다
+			                kakao.maps.event.addListener(marker, 'click', function () {
+			                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+			                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+			                    infowindow.open(map, marker);
+			                    console.log("마커위의" + place.place_name);
+			                    $("#aabbcc").val(place.place_name);
+			                });
+			            }
+			            
+				     	
+						//참석자 변경 모달
+				        $('.js-open').click(function () {
+				            var $layer = $('.js-layer');
+				            $layer.removeClass('hide');
+				        });
+				        $('.close').click(function () {
+				            var $layer = $('.js-layer');
+				            $layer.addClass('hide');
+				        });
+				        
+				        $(".pick").click(function(){
+				            if($(this).is(":checked") == true){
+				                $p=$(this).parent(".userlist_wrap");
+				                var user = $p.find("span").text();
+				                // var add = '<span>'+ user +'</span>'
+				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendee-child">'
+				                $(".pick-attendee").append(add);
+				            } else if($(this).is(":checked") == false){
+				                $p=$(this).parent(".userlist_wrap");
+				                var user = $p.find("span").text();
+				                if($("." + user).val() == user){
+				                    var aaa = $(".test").val();
+				                    console.log(aaa);
+				                    $("." + user).remove();
+				                 }
+				            }
+				        })
+				        function changeAttendee(){
+				            var change = $("input[name='attendee-child']").val();
+				            console.log("왜이래" +change)            
+				            $("input[name='attendee']").val(change);
+				
+				        }
+				    });
 
-							<div id="schedule" class="writemenu">
-								<div class="textbody">
-									<div class="title">
-										<input type="text" class="title_detail" placeholder="제목 입력(선택)">
-									</div>
-									<textarea class="content_detail2"
-										placeholder="내용을 입력하세요"></textarea>
-								</div>
-								<div class="textfooter">
-									<div class="textfooter_func_wrap">
-										<a href=""><img
-												src="${pageContext.request.contextPath}/resources/img/attachment.png"
-												class="textfooter_func"></a>
-										<a href=""><img
-												src="${pageContext.request.contextPath}/resources/img/picture-2.png"
-												class="textfooter_func"></a>
-									</div>
-									<div class="textfooter_side">
-										<div class="public">
-											<img
-												src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-												&#9660;</span>
-										</div>
-										<div class="public_admin" style="display: none;">
-											<img
-												src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-												&#9660;</span>
-										</div>
-										<div class="public_setting" style="display: none;">
-											<h1 class="public_setting_title">게시물 공개 대상</h1>
-											<ul>
-												<li class="set_li">
-													<img src="${pageContext.request.contextPath}/resources/img/worldwide.png"
-														class="setimg">
-													<div class="p_set_con">
-														<strong>전체공개</strong>
-														<span>전체 사람들에게 공개됩니다.</span>
-													</div>
-												</li>
-												<li class="set_li_admin">
-													<img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
-														class="setimg">
-													<div class="p_set_con">
-														<strong>관리자만</strong>
-														<span>프로젝트 관리자에게만 공개됩니다.</span>
-													</div>
-												</li>
-											</ul>
-										</div>
-										<button class="writebtn">올리기</button>
-									</div>
-								</div>
-							</div>
-							<!-- 윤진 )  할일 글작성 부분 -->
+				    </script>
+<!-- 혜림 일정 글 작성 부분 끝 -->
+                    
+<!-- 윤진 )  할일 글작성 부분 -->
 							<div id="todo" class="writemenu">
 								<form name="todo_frm" id="todo_frm" class="todoform">
 									<%-- <input type="hidden" name="${_csrf.parameterName}"
@@ -1947,7 +2665,6 @@
 									</div>
 								</form>
 							</div>
-
 							<script>
 								//윤진: todo 마감일 datepicker 선언
 								var tdcnt = 2;
@@ -2096,8 +2813,10 @@
 							</script>
 					</div>
 				</div>
+<!--  윤진 ) 업무 내용 작성 부분 끝 -->
 
-				<!--  혜원 ) 업무 내용 출력  -->
+
+<!--  혜원 ) 업무 내용 출력  -->
 				<c:forEach items="${tasklist}" var="tlist" varStatus="e">
 					<div class="one">
 						<div class="boardHeader">
@@ -2132,7 +2851,7 @@
 						</div>
 
 						<div class="boardResult">
-							<!-- 혜원 ) 업무 내용 뿌리기 -->
+<!-- 혜원 ) 업무 내용 뿌리기 -->
 							<div class="task_wrap">
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
@@ -2371,8 +3090,6 @@
 										});
 									</script>
 
-
-
 									<div class="task-03">
 										<img src="${pageContext.request.contextPath}/resources/img/svg/calendar-5.svg"
 											width="20px" height="20px" class="task-icon02">
@@ -2473,9 +3190,6 @@
 										});
 
 									</script>
-
-
-
 
 									<div class="task-04">
 										<img src="${pageContext.request.contextPath}/resources/img/svg/bar-chart-line-fill.svg"
@@ -2765,8 +3479,6 @@
 								</div>
 							</div>
 							<div class="replyCount">댓글 10개</div>
-
-
 							<div class="threeBtn">
 								<ul>
 									<li>
@@ -2924,7 +3636,186 @@
 
 				</c:forEach>
 			</div>
-			<!--우측 사이드바-->
+<!-- 혜원 업무 글 결과화면 끝 -->
+			
+<!-- 혜림 일정 글 결과화면 -->
+			<c:forEach items="${schelist}" var="slist" varStatus="e">
+            <div class="one">
+                <div class="boardHeader">
+                    <div class="writeInfo">
+                        <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+                        <div class="writer">${slist.uname}</div>
+                        <div class="writeschedate">${slist.bdate}</div>
+                        <img src="">
+                    </div>
+                    <div class="option">
+                        <div>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                        </div>
+                        <div>
+                            <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
+                        </div>
+                        <div class="editDropdown">
+                            <ul>
+                                <li><a href="${pageContext.request.contextPath}/project/schedule/del?bno=${slist.bno}&pno=${pno}">글 삭제</a></li>
+                                <li><a href="">다른 프로젝트에 올리기</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="boardResult">
+                    <div class="result_wrap">
+                        <!-- 일정, 제목-->
+                        <div class="rtitle">
+                            <input type="text" value="${slist.bname}" readonly>
+                        </div>
+                        <div class="rschedate">
+                        
+                            <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
+                            <%-- <fmt:formatDate pattern="yyyy년mm월dd일" value="${slist.sstart}"/> --%>
+                            <input type="text" id="scheSdate" name="startdate" class="d" value="${slist.sstart}"> 
+                            &nbsp; &nbsp; ~ &nbsp; &nbsp;
+                            <%-- <fmt:formatDate pattern="yyyy년mm월dd일" value="${slist.send}"/> --%>
+                            <input type="text" id="scheEdate" name="enddate" class="d" value="${slist.send}">
+                        </div>
+                        <!-- 참가자 -->
+                        <div class="rschepeople">
+                            <img src="${pageContext.request.contextPath}/resources/img/users.png" class="sche_icon">
+                            <div class="attendeecount">참여자 <span>${slist.count}</span>명</div>
+                            <div class="attendee">${slist.attendees}</div>
+                            <button class="js-open  open-button">참석자 변경</button>
+                            <!-- 참석자 모달 -->
+                            <div class="js-layer  layer  hide">
+                            <!-- <div id="attendee-modal"> -->
+                                <!-- <div class="attendee_modal-layer"></div> -->
+		                             <div class="ModalPopup">
+                                    <!-- <div class="attendee-modal-content"> -->
+                                        <div class="attendee-title">참석자변경</div>
+                                        <div class="attendee-list">
+                              			  
+                                            <div class="attendee-search">
+                                                <input type="text" placeholder="참석자 이름 검색">
+                                                <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
+                                            </div>
+                                            <div class="attendee-people">
+                                                <!-- 선택된 참가자가 표시됨  -->
+                                                <form action="" method="">
+                                                <div class="pick-attendee"></div>
+                                                </form>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>HYELIM</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>TEST1</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>TEST2</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div >
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>test3</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="userlist_wrap">
+                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
+                                                    <span>오은실천재</span>
+                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                </div>
+                                                <div class="modal-btn">
+                                                <button class="edit-btn close" >취소</button> &nbsp; 
+                                                <button type="submit" class="edit-btn" onclick=" changeAttendee();">확인</button>
+                                                </div> 
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                            <div id="mask"></div>
+                            <!-- <input type="text" id="schePname"> -->
+	                        </div>
+	                        <!-- 장소 -->
+	                        <div class="rscheplace">
+	                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
+	                            <input type="text" value="${slist.splace}">
+	                        </div>
+	                        <!-- 메모 -->
+	                        <div class="rschememo">
+	                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
+	                        	<textarea class="content_detail2" placeholder="${slist.smemo}"></textarea>
+	                        </div>
+                    	</div>
+                	</div>
+                </div>
+				</c:forEach>
+                <div class="replyCount">댓글 10개</div>
+
+                <div class="threeBtn">
+                    <ul>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/like.png" class="like"
+                                    style="width: 19px; padding-right: 10px;  padding-bottom : 5px; vertical-align: middle;">좋아요</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/chat-03.png" class="replyReg"
+                                    style="width: 17px; padding-right: 10px;vertical-align: middle;">댓글작성</a>
+                        </li>
+                        <li>
+                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/bookmark.png" class="save"
+                                    style="width: 13px; padding-right: 10px; vertical-align: middle;">담아두기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+             <!-- 댓글 출력 -->
+             <div class="reply">
+                <button class="replyMore">이전 댓글 더보기</button>
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+
+                <div class="defaultReply">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="replayPfImg">
+                    </span>
+                    <span class="replyTitle">이혜림</span>
+                    <span class="replyschedate">202012-18-17:34</span>
+                    <span class="replyEdit">
+                        <a href="">수정 &nbsp;&nbsp;&nbsp;| </a>
+                        <a href=""> &nbsp;&nbsp;&nbsp; 삭제</a>
+                    </span>
+                    <div id="replyResult">댓글 작성 내용입니다 댓글 작성 내용입니다 댓글 작성 내용입니다</div>
+                </div>
+                
+                <!-- 댓글 입력 -->
+                <div class="replyFrom">
+                    <span>
+                        <img src="${pageContext.request.contextPath}/resources/img/user-2.png" class="replayPfImg2">
+                    </span>
+                    <input type="text" name="reply" id="replyarea" placeholder="댓글을 입력하세요.">
+                    <button id="replyReg">등록</button>
+                </div>
+            </div>
+<!-- 혜림 일정 글 결과화면 끝 -->
+            
+			
+<!--우측 사이드바-->
 			<div class="rightBar">
 				<a href="#">
 					<div id="prevbtn">
