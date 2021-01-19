@@ -14,10 +14,6 @@ public class BoardAllDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int insertBoardAllTask(BoardAllDto dto) throws Exception {
-		return sqlSession.insert("BoardAll.insertBoardAllTask",dto);
-	}
-	
 	public int deleteBoardall(int bno) throws Exception{
 		return sqlSession.delete("BoardAll.deleteBoardall", bno);
 	}
