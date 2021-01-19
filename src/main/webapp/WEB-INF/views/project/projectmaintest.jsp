@@ -3905,7 +3905,6 @@
 						</div>
 					</a>
 				</div>
-	<%-- 			<div id="addmembtn" onclick="window.open('${pageContext.request.contextPath}/project/projectinvite?pno=${pno}','프로젝트 멤버 초대','width=470px,height=600px,location=no,status=no,scrollbars=no')"> --%>
 				<div id="addmembtn">
 					초대하기
 					<img src="${pageContext.request.contextPath}/resources/img/addperson-03-white.png"
