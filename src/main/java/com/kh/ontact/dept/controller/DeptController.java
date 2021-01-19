@@ -56,21 +56,22 @@ public class DeptController {
 			mv.setViewName("/commute/organogram");
 
 //			미분류그룹 default
-			if (dname == null && keyword == null && keyword == "") {
+			if (dname == null || keyword == null || keyword == "") {
 				System.out.println("#####if로 들어옴");
-				mv.addObject("firstlistCount", listCount1);
+				mv.addObject("userslistCount", listCount1);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
+				mv.addObject("dname", "미분류그룹");
 				mv.addObject("selectOgUser", usersService.selectOgFirst(currentPage, LIMIT));
 				System.out.println("결과" + usersService.selectOgFirst(currentPage, LIMIT));
 				mv.setViewName("/commute/organogram");
 			}
-//			분류그룹
 			if (dname != null) {
 				System.out.println("######dname이 있는 경우");
 				mv.addObject("userslistCount", listCount2);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
+				mv.addObject("dname", dname);
 				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT, dname));
 				mv.setViewName("/commute/organogram");
 			} 

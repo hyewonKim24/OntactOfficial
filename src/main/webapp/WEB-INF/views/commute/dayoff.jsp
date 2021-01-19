@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="../main/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,29 +14,33 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-    *{
+     *{
         margin : 0;
     }
     body{
         width : 100%;
         height: 100%;
         position: relative;
-    	color: #111111;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+   		color: #111111;
 	}
 	a{
 		text-decoration: none;
 		color: #111111;
 	}
-    .header{
-        position: relative;
-        width: 100%;
-        height: 60px;
-    }
-    .header div{
-        width: 1200px;
-        height: 60px;
-        margin: 0 auto;
-    }
+    .headersection {
+		position: relative;
+		width: 100%;
+		height: 60px;
+	}
+
+	.headersection div {
+		width: 1200px;
+		height: 60px;
+		margin: 0 auto;
+	}
     /* 본문 */
     .main{
         position: relative;
@@ -58,6 +63,7 @@
     .sidenav ul li{
         display: block;
         font-size: 16px;
+       	line-height:18px;
     }
     .sidenav ul ul {
     display: none;
@@ -314,7 +320,7 @@
     </script>
 </head>
 <body>
-    <div class="header">
+    <div class="headersection">
         <div>헤더 들어갈 자리</div>
     </div>
     <div class="main">

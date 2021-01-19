@@ -23,7 +23,7 @@
 
     <style>
         * {
-            margin: 0;
+            margin: 0; 
         }
 
         body {
@@ -700,10 +700,10 @@
         /* 참석자 변경 모달 */
         #attendee-modal{
             display: none;
-            position: relative;
+            /* position: relative; */
             height: 0;
             width:100%;
-            float: left;
+            /* float: left; */
             z-index: 9999;
         }
         .attendee-modal-content{
@@ -1151,6 +1151,33 @@
             right: 20px;
             width: 25px;
         }
+        
+        #wrap {
+  border: 1px solid red;
+  width: 100%;
+  min-height: 768px;
+  position: relative;
+}
+        
+        #mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  background-color: #000;
+  display: none;
+}
+
+.ModalPopup {
+  border: 1px solid blue;
+  width: 100px;
+  height: 100px;
+  display: none;
+  position: absolute;
+  z-index: 10000;
+  background-color: #fff;
+}
+
     </style>
     <script>
     var result='${message}';
@@ -1319,6 +1346,8 @@
                     $("#aabbcc").val(place.place_name);
                 });
             }
+            
+            
     });
 
     </script>
@@ -1764,10 +1793,12 @@
                             <div class="attendee">${slist.attendees}</div>
                             <button id="attendee-edit">참석자 변경</button>
                             <!-- 참석자 모달 -->
-                            <div id="attendee-modal">
-                                <div class="attendee_modal-layer"></div>
+                            <div id="wrap">
+                            <!-- <div id="attendee-modal"> -->
+                                <!-- <div class="attendee_modal-layer"></div> -->
                                 <form action="" method="">
-                                    <div class="attendee-modal-content">
+		                             <div class="ModalPopup">
+                                    <!-- <div class="attendee-modal-content"> -->
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
                                             <div class="attendee-search">
@@ -1811,6 +1842,7 @@
                                     </div>
                                 </form>
                             </div>
+                            <div id="mask"></div>
                             <!-- <input type="text" id="schePname"> -->
                         </div>
                         <!-- 장소 -->
@@ -2269,6 +2301,33 @@
             $(".prevsvg").css('fill', '#111111');
         });
         
+        jQuery.fn.center = function() {
+        	  this.css('top', Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + 'px');
+        	  this.css('left', Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + 'px');
+        	  return this;
+        	}
+
+        	function wrapWindowByMask() {
+        	  var maskHeight = $(document).height();
+        	  var maskWidth = $(window).width();
+
+        	  $('#mask').css({
+        	    'width': maskWidth,
+        	    'height': maskHeight
+        	  });
+        	  $('#mask').fadeTo(10, 0.8);
+
+        	  $('.ModalPopup').show();
+        	  $('.ModalPopup').center();
+        	}
+
+        	$(function() {
+        	  $('.openMask').click(function(e) {
+        	    e.preventDefault();
+        	    wrapWindowByMask();
+        	  });
+        	});
+        	
 	
     </script>
 </body>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../main/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
+    <script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>  
     <style>
   *{
         margin : 0;
@@ -25,19 +25,20 @@
         color: rgb(17,17,17);
     }
     a {
-		text-decoration: none;
+		text-decoration: none;h
 		color: #111111;
 	}
-    .header{
-        position: relative;
-        width: 100%;
-        height: 60px;
-    }
-    .header div{
-        width: 1200px;
-        height: 60px;
-        margin: 0 auto;
-    }
+    .headersection {
+	position: relative;
+	width: 100%;
+	height: 60px;
+	}
+	
+	.headersection div {
+		width: 1200px;
+		height: 60px;
+		margin: 0 auto;
+	}
     /* 본문 */
     .main{
         position: relative;
@@ -113,7 +114,7 @@
         
     }
     .search input{
-        width: 130px;
+        width: 168px;
         height: 30px;
         border: 1px solid #e7e7e7;
         /* border-right: 0; */
@@ -259,6 +260,7 @@
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
 	        $('.sidenav li.menu>a').on('click', function(){
+	        	alert("aaa");
 			$(this).removeAttr('href');
 			var element = $(this).parent('li');
 			if (element.hasClass('open')) {
@@ -276,20 +278,28 @@
 			}
 		    });
 	        
-	        $("#dept").on("click", function(){
-	        	var dname = $(this).val();
+	       /*  var dname= ${dname}
+	        $(".deptname").on("click", function(){
+	        	var dname = $(this).find(".dname").val();
 	        	console.log(dname);
-	        	$("#depttitle").text(dname);
+	        	$("#firstttl").html(dname);
 	        })
-			
-	    $()
-    	});
+			console.log("ssldkjfs"); */
+	    
+	        $("#keyword").keyup(function() {
+                var k = $(this).val();
+                $(".deptname").hide();
+                var temp = $(".deptname:contains('" + k + "')");
+                $(temp).show();
+            })
+        
+        });
     </script>
 </head>
 <body>
-    <div class="header">
-        <div>헤더 들어갈 자리</div>
-    </div>
+    <div class="headersection">
+		<div>헤더 들어갈 자리</div>
+	</div>
     <div class="main">
         <div class="sidenav">
             <ul>
@@ -312,8 +322,8 @@
             <div class="article">
                 <form action="/commute/organlist" method="get">
                 <div class="search">
-                    <input type="text" name="keyword">
-                    <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
+                    <input type="text" name="keyword" id="keyword" autocomplete="off">
+                    
                 </div>
                 </form>
                 <div class="team">
@@ -324,10 +334,9 @@
                         </li>
                         <c:if test="${not empty selectDept}">
 						<c:forEach var="dp" items="${selectDept}" varStatus="status">
-                        <li>
-                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}"id="dept">
-                        	<div id="deptname">${dp.dname}</div>
-                        	<input type ="hidden" value="${dp.dname}" name="dname" id="dname">
+                        <li class="deptname">
+                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}">
+                        	${dp.dname}<input type ="hidden" value="${dp.dname}" name="dname" class="dname">
                         	</a>
                         </li>
                         </c:forEach>
@@ -335,7 +344,7 @@
                     </ul>
                 </div>
                 <div class="notyet">
-                    <div><a href="">미분류그룹 &nbsp; (<span>${firstlistCount}</span>)</a></div>
+                    <div><a href="">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
@@ -345,10 +354,10 @@
                 <div class="detail">
                 
                     <div class="title">
-                    <span id="firstttl">미분류 그룹</span> 
-                    <span id="detpcount">총&nbsp;${userslistCount}&nbsp;명</span>
+                    <span id="firstttl">${dname}</span>
+                    <span id="detpcount">총&nbsp;<span>${userslistCount}</span>명</span>
                     <!-- <input type="text" id="depttitle" value="" readonly>  -->
-                    
+                
                     </div>
                     
                     <div>
@@ -360,7 +369,14 @@
                                 <th>직급</th>
                                 <th>이메일</th>
                             </tr>
-                        <c:if test="${not empty selectOgUser}">
+                            
+                        <c:if test="${userslistCount eq 0}">
+							<tr>
+								<td colspan="4" align="center">
+								<br>사원이 존재하지 않습니다.<br> <br></td>
+							</tr>
+						</c:if>     
+                        <c:if test="${userslistCount ne 0}">
 						<c:forEach var="og" items="${selectOgUser}" varStatus="status">
                             <tr>
                                 <!-- <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td> -->

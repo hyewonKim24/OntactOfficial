@@ -109,7 +109,7 @@ public class ScheduleController {
 		return "redirect:/scheduleboard";
 	}
 	
-	// task 글 삭제
+	// schedule 글 삭제
 	@RequestMapping(value="/project/schedule/del",method=RequestMethod.GET)
 	public ModelAndView deleteSchedule(ModelAndView mv, @RequestParam(name = "bno") int bno,
 			@RequestParam(name = "pno") String pno) {
