@@ -34,16 +34,19 @@ public class DeptController {
 			@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "dname", required = false) String dname,
-		    ModelAndView mv) {
+			Authentication authentication, ModelAndView mv) {
 			System.out.println("Dept 리스트진입");
+			System.out.println("부서이름이 들어왔나?" + dname);
 		try {
 			int currentPage = page;
+//			부서 출력
 			int deptlistCount1 = deptServ.listCount();
 			int deptlistCount2 = deptServ.searchlistCount();
+//			부서 사원 출력
 			int listCount1 = usersService.listCountFirst();
-			int listCount2 = usersService.listCount();
-			System.out.println("카운트 미분류" + listCount1 );
-			System.out.println("카운트 분류" + listCount2);
+			int listCount2 = usersService.listCount(dname);
+			System.out.println("미분류부서 : " + listCount1 );
+			System.out.println("분류부서 : " + listCount2);
 			
 			int maxPage1 = (int) ((double) listCount1 / LIMIT + 0.9);
 			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
@@ -54,8 +57,8 @@ public class DeptController {
 
 //			미분류그룹 default
 			if (dname == null && keyword == null && keyword == "") {
-				System.out.println("if로 들어옴");
-				mv.addObject("userslistCount", listCount1);
+				System.out.println("#####if로 들어옴");
+				mv.addObject("firstlistCount", listCount1);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
 				mv.addObject("selectOgUser", usersService.selectOgFirst(currentPage, LIMIT));
@@ -64,14 +67,14 @@ public class DeptController {
 			}
 //			분류그룹
 			if (dname != null) {
-				System.out.println("dname이 있는 경우");
+				System.out.println("######dname이 있는 경우");
 				mv.addObject("userslistCount", listCount2);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
 				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT, dname));
 				mv.setViewName("/commute/organogram");
 			} 
-//부서검색			
+//			부서검색			
 			if(keyword != null && keyword != "") {
 				mv.addObject("deptlistCount", deptlistCount2);
 				mv.addObject("list", deptServ.searchDept(keyword));

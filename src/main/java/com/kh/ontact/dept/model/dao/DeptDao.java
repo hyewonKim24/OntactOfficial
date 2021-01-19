@@ -20,6 +20,7 @@ public class DeptDao {
 	public List<DeptDto> selectListDept(String cno){
 		return sqlSession.selectList("Dept.selectListDept", cno);
 	}
+	
 	//혜림
 	public int listCount() {
 		return sqlSession.selectOne("Dept.listCount");

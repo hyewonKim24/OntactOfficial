@@ -185,15 +185,15 @@
 	<!-- 혜림 조직도 부서별 직원리스트 조회 -->
 	<!-- 미분류 상태 -->
 	<select id="listCountFirst" resultType="int">
-		select count(*) from users where dno = null 
+		select count(uno) from users where dno = null 
 	</select>
 	<select id="selectOgFirst" resultType="arraylist"
 		resultMap="resultUsers">
-		select uno, uname, urank, uemail from users where dno = null;
+		select uno, uname, urank, uemail from users where dno = null
 	</select>
 	<!-- 부서로 분류된 후 -->
 	<select id="listCount" resultType="int"> 
-		select count(*) 
+		select count(uno) 
 		from users u, dept d 
 		where u.dno = d.dno and d.dname = #{dname}
 	</select>

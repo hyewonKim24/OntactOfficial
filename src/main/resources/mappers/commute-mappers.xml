@@ -31,13 +31,11 @@
 		where cstate = '${cstate}' 
 		and cdate between to_date('${startdate}', 'yyyy-mm-dd') and to_date('${enddate}', 'yyyy-mm-dd')
 		and uno ='${uno}'
-	
 	</select>
 	<select id="searchDailyCommute" 
 		parameterType ="java.util.HashMap"
 		resultType="arraylist"
 		resultMap="resultCommute">
-
 		select * from commute 
 		where cstate = #{cstate}
 		and cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')

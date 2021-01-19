@@ -11,11 +11,6 @@
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 
-<!-- date picker -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <!-- 현재시간 및 위치 , QR 생성 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
 	type="text/javascript" charset="utf-8"></script>
@@ -47,7 +42,6 @@ a{
 	text-decoration: none;
 	color: #111111;
 }
-
 .header {
 	position: relative;
 	width: 100%;
@@ -193,7 +187,7 @@ a{
 
 .list table {
 	width: 930px;
-	height: 360px;
+	min-height: 95px;
 	font-size: 14px;
 	text-align: center;
 }
@@ -209,11 +203,11 @@ a{
 }
 
 /* QR스캐너 */
-.main {
+/* .main {
 	width: 100%;
 	height: 100%;
 	text-align: center;
-}
+} */
 
 .frame_wrap, .info {
 	width: 95%;
@@ -289,31 +283,8 @@ canvas {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.5);
 }
-
-/* input[type="date"]::before {content:attr(data-placeholder);} */
-/* 
-
-input[type=date]::-webkit-datetime-edit-text { 
-	-webkit-appearance: none; display: none; 
-} 
-input[type=date]::-webkit-datetime-edit-month-field{
- 	-webkit-appearance: none; display: none; 
-} 
-input[type=date]::-webkit-datetime-edit-day-field {
-  	-webkit-appearance: none; display: none; 
-} 
-input[type=date]::-webkit-datetime-edit-year-field {
-   -webkit-appearance: none; display: none; 
-   } */
-
-
-﻿
-
-
 </style>
 <script>
-
-	
     $(document).ready(function() {
         // 세로드롭다운
         $('.sidenav li.menu>a').on('click', function(){
@@ -426,27 +397,17 @@ input[type=date]::-webkit-datetime-edit-year-field {
 			    var specs = 'width=510, height=700, menubar=no,status=no,toolbar=no';
 			    var newWindow = window.open(url,name,specs);
 			    newWindow.focus();
-				/* var url= "qrscanner";    //팝업창에 출력될 페이지 URL
-				var winWidth = 510;
-			    var winHeight = 700;
-			    var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
-			    var myWindow = window.open(url,"qrscanner",popupOption); */
 			}
 		$('#qrleave').click(function() {
 				popupOpen('qrleave');
 		});
+		
 		function popupOpen(url){
 			  	var name="leave";
 			    var specs = 'width=510, height=700, menubar=no,status=no,toolbar=no';
 			    var newWindow = window.open(url,name,specs);
 			    newWindow.focus();
-				/* var url= "qrscanner";    //팝업창에 출력될 페이지 URL
-				var winWidth = 510;
-			    var winHeight = 700;
-			    var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
-			    var myWindow = window.open(url,"qrscanner",popupOption); */
 		}
-		
 		
 		$("#search").click(function(){
 		    $(this).prop("checked", true);
@@ -456,7 +417,6 @@ input[type=date]::-webkit-datetime-edit-year-field {
 		    var checkArr = [];     // 배열 초기화
 		    $("input[name='cstate']:checked").each(function(i) {
 		        checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-		    
 		    $.ajax({
 		        url: '/commute/dailylist'
 		        , type: 'get'
@@ -465,7 +425,6 @@ input[type=date]::-webkit-datetime-edit-year-field {
 		            valueArrTest: checkArr
 		        }
 		    })
-    
             });
         }
     });
@@ -516,9 +475,9 @@ input[type=date]::-webkit-datetime-edit-year-field {
 							<tr>
 								<td>기간 선택</td>
 								<td>
-								<input type="Date" id="startdate" name="startdate" autocomplete="off" data-placeholder="시작일을 선택하세요" required aria-required="true" style="width:200px; height:30px;"/>
+								<input type="Date" id="startdate" name="startdate" autocomplete="off" style="width:170px; height:30px; padding : 0 10px; color : #787878;"/>
 									&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
-								<input type="Date" id="enddate"name="enddate" autocomplete="off" data-placeholder="종료일을 선택하세요" required aria-required="true" style="width:200px; height:30px;"/>
+								<input type="Date" id="enddate" name="enddate" autocomplete="off"   style="width:170px; height:30px; padding : 0 10px; color : #787878;"/>
 								</td>
 							</tr>
 							<tr>
@@ -540,7 +499,7 @@ input[type=date]::-webkit-datetime-edit-year-field {
 					<table>
 						<thead>
 							<tr>
-								<td colspan="6" style="text-align: left;">조회결과 00건</td>
+								<td colspan="6" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
 							</tr>
 							<tr>
 								<th>날짜</th>
@@ -551,14 +510,14 @@ input[type=date]::-webkit-datetime-edit-year-field {
 								<th>사유</th>
 							</tr>
 						</thead>
-						<%-- <c:if test="${listCount eq 0}">
+						<c:if test="${listCount eq 0}">
 							<tr>
-								<td colspan="7" align="center"><br> <br> 신청내역이
-									없습니다.<br> <br></td>
+								<td colspan="6" align="center">
+								<br>내역이 없습니다.<br> <br></td>
 							</tr>
-						</c:if> --%>
-						<%-- <c:if test="${listCount ne 0}"> --%>
-						<c:if test="${not empty list}">
+						</c:if> 
+						<c:if test="${listCount ne 0}">
+						<%-- <c:if test="${not empty list}"> --%>
 							<c:forEach var="cm" items="${list}" varStatus="status">
 								<tr>
 									<td>${cm.cdate}</td>
@@ -604,8 +563,5 @@ input[type=date]::-webkit-datetime-edit-year-field {
 			</div>
 		</div>
 	</div>
-	<script>
-        
-</script>
 </body>
 </html>

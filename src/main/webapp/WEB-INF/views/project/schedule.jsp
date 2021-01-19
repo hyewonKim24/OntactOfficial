@@ -205,7 +205,7 @@ body {
                                                $("#gomodal").attr("style", "display:block");
                                                var bname = element.bname;
                                                var uname = element.uname;
-                                               ㅍㅁ
+                                               
                                                for (var i = 0; i < uname.length; i++) {
                                                 console.log("이름 확인 : "+uname[i]);
                                              }
@@ -267,10 +267,8 @@ body {
                                       data: allData,
                                       success : function(result) {
                                        console.log( result);
-                                          
                                        		var events = [];
                                           	if (result != null) {
-                                             
                                              $.each(result, function(index, element) {
                                                 console.log(element);
                                                 var sstart = element.sstart;
@@ -278,7 +276,6 @@ body {
                                                 var bname = element.bname;
                                                 var pno = element.pno;
                                                 console.log("#######" + pno);
-                                                
                                                 var startdate = moment(sstart).format('YYYY-MM-DD');
                                                 var enddate = moment(send).format('YYYY-MM-DD'); 
                                                 var aaa = startdate + "/" + bname;
@@ -287,7 +284,6 @@ body {
                                                 if( calendar.getEventSourceById(pno) != null ){
                                                 	calendar.getEventSourceById(pno).remove();
                                                 }
-                                                
                                                 events.push({
                                                 		id : pno,
                                                       title : aaa,

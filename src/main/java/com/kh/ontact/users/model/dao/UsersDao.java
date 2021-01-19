@@ -91,8 +91,8 @@ public class UsersDao {
 			return sqlSession.selectList("Users.selectOgFirst",null,row);
 		}
 		//분류그룹
-		public int listCount() {
-			return sqlSession.selectOne("Users.listCount");
+		public int listCount(String dname) {
+			return sqlSession.selectOne("Users.listCount", dname);
 		}
 		public List<UsersDto> selectOrgani(int startPage, int limit, String dname) { // 특정 페이지 단위의 게시글 조
 			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19

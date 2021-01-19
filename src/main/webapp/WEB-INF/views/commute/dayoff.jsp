@@ -110,8 +110,8 @@
         font-size: 14px;
     }
     .application table tr{
-        height: 30px;
-        line-height: 30px;
+        height: 35px;
+        line-height: 35px;
     }
     .application table tr:nth-child(3){
         height: 70px;
@@ -166,7 +166,7 @@
         
     }
     .option table td:nth-child(2){
-        width: 400px;
+        width: 480px;
         font-weight : 700;
     }
      .option table input{
@@ -215,6 +215,7 @@
     .lista table thead{
         font-weight: 700;
     }
+    
     </style>
      <script>
      	 var result='${message}';
@@ -343,7 +344,7 @@
                     <tr>
                         <td class="title">부서명</td>
                         <td style="width: 230px;">
-                            <select style="width: 200px; height: 25px;" id="dname" name="dname">
+                            <select style="width: 200px; height: 30px; color : #787878;" id="dname" name="dname">
                                 <option value="0">선택하세요</option>
                                 <option value="경영팀">경영팀</option>
                                 <option value="인사팀">인사팀</option>
@@ -354,22 +355,22 @@
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname" placeholder="이름을 입력하세요"></td>
+                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 30px;" id="uname" name="uname" placeholder="   이름을 입력하세요" autocomplete="off" ></td>
                         <td></td>
                         <td></td>
                     </tr> 
                     <tr>
                         <td class="title">휴가 시작 일자</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffStart" name="offstart" placeholder="시작일을 선택하세요"></td>
+                        <td style="width: 230px;"><input type="Date" style="width: 200px; height: 30px; padding : 0 10px; color : #787878;" id="dayoffStart" name="offstart" placeholder="시작일을 선택하세요" autocomplete="off" ></td>
                         <td class="title">휴가 종료 일자</td>
-                        <td style="width: 230px;"><input type="text" style="width: 200px; height: 25px;" id="dayoffEnd" name="offend" placeholder="종료일을 선택하세요"></td>
+                        <td style="width: 230px;"><input type="Date" style="width: 200px; height: 30px; padding : 0 10px; color : #787878;" id="dayoffEnd" name="offend" placeholder="종료일을 선택하세요" autocomplete="off"></td>
                         <td class="title" style="width: 50px;">일수</td>
-                        <td><input type="text" style="width: 50px; height: 25px;" id="offdays" name="offdays"></td>
+                        <td><input type="text" style="width: 50px; height: 30px;" id="offdays" name="offdays" autocomplete="off"></td>
                    
                     </tr>
                     <tr>
                         <td class="title">휴가사유</td>
-                        <td colspan="6" style="padding-bottom: 20px;"><input type="text" style="width: 830px; height: 65px;" id="offreason" name="offreason" placeholder="사유를 입력해주세요. (ex) 연차, 병가, 월차 등등)"></td>
+                        <td colspan="6" style="padding-bottom: 20px;"><input type="text" style="width: 830px; height: 65px;" id="offreason" name="offreason" placeholder="사유를 입력해주세요. (ex) 연차, 병가, 월차 등등)" autocomplete="off"></td>
              
                     </tr>
                     <tr>
@@ -384,7 +385,9 @@
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" name="startdate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate" placeholder="종료일을 선택하세요"></td>
+                        <td><input type="Date" id="startDate" name="startdate" placeholder="시작일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"> 
+                        &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
+                        <input type="Date" id="endDate" name="enddate" placeholder="종료일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"></td>
                         <td><button type="submit" value="">조회</button></td>
                     </tr>
                 </table>
@@ -394,11 +397,10 @@
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="8" style="text-align: left;">조회결과 00건</td>
+                        <td colspan="6" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
                     </tr>
                     <tr>
-                        <th>부서명</th>
-                        <th>성명</th>
+                        
                         <th>휴가시작일자</th>
                         <th>휴가종료일자</th>
                         <th>휴가일수</th>
@@ -417,8 +419,7 @@
 					<c:if test="${listCount ne 0}">
 						<c:forEach var="df" items="${list}" varStatus="status">
                     <tr>
-                        <td>${df.dno}</td>
-                        <td>${df.uname}</td>
+                        
                         <td>${df.offstart}</td>
                         <td>${df.offend}</td>
                         <td>${df.offdays}</td>
@@ -430,7 +431,7 @@
                     </c:if>
                    <!-- 앞 페이지 번호 처리 -->
 					<tr>
-						<td colspan="8">
+						<td colspan="6">
 						<c:if test="${currentPage <= 1}">
 						&lt; &nbsp;
 						</c:if>
@@ -470,39 +471,5 @@
         </div>
     </div>
 </div>
-<script>
-    $(function() {
-            //input을 datepicker로 선언
-            $.datepicker.setDefaults({
-                dateFormat: 'yy-mm-dd' //Input Display Format 변경
-                ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-                ,changeYear: true //콤보박스에서 년 선택 가능
-                ,changeMonth: true //콤보박스에서 월 선택 가능                
-                // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-                // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-                // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
-                ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
-                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-                ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-                ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
-            });
-            $('#dayoffStart').datepicker();  
-            $('#dayoffEnd').datepicker();                     
-            $('#startDate').datepicker(); 
-            $('#endDate').datepicker(); 
-            /* //초기값을 오늘 날짜로 설정
-            $('#dayoffStart').datepicker();
-            $('#dayoffEnd').datepicker();
-            $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            $('#endDate').datepicker('setDate', 'today');           */
-        });  
-    	
-     
-</script>
 </body>
 </html>

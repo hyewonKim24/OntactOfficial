@@ -45,7 +45,7 @@ public interface UsersService {
 	// 조직도
 	public int listCountFirst();
 	public List<UsersDto> selectOgFirst(int startPage, int limit);
-	public int listCount();
+	public int listCount(String dname);
 	public List<UsersDto> selectOgUser(int startPage, int limit, String dname);
 	public int updateDept(UsersDto u); 
 		

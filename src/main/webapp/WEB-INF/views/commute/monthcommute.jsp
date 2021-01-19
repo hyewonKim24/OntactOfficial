@@ -9,9 +9,9 @@
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
     <!-- 차트 그리기 -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
     	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" 
-    	crossorigin="anonymous"></script> -->
+    	crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>	
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -125,7 +125,7 @@
         font-weight : 700;
     }
     .option table td:nth-child(2){
-        width: 400px;
+        width: 440px;
         font-weight : 700;
     }
     .option table input{
@@ -173,6 +173,7 @@
     
     <script>
         $(document).ready(function() {
+        	
         $('.sidenav li.menu>a').on('click', function(){
 		$(this).removeAttr('href');
 		var element = $(this).parent('li');
@@ -190,7 +191,6 @@
             element.siblings('li').find('ul').slideUp();
 		}
 	    });
-	
     });
     </script>
 </head>
@@ -223,7 +223,9 @@
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" placeholder="종료일을 선택하세요"></td>
+                        <td><input type="Date" id="startDate" name="startdate" placeholder="시작일을 선택하세요" autocomplete="off" style="width:170px; height:30px; padding : 0 10px; color : #787878;"> 
+                        &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
+                        <input type="Date" id="endDate" name="enddate" placeholder="종료일을 선택하세요" autocomplete="off" style="width:170px; height:30px; padding : 0 10px;color : #787878;"></td>
                         <td><button name="submit">조회</button></td>
                     </tr>
                 </table>
@@ -327,37 +329,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
 <script>
-        $(function() {
-            //input을 datepicker로 선언
-            $.datepicker.setDefaults({
-                dateFormat: 'yy-mm-dd' //Input Display Format 변경
-                ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-                ,changeYear: true //콤보박스에서 년 선택 가능
-                ,changeMonth: true //콤보박스에서 월 선택 가능                
-                ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
-                ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-                ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-                ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-                ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-                ,minDate: "-48M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                ,maxDate: "+12M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
-            });                    
-            $('#startDate').datepicker(); 
-            $('#endDate').datepicker(); 
-            //초기값을 오늘 날짜로 설정
-            $('#startDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)  
-            $('#endDate').datepicker('setDate', 'today');          
-        });
-        
-            
         //그래프 그리기
         //createChart()함수를 안에다 선언해야지 차트값을 받더라...
         $(document).ready(function() {
         /* $('#btn').click(function(){ */
                 chartLabels = [];
                 chartData=[];
-
                 //getJson으로 데이터 
                 $.getJSON("${pageContext.request.contextPath}/commute/getDailyVisitor", {
                     month : month
@@ -384,17 +361,14 @@
                                 borderWidth: 4,
                                 data : chartData
                             } ]
-     
                         }
                     createChart();
-                    
                 });
             })
             
             var chartLabels = []; // 받아올 데이터를 저장할 배열 선언
             var chartData = []; 
             var month="";
-            
             function createChart() {
                 var ctx = document.getElementById("canvas").getContext("2d");
                 LineChartDemo = Chart.Line(ctx, {

@@ -61,6 +61,7 @@ public class UsercommuteController {
 			paramMap.put("cstate", state);
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
+			paramMap.put("uno", uno);
 			//
 			//페이징
 			int currentPage = page;

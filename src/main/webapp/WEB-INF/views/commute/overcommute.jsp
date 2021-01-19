@@ -62,25 +62,25 @@
         font-size: 16px;
     }
     .sidenav ul ul {
-    display: none;
+    	display: none;
     }
     .sidenav > ul > li > a {
-    padding: 19px 20px;
-    z-index: 2;  
-    cursor: pointer;
-    font-weight: 700;
-    text-decoration: none;
+	    padding: 19px 20px;
+	    z-index: 2;  
+	    cursor: pointer;
+	    font-weight: 700;
+	    text-decoration: none;
     }
     .sidenav ul ul li{
         background-color: #e7e7e7;
     }
     .sidenav ul ul li a {
-    cursor: pointer;
-    padding: 10px 0;
-    padding-left: 30px;
-    z-index: 1;
-    text-decoration: none;
-    font-size: 13px;
+	    cursor: pointer;
+	    padding: 10px 0;
+	    padding-left: 30px;
+	    z-index: 1;
+	    text-decoration: none;
+	    font-size: 13px;
     }
     /* 콘텐츠 */
     .contents{
@@ -112,8 +112,8 @@
         font-size: 14px;
     }
     .application table tr:nth-child(1), tr:nth-child(2){
-        height: 30px;
-        line-height: 30px;
+        height: 35px;
+        line-height: 35px;
     }
     .application table tr:nth-child(3), tr:nth-child(4){
         height: 70px;
@@ -165,7 +165,7 @@
         font-weight : 700;
     }
     .option table td:nth-child(2){
-        width: 400px;
+        width: 480px;
         font-weight : 700;
     }
     .option table input{
@@ -318,7 +318,7 @@
                     <tr>
                         <td class="title">부서명</td>
                         <td style="width: 250px;">
-                            <select style="width: 200px; height: 25px;" name="dname">
+                            <select style="width: 200px; height: 30px;color : #787878;" name="dname">
                                 <option value="0">선택하세요</option>
                                 <option value="경영팀">경영팀</option>
                                 <option value="인사팀">인사팀</option>
@@ -329,23 +329,23 @@
                             </select>
                         </td>
                         <td class="title">성명</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="uname" name="uname" placeholder="이름을 입력하세요"></td>
+                        <td><input type="text" style="width: 200px; height: 30px;" id="uname" name="uname" placeholder="  이름을 입력하세요" autocomplete="off"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">예정일시</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="owstart" name="owdate" placeholder="일자를 선택하세요"></td>
+                        <td><input type="Date" style="width: 200px; height: 30px; padding : 0 10px; color : #787878;" id="owstart" name="owdate" placeholder="일자를 선택하세요" autocomplete="off"></td>
                         <td class="title">예상시간</td>
-                        <td><input type="text" style="width: 200px; height: 25px;" id="owtime" name="owtime" placeholder="시간을 입력하세요 ex) 2시간 -> 2"></td>
+                        <td><input type="text" style="width: 200px; height: 30px;" id="owtime" name="owtime" placeholder="  시간을 입력하세요 ex) 2시간 -> 2" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <td class="title">업무내용</td>
-                        <td colspan="3"><input type="text" style="width: 860px; height: 65px;" id="owtitle" name="owtitle" placeholder="업무 내용을 입력하세요"></td>
+                        <td colspan="3"><input type="text" style="width: 860px; height: 65px;" id="owtitle" name="owtitle" placeholder="  업무 내용을 입력하세요" autocomplete="off"></td>
                         
                     </tr>
                     <tr>
                         <td class="title">사유</td>
-                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason" placeholder="사유를 입력하세요"></td>
+                        <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason" placeholder="  사유를 입력하세요" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <td colspan="4"><button type="submit" name="insertOw" id="insertOw">신청하기</button></td>
@@ -358,7 +358,9 @@
                 <table>
                     <tr>
                         <td>기간 선택</td>
-                        <td><input type="text" id="startDate" name="startdate" placeholder="시작일을 선택하세요"> &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; <input type="text" id="endDate" name="enddate" placeholder="종료일을 선택하세요"></td>
+                        <td><input type="Date" id="startDate" name="startdate" placeholder="시작일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"> 
+                        &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
+                        <input type="Date" id="endDate" name="enddate" placeholder="종료일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"></td>
                         <td><button name="submit" >조회</button></td>
                     </tr>
                 </table>
@@ -368,7 +370,7 @@
                 <table>
                     <thead>
 	                    <tr>
-	                        <td colspan="7" style="text-align: left;">조회결과 00건</td>
+	                        <td colspan="7" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
 	                    </tr>
 	                    <tr>
 	                        <th>부서명</th>
