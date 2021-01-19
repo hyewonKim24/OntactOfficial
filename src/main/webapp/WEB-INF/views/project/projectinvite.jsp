@@ -139,7 +139,6 @@
         	line-height: 50px;
         	padding:10px;
         	vertical-align: middle;
-        	margin-left:10px;
         }
         .invite-imgs{
        	    border-radius: 90px;
@@ -150,7 +149,7 @@
            vertical-align: middle;
         }
         .submit-wrap{
-            padding: 6px 0;
+            padding: 10px 0;
 		    border-top-color: #e8e8e8;
 		    border-top-width: 1px;
 		    border-top-style: solid;
@@ -172,7 +171,7 @@
         	background: #fff;
         }
         .submitbtn{
-            width: 100px;
+            width: 150px;
         	height: 40px;
         	border: 1px solid #fff;
         	color:#fff;
@@ -189,10 +188,12 @@
     </style>
 </head>
 <body>
+	<div class="invite-dim">
+	</div>
     <div class="invite-search-wrap">
         <div class="chat-invite-top">
             <p class="chat-invite-wrap">
-                <span class="invite-title">대화상대 초대</span>
+                <span class="invite-title">프로젝트 초대하기</span>
                 <!--검색모달 닫기-->
                 <a href="#" onclick="javascript:window.close()"><svg version="1.1"  class="invite-exit" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60"
@@ -221,7 +222,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                 </span>
                 <input type="text" class="chat-search-input" placeholder="이름, 이메일으로 대화상대 검색">
             </div>
-			<form action="${pageContext.request.contextPath}/chat/chatinvite" method="post" class="chatfrm1">
+			<form action="${pageContext.request.contextPath}/project/projectmemberinsert" method="post" class="pinvitefrm1">
             <div class="invite-rs">
               <c:if test="${empty ulist }">
                	 검색 결과가 없습니다.
@@ -241,20 +242,21 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 								</c:if>
 								
 								</td>
-									<td class="invite-names"><input type="hidden" name="chatuname" value="${list.uname }">
+									<td class="invite-names">
 									<p class="invite-name">${list.uname}<br>
-									<span class="invite-email">${list.uemail}</span></p> </td>
+									<span class="invite-email">${list.cname}</span></p> </td>
 										<td class="invite-check-wrap">
-											<input type="checkbox" class="invite-check" class="check${e.count}" name="chatuno" value="${list.uno}"> 
+											<input type="checkbox" class="invite-check" class="check${e.count}" name="uno" value="${list.uno}"> 
 											<label for="check${e.count}"></label>
 										</td>
 							</tr>
-				</c:forEach>
-               </c:if>
+							</c:forEach>
+             				  </c:if>
 						</table>
-            </div>
+       			     </div>
 						<div class="submit-wrap">
-							<button type="reset" class="resetbtn">취소</button><button type="submit" class="submitbtn">대화방 초대</button>
+							 <input type="text" name="pno" value="${pno}"> 
+							<button type="submit" class="submitbtn">프로젝트 초대</button>
 						</div>
 					</form>
         </div>

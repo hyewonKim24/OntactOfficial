@@ -30,7 +30,6 @@
 * {
 	margin: 0;
 }
-
 			body {
 				width: 1200px;
 				height: 100%;
@@ -41,12 +40,10 @@
 				background-color: rgb(242, 242, 242);
 				margin: 0 auto;
 			}
-
 			a {
 				text-decoration: none;
 				color: #333333;
 			}
-
 			/* 본문 */
 			.main {
 				position: relative;
@@ -54,7 +51,6 @@
 				height: 100%;
 				margin: 0 auto;
 			}
-
 			/* 프로젝트 글 */
 			.contents {
 				position: relative;
@@ -64,7 +60,6 @@
 				box-shadow: 1px 1px 3px 1px #e7e7e7;
 				float: left;
 			}
-
 			/* 글 쓰기 부분 */
 			.write {
 				border: 1px solid #dadbdb;
@@ -72,15 +67,12 @@
 				box-sizing: border-box;
 				background: #fff;
 			}
-
 			.writemenu {
 				display: none;
 			}
-
 			.write .tabs {
 				display: none;
 			}
-
 			.tabslabel {
 				display: inline-block;
 				padding: 15px 26.1px;
@@ -90,7 +82,6 @@
 				width: 118px;
 				font-size: 15px;
 			}
-
 			.write svg {
 				width: 20px;
 				height: 20px;
@@ -98,28 +89,23 @@
 				stroke: #c0c0c0;
 				stroke-width: 3%;
 			}
-
 			#line {
 				border-top: 1px solid #dadbdb;
 			}
-
 			.tabslabel:hover {
 				cursor: pointer;
 			}
-
 			.textbody {
 				height: auto;
 				margin-top: 10px;
 				margin: 17px 25px;
 			}
-
 			.title {
 				width: 100%;
 				border-bottom: 1px solid #dadbdb;
 				padding-bottom: 8px;
 				margin-bottom: 12px;
 			}
-
 			.title_detail {
 				border: none;
 				width: 100%;
@@ -128,7 +114,6 @@
 				font-weight: 700;
 				font-family: Noto Sans KR;
 			}
-
 			.content_detail {
 				border: none;
 				width: 100%;
@@ -137,7 +122,6 @@
 				overflow-y: hidden;
 				font-family: Noto Sans KR;
 			}
-
 			.content_detail2 {
 				border: none;
 				width: 100%;
@@ -146,11 +130,9 @@
 				overflow-y: hidden;
 				font-family: Noto Sans KR;
 			}
-
 .content_detail:focus, .title_detail:focus {
 	outline: none;
 }
-
 			.textfooter {
 				height: 46px;
 				border-top: 1px solid #dadbdb;
@@ -162,18 +144,15 @@
 				justify-content: space-between;
 				position: relative;
 			}
-
 			.textfooter_func {
 				width: 24px;
 				margin-right: 8px;
 				margin-left: 5px;
 				margin-top: 8px;
 			}
-
 			.textfooter_side {
 				display: flex;
 			}
-
 			.public {
 				min-width: 100px;
 				border: 1px solid #dfe0e4;
@@ -190,13 +169,11 @@
 				position: relative;
 				cursor: pointer;
 			}
-
 			.public span {
 				margin-top: 0px;
 				margin-left: 3px;
 				position: absolute;
 			}
-
 			.public img {
 				width: 20px;
 				/* position:absolute; */
@@ -204,7 +181,6 @@
 				margin-top: 5px;
 				margin-left: 5px;
 			}
-
 			.public_admin {
 				min-width: 100px;
 				border: 1px solid #dfe0e4;
@@ -221,13 +197,11 @@
 				position: relative;
 				cursor: pointer;
 			}
-
 			.public_admin span {
 				margin-top: 0px;
 				margin-left: 3px;
 				position: absolute;
 			}
-
 			.public_admin img {
 				width: 20px;
 				/* position:absolute; */
@@ -235,7 +209,6 @@
 				margin-top: 5px;
 				margin-left: 5px;
 			}
-
 			.public_setting {
 				position: absolute;
 				top: 50px;
@@ -248,7 +221,6 @@
 				background: #fff;
 				box-shadow: 1px -1px 4px 0 rgba(0, 0, 0, .15);
 			}
-
 			.public_setting_title {
 				height: 29px;
 				line-height: 27px;
@@ -258,36 +230,29 @@
 				font-weight: 400;
 				border-bottom: 1px solid #dfe0e4;
 			}
-
 			.set_li {
 				position: relative;
 			}
-
 			.set_li:hover {
 				background-color: #f6f7f8;
 			}
-
 			.set_li_admin {
 				position: relative;
 			}
-
 			.set_li_admin:hover {
 				background-color: #f6f7f8;
 			}
-
 			.setimg {
 				width: 23px;
 				top: 14px;
 				left: 7px;
 				position: absolute;
 			}
-
 			.p_set_con strong {
 				display: block;
 				font-size: 12px;
 				color: #545557;
 			}
-
 			.p_set_con {
 				display: block;
 				padding: 10px 0 0 40px;
@@ -299,7 +264,6 @@
 				background-position: 11px 14px;
 				cursor: pointer;
 			}
-
 			.writebtn {
 				width: 80px;
 				height: 36px;
@@ -313,7 +277,6 @@
 				margin-left: 5px;
 				font-size: 14px;
 			}
-
 			.tabs:checked+.tabslabel svg {
 				width: 20px;
 				height: 20px;
@@ -321,51 +284,43 @@
 				stroke-width: 6%;
 				stroke: #F27781;
 			}
-
 			/*input 클릭시, label 스타일*/
 			.tabs:checked+.tabslabel {
 				color: #F27781;
 			}
-
 			#tab1:checked~#commonboard,
 			#tab2:checked~#task,
 			#tab3:checked~#schedule,
 			#tab4:checked~#todo {
 				display: block;
 			}
-
 			/* 글 작성 부분 */
 			.boardHeader {
 				height: 60px;
 				padding: 25px 12px 0 25px;
 			}
-
 			.writeInfo {
 				width: 200px;
 				height: 40px;
 				float: left;
 			}
-
 			.profileImg {
 				width: 40px;
 				float: left;
 				margin-right: 25px;
 			}
-
 			.writer {
 				height: 18px;
 				font-size: 14px;
 				font-weight: 700;
 				padding-top: 5px;
 			}
-
 			.writeDate {
 				font-size: 12px;
 				font-weight: 400;
 				padding-top: 5px;
 				color: #c0c0c0;
 			}
-
 			.option {
 				width: 60px;
 				height: 40px;
@@ -373,20 +328,17 @@
 				margin: 0;
 				float: right;
 			}
-
 			.fixNotice {
 				width: 18px;
 				margin-top: 3px;
 				margin-right: 20px;
 				float: left;
 			}
-
 			.editoption {
 				width: 5px;
 				height: 20px;
 				margin-top: 3px;
 			}
-
 			.editDropdown {
 				display: none;
 				width: 145px;
@@ -397,20 +349,16 @@
 				float: right;
 				margin-top: 6px;
 			}
-
 			.editDropdown ul {
 				padding: 8px 0;
 			}
-
 			.editDropdown ul li {
 				padding: 6px 15px;
 			}
-
 			.boardResult {
 				width: 650px;
 				padding: 7px 25px;
 			}
-
 			.replyCount {
 				width: 650px;
 				height: 25px;
@@ -419,7 +367,6 @@
 				color: #c0c0c0;
 				text-align: right;
 			}
-
 			.threeBtn {
 				width: 650px;
 				height: 40px;
@@ -427,11 +374,9 @@
 				padding: 0 25px;
 				border-top: 1px solid #e7e7e7;
 			}
-
 			.threeBtn ul li {
 				float: left;
 			}
-
 			.threeBtn ul li a {
 				vertical-align: middle;
 				padding-right: 30px;
@@ -439,7 +384,6 @@
 				font-weight: 700;
 				color: #787878;
 			}
-
 			/* 업무 리포트 */
 			.task-report-wrap {
 				position: relative;
@@ -448,27 +392,23 @@
 				box-shadow: 1px 1px 3px 1px #e7e7e7;
 				float: left;
 			}
-
 			#report-title {
 				font-size: 20px;
 				font-weight: bold;
 				text-align: center;
 				margin: 20px;
 			}
-
 			#taskChart {
 				width: 500px !important;
 				height: 250px !important;
 				margin: 0 auto;
 				padding-bottom: 15px;
 			}
-
 			/* 업무 css */
 			.task-radio {
 				display: none;
 				margin: 10px;
 			}
-
 			.task-radio+label {
 				display: inline-block;
 				margin: -5px;
@@ -482,31 +422,25 @@
 				cursor: pointer;
 				color: #505050;
 			}
-
 			.task-radio-01:checked+label {
 				background-color: #F27781;
 				color: #fff;
 			}
-
 			.task-radio-02:checked+label {
 				background-color: #f17a19;
 				color: #fff;
 			}
-
 			.task-radio-03:checked+label {
 				background-color: #50b766;
 				color: #fff;
 			}
-
 			.task-radio-04:checked+label {
 				background-color: #4aaefb;
 				color: #fff;
 			}
-
 			#task-icon01 {
 				margin: 10px;
 			}
-
 			#task-01 {
 				display: inline-block;
 				height: 50px;
@@ -514,7 +448,6 @@
 				border: none;
 				border-bottom: 1px solid #dadbdb;
 			}
-
 			.task-radio-wrap {
 				position: absolute;
 				display: inline-block;
@@ -523,11 +456,9 @@
 				margin-left: 10px;
 				margin-top: 10px;
 			}
-
 			.task-icon02 {
 				margin: 12px;
 			}
-
 			.task-02 {
 				display: inline-block;
 				height: 45px;
@@ -535,7 +466,6 @@
 				border: none;
 				border-bottom: 1px solid #dadbdb;
 			}
-
 			.task-res-wrap {
 				position: absolute;
 				display: inline-block;
@@ -544,7 +474,6 @@
 				margin-left: 10px;
 				margin-top: 7px;
 			}
-
 			.task-res {
 				padding: 5px;
 				width: 150px;
@@ -553,7 +482,6 @@
 				border: 1px solid #e7e7e7;
 				border-radius: 5px;
 			}
-
 			.task-res-list {
 				padding: 5px;
 				width: 150px;
@@ -565,7 +493,6 @@
 				text-align: center;
 				white-space:nowrap;
 			}
-
 			.task-res-add-wrap {
 				width: 162px;
 				height: 100px;
@@ -578,7 +505,6 @@
 				position: absolute;
 				top: 33px;
 			}
-
 			.task-03 {
 				display: inline-block;
 				height: 45px;
@@ -587,7 +513,6 @@
 				border-bottom: 1px solid #dadbdb;
 				z-index: -2;
 			}
-
 			.task-start-wrap {
 				position: absolute;
 				display: inline-block;
@@ -596,7 +521,6 @@
 				margin-left: 10px;
 				margin-top: 7px;
 			}
-
 			.task-schedule {
 				padding: 5px;
 				width: 150px;
@@ -605,7 +529,6 @@
 				border: 1px solid #e7e7e7;
 				border-radius: 5px;
 			}
-
 			/* 업무 달성률 */
 			.task-04 {
 				display: inline-block;
@@ -614,7 +537,6 @@
 				border: none;
 				border-bottom: 1px solid #dadbdb;
 			}
-
 			.task-rate-wrap {
 				position: absolute;
 				display: inline-block;
@@ -623,7 +545,6 @@
 				margin-left: 10px;
 				margin-top: 15px;
 			}
-
 			.workPrgrs {
 				display: block;
 				margin-top: 6px;
@@ -631,7 +552,6 @@
 				padding-bottom: 3px;
 				height: 20px;
 			}
-
 			.workPrgrs_bg {
 				position: absolute;
 				width: 150px;
@@ -639,7 +559,6 @@
 				border-radius: 3px;
 				background-color: #eaeaea;
 			}
-
 			.workPrgrs_bg .txt {
 				z-index: 1;
 				position: absolute;
@@ -650,7 +569,6 @@
 				line-height: 14px;
 				color: #111;
 			}
-
 			.workPrgrs_bg .bar {
 				display: block;
 				position: absolute;
@@ -660,11 +578,9 @@
 				border-radius: 3px;
 				background-color: #7099de;
 			}
-
 			.workPrgrs_bg .bar.percent0 {
 				right: 95%;
 			}
-
 			.pcnt0,
 			.pcnt100,
 			.pcnt20,
@@ -678,7 +594,6 @@
 				bottom: -10px;
 				width: 20%;
 			}
-
 			.workPrgrs_bg .pcnt button {
 				position: relative;
 				display: block;
@@ -691,7 +606,6 @@
 				border: 0;
 				background: 0 0;
 			}
-
 			.workPrgrs_bg .pcnt {
 				z-index: 1;
 				display: none;
@@ -705,49 +619,42 @@
 				border-radius: 3px;
 				background-color: rgba(0, 0, 0, .6);
 			}
-
 			.pcnt0 {
 				cursor: pointer;
 				display: inline-block;
 				z-index: 1000;
 				width: 5%;
 			}
-
 			.pcnt20 {
 				cursor: pointer;
 				display: inline-block;
 				z-index: 999;
 				left: 5%;
 			}
-
 			.pcnt40 {
 				cursor: pointer;
 				display: inline-block;
 				width: 40%;
 				z-index: 998;
 			}
-
 			.pcnt60 {
 				cursor: pointer;
 				display: inline-block;
 				width: 60%;
 				z-index: 997;
 			}
-
 			.pcnt80 {
 				cursor: pointer;
 				display: inline-block;
 				width: 80%;
 				z-index: 996;
 			}
-
 			.pcnt100 {
 				cursor: pointer;
 				display: inline-block;
 				width: 100%;
 				z-index: 995;
 			}
-
 			/* 업무 우선순위 */
 			.task-05 {
 				display: inline-block;
@@ -757,7 +664,6 @@
 				border-bottom: 1px solid #dadbdb;
 				margin-bottom: 15px;
 			}
-
 			.task-pri {
 				width: 150px;
 				line-height: 25px;
@@ -765,7 +671,6 @@
 				border-radius: 5px;
 				background-color: none;
 			}
-
 			.task-pri-wrap {
 				position: absolute;
 				display: inline-block;
@@ -774,7 +679,6 @@
 				margin-left: 10px;
 				margin-top: 7px;
 			}
-
 			.task-pri-add-wrap {
 				width: 150px;
 				height: 90px;
@@ -786,16 +690,13 @@
 				position: absolute;
 				top: 33px;
 			}
-
 			/* 댓글 관련 */
 			.replyUpdateText {
 				display: none;
 			}
-
 			.replyUpdateBtn {
 				display: none;
 			}
-
 			.replyUpdate {
 				border: none;
 				background: none;
@@ -803,7 +704,6 @@
 				font-size: 12px;
 				font-family: Noto Sans KR;
 			}
-
 			.replyDelete {
 				border: none;
 				background: none;
@@ -811,7 +711,6 @@
 				font-size: 12px;
 				font-family: Noto Sans KR;
 			}
-
 			.replyUpdateBtn {
 				width: 80px;
 				height: 25px;
@@ -821,7 +720,6 @@
 				border: 1px solid #5A3673;
 				font-family: Noto Sans KR;
 			}
-
 			.replyUpdateText {
 				width: 500px;
 				height: 25px;
@@ -829,14 +727,12 @@
 				vertical-align: middle;
 				border: 1px solid #c0c0c0;
 			}
-
 			/* 댓글 작성 부분 */
 			.reply {
 				width: 700px;
 				padding: 10px 0;
 				border-top: 1px solid #e7e7e7;
 			}
-
 			.replyMore {
 				background-color: white;
 				border: none;
@@ -844,55 +740,45 @@
 				color: #5A3673;
 				padding: 10px 15px 20px 15px;
 			}
-
 			.defaultReply {
 				width: 670px;
 				margin: 0 15px;
 				padding-bottom: 10px;
 			}
-
 			.replayPfImg {
 				width: 34px;
 				margin-right: 20px;
 				float: left;
 			}
-
 			.replayPfImg2 {
 				width: 34px;
 				margin-right: 20px;
 				float: left;
 			}
-
 			.replyTitle {
 				height: 13px;
 				font-size: 13px;
 				font-weight: 700;
 				padding-right: 10px;
 			}
-
 			.replyDate {
 				font-size: 13px;
 				color: #c0c0c0;
 			}
-
 			.replyEdit {
 				float: right;
 			}
-
 			.replyEdit a {
 				color: #c0c0c0;
 				font-size: 12px;
 			}
-
 			#replyResult {
 				width: 643px;
 				margin-top: 5px;
 			}
-
 			.replyFrom {
 				margin: 10px 0 10px 15px;
 			}
-
 			.replyFrom input {
 				width: 550px;
 				height: 30px;
@@ -901,7 +787,6 @@
 				vertical-align: middle;
 				border: 1px solid #c0c0c0;
 			}
-
 			#replyReg {
 				width: 60px;
 				height: 30px;
@@ -911,8 +796,6 @@
 				border: none;
 				font-family: Noto Sans KR;
 			}
-
-
 /* 혜림 일정 글 작성 css */
         .schepeople,
         .schedate {
@@ -923,7 +806,6 @@
             padding-bottom: 10px;
             margin-bottom: 12px;
         }
-
         .schedate .d {
             width: 120px;
             height: 28px;
@@ -931,7 +813,6 @@
             border: 1px solid #dadbdb;
             margin-right: 10px;
         }
-
         .schedate .t {
             width: 80px;
             height: 28px;
@@ -1042,7 +923,6 @@
             width: 600px;
         }
 /* 혜림 css : 일정 작성 부분 끝  */
-
 /* 혜림 css : 일정 글 결과화면 시작*/
         .result_wrap{
             width: 650px;
@@ -1312,11 +1192,9 @@
             padding: 0 25px;
             border-top: 1px solid #e7e7e7;
         }
-
         .threeBtn ul li {
             float: left;
         }
-
         .threeBtn ul li a {
             vertical-align: middle;
             padding-right: 30px;
@@ -1324,14 +1202,12 @@
             font-weight: 700;
             color: #787878;
         }
-
         /* 댓글 출력 부분 */
         .reply {
             width: 700px;
             padding: 10px 0;
             border-top: 1px solid #e7e7e7;
         }
-
         .replyMore {
             background-color: #f2f2f2;
             border: none;
@@ -1339,46 +1215,38 @@
             color: #5A3673;
             padding: 10px 15px 20px 15px;
         }
-
         .defaultReply {
             width: 670px;
             margin: 0 15px;
             padding-bottom: 10px;
         }
-
         .replayPfImg {
             width: 34px;
             margin-right: 20px;
             float: left;
         }
-
         .replayPfImg2 {
             width: 34px;
             margin-right: 20px;
             float: left;
         }
-
         .replyTitle {
             height: 13px;
             font-size: 13px;
             font-weight: 700;
             padding-right: 10px;
         }
-
         .replyschedate {
             font-size: 13px;
             color: #c0c0c0;
         }
-
         .replyEdit {
             float: right;
         }
-
         .replyEdit a {
             color: #c0c0c0;
             font-size: 12px;
         }
-
         #replyResult {
             width: 643px;
             margin-top: 5px;
@@ -1387,7 +1255,6 @@
         .replyFrom {
             margin: 10px 0 10px 15px;
         }
-
         .replyFrom input {
             width: 550px;
             height: 30px;
@@ -1396,7 +1263,6 @@
             vertical-align: middle;
             border: 1px solid #c0c0c0;
         }
-
         #replyReg {
             width: 60px;
             height: 30px;
@@ -1407,38 +1273,30 @@
             font-family: Noto Sans KR;
         }
 /* 혜림 css : 일정 글 결과화면 끝*/
-
-
-
 /* 윤진 :할일 글 입력창*/
 			.todoinput {
 				width: 100%;
 			}
-
 			li {
 				list-style: none;
 				border-bottom: 1px solid #e7e7e7;
 				padding: 5px 0;
 			}
-
 			/* 윤진 :할일 글 입력창 - 할일입력칸 / 아이콘설정 */
 			.todo-01 {
 				width: 20px !important;
 				height: 20px !important;
 				margin-left: 10px;
 			}
-
 			.todoicon {
 				width: 23px;
 				height: 23px;
 				cursor: pointer;
 				box-sizing: border-box;
 			}
-
 			.todo-01 {
 				box-sizing: border-box;
 			}
-
 			.todo-02 {
 				padding-left: 35px;
 				width: 79%;
@@ -1450,8 +1308,6 @@
 				margin: 0;
 				box-sizing: border-box;
 			}
-
-
 			.todo-03 {
 				display: none;
 				width: 43px;
@@ -1461,12 +1317,10 @@
 				color: #333333;
 				transform: translateY(-9px);
 			}
-
 			.todo-04 {
 				margin-left: 17px;
 				transform: translateY(-6px);
 			}
-
 			.tdp-wrap {
 				position: absolute;
 				display: inline-block;
@@ -1475,7 +1329,6 @@
 				margin-left: 10px;
 				margin-top: 7px;
 			}
-
 			.tdp-list {
 				padding: 5px;
 				width: 150px;
@@ -1486,7 +1339,6 @@
 				cursor: pointer;
 				text-align: center;
 			}
-
 			.tdp-add-wrap {
 				width: 162px;
 				height: 100px;
@@ -1499,24 +1351,20 @@
 				position: absolute;
 				top: 33px;
 			}
-
 			.todoaddbox {
 				margin: 15px 0;
 				cursor: pointer;
 			}
-
 			.todo-plus {
 				width: 15px;
 				height: 15px;
 				margin-left: 13px;
 				transform: translateY(2px);
 			}
-
 			.todoaddspan {
 				padding-left: 40px;
 				cursor: pointer;
 			}
-
 			/* 윤진 :할일 리스트*/
 			.todo-cont {
 				width: 95%;
@@ -1526,22 +1374,18 @@
 				background-color: #fbfbfb;
 				margin: 0 auto;
 			}
-
 			.todo-title {
 				width: 90%;
 				padding: 30px 35px 0 30px;
 				margin-left: 15px;
 			}
-
 			.todo-list-per {
 				margin-right: 45px;
 				color: #505050;
 			}
-
 			.todo-list-ing {
 				color: #505050;
 			}
-
 			.todo-list-title {
 				display: inline-block;
 				width: 65%;
@@ -1553,23 +1397,19 @@
 				white-space: nowrap;
 				overflow: hidden;
 			}
-
 			.todo-cont-list {
 				padding: 30px;
 			}
-
 			.todo-cont-list li {
 				height: 40px;
 				clear: both;
 			}
-
 			/* 윤진 :체크박스 설정*/
 			/*unchecked */
 			.todo-cont-list input[type="checkbox"] {
 				display: none;
 				width: 10%;
 			}
-
 			.todo-cont-list input[type="checkbox"]+label {
 				display: inline-block;
 				width: 20px;
@@ -1581,13 +1421,11 @@
 				background-size: cover;
 				float: left;
 			}
-
 			/*checked */
 			.todo-cont-list input[type="checkbox"]:checked+label {
 				background: url("${pageContext.request.contextPath}/resources/img/checked-2-02.png") top no-repeat;
 				background-size: cover;
 			}
-
 			/* 윤진 :할일 내용*/
 			.todo-06 {
 				padding-left: 20px;
@@ -1601,20 +1439,17 @@
 				box-sizing: border-box;
 				float: left;
 			}
-
 			/*할일 마감일*/
 			.todo-07 {
 				float: left;
 				margin: 0 20px;
 				line-height: 44px;
 			}
-
 			/*할일 담당자 */
 			.todo-08 {
 				width: 25px;
 				margin-top: 10px;
 			}
-
 /* 윤진 : 우측 바 */
 			.rightBar {
 				
@@ -1623,7 +1458,6 @@
 				margin: 80px 0 0 950px;
 				z-index: 99;
 			}
-
 			/* 윤진 : 이전화면 버튼 div*/
 			.rightBar #prevbtn {
 				width: 250px;
@@ -1642,7 +1476,6 @@
 				background-color: #fff;
 				box-sizing: border-box;
 			}
-
 			.rightBar #addmembtn {
 				width: 250px;
 				height: 60px;
@@ -1661,7 +1494,6 @@
 				background-color: #f27781;
 				box-sizing: border-box;
 			}
-
 			.rightBar #addmembtn img {
 				width: 23px;
 				height: 23px;
@@ -1670,13 +1502,11 @@
 				transform: translateY(5px);
 				box-sizing: border-box;
 			}
-
 			.rightBar #prevbtn>.prevsvg {
 				padding: 18px 0 0 30px;
 				float: left;
 				fill: #111111;
 			}
-
 			.rightBar>#rightbtns {
 				clear: both;
 				width: 250px;
@@ -1691,54 +1521,45 @@
 				color: #505050;
 				font-weight: 500;
 			}
-
 			.rightBar>#rightbtns .rightbtn {
 				float: left;
 				width: 25%;
 				padding: 15px 0;
 			}
-
 			/*윤진 :우측 파일함,업무,일정,할일 아이콘 색,크기 통일*/
 			.rightsvg {
 				width: 23px;
 				fill: #444444;
 			}
-
 			/*윤진 : 채팅 div*/
 			#pjchat {
 				width: 250px;
 				height: 300px;
 				background-color: #fff;
 			}
-
 			#pjchat>#pjmembox {
 				height: 90%;
 				overflow: hidden;
 				padding: 10px 0;
 			}
-
 			/* 윤진 : scrollbar*/
 			/* 윤진 : width */
 			::-webkit-scrollbar {
 				width: 5px;
 			}
-
 			/* Track */
 			::-webkit-scrollbar-track {
 				background: #e7e7e7;
 			}
-
 			/* Handle */
 			::-webkit-scrollbar-thumb {
 				background: #a2a2a2;
 				border-radius: 10px;
 			}
-
 			/* Handle on hover */
 			::-webkit-scrollbar-thumb:hover {
 				background: #505050;
 			}
-
 			/* 윤진 :전체참여자*/
 			.allpj_title {
 				position: relative;
@@ -1749,7 +1570,6 @@
 				color: #343538;
 				font-weight: 700;
 			}
-
 			/*윤진 :전체보기 버튼*/
 			.allpjmem {
 				display: block;
@@ -1760,7 +1580,6 @@
 				color: #676869;
 				font-weight: 400;
 			}
-
 			/* 윤진 :타이틀 : 관리자,내부참여자 */
 			.part-title {
 				font-size: 12px;
@@ -1771,13 +1590,11 @@
 				margin: 0 15px;
 				border-top: 1px solid #e9eaed;
 			}
-
 			/* 윤진 :타이틀 : 프로젝트 멤버 리스트 */
 			#pjmemlist {
 				height: 80%;
 				overflow-x: hidden;
 			}
-
 			#pjchat>#pjmembox>#pjmemlist>ul>li {
 				position: relative;
 				width: 250px;
@@ -1785,7 +1602,6 @@
 				padding: 8px 20px 8px 20px;
 				box-sizing: border-box;
 			}
-
 			/* 윤진 :프로필사진*/
 			.userimg {
 				z-index: 20;
@@ -1800,7 +1616,6 @@
 				float: left;
 				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
 			}
-
 			/* 윤진 :프로젝트 멤버 이름*/
 			.pjusername {
 				display: inline-block;
@@ -1813,7 +1628,6 @@
 				vertical-align: middle;
 				margin-top: 7px;
 			}
-
 			/* 윤진 :우측 사이드 채팅 아이콘*/
 			.chatsvg {
 				position: absolute;
@@ -1821,13 +1635,11 @@
 				right: 20px;
 				width: 25px;
 			}
-
 			#chatbtn-fill {
 				width: 18px;
 				margin-top: 10px;
 				transform: translateY(3px);
 			}
-
 			/* 윤진 :우측 하단 채팅 버튼*/
 			#pjchatbox {
 				width: 250px;
@@ -1843,13 +1655,206 @@
 				border-radius: 0 0 0px 0px;
 				background-color: #fff;
 			}
-
 			#pjchatbox>.pjchatboxsvg {
 				position: absolute;
 				top: 11px;
 				right: 20px;
 				width: 25px;
 			}
+			
+			
+			/* 초대하기 모달 */
+			.invite-dim{
+				display:none;
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background: rgba(0, 0, 0, 0.5);
+			    z-index:90;
+			    
+			}
+			
+			.invite-search-wrap{
+				display:none;
+				position: relative;
+			    width: 500px;
+			    height: 580px;
+			    margin: 100px auto;
+			    background: #fefefe;
+			    border:1px solid #fff;
+			    z-index:95;
+			    overflow: scroll;
+			}
+			
+			.invite-title{
+				width:550px;
+			    height: 45px;
+			    line-height: 45px;
+			    text-align: center;
+			    font-size: 16px;
+			    background: #e7e7e7;
+			
+			}
+			.invite-search-box {
+            margin: 10px 12px;
+            height: 32px;
+            width: 480px;
+            line-height: 32px !important;
+            border: 1px solid #e7e7e7;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .chat-search-input {
+            border: none;
+            width: 400px;
+            line-height: 25px;
+            padding-left: 10px;
+        }
+
+        .chat-search {
+            padding-top: 12px;
+            margin-top: 10px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+ 
+        .chat-invite-top {
+            width: 500px;
+            height: 65px;
+            background-color:#e7e7e7;
+            margin:0 auto;
+        }
+
+        .chat-invite-wrap {
+        	position:relative;
+        	width:500px;
+            line-height: 60px;
+            color: #333333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .inviteList-table tbody{
+        	text-align: center;
+        }
+
+
+        .invite-exit{
+            float: right;
+            margin: 20px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .invite-search{
+            padding-left:10px;
+        }
+
+        .invite-rs{
+            line-height: 40px;
+            height: 400px;
+            overflow: scroll;
+        }
+        .invite-my-img{
+	        line-height: 68px;
+	        width: 100px;
+	        display:inline-block;
+	        float:right;
+        }
+        .invite-names{
+	        width: 400px;
+	        height:50px;
+	        line-height:20px;
+	        padding-top:15px;
+	        display:inline-block;
+        }
+        .invite-name{
+        	font-size:13px;
+        	color:#333333;
+        	font-weight: bold;
+        	padding-left:20px;
+        
+        }
+        .invite-email{
+        	font-size:10px;
+        	color:#787878;
+        }
+        .invite-check-wrap{
+	        line-height: 50px;
+	        width: 30px;
+	        display:inline-block;
+	        float:right;
+	        text-align: right;
+	        padding-top:5px;
+	    }
+	    
+	    .invite-check{
+	        border-radius: 70%;
+		    border: 1px solid #bebebe;
+		    width: 15px;
+		    height: 15px;
+		    cursor: pointer;
+        
+        }
+			
+        .invite-img-file{
+      		width: 30px;
+      		height: 30px;
+      		border-radius:15px !important;
+        }
+        .invite-img{
+        	padding-left:20px;
+        	vertical-align: middle;
+        }
+        .invite-imgs{
+       	    border-radius: 90px;
+    		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+        }
+      
+        .tel-other{
+           vertical-align: middle;
+        }
+        .submit-wrap{
+            padding: 10px 0;
+		    border-top-color: #e8e8e8;
+		    border-top-width: 1px;
+		    border-top-style: solid;
+		    position: absolute ;
+		    text-align: center;
+		    bottom:0px;
+		    background-color: #fff;
+		    height :40px;
+		    width: 500px;
+		    vertical-align: middle;
+        }
+        .resetbtn{
+        	width: 100px;
+        	height: 40px;
+        	border: 1px solid #432D73;
+        	color:#432D73;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #fff;
+        }
+        .submitbtn{
+            width: 150px;
+        	height: 40px;
+        	border: 1px solid #fff;
+        	color:#fff;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #432D73;
+        	margin-left:5px;
+        }
+        .inviteList-table tr:last-child td{
+        	margin-bottom:100px;
+        	background-color: black;
+        	display:none;
+        }
+			
+			
 		</style>
 	</head>
 
@@ -1998,6 +2003,7 @@
 								<form name="task_frm" id="task_frm">
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<input type="hidden" name="pno" id="pno" value="${pno}">
 									<div class="textbody">
 										<div class="title">
@@ -2201,7 +2207,6 @@
 									});
 									$('#task-start-date').datepicker();
 									$('#task-end-date').datepicker();
-
 									$(".task-res").click(function () {
 										$p = $(this).parents(".task-02");
 										$p.find(".task-res-add-wrap").toggle();
@@ -2211,12 +2216,10 @@
 										$(".task-res").val($(this).text());
 										$p.find(".task-res-add-wrap").hide();
 									});
-
 									$(".task-pri").click(function () {
 										$p = $(this).parents(".task-pri-wrap");
 										$p.find(".task-pri-add-wrap").toggle();
 									});
-
 									$(".pcnt0").click(function () {
 										var $p = $(this).parents(".workPrgrs_bg");
 										$p.find(".bar").css("background-color", "#7099de");
@@ -2271,11 +2274,7 @@
 										$(".task-pri").val("높음");
 										$(".task-pri-add-wrap").hide();
 									});
-
-
-
 								});
-
 								//업무 글작성 버튼 눌렀을 때 + 소켓 알림
 								// 웹소켓 연결
 								var sock = new WebSocket("ws://" + location.host + "/ontact/alert");
@@ -2559,7 +2558,6 @@
 				
 				        }
 				    });
-
 				    </script>
 <!-- 혜림 일정 글 작성 부분 끝 -->
                     
@@ -2710,7 +2708,6 @@
 										'<input type="hidden" class="tdp-uno" name="tduno" value="${ulist.uno}"></li>' + '\n' +
 										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>' +
 										'</li>'
-
 									$(".todoinput").append(todoinput);
 									$('.todoform').find('.todo-date' + tdcnt).datepicker({
 										dateFormat: 'mm/dd' //Input Display Format 변경
@@ -2747,7 +2744,6 @@
 								$(".todo-date" + tdcnt).removeClass('hasDatepicker').datepicker();
 								$(".todo-date" + tdcnt).removeAttr('id');
 								/* $('.datepicker').datepicker();  */
-
 								//윤진: 할일 글쓰기- 내용 삭제
 								$(document).on('click', '.todo-01', function () {
 									if ($('.todo').length > 1) {
@@ -2784,13 +2780,11 @@
 												console.log('filepath: ${ulist.ufilepath}');
 									} */
 								});
-
 								//윤진 : 할일 insert
 								//게시글 작성 공개여부 설정
 								$(".textfooter_side").on("click", function (e) {
 									e.preventDefault();
 									$(".public_setting").toggle();
-
 									$('.set_li').on('click', function () {
 										$(".public").show();
 										$(".public_admin").hide();
@@ -2809,7 +2803,6 @@
 									frm.method = "get";
 									frm.submit();
 								}
-
 							</script>
 					</div>
 				</div>
@@ -2960,7 +2953,6 @@
 														}]
 													},
 													options: {
-
 														legend: {
 															display: true,
 															position: 'right',
@@ -2968,7 +2960,6 @@
 													}
 												});
 											};
-
 											$("#task-radio01-" + count).click(function () {
 												//업무 상태 변경
 												$.ajax({
@@ -3159,7 +3150,6 @@
 										.on("change", function () {
 											console.log("Got change event from field");
 										});
-
 										//값 변경되면 ajax update
 										$('#task-end-date' + count).datepicker({
 											onSelect: function (dateText) {
@@ -3188,7 +3178,6 @@
 										.on("change", function () {
 											console.log("Got change event from field");
 										});
-
 									</script>
 
 									<div class="task-04">
@@ -3558,8 +3547,6 @@
 											parentDiv.find(".replyUpdateText").css("display", "inline-block");
 											parentDiv.find(".replyUpdateBtn").css("display", "inline-block");
 										});
-
-
 										$(".replyUpdateBtn").click(function () {
 											var parent = $(this).parent();
 											var parentDiv = parent.parent();
@@ -3567,7 +3554,6 @@
 											var rno = parentDiv.find(".rno").val();
 											console.log(rno + "rno");
 											console.log(rdesc + "rdesc");
-
 											$.ajax({
 												url: "${pageContext.request.contextPath}/project/replyupdate",
 												data: {
@@ -3588,14 +3574,11 @@
 												}
 											});
 										});
-
-
 										//댓글 삭제
 										$(".replyDelete").click(function () {
 											var parent = $(this).parent();
 											var parentDiv = parent.parent();
 											var rno = parentDiv.find(".rno").val();
-
 											$.ajax({
 												url: "${pageContext.request.contextPath}/project/replydelete",
 												data: {
@@ -3922,6 +3905,7 @@
 						</div>
 					</a>
 				</div>
+	<%-- 			<div id="addmembtn" onclick="window.open('${pageContext.request.contextPath}/project/projectinvite?pno=${pno}','프로젝트 멤버 초대','width=470px,height=600px,location=no,status=no,scrollbars=no')"> --%>
 				<div id="addmembtn">
 					초대하기
 					<img src="${pageContext.request.contextPath}/resources/img/addperson-03-white.png"
@@ -3995,14 +3979,88 @@
 					</a>
 				</div>
 			</div>
+		
+		<!-- 초대하기 모달 -->
+		<div class="invite-dim">
 		</div>
-		<script>
+    <div class="invite-search-wrap">
+        <div class="chat-invite-top">
+            <p class="chat-invite-wrap">
+                <span class="invite-title">프로젝트 초대하기</span>
+                <!--검색모달 닫기-->
+                <a href="#"><svg version="1.1"  class="invite-exit" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60"
+                        style="enable-background:new 0 0 60 60;" xml:space="preserve" fill="#505050" width="25px"
+                        height="25px" stroke="#505050">
+                        <g>
+                            <path d="M0,0v60h60V0H0z M58,58H2V2h56V58z" />
+                            <polygon points="16.009,45.405 30.151,31.263 44.293,45.405 45.707,43.991 31.565,29.849 45.707,15.707 44.293,14.293 
+		30.151,28.435 16.009,14.293 14.595,15.707 28.737,29.849 14.595,43.991 	" />
+                        </g>
+                    </svg></a>
+            </p>
 
+            <div class="invite-search-box">
+                <span class="invite-search">
+                    <svg version="1.1" id="Capa_1_margin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 53.627 53.627"
+                        style="enable-background:new 0 0 53.627 53.627;" xml:space="preserve" width="15px"
+                        height="15px">
+                        <path d="M53.627,49.385L37.795,33.553C40.423,30.046,42,25.709,42,21C42,9.42,32.58,0,21,0S0,9.42,0,21s9.42,21,21,21
+c4.709,0,9.046-1.577,12.553-4.205l15.832,15.832L53.627,49.385z M2,21C2,10.523,10.523,2,21,2s19,8.523,19,19s-8.523,19-19,19
+S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0.304-0.29,0.445-0.445l14.262,14.262
+l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
+                    </svg>
+
+                </span>
+                <input type="text" class="chat-search-input" placeholder="직원 이름으로 검색">
+            </div>
+			<form action="${pageContext.request.contextPath}/project/projectmemberinsert" method="post" class="pinvitefrm1">
+            <div class="invite-rs">
+              <c:if test="${empty pmlist }">
+               	 검색 결과가 없습니다.
+               	 </c:if>
+						<sec:csrfInput /> 
+						<table class="inviteList-table">
+              			<c:if test="${not empty pmlist }">
+              			  <c:forEach items="${pmlist}" var="list" varStatus="e">
+							<tr class="tel-other">
+							<td class="invite-img">
+								<c:if test="${not empty list.ufilepath }">
+								<img src="${list.ufilepath }" class="invite-imgs"  width="30px" height="30px" >
+								</c:if>
+								<c:if test="${empty list.ufilepath}">
+								<img src="${pageContext.request.contextPath}/resources/img/user-3.png" 
+								  width="30px" height="30px" class="invite-img-file">
+								</c:if>
+								
+								</td>
+									<td class="invite-names">
+									<p class="invite-name">${list.uname}<br>
+									<span class="invite-email">${list.cname}</span></p> </td>
+										<td class="invite-check-wrap">
+											<input type="checkbox" class="invite-check" class="check${e.count}" name="uno" value="${list.uno}"> 
+											<label for="check${e.count}"></label>
+										</td>
+							</tr>
+							</c:forEach>
+             				  </c:if>
+						</table>
+						<div class="submit-wrap">
+							 <input type="hidden" name="pno" value="${pno}"> 
+							<button type="submit" class="submitbtn">프로젝트 초대</button>
+						</div>
+       			     </div>
+					</form>
+        </div>
+    </div>
+		
+		
+		<script>
 			//게시글 작성 공개여부 설정
 			$(".textfooter_side").on("click", function (e) {
 				e.preventDefault();
 				$(".public_setting").toggle();
-
 				// if($('#pub_dropdown').data('clicked',true)){
 				//     $("#pub").show();
 				//     $("#admin").hide();
@@ -4027,16 +4085,12 @@
 				$(this).height(this.scrollHeight);
 			});
 			$('.wrap').find('textarea').keyup();
-
-
-
 			//작성된 글 더보기 메뉴 (혜림)
 			$(".option #dropdown").on("click", function (e) {
 				e.preventDefault();
 				var $t = $(this).parents(".option");
 				$t.find(".editDropdown").toggle();
 			});
-
 			//스크롤 숨겼다가 hover하면 나타남
 			$("#pjmemlist").mouseover(function () {
 				$(this).css("overflow-y", "scroll");
@@ -4044,7 +4098,6 @@
 			$("#pjmemlist").mouseout(function () {
 				$(this).css("overflow-y", "hidden");
 			});
-
 			//우측 버튼 hover시 background-color 변경
 			$(".btnhover").hover(function () {
 				$(this).css('background-color', '#e7e7e7');
@@ -4061,6 +4114,96 @@
 				$(this).css('color', '#333333');
 				$(".prevsvg").css('fill', '#111111');
 			});
+			
+			
+			//초대하기 모달
+			$("#addmembtn").on("click",function(){
+				$(".invite-dim").css("display","block");
+				$(".invite-search-wrap").css("display","block");
+			});
+			
+			$(".invite-exit").on("click",function(){
+				$(".invite-dim").css("display","none");
+				$(".invite-search-wrap").css("display","none");
+			});
+			//초대하기 모달 검색기능
+			$(".chat-search-input").keyup(function(){
+				var c =$(this).val();
+				$(".inviteList-table tr").hide();
+				console.log("검색어:"+c);
+				var temp= $(".inviteList-table td:contains('"+c+"')");
+				console.log("temp"+temp);
+				
+				$(temp).parent().show();
+			});
+			$(function () {
+				// 업무리포트 그래프 뿌리기 
+				var ctx = document.getElementById('taskChart').getContext('2d');
+				var pno = ${ pno };
+				report();
+				function report() {
+					$.ajax({
+						url: "${pageContext.request.contextPath}/project/tstatereport",
+						data: {
+							pno: pno
+						},
+						dataType: "json",
+						success: function (data) {
+							console.log("성공 들어옴");
+							if(data!=null||data!=''){
+								createChart(data[0], data[1], data[2], data[3]);
+								console.log(data+"데이터 null이 아닐때 값 ")
+								return false;
+							}else{
+								$(".task-report-wrap").css("display","none");
+							}
+							console.log(data+"데이터데이터");
+						},
+						error: function () {
+							console.log("update 실패");
+						}
+					});
+				};
+				function createChart(s1, s2, s3, s4) {
+					if(s1==null||s1==''){
+						$(".task-report-wrap").css("display","none");
+						console.log("데이터 s1"+s1);
+					}
+					var myChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ['요청', '진행', '완료', '보류'],
+							datasets: [{
+								label: 'Score',
+								data: [s1, s2, s3, s4],
+								backgroundColor: [
+									'#F27781',
+									'#f17a19',
+									'#50b766',
+									'#4aaefb'
+								],
+							}]
+						},
+						options: {
+
+							legend: {
+								display: true,
+								position: 'right',
+							}
+						}
+					});
+				};
+				});
+
+			
 		</script>
+		
+		<c:if test="${not empty inviteSuccess}">
+			<script>
+			$(document).ready(function(){  
+				alert('${inviteSuccess}');	
+			});
+			</script>
+		</c:if>
 	</body>
 	</html>

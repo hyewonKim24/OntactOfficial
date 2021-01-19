@@ -413,7 +413,7 @@
           float: left;
           padding-right : 10px;
         }
-        /* 참석자 모달 리스트 */
+        /* 참석자 모달 리스트 *우/
         .sche-res-wrap{
 			position:absolute;
 			display:inline-block;

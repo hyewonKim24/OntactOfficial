@@ -18,6 +18,15 @@ public class ProjectMemberServiceImpl implements ProjectMemberService{
 	public List<String> AlertProList(ProjectMemberDto dto) {
 		return pjMemberDao.AlertProList(dto);
 	}
+
+	@Override
+	public int projectMeberinvite(List<ProjectMemberDto> list) {
+		int rs=0;
+		for(int i=0;i<list.size();i++) {
+			rs += pjMemberDao.projectMeberinvite(list.get(i));
+		}
+		return rs;
+	}
 	
 
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -239,6 +240,34 @@ public class HeaderController {
 				e.printStackTrace();
 			}
 			return alist;
+		}
+		
+		//헤더에서 검색했을때
+		@RequestMapping(value="/headersearch",method = {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView headersearch(ModelAndView mv,Authentication authentication,
+				@RequestParam(name = "headerselect") String select,
+				@RequestParam(name = "headersearchtext") String headersearchtext) {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			System.out.println("검색 컨트롤러 들어옴");
+			String uno=userdetail.getUno();
+			System.out.println("검색내용"+headersearchtext+"select:"+select);
+			if(select.equals("P")) {
+				//프로젝트
+				
+				
+				
+			}else if(select.equals("B")){
+				//글
+				
+				
+			}else if(select.equals("R")){
+				//댓글
+				
+				
+			}
+			
+			mv.setViewName("main/searchresult");
+			return mv;
 		}
 	
 	

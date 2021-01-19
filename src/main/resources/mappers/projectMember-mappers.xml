@@ -22,4 +22,11 @@
 		]]>
 	</select>
 	
+	<!-- 프로젝트 멤버 초대로 추가 -->
+	<insert id="projectMeberinvite" parameterType="string" flushCache="true" statementType="PREPARED">
+		 <![CDATA[
+			insert into project_member values(#{pno},#{uno},0)
+		]]>
+	</insert>
+	
 </mapper>

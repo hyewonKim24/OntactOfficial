@@ -632,7 +632,6 @@ input:focus {
 			url: "${pageContext.request.contextPath}/chatalertall",
 			async : false,
 			success:function(object){
-				console.log("채팅알림수:"+object);
 				$("#chat-alarm-count").html('');
 				$("#chat-alarm-counts").html(''); 
 				
@@ -987,13 +986,13 @@ input:focus {
 			<span class="header-left-wrap"> <!-- 로고 넣어야 함 ! --> <img
 				src="img/png/internet.png" id="header-logo"> <span
 				id="header-search">
-					<form action="#" class="header-search-form">
-						<select class="header-pj-select">
+					<form class="header-search-form" name="header_frm">
+						<select class="header-pj-select" name="headerselect">
 							<option value="P">&nbsp;&nbsp;&nbsp;프로젝트</option>
-							<option value="A">&nbsp;&nbsp;&nbsp;전체</option>
 							<option value="B">&nbsp;&nbsp;&nbsp;글</option>
 							<option value="R">&nbsp;&nbsp;&nbsp;댓글</option>
-						</select> <input type="text" placeholder="검색어를 입력해주세요" id="header-pj-input">
+						</select> 
+						<input type="text" placeholder="검색어를 입력해주세요" name="headersearchtext" id="header-pj-input">
 					</form>
 
 			</span>
@@ -1481,7 +1480,17 @@ $(document).ready(function() {
 			}
 		});
 		
-});
+		});
+		
+		$("#header-pj-input").keypress(function(e){
+			if(e.keyCode == 13){
+				var frm = document.header_frm;
+				frm.action = "${pageContext.request.contextPath}/headersearch";
+				frm.method = "get";
+				frm.submit();
+				}
+			});
+		
 });
 </script>
 

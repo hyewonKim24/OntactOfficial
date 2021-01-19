@@ -21,4 +21,8 @@ public class ProjectMemberDao {
 	public List<String> AlertProList(ProjectMemberDto dto) {
 		return sqlSession.selectList("ProjectMember.AlertProList", dto);
 	}
+	// 프로젝트 멤버 초대 
+	public int projectMeberinvite(ProjectMemberDto dto) {
+		return sqlSession.insert("ProjectMember.projectMeberinvite", dto);
+	}
 }

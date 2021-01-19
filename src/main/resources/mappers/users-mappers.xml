@@ -6,6 +6,7 @@
 	<resultMap type="UsersDto" id="resultUsers">
 		<id property="uno" column="uno" />
 		<result property="cno" column="cno" />
+		<result property="cname" column="cname" />
 		<result property="dno" column="dno" />
 		<result property="uemail" column="uemail" />
 		<result property="uname" column="uname" />
@@ -167,7 +168,8 @@
 		SELECT * FROM USERS WHERE UEMAIL=#{UEMAIL}
 		]]>
 	</select>
-
+	
+	<!-- 혜원 : 프로젝트 관련 코드 -->
 	<!--  해당 프로젝트 유저 list 출력-->
 	<select id="listProjectMember" resultType="arraylist" resultMap="resultProjectMember">
 	 	<![CDATA[
@@ -178,6 +180,21 @@
     	inner join project p
         on p.pno=#{pno}
     	where pm.pno=#{pno}
+		]]>
+	</select>
+	
+	<!-- 프로젝트 멤버 초대하기에서 list -->
+	<select id="projectInviteList" resultMap="resultUsers">
+	 	<![CDATA[
+	 	select c.cno, c.cname, u.uno, u.uname, u.ufilepath
+	    from company c left outer join users u on c.cno = u.cno
+	    where c.cno=#{cno} and
+	    (u.uno 
+	    NOT IN (
+	        select pm.uno
+	            from project p
+	            left outer join project_member pm on p.pno = pm.pno
+	             where p.pno = #{pno}))
 		]]>
 	</select>
 

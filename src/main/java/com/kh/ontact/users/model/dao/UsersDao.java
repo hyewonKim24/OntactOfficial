@@ -79,6 +79,11 @@ public class UsersDao {
 		return sqlSession.selectList("Users.listProjectMember", pno);
 	}
 	
+	//프로젝트 초대 리스트
+	public List<UsersDto> projectInviteList(UsersDto dto) throws Exception{
+		return sqlSession.selectList("Users.projectInviteList", dto);
+	}
+	
 	
 	//혜림 - 조직도
 		//미분류그룹

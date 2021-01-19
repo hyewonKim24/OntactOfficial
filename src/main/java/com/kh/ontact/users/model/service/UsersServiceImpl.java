@@ -176,6 +176,12 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.listProjectMember(pno);
 	}
 	
+	// 프로젝트 초대 리스트
+	@Override
+	public List<UsersDto> projectInviteList(UsersDto dto) throws Exception {
+		return usersDao.projectInviteList(dto);
+	}
+	
 	//조직도 - 혜림
 		public int listCountFirst() {
 			return usersDao.listCountFirst();
@@ -192,6 +198,8 @@ public class UsersServiceImpl implements UsersService{
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
+
+
 
 		
 	

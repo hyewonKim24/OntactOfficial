@@ -32,7 +32,8 @@ public class UsersDto {
 	private int failure_cnt;
 	private String dname;
 	private int padmin;
-	
+	private String cname;
+	private String pno;
 	
 	public UsersDto(String uno, String cno, String uemail, String uname, String upwd, String urank, String uauthority,
 			int enabled) {

@@ -40,6 +40,7 @@ public interface UsersService {
 	
 	//프로젝트
 	List<ProjectMemberDto> listProjectMember(String pno) throws Exception;
+	List<UsersDto> projectInviteList(UsersDto dto) throws Exception;
 	
 	
 	// 조직도
