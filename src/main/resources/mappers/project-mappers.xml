@@ -113,7 +113,7 @@
 	
 	<insert id="insertProjectMember" flushCache="true" statementType="PREPARED"> 
 		<![CDATA[ 
-			insert into project_member values (pno_se.currval, #{uno, jdbcType=INTEGER}, 1) 
+			insert into project_member values (pno_se.currval, #{uno, jdbcType=VARCHAR}, 1) 
 		]]> 
 	</insert>
 		 

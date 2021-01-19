@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Todo">
+	<resultMap type="TodoDto" id="resultTodo">
+		<id property="bno" column="bno"/>
+	    <result property="tdcontent" column="tdcontent"/>
+		<result property="tddate" column="tddate"/>
+		<result property="tdcheck" column="tdcheck"/>
+		<result property="tdresponsibility" column="tdresponsibility"/>
+		<result property="tdno" column="tdno"/>
+	</resultMap>
+
+	<!-- Todo insert  -->
+	<insert id="insertTodo">
+		insert into todo values (bno_se.currval, #{tdcontent}, #{tddate}, 0, #{tdresponsibility}, tdno_se.nextval)
+	</insert>
+	
+	<!-- Todo update : 체크 수정  -->
+	<update id="updateTodoCheckFalse">
+		update todo set tdcheck=0 where tdno=#{tdno}
+	</update>
+	<update id="updateTodoCheckTrue">
+		update todo set tdcheck=1 where tdno=#{tdno}
+	</update>
+	
+	<!-- Todo update : 마감일 수정  -->
+	<update id="updateTodoDate">
+		update todo set tddate=#{tddate} where tdno=#{tdno}
+	</update>
+	
+	<!-- Todo update : 담당자수정  -->
+	<update id="updateTodoUno">
+		update todo set tdresponsibility=#{tduno} where tdno=#{tdno}
+	</update>
+</mapper>

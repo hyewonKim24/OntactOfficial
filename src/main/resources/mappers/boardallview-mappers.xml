@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BoardAllView">
+	<resultMap type="BoardAllViewDto" id="resultBoardAllView">
+		<id property="bno" column="bno"/>
+		<result property="pno" column="pno"/>
+		<result property="uno" column="uno" />
+		<result property="bname" column="bname"/>
+		<result property="bopen" column="bopen"/>
+		<result property="btype" column="btype"/>
+		<result property="bfirst" column="bfirst" />
+		<result property="bdate" column="bdate"/>
+		<result property="bdesc" column="bdesc"/>
+		<result property="uname" column="uname" />
+		<result property="ufilepath" column="ufilepath" />
+		<collection property="TodoViewDto" ofType="TodoViewDto" column="bno=bno" javaType="java.util.List" select ="getTodoList"/>
+	</resultMap>
+
+ 	<select id="getBoardAllList" resultMap="resultBoardAllView" parameterType="string">
+		SELECT distinct * FROM boardall_view where uno = #{uno} order by bno desc
+	</select> 
+	
+	<select id="getTodoList" resultType="TodoViewDto">
+		select distinct * from todo_view where bno = #{bno}
+	</select>
+
+</mapper>

@@ -1,28 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ include file="../main/header.jsp" %>
-<%@ include file="./pjsidebar.jsp" %>
-	<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-		<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet"
-			type="text/css">
-		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<!-- 차트 그리기 -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-			integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-			crossorigin="anonymous"></script>
-		<style>
-			* {
-				margin: 0;
-			}
+<%@ include file="../main/header.jsp"%>
+<%@ include file="./pjsidebar.jsp"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+       <!-- 차트 그리기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
+    	integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" 
+    	crossorigin="anonymous"></script>
+<style>
+* {
+	margin: 0;
+}
 
 			body {
 				width: 1200px;
@@ -140,10 +141,9 @@
 				font-family: Noto Sans KR;
 			}
 
-			.content_detail:focus,
-			.title_detail:focus {
-				outline: none;
-			}
+.content_detail:focus, .title_detail:focus {
+	outline: none;
+}
 
 			.textfooter {
 				height: 46px;
@@ -1984,7 +1984,7 @@
 									var todoinput = '<li class="todo">' + '\n' +
 										'<img src="${pageContext.request.contextPath}/resources/img/minus-reverse-pink.png" class="todo-01 todoicon" >' + '\n' +
 										'<input type="text" name="tdcontent" class="content_detail todo-02" placeholder="할일 입력">' + '\n' +
-										'<input type="text" class="todo-03 todoicon todo-date' + tdcnt + '" name="tdate" readonly>' + '\n' +
+										'<input type="text" class="todo-03 todoicon todo-date' + tdcnt + '" name="tddate" readonly>' + '\n' +
 										'<div class="tdp-wrap">' + '\n' +
 										'<img src="${pageContext.request.contextPath}/resources/img/addperson.png" class="todo-04 todoicon">' + '\n' +
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +

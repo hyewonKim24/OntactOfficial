@@ -31,6 +31,7 @@
 	<result property="tpriority" column="tpriority" />
 	<result property="tmemo" column="tmemo" />
 	<result property="taskmanager" column="taskmanager" />
+	<result property="bdesc" column="bdesc"/>
 	</resultMap>
 	
 	<resultMap type="ReplyDto" id="resultReply">
@@ -77,4 +78,10 @@
 		]]>
 	</insert>
 	
+	<!-- 윤진 : boardAll Todo 추가 -->
+	<insert id="insertBoardAllTodo">
+	 <![CDATA[
+	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},'4','0',sysdate)
+		]]>
+	</insert>
 </mapper>

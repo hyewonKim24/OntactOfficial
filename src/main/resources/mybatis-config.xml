@@ -32,6 +32,8 @@
  		<typeAlias type="com.kh.ontact.alert.model.dto.AlertDto" alias="AlertDto" /> 
 
  		<typeAlias type="com.kh.ontact.project.schedule.model.dto.ScheduleDto" alias="ScheduleDto" />
-
+		<typeAlias type="com.kh.ontact.project.todo.model.dto.TodoDto" alias="TodoDto" />
+		<typeAlias type="com.kh.ontact.project.todo.model.dto.TodoViewDto" alias="TodoViewDto" />
+		<typeAlias type="com.kh.ontact.project.boardall.model.dto.BoardAllViewDto" alias="BoardAllViewDto" />
 	</typeAliases>
 </configuration>

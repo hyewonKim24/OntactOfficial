@@ -1,5 +1,6 @@
 package com.kh.ontact.project.boardall.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,10 +27,15 @@ public class BoardAllDao {
 				+ "", pno);
 	}
 	
-//	혜림 BoardAll 스케줄 추가 
+//	Boardall insert (업무:혜원 / 일정:혜림 / 할일: 윤진)
+	public int insertBoardAllTask(BoardAllDto dto) throws Exception {
+		return sqlSession.insert("BoardAll.insertBoardAllTask",dto);
+	}
+	
 	public int insertBoardAllSchedule(BoardAllDto dto) throws Exception {
 		return sqlSession.insert("BoardAll.insertBoardAllSchedule",dto);
 	}
-	
-	
+	public int insertBoardAllTodo(BoardAllDto dto) throws Exception {
+		return sqlSession.insert("BoardAll.insertBoardAllTodo", dto);
+	}
 }

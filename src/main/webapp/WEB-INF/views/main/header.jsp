@@ -151,7 +151,7 @@ input:focus {
 
 .alarm-count {
 	position: absolute;
-	display: none;
+	display: inline;
 	top: 15px;
 	width: 5px;
 	height: 13px;
@@ -167,7 +167,7 @@ input:focus {
 }
 .alarm-counts {
 	position: absolute;
-	display: none;
+	display: inline;
 	top: 15px;
 	width: 10px;
 	height: 13px;
@@ -1301,9 +1301,6 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 						console.log("새글 등록 됐을때 : "+object+"알림추가")
 						$("#alarm-count").html('');
 						$("#alarm-counts").html('');
-						$("#alarm-count").css("display","inline");
-						$("#alarm-counts").css("display","inline");
-						
 						if(object==0 || object==null){
 							$("#alarm-count").remove();
 							$("#alarm-counts").remove(); 
