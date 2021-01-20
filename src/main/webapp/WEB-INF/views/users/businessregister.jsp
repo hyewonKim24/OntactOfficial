@@ -280,7 +280,7 @@
 
             </p>
             <p id="title_bottom"></p>
-           <form:form role="form" id="form" commandName="registerRequest" action="${pageContext.request.contextPath}/busjoincheck"> 
+           <form:form role="form" id="form" commandName="registerRequest" action="${pageContext.request.contextPath}/main/busjoincheck"> 
            <%--  <form:form role="form" id="form" commandName="registerRequest" method="post"> --%>
                 <table id="login">
                     <tbody>
@@ -526,7 +526,7 @@
             		} */
                 	
             			$.ajax({
-        					url:"${pageContext.request.contextPath}/busjoinchecktest",
+        					url:"${pageContext.request.contextPath}/main/busjoinchecktest",
         					type:"POST",
         					async: false,
         					data:$("#form").serialize(),
@@ -544,7 +544,7 @@
         							//이메일전송
         							$.ajax({
         								type:"GET",
-        								url:"${pageContext.request.contextPath}/mailCheck?uemail="+email,
+        								url:"${pageContext.request.contextPath}/main/mailCheck?uemail="+email,
         								//async: false,
         								success:function(data){
         									code=data;
@@ -583,7 +583,7 @@
             		var email = $("#uemail").val();
             		$.ajax({
 						type:"GET",
-						url:"${pageContext.request.contextPath}/mailCheck?uemail="+email,
+						url:"${pageContext.request.contextPath}/main/mailCheck?uemail="+email,
 						//async: false,
 						success:function(data){
 							code=data;
@@ -614,7 +614,7 @@
             	
             	//회원가입 버튼
             	$("#modal_send").click(function(){
-            		$("#form").attr("action","${pageContext.request.contextPath}/busjoin").submit();
+            		$("#form").attr("action","${pageContext.request.contextPath}/main/busjoin").submit();
             		alert("회원가입이 완료되었습니다!");
             	})
             });

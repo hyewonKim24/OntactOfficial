@@ -63,7 +63,7 @@ public class UsersMainController {
 	}
 
 	// 비즈니스 회원가입창 이동
-	@RequestMapping(value = "/busjoin", method = RequestMethod.GET)
+	@RequestMapping(value = "/main/busjoin", method = RequestMethod.GET)
 	public ModelAndView joinBusiness() {
 		ModelAndView mv = new ModelAndView("users/businessregister");
 		mv.addObject("registerRequest", new RegisterRequest());
@@ -71,7 +71,7 @@ public class UsersMainController {
 	}
 
 	// 비즈니스 회원가입 인서트
-	@RequestMapping(value = "/busjoin", method = RequestMethod.POST)
+	@RequestMapping(value = "/main/busjoin", method = RequestMethod.POST)
 	public String joinBusiness(UsersDto userdto, CompanyDto companydto) {
 		logger.info("userInfo");
 		try {
@@ -86,12 +86,12 @@ public class UsersMainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/loginform";
+		return "redirect:/main/loginform";
 	}
 
 	// 비즈니스 회원가입 유효성 검사 (에이작스용^^)
 	@ResponseBody
-	@RequestMapping(value = "/busjoinchecktest")
+	@RequestMapping(value = "/main/busjoinchecktest")
 	public String joinBusinessChk(@Valid RegisterRequest regReq, BindingResult bindingResult) throws Exception {
 		String test = null;
 		if (bindingResult.hasErrors()) {
@@ -115,7 +115,7 @@ public class UsersMainController {
 	}
 
 	// 비즈니스 회원가입 유효성 검사 (폼용)
-	@RequestMapping(value = "/busjoincheck")
+	@RequestMapping(value = "/main/busjoincheck")
 	public ModelAndView joinBusinessChk(@Valid RegisterRequest regReq, BindingResult bindingResult,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -138,7 +138,7 @@ public class UsersMainController {
 	}
 
 	// 가입 인증번호 메일 발송
-	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+	@RequestMapping(value = "/main/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheckGET(String uemail) throws Exception {
 
@@ -166,7 +166,7 @@ public class UsersMainController {
 	}
 
 	// 유저 회원가입 이동
-	@RequestMapping(value = "/guestjoin", method = RequestMethod.GET)
+	@RequestMapping(value = "/main/guestjoin", method = RequestMethod.GET)
 	public ModelAndView joinGuest() {
 		ModelAndView mv = new ModelAndView("users/guestregister");
 		mv.addObject("guestRegisterRequest", new GuestRegisterRequest());
@@ -174,7 +174,7 @@ public class UsersMainController {
 	}
 
 	// 유저 회원가입 인서트
-	@RequestMapping(value = "/guestjoin", method = RequestMethod.POST)
+	@RequestMapping(value = "/main/guestjoin", method = RequestMethod.POST)
 	public String joinGuest(@RequestParam String curl, UsersDto userdto) {
 		System.out.println(curl);
 		try {
@@ -190,12 +190,12 @@ public class UsersMainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/loginform";
+		return "redirect:/main/loginform";
 	}
 
 	// 게스트 회원가입 유효성 검사 (에이작스용)
 	@ResponseBody
-	@RequestMapping(value = "/guestjoinchecktest")
+	@RequestMapping(value = "/main/guestjoinchecktest")
 	public String joinGuestChk(@Valid GuestRegisterRequest regReq, BindingResult bindingResult) throws Exception {
 		String test = null;
 		if (bindingResult.hasErrors()) {
@@ -218,7 +218,7 @@ public class UsersMainController {
 	}
 
 	// 게스트 회원가입 유효성 검사 (폼용)
-	@RequestMapping(value = "/guestjoincheck")
+	@RequestMapping(value = "/main/guestjoincheck")
 	public ModelAndView joinGuestChk(@Valid GuestRegisterRequest regReq, BindingResult bindingResult,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -241,7 +241,7 @@ public class UsersMainController {
 	}
 
 	// 로그인페이지로 이동
-	@RequestMapping(value = "/loginform")
+	@RequestMapping(value = "/main/loginform")
 	public String loginForm() {
 		logger.info("Welcome Login Form!");
 
@@ -249,7 +249,7 @@ public class UsersMainController {
 	}
 
 	// 비밀번호 찾기 이동
-	@RequestMapping(value = "/pwdforget", method = RequestMethod.GET)
+	@RequestMapping(value = "/main/pwdforget", method = RequestMethod.GET)
 	public ModelAndView forgetpwd() {
 		ModelAndView mv = new ModelAndView("users/pwdforget");
 		mv.addObject("pwdRegisterRequest", new PwdRegisterRequest());
@@ -257,7 +257,7 @@ public class UsersMainController {
 	}
 
 	// 비밀번호 찾기 이동
-	@RequestMapping(value = "/pwdforgetmail", method = RequestMethod.GET)
+	@RequestMapping(value = "/main/pwdforgetmail", method = RequestMethod.GET)
 	public ModelAndView updateTmppwd() {
 		ModelAndView mv = new ModelAndView("users/pwdforget");
 		mv.addObject("pwdRegisterRequest", new PwdRegisterRequest());
@@ -284,7 +284,7 @@ public class UsersMainController {
 	}
 
 	// 비밀번호 찾기(임시비밀번호 발급)
-	@RequestMapping(value = "/pwdforgetmail", method = RequestMethod.POST)
+	@RequestMapping(value = "/main/pwdforgetmail", method = RequestMethod.POST)
 	public ModelAndView updateTmppwd(@Valid PwdRegisterRequest regReq, BindingResult bindingResult, UsersDto userdto)
 			throws Exception {
 		String uemail = userdto.getUemail();
@@ -569,7 +569,7 @@ public class UsersMainController {
 	}
 
 	// 권한 없음 페이지
-	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
+	@RequestMapping(value = "error/access_denied", method = RequestMethod.GET)
 	public String accessDeniedPage() {
 		logger.info("접근권한없음");
 		return "users/accessDenied";
@@ -581,12 +581,6 @@ public class UsersMainController {
 		logger.info("Welcome Admin Home!");
 
 		return "admin/adminHome";
-	}
-
-	// 유저 권한 테스트
-	@RequestMapping(value = "/member", method = RequestMethod.GET)
-	public String member() {
-		return "users/joincheck";
 	}
 
 }

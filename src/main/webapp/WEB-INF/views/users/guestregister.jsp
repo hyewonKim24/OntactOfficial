@@ -230,7 +230,7 @@ tfoot {
                 
             </p>
             <p id="title_bottom"></p>
-            <form:form role="form" id="form" commandName="guestRegisterRequest" action="${pageContext.request.contextPath}/guestjoincheck"> 
+            <form:form role="form" id="form" commandName="guestRegisterRequest" action="${pageContext.request.contextPath}/main/guestjoincheck"> 
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <table id="login">
                     <tbody>
@@ -372,7 +372,7 @@ tfoot {
             		} */
                 	
             			$.ajax({
-        					url:"${pageContext.request.contextPath}/guestjoinchecktest",
+        					url:"${pageContext.request.contextPath}/main/guestjoinchecktest",
         					type:"POST",
         					async: false,
         					data:$("#form").serialize(),
@@ -390,7 +390,7 @@ tfoot {
         							//이메일전송
         							$.ajax({
         								type:"GET",
-        								url:"${pageContext.request.contextPath}/mailCheck?uemail="+email,
+        								url:"${pageContext.request.contextPath}/main/mailCheck?uemail="+email,
         								//async: false,
         								success:function(data){
         									code=data;
@@ -429,7 +429,7 @@ tfoot {
             		var email = $("#uemail").val();
             		$.ajax({
 						type:"GET",
-						url:"${pageContext.request.contextPath}/mailCheck?uemail="+email,
+						url:"${pageContext.request.contextPath}/main/mailCheck?uemail="+email,
 						//async: false,
 						success:function(data){
 							code=data;
@@ -460,7 +460,7 @@ tfoot {
             	
             	//회원가입 버튼
             	$("#modal_send").click(function(){
-            		$("#form").attr("action","${pageContext.request.contextPath}/guestjoin").submit();
+            		$("#form").attr("action","${pageContext.request.contextPath}/main/guestjoin").submit();
             		alert("회원가입이 완료되었습니다!");
             	})
             });

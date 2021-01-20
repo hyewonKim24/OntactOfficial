@@ -136,11 +136,11 @@
 <body>
     <header>
         <h2>ONTACT</h2>
-        <sec:authorize access="isAnonymous()">
+        
 	        <button id="joinbtn" onclick="location.href='${pageContext.request.contextPath}/main'">회원가입</button>
-	    </sec:authorize>
+	   
     	<sec:authorize access="isAuthenticated()">
-			<form action="${pageContext.request.contextPath}/logout" method="POST">
+			<form action="${pageContext.request.contextPath}/main/logout" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         		<button type="submit" id="joinbtn">로그아웃</button>
 			</form>    	
@@ -190,7 +190,7 @@
             <tr>
                 <td colspan="5">
                     <p id="login_search">
-                        <a href="${pageContext.request.contextPath}/pwdforget" class="login_font_size">비밀번호를 잊어버리셨나요?</a>
+                        <a href="${pageContext.request.contextPath}/main/pwdforget" class="login_font_size">비밀번호를 잊어버리셨나요?</a>
                     </p>
                 </td>
             </tr>

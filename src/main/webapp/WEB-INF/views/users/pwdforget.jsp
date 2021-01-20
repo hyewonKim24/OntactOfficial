@@ -156,7 +156,7 @@ min-width:620px;
 			<div id="pwfinder__wrapper">
 				<form:form role="form" id="pwfinder__wrapper2"
 					commandName="pwdRegisterRequest" method="post"
-					action="${pageContext.request.contextPath}/pwdforgetmail">
+					action="${pageContext.request.contextPath}/main/pwdforgetmail">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div id="pwfinder__wrappertext">이름</div>
 					<form:input type="text" path="uname" id="uemail" placeholder="기존에 가입하신 이름을 입력해주세요." />

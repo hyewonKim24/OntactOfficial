@@ -2653,8 +2653,8 @@
 																			class="tdp-uno" name="tduno"
 																			value="${ulist.uno}">
 																	</li>
-																	<%-- <img src="${ulist.ufilepath}">
-																		--%>
+																	<img src="${ulist.ufilepath}">
+																	
 																</c:forEach>
 															</ul>
 														</div>

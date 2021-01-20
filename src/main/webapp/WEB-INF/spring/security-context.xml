@@ -14,19 +14,20 @@
 	<http use-expressions="true" auto-config="true">
 		<intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/users/member"
-			access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/main/**" access="isAnonymous()" />
+		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/error/**" access="permitAll" />
+		<intercept-url pattern="/**" access="hasAnyRole('USER,ADMIN')" />
 		<form-login
 			username-parameter="uemail"
 			password-parameter="upwd"
 			login-processing-url="/login"
-			login-page="/loginform"
+			login-page="/main/loginform"
 			authentication-failure-handler-ref="loginFailureHandler"
 			authentication-success-handler-ref="loginSuccessHandler"
 			/>
-		<logout logout-url="/logout"
-		logout-success-url="/loginform"
+		<logout logout-url="/main/logout"
+		logout-success-url="/main/loginform"
 		invalidate-session="true"
 		delete-cookies="remember-me,JSESSION_ID"
 		/>
@@ -35,7 +36,7 @@
 		authentication-success-handler-ref="loginSuccessHandler"
 		token-validity-seconds="2419200"/>
 		<!-- 권한 없는 요청 했을 때 보여지는 페이지 지정 -->
-		<access-denied-handler error-page="/access_denied" />
+		<access-denied-handler error-page="/error/access_denied" />
 		<!-- <csrf disabled="false" /> -->
 
 		<!-- 최대 한 개 세션만 생성되도록 -->
@@ -60,11 +61,11 @@
 	    <beans:property name="uemail" value="uemail"/>
 	    <beans:property name="upwd" value="upwd"/>
 	    <beans:property name="ERRORMSG" value="ERRORMSG"/>
-	    <beans:property name="defaultFailureUrl" value="/loginform"/>
+	    <beans:property name="defaultFailureUrl" value="/main/loginform"/>
 	</beans:bean>
 	<beans:bean id="loginSuccessHandler" class="com.kh.ontact.users.handler.LoginSuccessHandler">
 	    <beans:property name="uemail" value="uemail"/>
-	    <beans:property name="defaultUrl" value="/main"/>
+	    <beans:property name="defaultUrl" value="/project/all/list"/>
 	</beans:bean>
 
 

@@ -51,7 +51,7 @@ public class CommonboardController {
 			}
 			
 			mv.addObject("pno", pno);
-			mv.setViewName("redirect:/project/projectDetail");
+			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 //			return "redirect:/project/commonboard/cboard";
 		}
@@ -65,7 +65,7 @@ public class CommonboardController {
 			}
 			 
 			mv.addObject("pno", pno);
-			mv.setViewName("redirect:/project/projectDetail");
+			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}
 }

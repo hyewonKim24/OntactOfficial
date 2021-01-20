@@ -1025,7 +1025,7 @@
                        	<div class="title_detail">${blist.bdesc}</div>
                        	<div class="uploadFiles">
                        		<ul class="uploadedFileList-real">
-					<%-- <c:forEach items="${file}" var="file" varStatus="e">
+					 <c:forEach items="${file}" var="file" varStatus="e">
 					<c:if test="${blist.bno eq file.bno }">
                        			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
                        				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
@@ -1037,7 +1037,7 @@
                        				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
                        			</li>
                     </c:if>
-                    </c:forEach> --%>
+                    </c:forEach>
                        		</ul>
                        	</div>
                        <!-- 댓글 갯수 출력 -->

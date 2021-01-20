@@ -1381,7 +1381,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 				</a>
 			</p>
                	<sec:authorize access="isAuthenticated()">
-					<form action="${pageContext.request.contextPath}/logout" method="POST">
+					<form action="${pageContext.request.contextPath}/main/logout" method="POST">
 					<p>
 				<svg version="1.1" id="Capa1"
 						xmlns="http://www.w3.org/2000/svg"

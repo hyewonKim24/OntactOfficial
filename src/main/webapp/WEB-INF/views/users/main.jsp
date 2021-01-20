@@ -95,10 +95,10 @@
     <header>
 	    <h2>ONTACT</h2>
 	    <sec:authorize access="isAnonymous()">
-	        <button id="login"  onclick="location.href ='${pageContext.request.contextPath}/loginform'">로그인</button>
+	        <button id="login"  onclick="location.href ='${pageContext.request.contextPath}/main/loginform'">로그인</button>
 	    </sec:authorize>
     	<sec:authorize access="isAuthenticated()">
-			<form action="${pageContext.request.contextPath}/logout" method="POST">
+			<form action="${pageContext.request.contextPath}/main/logout" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         		<button type="submit" id="login">로그아웃</button>
 			</form>    	
@@ -109,15 +109,15 @@
         이젠 서로 연결되는 온라인 공간 ontact로</h3>
         <sec:authorize access="isAnonymous()">
         <div class="btn">
-            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/busjoin'">비즈니스 계정</button>
-            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/guestjoin'">게스트 계정</button>
+            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/main/busjoin'">비즈니스 계정</button>
+            <button class="btn__join" onclick="location.href='${pageContext.request.contextPath}/main/guestjoin'">게스트 계정</button>
         </div>
         <div class="txt">
             <div class="txt__join">온택트 공간 개설하기</div>
             <div class="txt__join">온택트 입장하기</div>
         </div>
         </sec:authorize>
-        <sec:authorize access="isAuthenticated()">
+        <%-- <sec:authorize access="isAuthenticated()">
         	<div id="info"><sec:authentication property="principal.uname" var="name"/>님, 반갑습니다.</div>
         	<sec:authentication property="principal.cno" var="cno"/>
         	<input type="text" value="${name}">
@@ -126,11 +126,7 @@
 			<input type="text" value="${principal }">
 			<sec:authentication property="principal.username"/>
         	
-        </sec:authorize>
+        </sec:authorize> --%>
     </section>
-    
-<a href='<c:url value="/main"/>'>GUEST</a>
-<a href='<c:url value="/member"/>'>MEMBER</a>
-<a href='<c:url value="/admin/adminHome.do"/>'>ADMIN</a>
 </body>
 </html>
