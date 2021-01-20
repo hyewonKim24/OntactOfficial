@@ -65,7 +65,7 @@ public class TaskController {
 				@RequestParam(name = "taskradio") String taskradio,
 				@RequestParam(name = "taskname") String taskname,@RequestParam(name = "taskstartdate") Date taskstartdate,
 				@RequestParam(name = "taskenddate") Date taskenddate,@RequestParam(name = "trate") String trate,
-				@RequestParam(name = "taskpri") String taskpri,@RequestParam(name = "taskopen") int taskopen,
+				@RequestParam(name = "taskpri") String taskpri,@RequestParam(name = "bopen") int taskopen,
 				@RequestParam(name = "pno") String pno,@RequestParam(name = "taskcontent") String taskcontent,
 				BoardAllDto dto,TaskDto tdto,FilesDto file, Authentication authentication) {
 				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
@@ -99,7 +99,7 @@ public class TaskController {
 					e.printStackTrace();
 				}
 				mv.addObject("pno", pno);
-				mv.setViewName("redirect:/project/projectDetail");
+				mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}
 		
@@ -155,7 +155,7 @@ public class TaskController {
 				mv.addObject("inviteSuccess", "프로젝트에 "+mcount+"명이 초대되었습니다");
 			}
 			mv.addObject("pno", pno);
-			mv.setViewName("project/projectmaintest");
+			mv.setViewName("project/pjdetail");
 			//mv.setViewName("project/test01");
 			return mv;
 		}
@@ -173,7 +173,7 @@ public class TaskController {
 				e.printStackTrace();
 			}
 			mv.addObject("pno", pno);
-			mv.setViewName("redirect:/project/projectDetail");
+			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}
 		
@@ -437,7 +437,7 @@ public class TaskController {
 						e.printStackTrace();
 					}
 					mv.addObject("pno", pno);
-					mv.setViewName("redirect:/project/projectDetail");
+					mv.setViewName("redirect:/project/pjdetail");
 					return mv;
 				}
 		
@@ -528,7 +528,7 @@ public class TaskController {
 			}
 			mv.addObject("mcount", mcount);
 			mv.addObject("pno",ppno);
-			mv.setViewName("redirect:/project/projectDetail");
+			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}
 

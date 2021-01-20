@@ -1067,6 +1067,66 @@
                         </ul>
                     </div>
                 </div>
+                	<div class="reply">
+							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
+							<br>
+							<!-- 댓글 출력  -->
+							 <c:forEach items="${replylist}" var="rlist" varStatus="i">
+								<c:if test="${rlist.bno eq blist.bno}">
+									<div class="defaultReply">
+										<span>
+											<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+												class="replayPfImg">
+										</span>
+
+										<span class="replyTitle">${rlist.uname}</span>
+										<span class="replyDate">${rlist.rdate}</span>
+										<!-- 내 댓글일 때만 수정,삭제 버튼 보임 -->
+										<c:if test="${rlist.uno eq uno}">
+											<span class="replyEdit">
+												<button type="button" class="replyUpdate"
+													id="replyUpdate${i.count}">수정</button>
+												<button type="button" class="replyDelete"
+													id="replyDelete${i.count}">삭제</button>
+											</span>
+										</c:if>
+										<div id="replyParent">
+											<p id="replyResult${i.count}" class="replyResult">
+												${rlist.rdesc}</p>
+											<br>
+											<input type="text" class="replyUpdateText"
+												id="replyUpdateText${i.count}" value="${rlist.rdesc}">
+											<button type="button" class="replyUpdateBtn"
+												id="replayUpdateSubmit${i.count}">수정완료</button>
+											<input type="hidden" value="${rlist.uno}"
+												id="runo${i.count}">
+											<input type="hidden" class="rno" value="${rlist.rno}"
+												id="rno${i.count}">
+										</div>
+									</div>
+
+									
+								</c:if>
+							</c:forEach> 
+
+							<!-- 댓글 입력  -->
+							<form action="${pageContext.request.contextPath}/project/replyinsert"
+								id="replyForm" method="get">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+								<div class="replyFrom">
+									<input type="hidden" name="pno" value="${pno}">
+									<input type="hidden" name="bno" value="${blist.bno}">
+									<span>
+										<img src="${pageContext.request.contextPath}/resources/img/user-2.png"
+											class="replayPfImg2">
+									</span>
+									<input type="text" name="rdesc" class="replyarea"
+										placeholder="댓글을 입력하세요.">
+									<button type="submit" id="replyReg">등록</button>
+								</div>
+							</form>
+						</div>
               </c:if>
               
 
@@ -1140,12 +1200,12 @@
 												class="t-label">보류</label>
 										</div>
 									</div>
-									<c:forEach items="${blist.taskDto}" var="t" varStatus="e">
+									<c:forEach items="${blist.taskDto}" var="t" >
 									<c:if test="${t.tstate eq 1}">
 										<script>
 											$(function () {
 												var count = ${ e.count };
-												$("#task-radio01-" + count).prop("checked", true);
+												$("#task-radio01-"+ count).prop("checked", true);
 											});
 										</script>
 									</c:if>
@@ -1153,7 +1213,7 @@
 										<script>
 											$(function () {
 												var count = ${ e.count };
-												$("#task-radio02-" + count).prop("checked", true);
+												$("#task-radio02-"+ count).prop("checked", true);
 											});
 										</script>
 									</c:if>
@@ -1161,7 +1221,7 @@
 										<script>
 											$(function () {
 												var count = ${ e.count };
-												$("#task-radio03-" + count).prop("checked", true);
+												$("#task-radio03-"+ count).prop("checked", true);
 											});
 										</script>
 									</c:if>
@@ -1169,7 +1229,7 @@
 										<script>
 											$(function () {
 												var count = ${ e.count };
-												$("#task-radio04-" + count).prop("checked", true);
+												$("#task-radio04-"+ count).prop("checked", true);
 											});
 										</script>
 									</c:if>
@@ -1318,6 +1378,7 @@
 									<script>
 										$(function () {
 											var count = ${e.count};
+											console.log("카운트:"+count);
 											var pno = ${pno};
 											var bno = ${blist.bno};
 											$(".task-res-list" + count).click(function () {
@@ -1817,70 +1878,7 @@
 										</div>
 									</div>
 
-									<script>
-										$(".replyUpdate").unbind("click");
-										$(".replyUpdateBtn").unbind("click");
-										$(".replyDelete").unbind("click");
-										//댓글 수정
-										$(".replyUpdate").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rno = parentDiv.find(".rno").val();
-											console.log(rno + "rno");
-											console.log("댓글 수정");
-											parentDiv.find(".replyResult").css("display", "none");
-											parentDiv.find(".replyUpdate").css("display", "none");
-											parentDiv.find(".replyDelete").css("display", "none");
-											parentDiv.find(".replyUpdateText").css("display", "inline-block");
-											parentDiv.find(".replyUpdateBtn").css("display", "inline-block");
-										});
-										$(".replyUpdateBtn").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rdesc = parentDiv.find(".replyUpdateText").val();
-											var rno = parentDiv.find(".rno").val();
-											console.log(rno + "rno");
-											console.log(rdesc + "rdesc");
-											$.ajax({
-												url: "${pageContext.request.contextPath}/project/replyupdate",
-												data: {
-													rno: rno,
-													rdesc: rdesc
-												},
-												dataType: "json",
-												success: function (data) {
-													parentDiv.find(".replyResult").css("display", "block");
-													parentDiv.find(".replyUpdateText").css("display", "none");
-													parentDiv.find(".replyUpdateBtn").css("display", "none");
-													parentDiv.find(".replyUpdate").css("display", "inline-block");
-													parentDiv.find(".replyDelete").css("display", "inline-block");
-													parentDiv.find(".replyResult").text(rdesc);
-												},
-												error: function () {
-													console.log("댓글수정 실패");
-												}
-											});
-										});
-										//댓글 삭제
-										$(".replyDelete").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rno = parentDiv.find(".rno").val();
-											$.ajax({
-												url: "${pageContext.request.contextPath}/project/replydelete",
-												data: {
-													rno: rno
-												},
-												dataType: "json",
-												success: function (data) {
-													parentDiv.remove();
-												},
-												error: function () {
-													console.log("삭제 실패");
-												}
-											});
-										});
-									</script>
+									
 								</c:if>
 							</c:forEach> 
 
@@ -2055,6 +2053,67 @@
                         </li>
                     </ul>
                 </div>
+                
+                	<div class="reply">
+							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
+							<br>
+							<!-- 댓글 출력  -->
+							 <c:forEach items="${replylist}" var="rlist" varStatus="i">
+								<c:if test="${rlist.bno eq blist.bno}">
+									<div class="defaultReply">
+										<span>
+											<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+												class="replayPfImg">
+										</span>
+
+										<span class="replyTitle">${rlist.uname}</span>
+										<span class="replyDate">${rlist.rdate}</span>
+										<!-- 내 댓글일 때만 수정,삭제 버튼 보임 -->
+										<c:if test="${rlist.uno eq uno}">
+											<span class="replyEdit">
+												<button type="button" class="replyUpdate"
+													id="replyUpdate${i.count}">수정</button>
+												<button type="button" class="replyDelete"
+													id="replyDelete${i.count}">삭제</button>
+											</span>
+										</c:if>
+										<div id="replyParent">
+											<p id="replyResult${i.count}" class="replyResult">
+												${rlist.rdesc}</p>
+											<br>
+											<input type="text" class="replyUpdateText"
+												id="replyUpdateText${i.count}" value="${rlist.rdesc}">
+											<button type="button" class="replyUpdateBtn"
+												id="replayUpdateSubmit${i.count}">수정완료</button>
+											<input type="hidden" value="${rlist.uno}"
+												id="runo${i.count}">
+											<input type="hidden" class="rno" value="${rlist.rno}"
+												id="rno${i.count}">
+										</div>
+									</div>
+
+									
+								</c:if>
+							</c:forEach> 
+
+							<!-- 댓글 입력  -->
+							<form action="${pageContext.request.contextPath}/project/replyinsert"
+								id="replyForm" method="get">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+								<div class="replyFrom">
+									<input type="hidden" name="pno" value="${pno}">
+									<input type="hidden" name="bno" value="${blist.bno}">
+									<span>
+										<img src="${pageContext.request.contextPath}/resources/img/user-2.png"
+											class="replayPfImg2">
+									</span>
+									<input type="text" name="rdesc" class="replyarea"
+										placeholder="댓글을 입력하세요.">
+									<button type="submit" id="replyReg">등록</button>
+								</div>
+							</form>
+						</div>
          </c:if>
 
 
@@ -2239,6 +2298,67 @@
                               </li>
                           </ul>
                       </div>
+                      
+                      	<div class="reply">
+							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
+							<br>
+							<!-- 댓글 출력  -->
+							 <c:forEach items="${replylist}" var="rlist" varStatus="i">
+								<c:if test="${rlist.bno eq blist.bno}">
+									<div class="defaultReply">
+										<span>
+											<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+												class="replayPfImg">
+										</span>
+
+										<span class="replyTitle">${rlist.uname}</span>
+										<span class="replyDate">${rlist.rdate}</span>
+										<!-- 내 댓글일 때만 수정,삭제 버튼 보임 -->
+										<c:if test="${rlist.uno eq uno}">
+											<span class="replyEdit">
+												<button type="button" class="replyUpdate"
+													id="replyUpdate${i.count}">수정</button>
+												<button type="button" class="replyDelete"
+													id="replyDelete${i.count}">삭제</button>
+											</span>
+										</c:if>
+										<div id="replyParent">
+											<p id="replyResult${i.count}" class="replyResult">
+												${rlist.rdesc}</p>
+											<br>
+											<input type="text" class="replyUpdateText"
+												id="replyUpdateText${i.count}" value="${rlist.rdesc}">
+											<button type="button" class="replyUpdateBtn"
+												id="replayUpdateSubmit${i.count}">수정완료</button>
+											<input type="hidden" value="${rlist.uno}"
+												id="runo${i.count}">
+											<input type="hidden" class="rno" value="${rlist.rno}"
+												id="rno${i.count}">
+										</div>
+									</div>
+
+									
+								</c:if>
+							</c:forEach> 
+
+							<!-- 댓글 입력  -->
+							<form action="${pageContext.request.contextPath}/project/replyinsert"
+								id="replyForm" method="get">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+								<div class="replyFrom">
+									<input type="hidden" name="pno" value="${pno}">
+									<input type="hidden" name="bno" value="${blist.bno}">
+									<span>
+										<img src="${pageContext.request.contextPath}/resources/img/user-2.png"
+											class="replayPfImg2">
+									</span>
+									<input type="text" name="rdesc" class="replyarea"
+										placeholder="댓글을 입력하세요.">
+									<button type="submit" id="replyReg">등록</button>
+								</div>
+							</form>
+						</div>
                       </div>
 		</c:if>
 	</c:forEach>
@@ -2937,7 +3057,73 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 			$(document).ready(function(){  
 				alert('${inviteSuccess}');	
 			});
-			</script>
+			 </script>		
 		</c:if>
+		
+		
+		<script>
+										$(".replyUpdate").unbind("click");
+										$(".replyUpdateBtn").unbind("click");
+										$(".replyDelete").unbind("click");
+										//댓글 수정
+										$(".replyUpdate").click(function () {
+											var parent = $(this).parent();
+											var parentDiv = parent.parent();
+											var rno = parentDiv.find(".rno").val();
+											console.log(rno + "rno");
+											console.log("댓글 수정");
+											parentDiv.find(".replyResult").css("display", "none");
+											parentDiv.find(".replyUpdate").css("display", "none");
+											parentDiv.find(".replyDelete").css("display", "none");
+											parentDiv.find(".replyUpdateText").css("display", "inline-block");
+											parentDiv.find(".replyUpdateBtn").css("display", "inline-block");
+										});
+										$(".replyUpdateBtn").click(function () {
+											var parent = $(this).parent();
+											var parentDiv = parent.parent();
+											var rdesc = parentDiv.find(".replyUpdateText").val();
+											var rno = parentDiv.find(".rno").val();
+											console.log(rno + "rno");
+											console.log(rdesc + "rdesc");
+											$.ajax({
+												url: "${pageContext.request.contextPath}/project/replyupdate",
+												data: {
+													rno: rno,
+													rdesc: rdesc
+												},
+												dataType: "json",
+												success: function (data) {
+													parentDiv.find(".replyResult").css("display", "block");
+													parentDiv.find(".replyUpdateText").css("display", "none");
+													parentDiv.find(".replyUpdateBtn").css("display", "none");
+													parentDiv.find(".replyUpdate").css("display", "inline-block");
+													parentDiv.find(".replyDelete").css("display", "inline-block");
+													parentDiv.find(".replyResult").text(rdesc);
+												},
+												error: function () {
+													console.log("댓글수정 실패");
+												}
+											});
+										});
+										//댓글 삭제
+										$(".replyDelete").click(function () {
+											var parent = $(this).parent();
+											var parentDiv = parent.parent();
+											var rno = parentDiv.find(".rno").val();
+											$.ajax({
+												url: "${pageContext.request.contextPath}/project/replydelete",
+												data: {
+													rno: rno
+												},
+												dataType: "json",
+												success: function (data) {
+													parentDiv.remove();
+												},
+												error: function () {
+													console.log("삭제 실패");
+												}
+											});
+										});
+									</script>
 	</body>
 	</html>
