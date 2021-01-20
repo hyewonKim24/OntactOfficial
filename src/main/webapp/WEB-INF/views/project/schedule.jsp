@@ -162,15 +162,20 @@ body {
 }
 </style>
 <script>
+
    document.addEventListener('DOMContentLoaded',function() {
                   /* var elems = document.querySelectorAll('.modal');
                   var instances = M.Modal.init(elems); */
                   function test111(){
-                	 /*  setTimeout('location.reload()', 5000); */
+                	  var test = $(".fc-content-skeleton");
+                	  test.find(".fc-content").remove();
                   }
-                  $(".fc-content-skeleton > tbody").addClass('result');
+                  $("input[name='chk']").change(function(){
+                		$(".result").load(window.location.href + ".result")
+                	});
                   
                   var calendarEl = document.getElementById('calendar');
+                  
                   var calendar = new FullCalendar.Calendar(calendarEl,{
                            height : 600,
                            plugins : [ 'interaction', 'dayGrid' ],
@@ -181,6 +186,7 @@ body {
                               center : 'title',
                               right : 'dayGridMonth,dayGridWeek,dayGridDay'
                            },
+                           locale : 'ko',
                            eventLimit : true,
                            eventLimitText : "more",
                            eventLimitClick : "popover",
@@ -188,86 +194,94 @@ body {
                            droppable : true,
                            
                            //해당 일정 클릭하면 모달 생성
-                           eventClick : function test2(info) {
-                              console.log(info);
-                              
+                 eventClick : function(info) {
                               var eventObj = info.event;
-                              $.ajax({
-                                 contentType : 'application/json',
-                                 url : '${pageContext.request.contextPath}/schedule/list',
-                                 dataType : 'json',
-                                 success : function(result) {
-                                    var events = [];
-                                    if (result != null) {
-                                       $.each(result, function(index, element) {
-                                          //모달생성
-                                            $(".fc-event-container").click(function(){
-                                               $("#gomodal").attr("style", "display:block");
-                                               var bname = element.bname;
-                                               var uname = element.uname;
-                                               
-                                               for (var i = 0; i < uname.length; i++) {
-                                                console.log("이름 확인 : "+uname[i]);
-                                             }
-                                                  /* console.log(index[0].uname); */
-                                               
-                                               
-                                               console.log("확인 render" + element.uname + "," + bname);
-                                             var startdate = moment(eventObj.start).format('YYYY-MM-DD');
-                                             var enddate = moment(eventObj.end).format('YYYY-MM-DD');
-                                             console.log("시작일" + startdate);
-                                             /* $(".modal_content #title").text(eventObj.title);
-                                             $(".modal_content #pname").text(eventObj.title);
-                                             $(".modal_content #startdate").text(startdate);
-                                             $(".modal_content #enddate").text(enddate); */
-                                             
-                                             for (var i = 0; i < index.length; i++) {
-                                                $(".modal_content").append('<input type="text" name="uname" value="'+ index[i].uname + '">'+index[i].uname+'<br>');
-                                             }
-                                             /* $(".modal_content #url").text(uname); */
-                                            });
-                                          /* $("#successModal").modal("show"); */
-                                          $(".close").click(function(){
-                                               $("#gomodal").attr("style", "display:none");
-                                               });
-                                          /* $(".modal_content .modalTitle").text(eventObj.start); */
-                                          /* if (eventObj.url) { 
-                                              alert('Clicked '+ eventObj.title + '.\n'
-                                                   + 'Will open ' + eventObj.url + ' in a new tab');
-                                                   window.open(eventObj.url);
-                                                   info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
-                                          } else {
-                                             alert('Clicked ' + eventObj.title);
-                                          } */
-                                          }); //.each()
-                                    }//if end   */
-                              }//success: function end                          
-                        }); //ajax end
+                              console.log(eventObj);
+                              alert("클릭함");
+                              if $("input:checkbox[name=chk]").is(":checked"){
+                            	  var allData = {"valueChk": "1"};
+                            	  $(".fc-event-container").click(function(){
+                            	      $.ajax({
+                                    	  contentType : 'application/json; charset:UTF-8',
+                                          url: '${pageContext.request.contextPath}/schedule/list',
+                                          type: 'get',
+                                          dataType : 'json',
+                                          data : allData,
+                                         success : function(result) {
+                                            var events = [];
+                                            if (result != null) {
+                                               $.each(result, function(index, element) {
+                                                  //모달생성
+                                                    $(".fc-event-container").click(function(){
+                                                       $("#gomodal").attr("style", "display:block");
+                                                       var bname = element.bname;
+                                                       var uname = element.uname;
+                                                       console.log("글이름 : " + bname);
+                                                       console.log("글쓴이 : " + uname);
+                                                       for (var i = 0; i < uname.length; i++) {
+                                                        console.log("이름 확인 : "+uname[i]);
+                                                     }
+                                                          /* console.log(index[0].uname); */
+                                                       
+                                                       
+                                                       console.log("확인 render" + element.uname + "," + bname);
+                                                     var startdate = moment(eventObj.start).format('YYYY-MM-DD');
+                                                     var enddate = moment(eventObj.end).format('YYYY-MM-DD');
+                                                     console.log("시작일" + startdate);
+                                                     $(".modal_content #title").text(eventObj.title);
+                                                     $(".modal_content #pname").text(eventObj.title);
+                                                     $(".modal_content #startdate").text(startdate);
+                                                     $(".modal_content #enddate").text(enddate);
+                                                     
+                                                     /* for (var i = 0; i < index.length; i++) {
+                                                        $(".modal_content").append('<input type="text" name="uname" value="'+ index[i].uname + '">'+index[i].uname+'<br>');
+                                                     } */
+                                                     /* $(".modal_content #url").text(uname); */
+                                                    });
+                                                  /* $("#successModal").modal("show"); */
+                                                  $(".close").click(function(){
+                                                       $("#gomodal").attr("style", "display:none");
+                                                       });
+                                                  /* $(".modal_content .modalTitle").text(eventObj.start); */
+                                                  /* if (eventObj.url) { 
+                                                      alert('Clicked '+ eventObj.title + '.\n'
+                                                           + 'Will open ' + eventObj.url + ' in a new tab');
+                                                           window.open(eventObj.url);
+                                                           info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
+                                                  } else {
+                                                     alert('Clicked ' + eventObj.title);
+                                                  } */
+                                                  }); //.each()
+                                            }//if end   */
+                                      }//success: function end                          
+                                }); //ajax end
+                            	  }
+                              }
+                              
+                          
+                      /*         $(".fc-event-container").click(function(){
+                                  $("#gomodal").attr("style", "display:block");
+                                  
+                        
+                      }); */
                      },
                      //달력에 일정 출력
-                     events : function test1(info, successCallback, failureCallback) {
-                              console.log(info);
+                     events : function (info, callback) {
                               console.log("###########aaa");
-                              /* console.log(calendar.getEventSourcesById("pno")); */
-                              /* calendar.getEventSourcesById("pno"); */
-                              $("input[name='chk']").change(function(){
-                                 var checkArr = [];     // 배열 초기화
-                                 console.log("#########ccc");
-                                 $("input:checkbox[name=chk]:checked").each(function(i) {
-                                      checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
-                                      console.log("뭐야 : " + checkArr);
-                                  });
-                                 var allData = {"valueChk": checkArr};
-                                 console.log(allData);            
+                               $("input[name='chk']").click(function(){
+                                 var checkArr = $(this).val();     // 배열 초기화
+                                 console.log(checkArr); 
+                                             
                                   $.ajax({
                                      contentType : 'application/json; charset:UTF-8',
-                                      url: '${pageContext.request.contextPath}/schedule/list',
-                                      type: 'get',
+                                      url : '${pageContext.request.contextPath}/schedule/list',
+                                      type : 'get',
                                       dataType : 'json',
-                                      data: allData,
+                                      data: {"valueChk": checkArr},
                                       success : function(result) {
-                                       console.log( result);
+                                    	    alert("출력성공");
                                        		var events = [];
+                                       		
                                           	if (result != null) {
                                              $.each(result, function(index, element) {
                                                 console.log(element);
@@ -280,73 +294,29 @@ body {
                                                 var enddate = moment(send).format('YYYY-MM-DD'); 
                                                 var aaa = startdate + "/" + bname;
                                                 console.log("확인 event" + startdate + "," + bname);
-                                                
-                                                if( calendar.getEventSourceById(pno) != null ){
-                                                	calendar.getEventSourceById(pno).remove();
-                                                }
-                                                events.push({
-                                                		id : pno,
-                                                      title : aaa,
-                                                      start : startdate,
-                                                      end : enddate,
-                                                      /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
-                                                      color:"#ff3399"   */
-                                                }); //.push()
-                                                console.log("########eeeee" + event); 
-                                             }); //.each()
-                                             console.log(events);
+	                                                events.push({
+	                                                		id : pno,
+	                                                      title : aaa,
+	                                                      start : startdate,
+	                                                      end : enddate,
+	                                                      /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
+	                                                      color:"#ff3399"   */
+	                                                }); 
+                                                }); //.each()
+                                             console.log("each 끝");
                                           }//if end  
-                                          console.log("########ccc" + events);
+                                          console.log("if 끝");
                                           /* failureCallback(" "); */
-                                          successCallback(events);
-                                          
+                                          callback(events);
                                           /* successCallback(events).remove(); */ 
                                        }//success: function end   
                                   });
-                              });
-                              
-                              /* function test3(){
-                              $.ajax({
-                                    contentType : 'application/json',
-                                    url : '${pageContext.request.contextPath}/schedule/list',
-                                    dataType : 'json',
-                                    success : function(result) {
-                                       console.log(result);
-                                          var events = [];
-                                          if (result != null) {
-                                             $.each(result, function(index, element) {
-                                                console.log(element);
-                                                var sstart = element.sstart;
-                                                var send = element.send;
-                                                var bname = element.bname;
-                                                
-                                                var startdate = moment(sstart).format('YYYY-MM-DD');
-                                                var enddate = moment(send).format('YYYY-MM-DD'); 
-                                                
-                                                var aaa = startdate + "/" + bname;
-                                                console.log("확인 event" + startdate + "," + bname);
-                                                events.push({
-                                                      title : aaa,
-                                                      start : startdate,
-                                                      end : enddate,
-                                                      /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
-                                                      color:"#ff3399"  
-                                                }); //.push()
-                                                /* console.log(event); 
-                                             }); //.each()
-                                             /* console.log(events);
-                                          }//if end  
-                                          successCallback(events);
-                                       }//success: function end                          
-                                    }); //ajax end 
-                              }*/
+                              }) 
                            }, //events:function end
                         });//new FullCalendar end
-                  calendar.render();
-               
-                  
-
+                  		calendar.render();
    });
+   
    
 
    
@@ -383,17 +353,17 @@ body {
             <div id="gomodal">
             <div class="modal_layer"></div>
             <div class="modal_content">
-               <!-- <div id="title"></div>
+               <div id="title"></div>
                <div id="pname"></div>
                <div id="startdate"></div>
                <div id="enddate"></div>
                <div id="enddate"></div>
                <div id="people"></div>
-               <div id="url"><a href=""></a></div> -->
-               <!-- <button type="button" class="close" data-dismiss="modal"
+               <div id="url"><a href=""></a></div>
+               <button type="button" class="close" data-dismiss="modal"
                      aria-label="Close">
                      <span aria-hidden="true">&times;</span>
-                  </button> -->
+                  </button> 
             </div>
          </div>   
          </div>

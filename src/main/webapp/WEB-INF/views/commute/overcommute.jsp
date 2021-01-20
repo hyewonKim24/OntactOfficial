@@ -203,7 +203,7 @@
     }
     .list table{
         width: 930px;
-        height: 360px;
+        min-height : 93px;
         font-size: 14px;
         text-align: center;
     }
@@ -323,14 +323,12 @@
                     <tr>
                         <td class="title">부서명</td>
                         <td style="width: 250px;">
-                            <select style="width: 200px; height: 30px;color : #787878;" name="dname">
+                            <select style="width: 200px; height: 30px;color : #787878;" name="dno">
                                 <option value="0">선택하세요</option>
-                                <option value="경영팀">경영팀</option>
-                                <option value="인사팀">인사팀</option>
-                                <option value="개발팀">개발팀</option>
-                                <option value="영업팀">영업팀</option>
-                                <option value="디자인팀">디자인팀</option>
-                                <option value="마케팅팀">마케팅팀</option>
+                                <option value="1">개발팀</option>
+                                <option value="2">기획팀</option>
+                                <option value="3">영업팀</option>
+                                <option value="4">마케팅팀</option>
                             </select>
                         </td>
                         <td class="title">성명</td>
@@ -378,8 +376,6 @@
 	                        <td colspan="7" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
 	                    </tr>
 	                    <tr>
-	                        <th>부서명</th>
-	                        <th>성명</th>
 	                        <th>일자</th>
 	                        <th>시간</th>
 	                        <th>업무내용</th>
@@ -390,8 +386,6 @@
 	                <%-- <c:if test="${not empty list}"> --%>
 						<c:forEach var="ow" items="${list}" varStatus="status">
 	                    <tr>
-	                        <td>${ow.dname}</td>
-	                        <td>${ow.uname}</td>
 	                        <td>${ow.owdate}</td>
 	                        <td>${ow.owtime}</td>
 	                        <td>${ow.owtitle}</td>

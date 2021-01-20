@@ -126,9 +126,9 @@ public class UsercommuteController {
 			System.out.println("인서트진입");
 			
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-		    String uno=userdetail.getUno();
-		    System.out.println(uno);
-		    c.setUno(uno);
+		    
+		    String uname=userdetail.getUname();
+		    
 		    
 			String enterInfo = request.getParameter("enterInfo");
 			System.out.println(enterInfo);
@@ -139,12 +139,12 @@ public class UsercommuteController {
 			}
 
 			String cstarttime = array[0];
-			String dname = array[1];
-			String uname = array[2];
+			String dno = array[1];
+			String uno = array[2];
 			
+			c.setUno(uno);
 			c.setCstarttime(cstarttime);
-			c.setDname(dname);
-			c.setUname(uname);
+			c.setDname(dno);
 			
 			//QR시간
 			String day1 = array[0]; 
@@ -152,7 +152,7 @@ public class UsercommuteController {
 			System.out.println("결과확인 " + t1);
 			
 			//기준시간
-			String day2 = "2021-01-01 09:00:00"; // 형식을 지켜야 함
+			String day2 = "2021-01-01 09:01:00"; // 형식을 지켜야 함
 			java.sql.Timestamp t2 = java.sql.Timestamp.valueOf(day2);
 			System.out.println("결과확인 " + t2);
 			
@@ -167,6 +167,7 @@ public class UsercommuteController {
 			System.out.println("standardT " + standardT);
 			if(qrT > standardT) {
 				c.setCstate("1");
+				c.setCreason("지각");
 				System.out.println("지각");
 			} else {
 				c.setCstate("0");
@@ -197,12 +198,10 @@ public class UsercommuteController {
 				System.out.println(array[i]);
 			}
 			String cendtime = array[0];
-			String dname = array[1];
-			String uname = array[2];
+			String uno = array[2];
 			
 			c.setCendtime(cendtime);
-			c.setDname(dname);
-			c.setUname(uname);
+			c.setUname(uno);
 			
 			commuteServ.updateLeave(c);
 			rttr.addFlashAttribute("message", "window.open(\"about:blank\", \"_self\").close();");
@@ -277,7 +276,7 @@ public class UsercommuteController {
 		return mv;
 	}
 	@ResponseBody
-	@RequestMapping(value = "/commute/getDailyVisitor", method = RequestMethod.GET)
+	@RequestMapping(value = "/commute/getDailyCommute", method = RequestMethod.GET)
     public String getDailyVisitor(String month, Authentication authentication){
 		System.out.println("어디로 들어온거지?");
 		//세션값
@@ -289,10 +288,11 @@ public class UsercommuteController {
         Gson gson = new Gson();
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("month", month);
- //
+
         List<CommuteDto> list= commuteServ.testCommute(uno);
         System.out.println("여기" + list);
         return gson.toJson(list);
     }
+	
 }
 

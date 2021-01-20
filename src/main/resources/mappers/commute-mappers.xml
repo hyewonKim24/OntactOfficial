@@ -45,52 +45,38 @@
 	
 	<!-- 출근 시간 삽입 -->
 	<insert id="insertEnter" flushCache="true" statementType="PREPARED">  
-	
-	insert into commute values(#{uno}, #{dname}, #{uname}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
+	insert into commute values(#{uno}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
 			null, null, #{creason})
-	
 	</insert>
 	
 	<!-- 퇴근 시간 삽입 -->
 	<update id="updateLeave" flushCache="true" statementType="PREPARED">
-	
 		update commute 
 		set cendtime = to_char(to_date( '${cendtime}', 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
 			cworktime = TRUNC((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss')-to_date(cstarttime,'yyyy-mm-dd hh24:mi:ss'))*24-1) || '.' ||
 						TRUNC(mod((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss') - to_date(cstarttime, 'yyyy-mm-dd hh24:mi:ss'))*24,1)*60)
-		where uname = '${uname}' and to_date(cdate, 'yyyy-mm-dd hh24:mi:ss') = to_date(sysdate, 'yyyy-mm-dd')
-	
-		<!-- 여기 date 형식으로 비교하는거 질문 -->
+		where uno = '${uno}' and to_date(cdate, 'yyyy-mm-dd hh24:mi:ss') = to_date(sysdate, 'yyyy-mm-dd')
 	</update>
 	
 	<!-- 월 근무내역 조회 -->
 	<!-- 기본값 -->
 	<select id="mAllCount" resultType="int">
-	
-		select count(*) from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno} 
-	
-			<!-- #{uno}  -->
-			
+		select count(c.cdate) from commute c, overwork o
+			where c.uno = o.uno and c.cdate = o.owdate and c.uno= #{uno} 
 	</select>
 	<select id="selectMonthCommute" 
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		
 		select to_char(c.cdate, 'yyyy-mm-dd') as cdate, c.cworktime as cworktime, o.owtime as owtime, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno}
+			where c.uno = o.uno and c.cdate = o.owdate and c.uno= #{uno}
 			order by cdate desc
-			
-			<!-- #{uno} --> 
 	</select>
-	
+	<!-- 월 근무 내역 검색 -->
 	<select id="msearchCount" resultType="int">
-	
 		select count(*) from commute c, overwork o
 			where c.uno = o.uno and c.cdate = o.owdate and c.uno = #{uno}
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
-		
 		<!-- 	where c.uname = o.uname and c.cdate = o.owdate and c.uname= #{uno} 
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd'); -->
 	</select>
@@ -98,23 +84,20 @@
 		parameterType ="java.util.HashMap"
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		
 		select c.cdate as cdate, c.cworktime as cworktime, o.owtime as owtime, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
 			where c.uno = o.uno and c.cdate = o.owdate and c.uno= #{uno}
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
-		
 	</select>
+
 	<select id="testCommute" 
 		resultType="arraylist"
 		resultMap="monthlyMapper">
-		
 		select to_char(c.cdate, 'yy/mm/dd') as cdate, (c.cworktime + o.owtime) as total
 			from commute c, overwork o
-			where c.uname = o.uname and c.cdate = o.owdate and c.uno= #{uno}
-		
-			<!-- #{uno} --> 
+			where c.uno = o.uno and c.cdate = o.owdate and c.uno= #{uno}
 	</select>
+
 	<resultMap type="map" id="monthlyMapper">
 		<id property="uno" column="uno" />
 		<result property="cdate" column="cdate" />

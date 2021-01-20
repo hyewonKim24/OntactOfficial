@@ -338,7 +338,7 @@
                 chartLabels = [];
                 chartData=[];
                 //getJson으로 데이터 
-                $.getJSON("${pageContext.request.contextPath}/commute/getDailyVisitor", {
+                $.getJSON("${pageContext.request.contextPath}/commute/getDailyCommute", {
                     month : month
                 }, function(data) {
                 	console.log("여기 " + data);

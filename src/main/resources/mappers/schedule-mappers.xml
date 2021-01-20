@@ -58,9 +58,7 @@
 		 	delete from schedule where bno=#{bno}
 		]]>
 	</delete>
-	<select id="attendeeCount" resultType="int" >
-		select count(cstate) from commute where uno= #{uno}
-	</select>
+	
 	<select id="ListScheduleAll" resultType="map" resultMap="resultSchedule">
 		<![CDATA[
 		select b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, s.sstart, s.send, s.splace, s.smemo, count(s.attendee) as count, listagg(s.attendee, ',') within group(order by s.attendee) as attendees

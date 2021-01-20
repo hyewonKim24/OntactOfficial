@@ -260,7 +260,6 @@
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
 	        $('.sidenav li.menu>a').on('click', function(){
-	        	alert("aaa");
 			$(this).removeAttr('href');
 			var element = $(this).parent('li');
 			if (element.hasClass('open')) {
@@ -277,7 +276,6 @@
 	            element.siblings('li').find('ul').slideUp();
 			}
 		    });
-	        
 	       /*  var dname= ${dname}
 	        $(".deptname").on("click", function(){
 	        	var dname = $(this).find(".dname").val();

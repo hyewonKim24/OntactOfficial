@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class OverworkDto {
 	private String owno;
 	private String uno;
+	private String dno;
 	private String dname;
 	private String uname;
 	private Date owdate;

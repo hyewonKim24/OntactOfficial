@@ -70,7 +70,7 @@ public class UseroverworkController {
 		}
 		return mv;
 	}
-	
+	//
 	@RequestMapping(value = "/overwork/ins", method = RequestMethod.GET)
 	public String  insetOverwork(OverworkDto o, Authentication authentication, RedirectAttributes rttr) {
 		try {
@@ -79,9 +79,13 @@ public class UseroverworkController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		    String uno=userdetail.getUno();
 		    String dno = userdetail.getDno();
+		    String uname = userdetail.getUname();
 		    System.out.println("세션값확인 : " + uno);
 		    
 		    o.setUno(uno);
+		    o.setDno(dno);
+		    
+		    
 		    
 			overworkServ.insertOverwork(o);
 			rttr.addFlashAttribute("message", "success");

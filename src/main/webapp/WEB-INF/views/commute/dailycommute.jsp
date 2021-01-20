@@ -367,9 +367,9 @@ canvas {
 		
 		//QR생성
 		  $("#qrcreate").click(function () {
-			var uname = $("#uname").val();
+			var uno = $("#uno").val();
 			var dno = $("#dno").val();	
-		    let today = getTimeStamp() + "," + dno + "," + uname;
+		    let today = getTimeStamp() + "," + dno + "," + uno;
 	 
 		    $text = today;
 		    //입력한 내용 있는지 체크
@@ -456,7 +456,7 @@ canvas {
 			<div class="article">
 				<div class="conTitle">출퇴근 관리</div>
 				<div class="commuteBtn">
-					<input type="hidden" id="uname" value="<sec:authentication property="principal.uname" var="name"/>${name}">
+					<input type="hidden" id="uno" value="<sec:authentication property="principal.uno" var="uno"/>${uno}">
 					<input type="hidden" id="dno" value="<sec:authentication property="principal.dno" var="dno"/>${dno}">
 					<button name="go" id="qrcreate">QR생성</button>
 					<button name="go" id="qrenter">출근하기</button>
@@ -514,7 +514,7 @@ canvas {
 						<c:if test="${listCount eq 0}">
 							<tr>
 								<td colspan="6" align="center">
-								<br>내역이 없습니다.<br> <br></td>
+								<br> 출퇴근 내역이 없습니다.<br> <br></td>
 							</tr>
 						</c:if> 
 						<c:if test="${listCount ne 0}">
