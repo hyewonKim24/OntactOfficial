@@ -71,7 +71,7 @@ public class ScheduleController {
 //		mv.setViewName("project/projectSche");
 		return mv;
 	}
-	//
+	
 	//프로젝트 일정 
 	@RequestMapping(value = "/project/schedule/ins", method = RequestMethod.POST)
 	public ModelAndView insertSchedule(ModelAndView mv, BoardAllDto alldto, ScheduleDto s,
@@ -119,7 +119,7 @@ public class ScheduleController {
 			mv.setViewName("/errorpage");
 		}
 		mv.addObject("pno", pno);
-		mv.setViewName("redirect:/project/projectDetail");
+		mv.setViewName("redirect:/project/pjdetail");
 		return mv;
 	}
 	

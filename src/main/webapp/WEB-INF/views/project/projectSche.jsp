@@ -1556,7 +1556,7 @@
 	                          					<li class="sche-res-list sche-res-list${e.count}">${ulist.uname}</li>
 	                          					<input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }">
 	                          					
-	                          					</c:forEach>
+	                         					</c:forEach>
 	                          				</ul>
                           				</div>
                           			</div>

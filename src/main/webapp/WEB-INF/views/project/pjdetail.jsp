@@ -517,11 +517,10 @@
                           			 <div class="sche-res-add-wrap">
                           				<div class="sche-add">
 	                          				<ul>
-	                          					<%-- <c:forEach items="${userlist}" var="ulist" varStatus="e">
+	                          					<c:forEach items="${userlist}" var="ulist" varStatus="e">
 	                          					<li class="sche-res-list sche-res-list${e.count}">${ulist.uname}</li>
 	                          					<input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }"> 
-	                          					
-	                          					</c:forEach>--%>
+	                          					</c:forEach>
 	                          				</ul>
                           				</div>
                           			</div>
@@ -724,7 +723,7 @@
 				            var $layer = $('.js-layer');
 				            $layer.removeClass('hide');
 				        });
-				        $('.close').click(function () {
+				        $('.closebtn').click(function () {
 				            var $layer = $('.js-layer');
 				            $layer.addClass('hide');
 				        });
@@ -1014,7 +1013,7 @@
                                   		<a href="${pageContext.request.contextPath}/project/commonboard/del?bno=${blist.bno}&pno=${pno}" class="list_delbtn">글 삭제</a>
                                     	<input type="hidden" class="bnoval" value="${blist.bno}">
                                     </li>
-                                    <li><a href="">다른 프로젝트에 올리기</a></li>
+                                    <li><a href="">글 수정</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1042,14 +1041,15 @@
                     </c:forEach> 
                        		</ul>
                        	</div>
-                       <!-- 댓글 갯수 출력 -->
-							<c:forEach items="${rclist}" var="clist" varStatus="i">
-								<c:if test="${clist.bno eq blist.bno}">
-										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
-								</c:if>
-							</c:forEach>
                     </div>
-                    <div class="threeBtn">
+                </div>
+                <!-- 댓글 갯수 출력 -->
+				<c:forEach items="${rclist}" var="clist" varStatus="i">
+					<c:if test="${clist.bno eq blist.bno}">
+						<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+					</c:if>
+				</c:forEach>
+                   <div class="threeBtn">
                         <ul>
                             <li>
                                 <a href=""><img src="${pageContext.request.contextPath}/resources/img/like.png"
@@ -1068,7 +1068,6 @@
                             </li>
                         </ul>
                     </div>
-                </div>
                 	<div class="reply">
 							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
 							<br>
@@ -1098,7 +1097,7 @@
 											<br>
 											<input type="text" class="replyUpdateText"
 												id="replyUpdateText${i.count}" value="${rlist.rdesc}">
-											<button type="button" class="replyUpdateBtn"
+												<button type="button" class="replyUpdateBtn"
 												id="replayUpdateSubmit${i.count}">수정완료</button>
 											<input type="hidden" value="${rlist.uno}"
 												id="runo${i.count}">
@@ -1161,7 +1160,7 @@
 										<a href="${pageContext.request.contextPath}/project/taskdelete?bno=${blist.bno}&pno=${pno}" class="list_delbtn_task">글 삭제</a>
                                     	<input type="hidden" class="bnoval" value="${blist.bno}">
 										</li>
-										<li><a href="">다른 프로젝트에 올리기</a></li>
+										<li><a href="">글 수정</a></li>
 									</ul>
 								</div>
 							</div>
@@ -1202,7 +1201,7 @@
 												class="t-label">보류</label>
 										</div>
 									</div>
-									<c:forEach items="${blist.taskDto}" var="t" >
+							<c:forEach items="${blist.taskDto}" var="t" >
 									<c:if test="${t.tstate eq 1}">
 										<script>
 											$(function () {
@@ -1811,7 +1810,9 @@
                     			</div>
                     			</div>
                        			<!-- 여기까지 -->
-                       			</c:forEach>
+                       	<%-- </c:forEach> --%>
+                       	
+                       	
 								<!-- 댓글 갯수 출력 -->
 							<c:forEach items="${rclist}" var="clist" varStatus="i">
 								<c:if test="${clist.bno eq blist.bno}">
@@ -1902,20 +1903,10 @@
 								</div>
 							</form>
 						</div>
+					</c:forEach>
 				</c:if>
-			
 <!-- 혜원 업무 글 결과화면 끝 -->
 
-
-
-	
-
-
-
-
-
-
-			
 <!-- 혜림 일정 글 결과화면 -->
 		<c:if test="${blist.btype eq 3}">
             <div class="one">
@@ -1936,7 +1927,7 @@
                         <div class="editDropdown">
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/project/schedule/del?bno=${blist.bno}&pno=${pno}">글 삭제</a></li>
-                                <li><a href="">다른 프로젝트에 올리기</a></li>
+                                <li><a href="">글 수정</a></li>
                             </ul>
                         </div>
                     </div>
@@ -1977,40 +1968,22 @@
                                             </div>
                                             <div class="attendee-people">
                                                 <!-- 선택된 참가자가 표시됨  -->
-                                                <form action="" method="">
+                                                <form name="pickAttendee_frm">
                                                 <div class="pick-attendee"></div>
                                                 </form>
+                                                <c:forEach items="${userlist}" var="ulist" varStatus="e"> 
                                                 <div class="userlist_wrap">
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
-                                                    <span>HYELIM</span>
+                                                    <span>${ulist.uname}</span>
+                                                    <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }">
                                                     <input type="checkbox" class="pick" value="+ 선택">
                                                 </div>
-                                                <div class="userlist_wrap">
-                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
-                                                    <span>TEST1</span>
-                                                    <input type="checkbox" class="pick" value="+ 선택">
-                                                </div>
-                                                <div class="userlist_wrap">
-                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
-                                                    <span>TEST2</span>
-                                                    <input type="checkbox" class="pick" value="+ 선택">
-                                                </div >
-                                                <div class="userlist_wrap">
-                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
-                                                    <span>test3</span>
-                                                    <input type="checkbox" class="pick" value="+ 선택">
-                                                </div>
-                                                <div class="userlist_wrap">
-                                                    <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
-                                                    <span>오은실천재</span>
-                                                    <input type="checkbox" class="pick" value="+ 선택">
-                                                </div>
+                                                </c:forEach>
                                                 <div class="modal-btn">
-                                                <button class="edit-btn close" >취소</button> &nbsp; 
-                                                <button type="submit" class="edit-btn" onclick=" changeAttendee();">확인</button>
+                                                <button class="edit-btn closebtn" >취소</button>
+                                                <button class="edit-btn" onclick="changeAttendee()">확인</button>
                                                 </div> 
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 
@@ -2117,8 +2090,9 @@
 							</form>
 						</div>
          </c:if>
+<!-- 혜림  일정 결과화면 끝 -->
 
-
+<!-- 윤진 할일 결과화면 시작 -->
 		<c:if test="${blist.btype eq 4 }">
 		<div class="one">
                       <div class="boardHeader">
@@ -2138,7 +2112,7 @@
                               <div class="editDropdown">
                                   <ul>
                                       <li><a href="">글 삭제</a></li>
-                                      <li><a href="">다른 프로젝트에 올리기</a></li>
+                                      <li><a href="">글 수정</a></li>
                                   </ul>
                               </div>
                           </div>
@@ -2276,15 +2250,20 @@
                               </c:forEach>	
                               </ul>
                           </div>
-                         <!-- 댓글 갯수 출력 -->
-							<c:forEach items="${rclist}" var="clist" varStatus="i">
-								<c:if test="${clist.bno eq blist.bno}">
-										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
-								</c:if>
-							</c:forEach>
+                         
+							
                       </div>
-
-                      <div class="threeBtn">
+                      	
+                      </div>
+                      <!-- one 끝 -->
+                      <!-- 댓글 갯수 출력 -->
+                      <c:forEach items="${rclist}" var="clist" varStatus="i">
+							<c:if test="${clist.bno eq blist.bno}">
+								<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+							</c:if>
+					  </c:forEach>
+					  
+					  <div class="threeBtn">
                           <ul>
                               <li>
                                   <a href=""><img src="${pageContext.request.contextPath}/resources/img/like.png" class="like"
@@ -2300,8 +2279,8 @@
                               </li>
                           </ul>
                       </div>
-                      
-                      	<div class="reply">
+							
+					<div class="reply">
 							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
 							<br>
 							<!-- 댓글 출력  -->
@@ -2361,7 +2340,6 @@
 								</div>
 							</form>
 						</div>
-                      </div>
 		</c:if>
 	</c:forEach>
 	</div>

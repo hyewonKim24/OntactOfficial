@@ -1,7 +1,7 @@
 @charset "UTF-8";
-* {
-	margin: 0;
-}
+			* {
+				margin: 0;
+			}
 			body {
 				width: 1200px;
 				height: 100%;
@@ -267,9 +267,14 @@
 				display: block;
 			}
 			/* 글 작성 부분 */
+			.one{
+				margin-top : 20px;
+				background-color : white;
+			}
 			.boardHeader {
 				height: 60px;
 				padding: 25px 12px 0 25px;
+				
 			}
 			.writeInfo {
 				width: 200px;
@@ -312,14 +317,18 @@
 				margin-top: 3px;
 			}
 			.editDropdown {
+				position : absolute;
 				display: none;
-				width: 145px;
+				width: 100px;
 				height: 65px;
 				border: 1px solid #e7e7e7;
 				box-sizing: border-box;
 				font-size: 12px;
 				float: right;
 				margin-top: 6px;
+				margin-left : -50px;
+				z-index : 9999;
+				background-color : white;
 			}
 			.editDropdown ul {
 				padding: 8px 0;
@@ -329,22 +338,27 @@
 			}
 			.boardResult {
 				width: 650px;
-				padding: 7px 25px;
+				padding: 7px 25px 20px 25px;
 			}
+			/* 댓글 카운트 */
 			.replyCount {
-				width: 650px;
-				height: 25px;
-				margin-top: 30px;
-				font-size: 12px;
-				color: #c0c0c0;
-				text-align: right;
+				width: 680px;
+	            height: 25px;
+	            line-height : 25px;
+	            padding-top: 30px;
+	            padding-right :20px;
+	            font-size: 12px;
+	            color: #c0c0c0;
+	            text-align: right;
+	            background-color:white;
 			}
 			.threeBtn {
 				width: 650px;
 				height: 40px;
-				line-height: 40px;
+				line-height: 36px;
 				padding: 0 25px;
 				border-top: 1px solid #e7e7e7;
+				background-color:white;
 			}
 			.threeBtn ul li {
 				float: left;
@@ -665,9 +679,24 @@
 			/* 댓글 관련 */
 			.replyUpdateText {
 				display: none;
+				background-color: #f6f7f8;
+				width: 520px;
+				height: 25px;
+				box-sizing: border-box;
+				vertical-align: middle;
+				border: none;
+				margin-top : -37px;
 			}
 			.replyUpdateBtn {
 				display: none;
+				border : none;
+				color: #432D73;
+				background-color: #f6f7f8;
+				width: 70px;
+				height: 25px;
+				color: #5A3673;
+				font-size: 12px;
+				font-family: Noto Sans KR;
 			}
 			.replyUpdate {
 				border: none;
@@ -683,27 +712,18 @@
 				font-size: 12px;
 				font-family: Noto Sans KR;
 			}
-			.replyUpdateBtn {
-				width: 80px;
-				height: 25px;
-				border-radius: 3px;
-				color: #5A3673;
-				font-size: 12px;
-				border: 1px solid #5A3673;
-				font-family: Noto Sans KR;
-			}
-			.replyUpdateText {
-				width: 500px;
-				height: 25px;
-				box-sizing: border-box;
-				vertical-align: middle;
-				border: 1px solid #c0c0c0;
-			}
+			/* .replyUpdateBtn {
+				
+			} */
+			/* .replyUpdateText {
+				
+			} */
 			/* 댓글 작성 부분 */
 			.reply {
 				width: 700px;
 				padding: 10px 0;
 				border-top: 1px solid #e7e7e7;
+				background-color: #f6f7f8;
 			}
 			.replyMore {
 				background-color: white;
@@ -895,12 +915,15 @@
             width: 600px;
         }
 /* 혜림 css : 일정 작성 부분 끝  */
+
 /* 혜림 css : 일정 글 결과화면 시작*/
         .result_wrap{
+       		
             width: 650px;
             min-height: 151px;
             background-color: #fafafa;
             border: 1px solid #e7e7e7;
+            z-index : -99;
         }
         .rstart{
             width: 80px;
@@ -1114,7 +1137,7 @@
             border-radius: 3px;
         }
         .modal-btn{
-            padding-top: 17px;
+            padding: 17px 0;
             text-align: center;
         }
         .attendee_modal-layer {
@@ -1147,17 +1170,9 @@
             width: 605px;
             background-color: #fafafa;
         }
-        /* 댓글 갯수  */
-        .replyCount {
-            width: 650px;
-            height: 25px;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #c0c0c0;
-            text-align: right;
-        }
+        
 		/* 좋아요 댓글 담아두기 버튼 */
-        .threeBtn {
+        /* .threeBtn {
             width: 650px;
             height: 40px;
             line-height: 40px;
@@ -1173,7 +1188,7 @@
             font-size: 12px;
             font-weight: 700;
             color: #787878;
-        }
+        } */
         /* 댓글 출력 부분 */
         .reply {
             width: 700px;
@@ -1249,7 +1264,7 @@
 			.todoinput {
 				width: 100%;
 			}
-			li {
+			.todo-cont-list li {
 				list-style: none;
 				border-bottom: 1px solid #e7e7e7;
 				padding: 5px 0;
