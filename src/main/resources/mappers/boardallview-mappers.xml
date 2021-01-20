@@ -10,7 +10,6 @@
 		<result property="btype" column="btype"/>
 		<result property="bfirst" column="bfirst" />
 		<result property="bdate" column="bdate"/>
-		<result property="bdesc" column="bdesc"/>
 		<result property="uname" column="uname" />
 		<result property="ufilepath" column="ufilepath" />
 		<collection property="TodoViewDto" ofType="TodoViewDto" column="bno=bno" javaType="java.util.List" select ="getTodoList"/>

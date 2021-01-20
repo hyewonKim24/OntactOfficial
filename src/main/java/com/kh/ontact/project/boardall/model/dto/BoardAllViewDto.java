@@ -28,7 +28,6 @@ public class BoardAllViewDto {
 	private int btype;
 	private Date bdate;
 	private int bfirst;
-	private String bdesc;
 	
 	private String uname;
 	private String ufilepath;

@@ -22,5 +22,11 @@ public class CommonboardDto {
 	private String bname;
 	private String popen;
 	private Date bdate;
-
+	
+	// projectDetail 전체 리스트
+	public CommonboardDto(int bno, String bdesc) {
+		super();
+		this.bno = bno;
+		this.bdesc = bdesc;
+	}
 }
