@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.project.boardall.model.dto.BoardAllViewDto;
+import com.kh.ontact.project.commonboard.model.dto.CommonboardDto;
+import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
+import com.kh.ontact.project.task.model.dto.TaskDto;
+import com.kh.ontact.project.todo.model.dto.TodoViewDto;
 
 @Repository("baDao")
 public class BoardAllDao {
@@ -34,4 +39,25 @@ public class BoardAllDao {
 	public int insertBoardAllTodo(BoardAllDto dto) throws Exception {
 		return sqlSession.insert("BoardAll.insertBoardAllTodo", dto);
 	}
+
+	
+	public List<BoardAllViewDto> selectListPjDetail(String pno) throws Exception {
+		return sqlSession.selectList("BoardAllView.selectListPjDetail", pno);
+	}
+	
+	public List<CommonboardDto> getCommonboard() throws Exception{
+		return sqlSession.selectList("BoardAllView.getCommonboard");
+	}
+	
+	public List<TaskDto> getTask() throws Exception{
+		return sqlSession.selectList("BoardAllView.getTask");
+	}
+	public List<ScheduleDto> getSchedule() throws Exception{
+		return sqlSession.selectList("BoardAllView.getSchedule");
+	}
+	
+	public List<TodoViewDto> getTodo() throws Exception{
+		return sqlSession.selectList("BoardAllView.getTodo");
+	}
+	
 }

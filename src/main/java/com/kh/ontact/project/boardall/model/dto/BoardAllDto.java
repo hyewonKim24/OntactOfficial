@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*------ -------- ------------ 
 BNO    NOT NULL VARCHAR2(20) 
@@ -22,6 +24,8 @@ BDATE           DATE        */
 
 @Data
 @Component
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardAllDto {
 	private int bno;
 	private String pno;
@@ -36,4 +40,6 @@ public class BoardAllDto {
 	private int count;
 	private String runame;
 	private List<ReplyDto> replydto;
+	
+	
 }

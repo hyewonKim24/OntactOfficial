@@ -43,4 +43,19 @@ public class ScheduleDto {
 	private Date tend;
 	private String taskmanager;
 	private int count;
+	
+	// Proejct Detail 전체 리스트
+	public ScheduleDto(int bno, String sstart, String send, String splace, String smemo, String attendees, int count) {
+		super();
+		this.bno = bno;
+		this.sstart = sstart;
+		this.send = send;
+		this.splace = splace;
+		this.smemo = smemo;
+		this.attendees = attendees;
+		this.count = count;
+	}
+
+	
+
 }

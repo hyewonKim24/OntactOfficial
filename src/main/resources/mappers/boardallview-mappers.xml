@@ -14,14 +14,58 @@
 		<result property="uname" column="uname" />
 		<result property="ufilepath" column="ufilepath" />
 		<collection property="TodoViewDto" ofType="TodoViewDto" column="bno=bno" javaType="java.util.List" select ="getTodoList"/>
+		<collection property="CommonboardDto" ofType="CommonboardDto" column="bno=bno" javaType="java.util.List" select ="getCommonboard"/>
+		<collection property="TaskDto" ofType="TaskDto" column="bno=bno" javaType="java.util.List" select ="getTask"/>
+		<collection property="ScheduleDto" ofType="ScheduleDto" column="bno=bno" javaType="java.util.List" select ="getSchedule"/>
+		<collection property="TodoViewDto" ofType="TodoViewDto" column="bno=bno" javaType="java.util.List" select ="getTodo"/>
 	</resultMap>
-
+	<!-- 전체 할일 리스트 -->
  	<select id="getBoardAllList" resultMap="resultBoardAllView" parameterType="string">
+ 		<![CDATA[
 		SELECT distinct * FROM boardall_view where uno = #{uno} order by bno desc
+		]]>
 	</select> 
 	
 	<select id="getTodoList" resultType="TodoViewDto">
+		<![CDATA[
 		select distinct * from todo_view where bno = #{bno}
+		]]>
 	</select>
-
+	
+	
+	<!-- Project Detail 리스트 (파일 댓글 따로 가져감)-->
+	<select id="selectListPjDetail" resultMap="resultBoardAllView">
+		<![CDATA[
+		select rownum, b.* 
+		    from (select * from boardall_view order by bdate desc) b
+		    where pno = #{pno} and (rownum >=  1 and rownum <= 100)
+		]]>
+	</select>
+	
+	<select id="getCommonboard" resultType="CommonboardDto">
+		<![CDATA[
+		select bno, bdesc from commonboard where bno = #{bno}
+		]]>
+	</select>
+	
+	<select id="getTask" resultType="TaskDto">
+		<![CDATA[
+		select * from task where bno = #{bno}
+		]]>
+	</select>
+	
+	<select id="getSchedule" resultType="ScheduleDto">
+		<![CDATA[
+		select bno, sstart, send, splace, smemo, count(attendee) as count, listagg(attendee, ',') within group(order by attendee) as attendees
+	        from schedule
+	        group by bno, sstart, send, splace, smemo
+	        having bno = #{bno}
+		]]>
+	</select>
+	
+	<select id="getTodo" resultType="TodoViewDto">
+		<![CDATA[
+		select * from todo_view where bno = #{bno}
+		]]>
+	</select>
 </mapper>
