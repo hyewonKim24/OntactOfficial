@@ -139,46 +139,43 @@
 						                </a>
 						            </div>
 						            <div class="textfooter_side">
-						                <div class="public">
-						                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-						                        &#9660;</span>
+						            	<div class="footerwrap">
+							                <div class="public">
+							                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_admin" style="display: none;">
+							                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_setting" style="display: none;">
+							                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+							                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+							                    <ul>
+							                        <li class="set_li">
+							                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>전체공개</strong>
+							                                <span>전체 사람들에게 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                        <li class="set_li_admin">
+							                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>관리자만</strong>
+							                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                    </ul>
+							                </div>
 						                </div>
-						                <div class="public_admin" style="display: none;">
-						                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-						                        &#9660;</span>
-						                </div>
-						                <div class="public_setting" style="display: none;">
-						                    <h1 class="public_setting_title">게시물 공개 대상</h1>
-						                    <input type="hidden" id="taskopen" name="bopen" value="0" />
-						                    <ul>
-						                        <li class="set_li">
-						                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
-						                            <div class="p_set_con">
-						                                <strong>전체공개</strong>
-						                                <span>전체 사람들에게 공개됩니다.</span>
-						                            </div>
-						                        </li>
-						                        <li class="set_li_admin">
-						                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
-						                            <div class="p_set_con">
-						                                <strong>관리자만</strong>
-						                                <span>프로젝트 관리자에게만 공개됩니다.</span>
-						                            </div>
-						                        </li>
-						                    </ul>
-						                </div>
-						            </div>
 						            <button type="submit" id="writebtn" class="writebtn">올리기</button>
+						            </div>
 						        </div>
 						    </form>
 						</div>
 
 <!-- 혜원 )  업무 글작성 부분 -->
-						<%-- <c:if test="${not empty taskSuccess}">
-							<script>
-								alert("1개의 글이 등록되었습니다");
-							</script>
-							</c:if> --%>
 							<div id="task" class="writemenu">
 								<form name="task_frm" id="task_frm">
 									<input type="hidden" name="${_csrf.parameterName}"
@@ -220,9 +217,9 @@
 												<div class="task-res-add-wrap">
 													<div class="task-add">
 														<ul>
-															<%-- <c:forEach items="${userlist}" var="ulist">
+															 <c:forEach items="${userlist}" var="ulist">
 																<li class="task-res-list task-res-list${e.count}">${ulist.uname}</li>
-															</c:forEach> --%>
+															</c:forEach> 
 														</ul>
 													</div>
 												</div>
@@ -326,39 +323,36 @@
 		                                    </a>
 										</div>
 										<div class="textfooter_side">
-											<div class="public">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-													&#9660;</span>
-											</div>
-											<div class="public_admin" style="display: none;">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-													&#9660;</span>
-											</div>
-											<div class="public_setting" style="display: none;">
-												<h1 class="public_setting_title">게시물 공개 대상</h1>
-												<input type="hidden" id="taskopen" name="taskopen"
-													value="0" />
-												<ul>
-													<li class="set_li">
-														<img src="${pageContext.request.contextPath}/resources/img/worldwide.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>전체공개</strong>
-															<span>전체 사람들에게 공개됩니다.</span>
-														</div>
-													</li>
-													<li class="set_li_admin">
-														<img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>관리자만</strong>
-															<span>프로젝트 관리자에게만 공개됩니다.</span>
-														</div>
-													</li>
-												</ul>
-											</div>
+											<div class="footerwrap">
+								                <div class="public">
+								                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_admin" style="display: none;">
+								                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_setting" style="display: none;">
+								                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+								                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+								                    <ul>
+								                        <li class="set_li">
+								                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>전체공개</strong>
+								                                <span>전체 사람들에게 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                        <li class="set_li_admin">
+								                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>관리자만</strong>
+								                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                    </ul>
+								                </div>
+						                	</div>
 											<button type="button" class="writebtn" id="writetask"
 												onclick="taskSubmit()">올리기</button>
 										</div>
@@ -550,36 +544,38 @@
                                 <a href=""><img src="${pageContext.request.contextPath}/resources/img/picture-2.png" class="textfooter_func"></a>
                             </div>
                             <div class="textfooter_side">
-                                <div class="public">
-                                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-                                        &#9660;</span>
-                                </div>
-                                <div class="public_admin" style="display: none;">
-                                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-                                        &#9660;</span>
-                                </div>
-                                <div class="public_setting" style="display: none;">
-                                    <h1 class="public_setting_title">게시물 공개 대상</h1>
-                                    <input type="hidden" id="taskopen" name="bopen" value="0" />
-                                    <ul>
-                                        <li class="set_li">
-                                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
-                                            <div class="p_set_con">
-                                                <strong>전체공개</strong>
-                                                <span>전체 사람들에게 공개됩니다.</span>
-                                            </div>
-                                        </li>
-                                        <li class="set_li_admin">
-                                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
-                                            <div class="p_set_con">
-                                                <strong>관리자만</strong>
-                                                <span>프로젝트 관리자에게만 공개됩니다.</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                                <div class="footerwrap">
+							               	<div class="public">
+							                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_admin" style="display: none;">
+							                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_setting" style="display: none;">
+							                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+							                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+							                    <ul>
+							                        <li class="set_li">
+							                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>전체공개</strong>
+							                                <span>전체 사람들에게 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                        <li class="set_li_admin">
+							                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>관리자만</strong>
+							                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                    </ul>
+							                </div>
+						                </div>
                            <button class="writebtn" onclick="insertSchedule()">올리기</button>
+                            </div>
                         </div>
                         </form>
                     </div>
@@ -824,39 +820,37 @@
 													class="textfooter_func"></a>
 										</div>
 										<div class="textfooter_side">
-											<input type="hidden" id="bopen" name="bopen" value="0" />
-											<div class="public">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-													&#9660;</span>
-											</div>
-											<div class="public_admin" style="display: none;">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-													&#9660;</span>
-											</div>
-											<div class="public_setting" style="display: none;">
-												<h1 class="public_setting_title">게시물 공개 대상</h1>
-												<ul>
-													<li class="set_li"><img
-															src="${pageContext.request.contextPath}/resources/img/worldwide.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>전체공개</strong> <span>전체 사람들에게
-																공개됩니다.</span>
-														</div>
-													</li>
-													<li class="set_li_admin"><img
-															src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>관리자만</strong> <span>프로젝트 관리자에게만
-																공개됩니다.</span>
-														</div>
-													</li>
-												</ul>
-											</div>
-											<button type="button" class="writebtn"
+											<div class="footerwrap">
+								                <div class="public">
+								                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_admin" style="display: none;">
+								                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_setting" style="display: none;">
+								                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+								                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+								                    <ul>
+								                        <li class="set_li">
+								                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>전체공개</strong>
+								                                <span>전체 사람들에게 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                        <li class="set_li_admin">
+								                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>관리자만</strong>
+								                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                    </ul>
+								                </div>
+						                </div>
+										<button type="button" class="writebtn"
 												onclick="todoSubmit()">올리기</button>
 										</div>
 									</div>
@@ -980,21 +974,6 @@
 									} */
 								});
 								//윤진 : 할일 insert
-								//게시글 작성 공개여부 설정
-								$(".textfooter_side").on("click", function (e) {
-									e.preventDefault();
-									$(".public_setting").toggle();
-									$('.set_li').on('click', function () {
-										$(".public").show();
-										$(".public_admin").hide();
-										$("#bopen").val("0");
-									});
-									$('.set_li_admin').on('click', function () {
-										$(".public").hide();
-										$(".public_admin").show();
-										$("#bopen").val("1");
-									});
-								})
 								//글작성 버튼 submit
 								function todoSubmit() {
 									var frm = document.todo_frm;
@@ -1003,7 +982,7 @@
 									frm.submit();
 								}
 							</script>
-					</div>
+				</div>
 				</div>
 <!--  윤진 ) 업무 내용 작성 부분 끝 -->
 
@@ -1061,7 +1040,12 @@
                     </c:forEach> --%>
                        		</ul>
                        	</div>
-                        <div class="replyCount">댓글 10개</div>
+                       <!-- 댓글 갯수 출력 -->
+							<c:forEach items="${rclist}" var="clist" varStatus="i">
+								<c:if test="${clist.bno eq blist.bno}">
+										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+								</c:if>
+							</c:forEach>
                     </div>
                     <div class="threeBtn">
                         <ul>
@@ -1122,7 +1106,6 @@
 						</div>
 
 						<div class="boardResult">
-<!-- 혜원 ) 업무 내용 뿌리기 -->	
 							<div class="task_wrap">
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
@@ -1323,10 +1306,9 @@
                           			 <div class="task-res-add-wrap">
                           				<div class="task-add">
 	                          				<ul>
-	                          					<!-- project user list -->
-	                          					<%-- <c:forEach items="${userlist}" var="ulist">
+	                          					 <c:forEach items="${userlist}" var="ulist">
 	                          					<li class="task-res-list task-res-list${e.count}">${ulist.uname}</li>
-												</c:forEach> --%>
+												</c:forEach> 
 													</ul>
 												</div>
 											</div>
@@ -1745,7 +1727,7 @@
 									${t.tmemo}
 								</div>
 								<!-- 은실 ) 파일뿌리기 -->
-								<%-- <div class="uploadFiles">
+								 <div class="uploadFiles">
 			                       		<ul class="uploadedFileList-real">
 								<c:forEach items="${file}" var="file" varStatus="e">
 								<c:if test="${tlist.bno eq file.bno }">
@@ -1761,11 +1743,18 @@
 			                    </c:if>
 			                    </c:forEach>
 			                       		</ul>
-                       			</div> --%>
+                      			</div> 
+                    			</div>
+                    			</div>
+                    			</div>
                        			<!-- 여기까지 -->
                        			</c:forEach>
-							</div>
-							<div class="replyCount">댓글 10개</div>
+								<!-- 댓글 갯수 출력 -->
+							<c:forEach items="${rclist}" var="clist" varStatus="i">
+								<c:if test="${clist.bno eq blist.bno}">
+										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+								</c:if>
+							</c:forEach>
 							<div class="threeBtn">
 								<ul>
 									<li>
@@ -1788,14 +1777,14 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						
 
 						<div class="reply">
 							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
 							<br>
 							<!-- 댓글 출력  -->
-							<%-- <c:forEach items="${replylist}" var="rlist" varStatus="i">
-								<c:if test="${rlist.bno eq tlist.bno}">
+							 <c:forEach items="${replylist}" var="rlist" varStatus="i">
+								<c:if test="${rlist.bno eq blist.bno}">
 									<div class="defaultReply">
 										<span>
 											<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
@@ -1893,7 +1882,7 @@
 										});
 									</script>
 								</c:if>
-							</c:forEach> --%>
+							</c:forEach> 
 
 							<!-- 댓글 입력  -->
 							<form action="${pageContext.request.contextPath}/project/replyinsert"
@@ -1913,199 +1902,13 @@
 								</div>
 							</form>
 						</div>
-					</div>
 				</c:if>
-			</div>
+			
 <!-- 혜원 업무 글 결과화면 끝 -->
 
 
 
-		
-<!--우측 사이드바-->
-			<div class="rightBar">
-				<a href="#">
-					<div id="prevbtn">
-						<svg version="1.1" class="prevsvg rightsvg" xmlns="http://www.w3.org/2000/svg"
-							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-							xml:space="preserve">
-							<path
-								d="M2.414,30l13.293-13.293c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0l-14,14c-0.391,0.391-0.391,1.023,0,1.414
-								l14,14C14.488,44.902,14.744,45,15,45s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L2.414,30z" />
-						</svg>
-						이전화면
-
-					</div>
-				</a>
-				<div id="rightbtns">
-					<a href="#">
-						<div class="rightbtn btnhover">
-							<div>
-								<svg version="1.1" class="fileboxsvg rightsvg"
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-									xml:space="preserve">
-									<g>
-										<path d="M60,8.311c0-0.199-0.052-0.382-0.131-0.551c-0.027-0.209-0.112-0.412-0.254-0.579L53.46,0H6.54L0.384,7.182
-										C0.242,7.348,0.157,7.55,0.131,7.76C0.052,7.929,0,8.112,0,8.311V19h3v41h54V19h3V8.311z M7.46,2h45.08l4.286,5H3.174L7.46,2z
-										M55,58H5V19h50V58z M58,17h-1H3H2V9h56V17z" />
-										<path d="M42,23H18v10h24V23z M40,31H20v-6h20V31z" />
-										<path d="M45,38H15v14h30V38z M43,50H17V40h26V50z" />
-										<path
-											d="M22,48h5c0.552,0,1-0.447,1-1s-0.448-1-1-1h-5c-0.552,0-1,0.447-1,1S21.448,48,22,48z" />
-										<path
-											d="M27,44h11c0.552,0,1-0.447,1-1s-0.448-1-1-1H27c-0.552,0-1,0.447-1,1S26.448,44,27,44z" />
-										<path d="M22,44c0.26,0,0.52-0.11,0.71-0.29C22.89,43.52,23,43.26,23,43c0-0.261-0.11-0.521-0.29-0.71c-0.38-0.37-1.04-0.37-1.42,0
-										C21.11,42.479,21,42.739,21,43c0,0.27,0.11,0.52,0.29,0.71C21.48,43.89,21.73,44,22,44z" />
-										<path
-											d="M31.29,46.29C31.11,46.479,31,46.739,31,47c0,0.26,0.11,0.52,0.29,0.71C31.48,47.89,31.74,48,32,48
-										c0.26,0,0.52-0.11,0.71-0.29C32.89,47.52,33,47.26,33,47c0-0.261-0.11-0.521-0.29-0.71C32.34,45.92,31.66,45.92,31.29,46.29z" />
-										<path
-											d="M38,46h-1c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S38.552,46,38,46z" />
-									</g>
-								</svg>
-							</div>
-							<div>파일함</div>
-						</div>
-					</a> <a href="#">
-						<div class="rightbtn btnhover">
-							<div>
-								<svg version="1.1" class="checkedsvg rightsvg"
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									viewBox="0 0 59 59" style="enable-background: new 0 0 59 59;"
-									xml:space="preserve">
-									<g>
-										<path
-											d="M52,21c-0.553,0-1,0.447-1,1v32H2V5h49v1c0,0.553,0.447,1,1,1s1-0.447,1-1V3H0v53h53V22C53,21.447,52.553,21,52,21z" />
-										<path d="M58.707,7.293c-0.391-0.391-1.023-0.391-1.414,0L27,37.586l-13.07-13.07c-0.391-0.391-1.023-0.391-1.414,0
-										s-0.391,1.023,0,1.414l13.777,13.777C26.488,39.902,26.744,40,27,40s0.512-0.098,0.707-0.293l31-31
-										C59.098,8.316,59.098,7.684,58.707,7.293z" />
-									</g>
-								</svg>
-							</div>
-							<div>업무</div>
-						</div>
-					</a> <a href="#">
-						<div class="rightbtn btnhover">
-							<div>
-								<svg version="1.1" class="schedulesvg rightsvg"
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
-									xml:space="preserve">
-									<g>
-										<path d="M57,4h-7V1c0-0.553-0.447-1-1-1h-7c-0.553,0-1,0.447-1,1v3H19V1c0-0.553-0.447-1-1-1h-7c-0.553,0-1,0.447-1,1v3H3
-										C2.447,4,2,4.447,2,5v11v43c0,0.553,0.447,1,1,1h54c0.553,0,1-0.447,1-1V16V5C58,4.447,57.553,4,57,4z M43,2h5v3v3h-5V5V2z M12,2h5
-										v3v3h-5V5V2z M4,6h6v3c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1V6h22v3c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1V6h6v9H4V6z
-										M4,58V17h52v41H4z" />
-										<path d="M38,23h-7h-2h-7h-2h-9v9v2v7v2v9h9h2h7h2h7h2h9v-9v-2v-7v-2v-9h-9H38z M31,25h7v7h-7V25z M38,41h-7v-7h7V41z M22,34h7v7h-7
-										V34z M22,25h7v7h-7V25z M13,25h7v7h-7V25z M13,34h7v7h-7V34z M20,50h-7v-7h7V50z M29,50h-7v-7h7V50z M38,50h-7v-7h7V50z M47,50h-7
-										v-7h7V50z M47,41h-7v-7h7V41z M47,25v7h-7v-7H47z" />
-									</g>
-								</svg>
-							</div>
-							<div>일정</div>
-						</div>
-					</a> <a href="#">
-						<div class="rightbtn btnhover">
-							<div>
-								<svg version="1.1" class="todosvg rightsvg"
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;"
-									xml:space="preserve">
-									<g>
-										<rect x="9" y="12" width="40" height="2" />
-										<rect x="9" y="28" width="40" height="2" />
-										<rect x="9" y="44" width="40" height="2" />
-										<path d="M0,0v58h58V0H0z M56,56H2V2h54V56z" />
-									</g>
-								</svg>
-							</div>
-							<div>할일</div>
-						</div>
-					</a>
-				</div>
-				<div id="addmembtn">
-					초대하기
-					<img src="${pageContext.request.contextPath}/resources/img/addperson-03-white.png"
-						class="todoicon">
-				</div>
-				<div id="pjchat">
-					<div id="pjmembox">
-						<div class="allpj_title">
-							전체참여자
-							<span>5명</span>
-							<a href="#" class="allpjmem">전체보기</a>
-						</div>
-						<div class="part-title">관리자&nbsp;(1)</div>
-						<div id="pjmemlist">
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">김혜원</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
-							<div class="part-title">내부참여자&nbsp;(4)</div>
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">이윤진</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">이혜림</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">오은실</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">김봉영</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<a href="${pageContext.request.contextPath}/chat/projectchat?pno=${pno}"
-						onClick="window.open(this.href,'', 'width=470, height=650'); return false;">
-						<div id="pjchatbox">
-							채팅 &nbsp;<img
-								src="${pageContext.request.contextPath}/resources/img/chat-04-fill.png"
-								id="chatbtn-fill">
-						</div>
-					</a>
-				</div>
-			</div>
-<!-- 우측 사이드바 끝 -->			
-			
-			
-			
-			
+	
 
 
 
@@ -2144,8 +1947,8 @@
                         <div class="rtitle">
                             <input type="text" value="${blist.bname}" readonly>
                         </div>
+                       	<c:forEach items="${blist.scheduleDto}" var="s" varStatus="e">
                         <div class="rschedate">
-                        	<c:forEach items="${blist.scheduleDto}" var="s" varStatus="e">
                             <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
                             <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.sstart}"/>
                             <input type="text" id="scheSdate" name="startdate" class="d" value="${s.sstart}"> 
@@ -2225,11 +2028,16 @@
 	                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
 	                        	<textarea class="content_detail2" placeholder="${s.smemo}"></textarea>
 	                        </div>
+			                </c:forEach>
                     	</div>
                 	</div>
                 </div>
-                </c:forEach>
-                <div class="replyCount">댓글 10개</div>
+                <!-- 댓글 갯수 출력 -->
+				<c:forEach items="${rclist}" var="clist" varStatus="i">
+					<c:if test="${clist.bno eq blist.bno}">
+							<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+					</c:if>
+				</c:forEach>
 
                 <div class="threeBtn">
                     <ul>
@@ -2247,7 +2055,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
          </c:if>
 
 
@@ -2408,7 +2215,12 @@
                               </c:forEach>	
                               </ul>
                           </div>
-                          <div class="replyCount">댓글 10개</div>
+                         <!-- 댓글 갯수 출력 -->
+							<c:forEach items="${rclist}" var="clist" varStatus="i">
+								<c:if test="${clist.bno eq blist.bno}">
+										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+								</c:if>
+							</c:forEach>
                       </div>
 
                       <div class="threeBtn">
@@ -2427,11 +2239,192 @@
                               </li>
                           </ul>
                       </div>
-                  </div>
+                      </div>
 		</c:if>
 	</c:forEach>
-<!-- 혜림 일정 글 결과화면 끝 -->
-            
+	</div>
+<!-- 윤진 할일 글 결과화면 끝 -->
+           	
+<!--우측 사이드바-->
+			<div class="rightBar">
+				<a href="#">
+					<div id="prevbtn">
+						<svg version="1.1" class="prevsvg rightsvg" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
+							xml:space="preserve">
+							<path
+								d="M2.414,30l13.293-13.293c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0l-14,14c-0.391,0.391-0.391,1.023,0,1.414
+								l14,14C14.488,44.902,14.744,45,15,45s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L2.414,30z" />
+						</svg>
+						이전화면
+
+					</div>
+				</a>
+				<div id="rightbtns">
+					<a href="#">
+						<div class="rightbtn btnhover">
+							<div>
+								<svg version="1.1" class="fileboxsvg rightsvg"
+									xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
+									xml:space="preserve">
+									<g>
+										<path d="M60,8.311c0-0.199-0.052-0.382-0.131-0.551c-0.027-0.209-0.112-0.412-0.254-0.579L53.46,0H6.54L0.384,7.182
+										C0.242,7.348,0.157,7.55,0.131,7.76C0.052,7.929,0,8.112,0,8.311V19h3v41h54V19h3V8.311z M7.46,2h45.08l4.286,5H3.174L7.46,2z
+										M55,58H5V19h50V58z M58,17h-1H3H2V9h56V17z" />
+										<path d="M42,23H18v10h24V23z M40,31H20v-6h20V31z" />
+										<path d="M45,38H15v14h30V38z M43,50H17V40h26V50z" />
+										<path
+											d="M22,48h5c0.552,0,1-0.447,1-1s-0.448-1-1-1h-5c-0.552,0-1,0.447-1,1S21.448,48,22,48z" />
+										<path
+											d="M27,44h11c0.552,0,1-0.447,1-1s-0.448-1-1-1H27c-0.552,0-1,0.447-1,1S26.448,44,27,44z" />
+										<path d="M22,44c0.26,0,0.52-0.11,0.71-0.29C22.89,43.52,23,43.26,23,43c0-0.261-0.11-0.521-0.29-0.71c-0.38-0.37-1.04-0.37-1.42,0
+										C21.11,42.479,21,42.739,21,43c0,0.27,0.11,0.52,0.29,0.71C21.48,43.89,21.73,44,22,44z" />
+										<path
+											d="M31.29,46.29C31.11,46.479,31,46.739,31,47c0,0.26,0.11,0.52,0.29,0.71C31.48,47.89,31.74,48,32,48
+										c0.26,0,0.52-0.11,0.71-0.29C32.89,47.52,33,47.26,33,47c0-0.261-0.11-0.521-0.29-0.71C32.34,45.92,31.66,45.92,31.29,46.29z" />
+										<path
+											d="M38,46h-1c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S38.552,46,38,46z" />
+									</g>
+								</svg>
+							</div>
+							<div>파일함</div>
+						</div>
+					</a> <a href="#">
+						<div class="rightbtn btnhover">
+							<div>
+								<svg version="1.1" class="checkedsvg rightsvg"
+									xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									viewBox="0 0 59 59" style="enable-background: new 0 0 59 59;"
+									xml:space="preserve">
+									<g>
+										<path
+											d="M52,21c-0.553,0-1,0.447-1,1v32H2V5h49v1c0,0.553,0.447,1,1,1s1-0.447,1-1V3H0v53h53V22C53,21.447,52.553,21,52,21z" />
+										<path d="M58.707,7.293c-0.391-0.391-1.023-0.391-1.414,0L27,37.586l-13.07-13.07c-0.391-0.391-1.023-0.391-1.414,0
+										s-0.391,1.023,0,1.414l13.777,13.777C26.488,39.902,26.744,40,27,40s0.512-0.098,0.707-0.293l31-31
+										C59.098,8.316,59.098,7.684,58.707,7.293z" />
+									</g>
+								</svg>
+							</div>
+							<div>업무</div>
+						</div>
+					</a> <a href="#">
+						<div class="rightbtn btnhover">
+							<div>
+								<svg version="1.1" class="schedulesvg rightsvg"
+									xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
+									xml:space="preserve">
+									<g>
+										<path d="M57,4h-7V1c0-0.553-0.447-1-1-1h-7c-0.553,0-1,0.447-1,1v3H19V1c0-0.553-0.447-1-1-1h-7c-0.553,0-1,0.447-1,1v3H3
+										C2.447,4,2,4.447,2,5v11v43c0,0.553,0.447,1,1,1h54c0.553,0,1-0.447,1-1V16V5C58,4.447,57.553,4,57,4z M43,2h5v3v3h-5V5V2z M12,2h5
+										v3v3h-5V5V2z M4,6h6v3c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1V6h22v3c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1V6h6v9H4V6z
+										M4,58V17h52v41H4z" />
+										<path d="M38,23h-7h-2h-7h-2h-9v9v2v7v2v9h9h2h7h2h7h2h9v-9v-2v-7v-2v-9h-9H38z M31,25h7v7h-7V25z M38,41h-7v-7h7V41z M22,34h7v7h-7
+										V34z M22,25h7v7h-7V25z M13,25h7v7h-7V25z M13,34h7v7h-7V34z M20,50h-7v-7h7V50z M29,50h-7v-7h7V50z M38,50h-7v-7h7V50z M47,50h-7
+										v-7h7V50z M47,41h-7v-7h7V41z M47,25v7h-7v-7H47z" />
+									</g>
+								</svg>
+							</div>
+							<div>일정</div>
+						</div>
+					</a> <a href="#">
+						<div class="rightbtn btnhover">
+							<div>
+								<svg version="1.1" class="todosvg rightsvg"
+									xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+									viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;"
+									xml:space="preserve">
+									<g>
+										<rect x="9" y="12" width="40" height="2" />
+										<rect x="9" y="28" width="40" height="2" />
+										<rect x="9" y="44" width="40" height="2" />
+										<path d="M0,0v58h58V0H0z M56,56H2V2h54V56z" />
+									</g>
+								</svg>
+							</div>
+							<div>할일</div>
+						</div>
+					</a>
+				</div>
+				<div id="addmembtn">
+					초대하기
+					<img src="${pageContext.request.contextPath}/resources/img/addperson-03-white.png"
+						class="todoicon">
+				</div>
+				<div id="pjchat">
+					<div id="pjmembox">
+						<div class="allpj_title">
+							전체참여자
+							<span>${userListSize}명</span>
+						</div>
+						<div class="part-title">관리자&nbsp;(1)</div>
+							<div id="pjmemlist">
+								<c:forEach items="${userlist }" var="ulist">
+									<c:if test="${ulist.padmin eq 1}">
+										<ul>
+											<li class="btnhover">
+												<c:if test="${empty ulist.ufilepath}">
+												<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+													class="userimg" width="32px">
+												</c:if>
+												<c:if test="${not empty ulist.ufilepath}">
+												<img src="${ulist.ufilepath}" class="userimg" width="32px">
+												</c:if>
+												<span class="pjusername">${ulist.uname}</span>
+												<!-- 개인채팅방 -->
+												<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${ulist.uno}&chatuname=${ulist.uname}" onclick="window.open(this.href, '', 'width=470, height=650'); return false;"> 
+												<img src="${pageContext.request.contextPath}/resources/img/chat-04.png" class="chatsvg"></a>
+											</li>
+										</ul>
+									</c:if>
+								</c:forEach>
+								
+								
+								<div class="part-title">내부참여자&nbsp;(${userSize})</div>
+								
+								<c:forEach items="${userlist }" var="ulist">
+									<c:if test="${ulist.padmin eq 0}">
+										<ul>
+											<li class="btnhover">
+												<c:if test="${empty ulist.ufilepath}">
+												<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+													class="userimg" width="32px">
+												</c:if>
+												<c:if test="${not empty ulist.ufilepath}">
+												<img src="${ulist.ufilepath}" class="userimg" width="32px">
+												</c:if>
+												<span class="pjusername">${ulist.uname}</span>
+												<!-- 개인채팅방 -->
+												<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${ulist.uno}&chatuname=${ulist.uname}" onclick="window.open(this.href, '', 'width=470, height=650'); return false;"> 
+												<img src="${pageContext.request.contextPath}/resources/img/chat-04.png" class="chatsvg"></a>
+											</li>
+										</ul>
+									</c:if>
+								</c:forEach>
+							
+							</div>
+						</div>
+					<a href="${pageContext.request.contextPath}/chat/projectchat?pno=${pno}"
+						onClick="window.open(this.href,'', 'width=470, height=650'); return false;">
+						<div id="pjchatbox">
+							채팅 &nbsp;<img
+								src="${pageContext.request.contextPath}/resources/img/chat-04-fill.png"
+								id="chatbtn-fill">
+						</div>
+					</a>
+				</div>
+			</div>
+<!-- 우측 사이드바 끝 -->			
+			
+			
+			
+			 
 	
 		
 		<!-- 초대하기 모달 -->
@@ -2470,7 +2463,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                 <input type="text" class="chat-search-input" placeholder="직원 이름으로 검색">
             </div>
 			<form action="${pageContext.request.contextPath}/project/projectmemberinsert" method="post" class="pinvitefrm1">
-            <%-- <div class="invite-rs">
+            <div class="invite-rs">
               <c:if test="${empty pmlist }">
                	 검색 결과가 없습니다.
                	 </c:if>
@@ -2504,7 +2497,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 							 <input type="hidden" name="pno" value="${pno}"> 
 							<button type="submit" class="submitbtn">프로젝트 초대</button>
 						</div>
-       			     </div> --%>
+       			     </div> 
 					</form>
         </div>
     </div>
@@ -2512,25 +2505,20 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		
 		<script>
 			//게시글 작성 공개여부 설정
-			$(".textfooter_side").on("click", function (e) {
+			$(".footerwrap").on("click", function (e) {
 				e.preventDefault();
-				$(".public_setting").toggle();
-				// if($('#pub_dropdown').data('clicked',true)){
-				//     $("#pub").show();
-				//     $("#admin").hide();
-				// } else if($('#admin_dropdown').data('clicked',true)){
-				//     $("#pub").show();
-				//     $("#admin").hide();
-				// }
-				$('.set_li').on('click', function () {
-					$(".public").show();
-					$(".public_admin").hide();
-					$("#taskopen").val("0");
+				let parent = $(this);
+				parent.find(".public_setting").toggle();
+
+				parent.find('.set_li').on('click', function () {
+					parent.find(".public").show();
+					parent.find(".public_admin").hide();
+					parent.find(".taskopen").val("0");
 				});
-				$('.set_li_admin').on('click', function () {
-					$(".public").hide();
-					$(".public_admin").show();
-					$("#taskopen").val("1");
+				parent.find('.set_li_admin').on('click', function () {
+				 	parent.find(".public").hide();
+				 	parent.find(".public_admin").show();
+				 	parent.find(".taskopen").val("1");
 				});
 			})
 			//게시글 작성 상자 늘어나기

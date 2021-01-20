@@ -110,7 +110,6 @@ public class TaskController {
 			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String cno = user.getCno();
 			String uno = user.getUno();
-			List<BoardAllDto> blist = new ArrayList<BoardAllDto>();
 			List<ReplyDto> rlist = new ArrayList<ReplyDto>();
 			List<ReplyDto> rclist = new ArrayList<ReplyDto>();
 			List<TaskDto> list= new ArrayList<TaskDto>();
@@ -124,7 +123,6 @@ public class TaskController {
 			try {
 				//업무글리스트
 				list = taskService.ListTaskAll(pno);
-				blist=baService.ListTaskBoardAll(pno);
 				System.out.println("글 blist"+list+"글 blist");
 				//댓글리스트
 				rlist=replyService.ListReply(pno);

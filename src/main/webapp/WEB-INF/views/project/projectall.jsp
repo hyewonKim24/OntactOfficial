@@ -292,7 +292,7 @@ body {
 				console.log("ajax:" + object + "성공");
 				for(var i=0 in object){
 				var color = backgroundColor();
-				var print ="<a href='${pageContext.request.contextPath}/project/projectDetail?pno="+ object[i].pno+"'>";
+				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].pno+"'>";
 				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
 				print += " <div>"+object[i].pname+"</div>";
 				print += " <div class='pj_team_list'>";

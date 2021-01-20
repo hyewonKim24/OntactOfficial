@@ -1649,15 +1649,19 @@
 			}
 			
 			.invite-search-wrap{
-				display:none;
-				position: relative;
+				position: fixed;
 			    width: 500px;
+			    left: 50%;
+			    margin-left: -21%;
 			    height: 580px;
-			    margin: 100px auto;
-			    background: #fefefe;
-			    border:1px solid #fff;
-			    z-index:95;
-			    overflow: scroll;
+			    top: 40%;
+			    margin-top: -150px;
+			    overflow: auto;
+			    border: 1px solid #dadbdb;
+			    background-color: rgb(255, 255, 255);
+			    box-sizing: border-box;
+			    display:none;
+			    z-index:99;
 			}
 			
 			.invite-title{
