@@ -41,6 +41,7 @@ public class BoardAllDao {
 	}
 
 	
+	// Proejct Detail 전체 리스트
 	public List<BoardAllViewDto> selectListPjDetail(String pno) throws Exception {
 		return sqlSession.selectList("BoardAllView.selectListPjDetail", pno);
 	}

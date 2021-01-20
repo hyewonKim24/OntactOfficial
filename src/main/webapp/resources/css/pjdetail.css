@@ -1,0 +1,1946 @@
+@charset "UTF-8";
+* {
+	margin: 0;
+}
+			body {
+				width: 1200px;
+				height: 100%;
+				position: relative;
+				font-size: 14px;
+				font-family: Noto Sans KR;
+				line-height: 1.15;
+				background-color: rgb(242, 242, 242);
+				margin: 0 auto;
+			}
+			a {
+				text-decoration: none;
+				color: #333333;
+			}
+			/* 본문 */
+			.main {
+				position: relative;
+				width: 1200px;
+				height: 100%;
+				margin: 0 auto;
+			}
+			/* 프로젝트 글 */
+			.contents {
+				position: relative;
+				width: 700px;
+				height: 100%;
+				margin: 80px auto 0 230px;
+				box-shadow: 1px 1px 3px 1px #e7e7e7;
+				float: left;
+			}
+			/* 글 쓰기 부분 */
+			.write {
+				border: 1px solid #dadbdb;
+				min-height: 270px;
+				box-sizing: border-box;
+				background: #fff;
+			}
+			.writemenu {
+				display: none;
+			}
+			.write .tabs {
+				display: none;
+			}
+			.tabslabel {
+				display: inline-block;
+				padding: 15px 26.1px;
+				font-weight: 600;
+				text-align: center;
+				color: #969696;
+				width: 118px;
+				font-size: 15px;
+			}
+			.write svg {
+				width: 20px;
+				height: 20px;
+				margin: -5px 10px -5px -5px;
+				stroke: #c0c0c0;
+				stroke-width: 3%;
+			}
+			#line {
+				border-top: 1px solid #dadbdb;
+			}
+			.tabslabel:hover {
+				cursor: pointer;
+			}
+			.textbody {
+				height: auto;
+				margin-top: 10px;
+				margin: 17px 25px;
+			}
+			.title {
+				width: 100%;
+				border-bottom: 1px solid #dadbdb;
+				padding-bottom: 8px;
+				margin-bottom: 12px;
+			}
+			.title_detail {
+				border: none;
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+				font-weight: 700;
+				font-family: Noto Sans KR;
+			}
+			.content_detail {
+				border: none;
+				width: 100%;
+				min-height: 65px;
+				font-size: 14px;
+				overflow-y: hidden;
+				font-family: Noto Sans KR;
+			}
+			.content_detail2 {
+				border: none;
+				width: 100%;
+				min-height: 69px;
+				font-size: 14px;
+				overflow-y: hidden;
+				font-family: Noto Sans KR;
+			}
+.content_detail:focus, .title_detail:focus {
+	outline: none;
+}
+			.textfooter {
+				height: 46px;
+				border-top: 1px solid #dadbdb;
+				/* border:1px solid red; */
+				padding: 10px 20px;
+				bottom: 0px;
+				width: 658px;
+				display: flex;
+				justify-content: space-between;
+				position: relative;
+			}
+			.textfooter_func {
+				width: 24px;
+				margin-right: 8px;
+				margin-left: 5px;
+				margin-top: 8px;
+			}
+			.textfooter_side {
+				display: flex;
+			}
+			.public {
+				min-width: 100px;
+				border: 1px solid #dfe0e4;
+				height: 36px;
+				line-height: 32px;
+				font-size: 12px;
+				color: #545557;
+				/* text-align: center; */
+				font-weight: 700;
+				background-color: #fff;
+				border-radius: 3px;
+				box-sizing: border-box;
+				font-family: Noto Sans KR;
+				position: relative;
+				cursor: pointer;
+			}
+			.public span {
+				margin-top: 0px;
+				margin-left: 3px;
+				position: absolute;
+			}
+			.public img {
+				width: 20px;
+				/* position:absolute; */
+				margin-right: 2px;
+				margin-top: 5px;
+				margin-left: 5px;
+			}
+			.public_admin {
+				min-width: 100px;
+				border: 1px solid #dfe0e4;
+				height: 36px;
+				line-height: 32px;
+				font-size: 12px;
+				color: #545557;
+				/* text-align: center; */
+				font-weight: 700;
+				background-color: #fff;
+				border-radius: 3px;
+				box-sizing: border-box;
+				font-family: Noto Sans KR;
+				position: relative;
+				cursor: pointer;
+			}
+			.public_admin span {
+				margin-top: 0px;
+				margin-left: 3px;
+				position: absolute;
+			}
+			.public_admin img {
+				width: 20px;
+				/* position:absolute; */
+				margin-right: 2px;
+				margin-top: 5px;
+				margin-left: 5px;
+			}
+			.public_setting {
+				position: absolute;
+				top: 50px;
+				right: -1px;
+				z-index: 1000;
+				width: 230px;
+				text-align: left;
+				border: 1px solid rgba(34, 35, 37, .2);
+				border-radius: 2px;
+				background: #fff;
+				box-shadow: 1px -1px 4px 0 rgba(0, 0, 0, .15);
+			}
+			.public_setting_title {
+				height: 29px;
+				line-height: 27px;
+				text-indent: 12px;
+				font-size: 12px;
+				color: #828385;
+				font-weight: 400;
+				border-bottom: 1px solid #dfe0e4;
+			}
+			.set_li {
+				position: relative;
+			}
+			.set_li:hover {
+				background-color: #f6f7f8;
+			}
+			.set_li_admin {
+				position: relative;
+			}
+			.set_li_admin:hover {
+				background-color: #f6f7f8;
+			}
+			.setimg {
+				width: 23px;
+				top: 14px;
+				left: 7px;
+				position: absolute;
+			}
+			.p_set_con strong {
+				display: block;
+				font-size: 12px;
+				color: #545557;
+			}
+			.p_set_con {
+				display: block;
+				padding: 10px 0 0 40px;
+				height: 55px;
+				font-size: 11px;
+				color: #828385;
+				box-sizing: border-box;
+				background-repeat: no-repeat;
+				background-position: 11px 14px;
+				cursor: pointer;
+			}
+			.writebtn {
+				width: 80px;
+				height: 36px;
+				background-color: #5A3673;
+				border-radius: 3px;
+				color: #e7e7e7;
+				border: none;
+				font-family: Noto Sans KR;
+				font-weight: 700;
+				vertical-align: middle;
+				margin-left: 5px;
+				font-size: 14px;
+			}
+			.tabs:checked+.tabslabel svg {
+				width: 20px;
+				height: 20px;
+				margin: -5px 10px -5px -5px;
+				stroke-width: 6%;
+				stroke: #F27781;
+			}
+			/*input 클릭시, label 스타일*/
+			.tabs:checked+.tabslabel {
+				color: #F27781;
+			}
+			#tab1:checked~#commonboard,
+			#tab2:checked~#task,
+			#tab3:checked~#schedule,
+			#tab4:checked~#todo {
+				display: block;
+			}
+			/* 글 작성 부분 */
+			.boardHeader {
+				height: 60px;
+				padding: 25px 12px 0 25px;
+			}
+			.writeInfo {
+				width: 200px;
+				height: 40px;
+				float: left;
+			}
+			.profileImg {
+				width: 40px;
+				float: left;
+				margin-right: 25px;
+			}
+			.writer {
+				height: 18px;
+				font-size: 14px;
+				font-weight: 700;
+				padding-top: 5px;
+			}
+			.writeDate {
+				font-size: 12px;
+				font-weight: 400;
+				padding-top: 5px;
+				color: #c0c0c0;
+			}
+			.option {
+				width: 60px;
+				height: 40px;
+				padding-top: 7px;
+				margin: 0;
+				float: right;
+			}
+			.fixNotice {
+				width: 18px;
+				margin-top: 3px;
+				margin-right: 20px;
+				float: left;
+			}
+			.editoption {
+				width: 5px;
+				height: 20px;
+				margin-top: 3px;
+			}
+			.editDropdown {
+				display: none;
+				width: 145px;
+				height: 65px;
+				border: 1px solid #e7e7e7;
+				box-sizing: border-box;
+				font-size: 12px;
+				float: right;
+				margin-top: 6px;
+			}
+			.editDropdown ul {
+				padding: 8px 0;
+			}
+			.editDropdown ul li {
+				padding: 6px 15px;
+			}
+			.boardResult {
+				width: 650px;
+				padding: 7px 25px;
+			}
+			.replyCount {
+				width: 650px;
+				height: 25px;
+				margin-top: 30px;
+				font-size: 12px;
+				color: #c0c0c0;
+				text-align: right;
+			}
+			.threeBtn {
+				width: 650px;
+				height: 40px;
+				line-height: 40px;
+				padding: 0 25px;
+				border-top: 1px solid #e7e7e7;
+			}
+			.threeBtn ul li {
+				float: left;
+			}
+			.threeBtn ul li a {
+				vertical-align: middle;
+				padding-right: 30px;
+				font-size: 12px;
+				font-weight: 700;
+				color: #787878;
+			}
+			/* 업무 리포트 */
+			.task-report-wrap {
+				position: relative;
+				width: 700px;
+				height: 100%;
+				box-shadow: 1px 1px 3px 1px #e7e7e7;
+				float: left;
+			}
+			#report-title {
+				font-size: 20px;
+				font-weight: bold;
+				text-align: center;
+				margin: 20px;
+			}
+			#taskChart {
+				width: 500px !important;
+				height: 250px !important;
+				margin: 0 auto;
+				padding-bottom: 15px;
+			}
+			/* 업무 css */
+			.task-radio {
+				display: none;
+				margin: 10px;
+			}
+			.task-radio+label {
+				display: inline-block;
+				margin: -5px;
+				padding: 8px;
+				background-color: #f5f5f5;
+				border: 1px solid #ccc;
+				font-size: 13px;
+				width: 70px;
+				text-align: center;
+				border-radius: 3px;
+				cursor: pointer;
+				color: #505050;
+			}
+			.task-radio-01:checked+label {
+				background-color: #F27781;
+				color: #fff;
+			}
+			.task-radio-02:checked+label {
+				background-color: #f17a19;
+				color: #fff;
+			}
+			.task-radio-03:checked+label {
+				background-color: #50b766;
+				color: #fff;
+			}
+			.task-radio-04:checked+label {
+				background-color: #4aaefb;
+				color: #fff;
+			}
+			#task-icon01 {
+				margin: 10px;
+			}
+			#task-01 {
+				display: inline-block;
+				height: 50px;
+				width: 600px;
+				border: none;
+				border-bottom: 1px solid #dadbdb;
+			}
+			.task-radio-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 10px;
+			}
+			.task-icon02 {
+				margin: 12px;
+			}
+			.task-02 {
+				display: inline-block;
+				height: 45px;
+				width: 600px;
+				border: none;
+				border-bottom: 1px solid #dadbdb;
+			}
+			.task-res-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 7px;
+			}
+			.task-res {
+				padding: 5px;
+				width: 150px;
+				height: 20px;
+				line-height: 25px;
+				border: 1px solid #e7e7e7;
+				border-radius: 5px;
+			}
+			.task-res-list {
+				padding: 5px;
+				width: 150px;
+				height: 20px;
+				line-height: 25px;
+				border: 1px solid #e7e7e7;
+				border-radius: 5px;
+				cursor: pointer;
+				text-align: center;
+				white-space:nowrap;
+			}
+			.task-res-add-wrap {
+				width: 162px;
+				height: 100px;
+				overflow: scroll;
+				display: none;
+				background-color: #fff;
+				border: 1px solid #787878;
+				border-radius: 5px;
+				z-index: 99;
+				position: absolute;
+				top: 33px;
+			}
+			.task-03 {
+				display: inline-block;
+				height: 45px;
+				width: 600px;
+				border: none;
+				border-bottom: 1px solid #dadbdb;
+				z-index: -2;
+			}
+			.task-start-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 7px;
+			}
+			.task-schedule {
+				padding: 5px;
+				width: 150px;
+				height: 20px;
+				line-height: 25px;
+				border: 1px solid #e7e7e7;
+				border-radius: 5px;
+			}
+			/* 업무 달성률 */
+			.task-04 {
+				display: inline-block;
+				height: 45px;
+				width: 600px;
+				border: none;
+				border-bottom: 1px solid #dadbdb;
+			}
+			.task-rate-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 15px;
+			}
+			.workPrgrs {
+				display: block;
+				margin-top: 6px;
+				margin-bottom: -3px;
+				padding-bottom: 3px;
+				height: 20px;
+			}
+			.workPrgrs_bg {
+				position: absolute;
+				width: 150px;
+				height: 14px;
+				border-radius: 3px;
+				background-color: #eaeaea;
+			}
+			.workPrgrs_bg .txt {
+				z-index: 1;
+				position: absolute;
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-size: 10px;
+				line-height: 14px;
+				color: #111;
+			}
+			.workPrgrs_bg .bar {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				border-radius: 3px;
+				background-color: #7099de;
+			}
+			.workPrgrs_bg .bar.percent0 {
+				right: 95%;
+			}
+			.pcnt0,
+			.pcnt100,
+			.pcnt20,
+			.pcnt40,
+			.pcnt60,
+			.pcnt80 {
+				z-index: 100;
+				display: inline-block;
+				position: absolute;
+				top: 0;
+				bottom: -10px;
+				width: 20%;
+			}
+			.workPrgrs_bg .pcnt button {
+				position: relative;
+				display: block;
+				width: 36px;
+				height: 23px;
+				line-height: 21px;
+				font-size: 11px;
+				color: #fff;
+				text-align: center;
+				border: 0;
+				background: 0 0;
+			}
+			.workPrgrs_bg .pcnt {
+				z-index: 1;
+				display: none;
+				position: absolute;
+				top: 20px;
+				left: 100%;
+				margin-left: -18px;
+				width: 36px;
+				height: 23px;
+				line-height: 21px;
+				border-radius: 3px;
+				background-color: rgba(0, 0, 0, .6);
+			}
+			.pcnt0 {
+				cursor: pointer;
+				display: inline-block;
+				z-index: 1000;
+				width: 5%;
+			}
+			.pcnt20 {
+				cursor: pointer;
+				display: inline-block;
+				z-index: 999;
+				left: 5%;
+			}
+			.pcnt40 {
+				cursor: pointer;
+				display: inline-block;
+				width: 40%;
+				z-index: 998;
+			}
+			.pcnt60 {
+				cursor: pointer;
+				display: inline-block;
+				width: 60%;
+				z-index: 997;
+			}
+			.pcnt80 {
+				cursor: pointer;
+				display: inline-block;
+				width: 80%;
+				z-index: 996;
+			}
+			.pcnt100 {
+				cursor: pointer;
+				display: inline-block;
+				width: 100%;
+				z-index: 995;
+			}
+			/* 업무 우선순위 */
+			.task-05 {
+				display: inline-block;
+				height: 45px;
+				width: 600px;
+				border: none;
+				border-bottom: 1px solid #dadbdb;
+				margin-bottom: 15px;
+			}
+			.task-pri {
+				width: 150px;
+				line-height: 25px;
+				border: 1px solid #e7e7e7;
+				border-radius: 5px;
+				background-color: none;
+			}
+			.task-pri-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 7px;
+			}
+			.task-pri-add-wrap {
+				width: 150px;
+				height: 90px;
+				display: none;
+				background-color: #fff;
+				border: 1px solid #787878;
+				border-radius: 5px;
+				z-index: 99;
+				position: absolute;
+				top: 33px;
+			}
+			/* 댓글 관련 */
+			.replyUpdateText {
+				display: none;
+			}
+			.replyUpdateBtn {
+				display: none;
+			}
+			.replyUpdate {
+				border: none;
+				background: none;
+				color: #432D73;
+				font-size: 12px;
+				font-family: Noto Sans KR;
+			}
+			.replyDelete {
+				border: none;
+				background: none;
+				color: #432D73;
+				font-size: 12px;
+				font-family: Noto Sans KR;
+			}
+			.replyUpdateBtn {
+				width: 80px;
+				height: 25px;
+				border-radius: 3px;
+				color: #5A3673;
+				font-size: 12px;
+				border: 1px solid #5A3673;
+				font-family: Noto Sans KR;
+			}
+			.replyUpdateText {
+				width: 500px;
+				height: 25px;
+				box-sizing: border-box;
+				vertical-align: middle;
+				border: 1px solid #c0c0c0;
+			}
+			/* 댓글 작성 부분 */
+			.reply {
+				width: 700px;
+				padding: 10px 0;
+				border-top: 1px solid #e7e7e7;
+			}
+			.replyMore {
+				background-color: white;
+				border: none;
+				font-size: 14px;
+				color: #5A3673;
+				padding: 10px 15px 20px 15px;
+			}
+			.defaultReply {
+				width: 670px;
+				margin: 0 15px;
+				padding-bottom: 10px;
+			}
+			.replayPfImg {
+				width: 34px;
+				margin-right: 20px;
+				float: left;
+			}
+			.replayPfImg2 {
+				width: 34px;
+				margin-right: 20px;
+				float: left;
+			}
+			.replyTitle {
+				height: 13px;
+				font-size: 13px;
+				font-weight: 700;
+				padding-right: 10px;
+			}
+			.replyDate {
+				font-size: 13px;
+				color: #c0c0c0;
+			}
+			.replyEdit {
+				float: right;
+			}
+			.replyEdit a {
+				color: #c0c0c0;
+				font-size: 12px;
+			}
+			#replyResult {
+				width: 643px;
+				margin-top: 5px;
+			}
+			.replyFrom {
+				margin: 10px 0 10px 15px;
+			}
+			.replyFrom input {
+				width: 550px;
+				height: 30px;
+				margin: 5px 5px 5px 0;
+				box-sizing: border-box;
+				vertical-align: middle;
+				border: 1px solid #c0c0c0;
+			}
+			#replyReg {
+				width: 60px;
+				height: 30px;
+				background-color: #5A3673;
+				border-radius: 3px;
+				color: #e7e7e7;
+				border: none;
+				font-family: Noto Sans KR;
+			}
+/* 혜림 일정 글 작성 css */
+        .schepeople,
+        .schedate {
+            width: 648px;
+            height: 38px;
+            border-bottom: 1px solid #dadbdb;
+            box-sizing: border-box;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        .schedate .d {
+            width: 120px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+            margin-right: 10px;
+        }
+        .schedate .t {
+            width: 80px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+        }
+        .schepeople img{
+          float: left;
+          padding-right : 10px;
+        }
+/* 참석자 모달 리스트 */
+        .sche-res-wrap{
+			position:absolute;
+			display:inline-block;
+			width: 600px;
+			height: 30px;
+            box-sizing: border-box;
+		}
+		.sche-res{
+			padding:5px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+		}
+		.sche-res-close{
+            border: 1px solid #e7e7e7;
+            background: white;
+            width: 27px;
+            height: 27px;
+            box-sizing: border-box;
+        }
+		.sche-res-append{
+            padding:5px;
+			width: 100px;
+			height: 15px;
+			line-height: 25px;
+			border: 1px solid #e7e7e7;
+			border-radius: 3px;
+        }
+		.sche-res-list{
+			width: 100px;
+			height: 20px;
+			line-height: 25px;
+			cursor: pointer;
+			padding-top : 5px;
+			text-align : center;
+		}
+		
+		.sche-res-add-wrap{
+			width: 110px;
+			height: 100px;
+        	display:none;
+			overflow: scroll;
+			background-color: #fff;
+			border: 1px solid #787878;
+			border-radius: 3px;
+			z-index: 999;
+		    position: absolute;
+   			top: 33px;
+		}
+		#schePname {
+            width: 135px;
+            height: 28px;
+            box-sizing: border-box;
+            border: 1px solid #dadbdb;
+        }
+/* 참석자 모달 리스트 끝 */	
+        .scheplace{
+            width: 648px;
+            border-bottom: 1px solid #dadbdb;
+            box-sizing: border-box;
+            padding-bottom: 10px;
+            margin-bottom: 17px;
+        }
+        #location{
+            width: 600px;
+            height: 28px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid #dadbdb;
+        }
+        .sche_icon{
+            width: 15px;
+            padding: 5px;
+            vertical-align: middle;
+        }
+        #map{
+            width: 93%;
+            height: 200px;
+            margin-left: 25px;
+        }
+        #aabbcc{
+        	width: 600px;
+            height: 28px;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid #dadbdb;
+            margin-left : 25px;
+            margin-bottom : 10px;
+        }
+        #calendaricon{
+            vertical-align: top;
+            padding-top: 0;
+        }
+        .schememo textarea{
+            width: 600px;
+        }
+/* 혜림 css : 일정 작성 부분 끝  */
+/* 혜림 css : 일정 글 결과화면 시작*/
+        .result_wrap{
+            width: 650px;
+            min-height: 151px;
+            background-color: #fafafa;
+            border: 1px solid #e7e7e7;
+        }
+        .rstart{
+            width: 80px;
+            height: 60px;
+            padding: 10px;
+            float: left;
+            text-align: center;
+            border-right: 1px solid #e7e7e7;
+            border-bottom: 1px solid #e7e7e7;
+        }
+        #month{
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        #day{
+            height: 30px;
+            line-height: 30px;
+            font-size: 30px;
+            letter-spacing: 5px;
+        }
+        .rtitle{
+            width:648px;
+            height: 40px;
+            
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .rtitle input{
+            width: 648px;
+            height: 38px;
+            box-sizing: border-box;
+            border: none;
+            padding-left: 10px;
+            background-color: #fafafa;
+        }
+        .rschedate{
+            width: 648px;
+            height: 40px;
+            line-height: 40px;
+            
+            padding-left: 10px;
+            border-bottom: 1px solid #e7e7e7;
+            box-sizing: border-box;
+        }
+        .rschedate input{
+            width: 120px;
+            height: 30px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #fafafa;
+            
+        }
+        .rschepeople {
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .rschepeople img{
+            float: left;
+        }
+        .attendeecount{
+            width: 200px;
+            height: 25px;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-left: 34px;
+        }
+        .attendee{
+            height: 35px;
+            line-height: 35px;
+            font-size: 14px;
+            margin-left: 34px;
+            float: left;
+        }
+        .open-button{
+            width: 100px;
+            height: 30px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid #e7e7e7;
+            background: none;
+            margin-right: 10px;
+            float: right;
+        }
+		/* 참석자 모달 변경 */
+		.layer {
+		    position: fixed;
+		    width: 40%;
+		    left: 50%;
+		    margin-left: -21%; /* half of width */
+		    height: 580px;
+		    top: 40%;
+		    margin-top: -150px; /* half of height */
+		    overflow: auto;
+		
+		    /* decoration */
+		    border: 1px solid #dadbdb;
+		    background-color: rgb(255, 255, 255);
+		    box-sizing: border-box;
+		}
+		@media (max-width: 600px) {
+		    .layer {
+		        width: 80%;
+		        margin-left: -40%;
+		    }
+		}
+		.hide {
+		    display: none;
+		}
+		
+        /* 참석자 변경 모달 */
+        /* #attendee-modal{
+            display: none;
+           	position: relative; 
+            height: 0;
+            width:100%;
+            float: left; 
+            z-index: 9999;
+        }
+        .attendee-modal-content{
+            position: relative;
+            width:550px;
+            height: 580px;
+            margin:100px auto;
+            background:#fefefe;
+        } */
+        .attendee-title{
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            font-size: 16px;  
+            background:#e7e7e7;
+        }
+        .attendee-search{
+            height: 35px;
+            padding: 10px 0;
+            background:#e7e7e7;
+            letter-spacing: -20px;
+        }
+        .attendee-search input{
+            width: 410px;
+            height: 35px;
+            margin-left: 20px;
+            margin-right: 0;
+            border: none;
+            box-sizing: border-box;  
+            vertical-align:bottom; 
+        }
+        .attendee-search button{
+            height: 35px;
+            margin: 0;
+            border: none;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .attendee-search img{
+            width: 23px;
+        }
+        /* 참석자 선택하면 추가되는 곳 */
+        .pick-attendee input{
+            width: 100px;
+            height: 35px;
+            margin-top: 8px;
+            margin-right: 8px;
+            background-color: #e7e7e7;
+            border: none;  
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: 700;
+        }
+        .attendee-people{
+            padding : 0 20px;
+        }
+        .pick-attendee{
+            padding-left: 10px;
+            height: 40px;
+            line-height: 45px;
+            margin-bottom: 18px;
+        }
+        .userlist_wrap{
+            height: 70px;
+            border-bottom: 1px solid #e7e7e7;   
+        }
+        .userlist_wrap img{
+            width: 40px;
+            height: 40px;
+            padding : 15px 20px 0 10px;
+        }
+        .userlist_wrap span{
+            height: 70px;
+            line-height: 70px;
+            font-weight: 700;
+            
+        }
+        .userlist_wrap .pick{
+            margin-top : 23px;
+            width: 60px;
+            height: 25px;
+            float: right;
+            border: 1px solid #e7e7e7;   
+            color : #a2a2a2; 
+        }
+        .edit-btn{
+            width: 100px;
+            height: 32px;
+            background-color: #5A3673;
+            color:#F2F2F2;
+            border : none;
+            border-radius: 3px;
+        }
+        .modal-btn{
+            padding-top: 17px;
+            text-align: center;
+        }
+        .attendee_modal-layer {
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.5);
+        }
+        /* 모달 끝 */
+        .rscheplace{
+            clear: both;
+            padding-left: 10px;
+        }
+        .rscheplace input{
+            width: 600px;
+            height: 30px;
+            font-size: 14px;
+            box-sizing: border-box;
+            border: none;
+            margin-left: 3px;
+            background-color: #fafafa;
+        }
+        .rschememo{
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .rschememo textarea{
+            width: 605px;
+            background-color: #fafafa;
+        }
+        /* 댓글 갯수  */
+        .replyCount {
+            width: 650px;
+            height: 25px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #c0c0c0;
+            text-align: right;
+        }
+		/* 좋아요 댓글 담아두기 버튼 */
+        .threeBtn {
+            width: 650px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 25px;
+            border-top: 1px solid #e7e7e7;
+        }
+        .threeBtn ul li {
+            float: left;
+        }
+        .threeBtn ul li a {
+            vertical-align: middle;
+            padding-right: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #787878;
+        }
+        /* 댓글 출력 부분 */
+        .reply {
+            width: 700px;
+            padding: 10px 0;
+            border-top: 1px solid #e7e7e7;
+        }
+        .replyMore {
+            background-color: #f2f2f2;
+            border: none;
+            font-size: 14px;
+            color: #5A3673;
+            padding: 10px 15px 20px 15px;
+        }
+        .defaultReply {
+            width: 670px;
+            margin: 0 15px;
+            padding-bottom: 10px;
+        }
+        .replayPfImg {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+        .replayPfImg2 {
+            width: 34px;
+            margin-right: 20px;
+            float: left;
+        }
+        .replyTitle {
+            height: 13px;
+            font-size: 13px;
+            font-weight: 700;
+            padding-right: 10px;
+        }
+        .replyschedate {
+            font-size: 13px;
+            color: #c0c0c0;
+        }
+        .replyEdit {
+            float: right;
+        }
+        .replyEdit a {
+            color: #c0c0c0;
+            font-size: 12px;
+        }
+        #replyResult {
+            width: 643px;
+            margin-top: 5px;
+        }
+		/* 댓글 입력 부분 */
+        .replyFrom {
+            margin: 10px 0 10px 15px;
+        }
+        .replyFrom input {
+            width: 550px;
+            height: 30px;
+            margin: 5px 5px 5px 0;
+            box-sizing: border-box;
+            vertical-align: middle;
+            border: 1px solid #c0c0c0;
+        }
+        #replyReg {
+            width: 60px;
+            height: 30px;
+            background-color: #5A3673;
+            border-radius: 3px;
+            color: #e7e7e7;
+            border: none;
+            font-family: Noto Sans KR;
+        }
+/* 혜림 css : 일정 글 결과화면 끝*/
+/* 윤진 :할일 글 입력창*/
+			.todoinput {
+				width: 100%;
+			}
+			li {
+				list-style: none;
+				border-bottom: 1px solid #e7e7e7;
+				padding: 5px 0;
+			}
+			/* 윤진 :할일 글 입력창 - 할일입력칸 / 아이콘설정 */
+			.todo-01 {
+				width: 20px !important;
+				height: 20px !important;
+				margin-left: 10px;
+			}
+			.todoicon {
+				width: 23px;
+				height: 23px;
+				cursor: pointer;
+				box-sizing: border-box;
+			}
+			.todo-01 {
+				box-sizing: border-box;
+			}
+			.todo-02 {
+				padding-left: 35px;
+				width: 79%;
+				height: 25px;
+				min-height: 0px;
+				line-height: 25px;
+				font-size: 14px;
+				border: none;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			.todo-03 {
+				display: none;
+				width: 43px;
+				border: none;
+				text-align: center;
+				font-weight: 600;
+				color: #333333;
+				transform: translateY(-9px);
+			}
+			.todo-04 {
+				margin-left: 17px;
+				transform: translateY(-6px);
+			}
+			.tdp-wrap {
+				position: absolute;
+				display: inline-block;
+				width: 350px;
+				height: 30px;
+				margin-left: 10px;
+				margin-top: 7px;
+			}
+			.tdp-list {
+				padding: 5px;
+				width: 150px;
+				height: 20px;
+				line-height: 25px;
+				border: 1px solid #e7e7e7;
+				border-radius: 5px;
+				cursor: pointer;
+				text-align: center;
+			}
+			.tdp-add-wrap {
+				width: 162px;
+				height: 100px;
+				overflow: scroll;
+				display: none;
+				background-color: #fff;
+				border: 1px solid #787878;
+				border-radius: 5px;
+				z-index: 999;
+				position: absolute;
+				top: 33px;
+			}
+			.todoaddbox {
+				margin: 15px 0;
+				cursor: pointer;
+			}
+			.todo-plus {
+				width: 15px;
+				height: 15px;
+				margin-left: 13px;
+				transform: translateY(2px);
+			}
+			.todoaddspan {
+				padding-left: 40px;
+				cursor: pointer;
+			}
+			/* 윤진 :할일 리스트*/
+			.todo-cont {
+				width: 95%;
+				position: relative;
+				padding: 15px 0 15px 0;
+				border: 1px solid #e5e6e9;
+				background-color: #fbfbfb;
+				margin: 0 auto;
+			}
+			.todo-title {
+				width: 90%;
+				padding: 30px 35px 0 30px;
+				margin-left: 15px;
+			}
+			.todo-list-per {
+				margin-right: 45px;
+				color: #505050;
+			}
+			.todo-list-ing {
+				color: #505050;
+			}
+			.todo-list-title {
+				display: inline-block;
+				width: 65%;
+				font-size: 16px;
+				font-weight: 700;
+				color: #333;
+				line-height: 18px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			.todo-cont-list {
+				padding: 30px;
+			}
+			.todo-cont-list li {
+				height: 40px;
+				clear: both;
+			}
+			/* 윤진 :체크박스 설정*/
+			/*unchecked */
+			.todo-cont-list input[type="checkbox"] {
+				display: none;
+				width: 10%;
+			}
+			.todo-cont-list input[type="checkbox"]+label {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				margin: 10px 10px 10px 25px;
+				vertical-align: middle;
+				background: url("${pageContext.request.contextPath}/resources/img/checked-2-01.png") left top no-repeat;
+				cursor: pointer;
+				background-size: cover;
+				float: left;
+			}
+			/*checked */
+			.todo-cont-list input[type="checkbox"]:checked+label {
+				background: url("${pageContext.request.contextPath}/resources/img/checked-2-02.png") top no-repeat;
+				background-size: cover;
+			}
+			/* 윤진 :할일 내용*/
+			.todo-06 {
+				padding-left: 20px;
+				width: 71%;
+				height: 25px;
+				min-height: 0px;
+				line-height: 25px;
+				font-size: 14px;
+				border: none;
+				margin: 10px 0;
+				box-sizing: border-box;
+				float: left;
+			}
+			/*할일 마감일*/
+			.todo-07 {
+				float: left;
+				margin: 0 20px;
+				line-height: 44px;
+			}
+			/*할일 담당자 */
+			.todo-08 {
+				width: 25px;
+				margin-top: 10px;
+			}
+/* 윤진 : 우측 바 */
+			.rightBar {
+				position:fixed;
+				width: 250px;
+				height: 100%;
+				margin: 80px 0 0 950px;
+				z-index: 99;
+			}
+			/* 윤진 : 이전화면 버튼 div*/
+			.rightBar #prevbtn {
+				width: 250px;
+				height: 60px;
+				font-size: 14px;
+				display: block;
+				margin-bottom: 8px;
+				line-height: 60px;
+				color: #333333;
+				font-weight: 700;
+				border-top: 1px solid #fff;
+				border-left: 1px solid #ececec;
+				border-right: 1px solid #ececec;
+				border-bottom: 1px solid #e0e0e0;
+				border-radius: 3px;
+				background-color: #fff;
+				box-sizing: border-box;
+			}
+			.rightBar #addmembtn {
+				width: 250px;
+				height: 60px;
+				font-size: 14px;
+				display: block;
+				margin-bottom: 8px;
+				line-height: 60px;
+				color: #ffffff;
+				font-weight: 700;
+				padding-left: 90px;
+				border-top: 1px solid #fff;
+				border-left: 1px solid #ececec;
+				border-right: 1px solid #ececec;
+				border-bottom: 1px solid #e0e0e0;
+				border-radius: 3px;
+				background-color: #f27781;
+				box-sizing: border-box;
+			}
+			.rightBar #addmembtn img {
+				width: 23px;
+				height: 23px;
+				cursor: pointer;
+				margin: 0 10px;
+				transform: translateY(5px);
+				box-sizing: border-box;
+			}
+			.rightBar #prevbtn>.prevsvg {
+				padding: 18px 0 0 30px;
+				float: left;
+				fill: #111111;
+			}
+			.rightBar>#rightbtns {
+				clear: both;
+				width: 250px;
+				height: 70px;
+				margin-bottom: 8px;
+				border-left: 1px solid #ececec;
+				border-right: 1px solid #ececec;
+				border-bottom: 1px solid #e0e0e0;
+				border-radius: 3px;
+				background-color: #fff;
+				text-align: center;
+				color: #505050;
+				font-weight: 500;
+			}
+			.rightBar>#rightbtns .rightbtn {
+				float: left;
+				width: 25%;
+				padding: 15px 0;
+			}
+			/*윤진 :우측 파일함,업무,일정,할일 아이콘 색,크기 통일*/
+			.rightsvg {
+				width: 23px;
+				fill: #444444;
+			}
+			/*윤진 : 채팅 div*/
+			#pjchat {
+				width: 250px;
+				height: 300px;
+				background-color: #fff;
+			}
+			#pjchat>#pjmembox {
+				height: 90%;
+				overflow: hidden;
+				padding: 10px 0;
+			}
+			/* 윤진 : scrollbar*/
+			/* 윤진 : width */
+			::-webkit-scrollbar {
+				width: 5px;
+			}
+			/* Track */
+			::-webkit-scrollbar-track {
+				background: #e7e7e7;
+			}
+			/* Handle */
+			::-webkit-scrollbar-thumb {
+				background: #a2a2a2;
+				border-radius: 10px;
+			}
+			/* Handle on hover */
+			::-webkit-scrollbar-thumb:hover {
+				background: #505050;
+			}
+			/* 윤진 :전체참여자*/
+			.allpj_title {
+				position: relative;
+				padding-top: 6px;
+				margin: 0 15px 10px 15px;
+				height: 20px;
+				font-size: 12px;
+				color: #343538;
+				font-weight: 700;
+			}
+			/*윤진 :전체보기 버튼*/
+			.allpjmem {
+				display: block;
+				position: absolute;
+				top: 5px;
+				right: 0;
+				font-size: 12px;
+				color: #676869;
+				font-weight: 400;
+			}
+			/* 윤진 :타이틀 : 관리자,내부참여자 */
+			.part-title {
+				font-size: 12px;
+				position: relative;
+				padding-top: 8px;
+				padding-bottom: 8px;
+				min-height: 12px;
+				margin: 0 15px;
+				border-top: 1px solid #e9eaed;
+			}
+			/* 윤진 :타이틀 : 프로젝트 멤버 리스트 */
+			#pjmemlist {
+				height: 80%;
+				overflow-x: hidden;
+			}
+			#pjchat>#pjmembox>#pjmemlist>ul>li {
+				position: relative;
+				width: 250px;
+				height: 50px;
+				padding: 8px 20px 8px 20px;
+				box-sizing: border-box;
+			}
+			/* 윤진 :프로필사진*/
+			.userimg {
+				z-index: 20;
+				position: relative;
+				top: 0;
+				left: 0;
+				width: 32px;
+				height: 32px;
+				content: "";
+				display: block;
+				border-radius: 32px;
+				float: left;
+				box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+			}
+			/* 윤진 :프로젝트 멤버 이름*/
+			.pjusername {
+				display: inline-block;
+				width: 160px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				margin: 0px 0 0 10px;
+				color: #969696;
+				vertical-align: middle;
+				margin-top: 7px;
+			}
+			/* 윤진 :우측 사이드 채팅 아이콘*/
+			.chatsvg {
+				position: absolute;
+				top: 11px;
+				right: 20px;
+				width: 25px;
+			}
+			#chatbtn-fill {
+				width: 18px;
+				margin-top: 10px;
+				transform: translateY(3px);
+			}
+			/* 윤진 :우측 하단 채팅 버튼*/
+			#pjchatbox {
+				width: 250px;
+				height: 45px;
+				position: relative;
+				line-height: 40px;
+				font-weight: 700;
+				font-size: 14px;
+				color: #333;
+				text-align: center;
+				border-top: 1px solid #d7d7d7;
+				border-bottom: 1px solid #d7d7d7;
+				border-radius: 0 0 0px 0px;
+				background-color: #fff;
+			}
+			#pjchatbox>.pjchatboxsvg {
+				position: absolute;
+				top: 11px;
+				right: 20px;
+				width: 25px;
+			}
+			
+			
+			/* 초대하기 모달 */
+			.invite-dim{
+				display:none;
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background: rgba(0, 0, 0, 0.5);
+			    z-index:90;
+			    
+			}
+			
+			.invite-search-wrap{
+				display:none;
+				position: relative;
+			    width: 500px;
+			    height: 580px;
+			    margin: 100px auto;
+			    background: #fefefe;
+			    border:1px solid #fff;
+			    z-index:95;
+			    overflow: scroll;
+			}
+			
+			.invite-title{
+				width:550px;
+			    height: 45px;
+			    line-height: 45px;
+			    text-align: center;
+			    font-size: 16px;
+			    background: #e7e7e7;
+			
+			}
+			.invite-search-box {
+            margin: 10px 12px;
+            height: 32px;
+            width: 480px;
+            line-height: 32px !important;
+            border: 1px solid #e7e7e7;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .chat-search-input {
+            border: none;
+            width: 400px;
+            line-height: 25px;
+            padding-left: 10px;
+        }
+
+        .chat-search {
+            padding-top: 12px;
+            margin-top: 10px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+ 
+        .chat-invite-top {
+            width: 500px;
+            height: 65px;
+            background-color:#e7e7e7;
+            margin:0 auto;
+        }
+
+        .chat-invite-wrap {
+        	position:relative;
+        	width:500px;
+            line-height: 60px;
+            color: #333333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .inviteList-table tbody{
+        	text-align: center;
+        }
+
+
+        .invite-exit{
+            float: right;
+            margin: 20px;
+            width: 25px;
+            height: 25px;
+        }
+
+        .invite-search{
+            padding-left:10px;
+        }
+
+        .invite-rs{
+            line-height: 40px;
+            height: 400px;
+            overflow: scroll;
+        }
+        .invite-my-img{
+	        line-height: 68px;
+	        width: 100px;
+	        display:inline-block;
+	        float:right;
+        }
+        .invite-names{
+	        width: 400px;
+	        height:50px;
+	        line-height:20px;
+	        padding-top:15px;
+	        display:inline-block;
+        }
+        .invite-name{
+        	font-size:13px;
+        	color:#333333;
+        	font-weight: bold;
+        	padding-left:20px;
+        
+        }
+        .invite-email{
+        	font-size:10px;
+        	color:#787878;
+        }
+        .invite-check-wrap{
+	        line-height: 50px;
+	        width: 30px;
+	        display:inline-block;
+	        float:right;
+	        text-align: right;
+	        padding-top:5px;
+	    }
+	    
+	    .invite-check{
+	        border-radius: 70%;
+		    border: 1px solid #bebebe;
+		    width: 15px;
+		    height: 15px;
+		    cursor: pointer;
+        
+        }
+			
+        .invite-img-file{
+      		width: 30px;
+      		height: 30px;
+      		border-radius:15px !important;
+        }
+        .invite-img{
+        	padding-left:20px;
+        	vertical-align: middle;
+        }
+        .invite-imgs{
+       	    border-radius: 90px;
+    		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+        }
+      
+        .tel-other{
+           vertical-align: middle;
+        }
+        .submit-wrap{
+            padding: 10px 0;
+		    border-top-color: #e8e8e8;
+		    border-top-width: 1px;
+		    border-top-style: solid;
+		    position: absolute ;
+		    text-align: center;
+		    bottom:0px;
+		    background-color: #fff;
+		    height :40px;
+		    width: 500px;
+		    vertical-align: middle;
+        }
+        .resetbtn{
+        	width: 100px;
+        	height: 40px;
+        	border: 1px solid #432D73;
+        	color:#432D73;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #fff;
+        }
+        .submitbtn{
+            width: 150px;
+        	height: 40px;
+        	border: 1px solid #fff;
+        	color:#fff;
+        	font-size:12px;
+        	border-radius: 3px;
+        	background: #432D73;
+        	margin-left:5px;
+        }
+        .inviteList-table tr:last-child td{
+        	margin-bottom:100px;
+        	background-color: black;
+        	display:none;
+        }
+        /* 파일 css */
+            .imgsrc{
+            width:150px;
+            height:150px;
+            }
+            .uploadedFileList,
+            .uploadedFileList_task,
+            .uploadedFileList-real{
+            display:flex;
+            flex-wrap: wrap;
+      		}	
+         	.uploadedFileList li,
+            .uploadedFileList_task li,
+            .uploadedFileList-real li{
+            width:150px;
+            overflow:hidden;
+            margin-right:7px;
+            }
+            .boardimg img,
+            .boardimg-real img{
+            border:1px solid #e7e7e7;
+            box-sizing:border-box;
+            width:150px;
+            height:150px;
+            }
+        /* 윤진 :할일 리스트*/
+.todo-cont {
+    width: 95%;
+    position: relative;
+    padding: 15px 0 15px 0;
+    border: 1px solid #e5e6e9;
+    background-color: #fbfbfb;
+    margin: 0 auto;
+}
+.todo-title{
+    width: 90%;
+    padding: 30px 35px 0 30px;
+    margin-left: 15px;
+}
+.todo-list-per{
+    margin-right: 45px;
+    color: #505050;
+}
+.todo-list-ing{
+    color: #505050;
+}
+.todo-list-title{
+    display: inline-block;
+    width: 65%;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.todo-cont-list{
+    padding: 30px;
+}
+.todo-cont-list li{
+    height: 40px;
+    clear: both;
+}
+/* 윤진 :체크박스 설정*/
+/*unchecked */
+.todo-cont-list input[type="checkbox"] {
+    display: none;
+    width:10%;
+}
+
+.todo-cont-list input[type="checkbox"]+label{
+    display: inline-block;
+    width: 20px; 
+    height: 20px;
+    margin: 10px 10px 10px 25px;
+    vertical-align: middle;
+    background: url(${pageContext.request.contextPath}/resources/img/checked-2-01.png) left top no-repeat;
+    cursor: pointer;
+    background-size: cover;
+    float: left;
+}
+/*checked */
+.todo-cont-list input[type="checkbox"]:checked+label {
+    background: url(${pageContext.request.contextPath}/resources/img/checked-2-02.png) top no-repeat;
+    background-size: cover;
+}
+/* 윤진 :할일 내용*/
+.todo-06{
+    padding-left: 20px;
+    width: 71%;
+    height: 25px;
+    min-height: 0px;
+    line-height: 25px;
+    font-size: 14px;
+    border: none;
+    margin: 10px 0;
+    box-sizing: border-box;
+    float:left;
+}
+/*할일 마감일*/
+.todo-07{
+   float: left;
+   margin: 0 10px;
+   line-height: 44px;
+   font-weight: 700;
+   background-color: tran;
+}
+
+.tddate{
+	border: none;
+	width: 45px;
+	text-align: center;
+}
+/*할일 담당자 */
+.todo-08{
+    width: 25px;
+    margin-top:10px;
+}
