@@ -12,6 +12,7 @@
 	<result property="rdate" column="rdate" />
 	<result property="rdesc" column="rdesc" />
 	<result property="uname" column="uname" />
+	<result property="rcount" column="rcount" />
 	</resultMap>
 	
 	<!-- 댓글 추가 -->
@@ -30,6 +31,15 @@
 		on r.uno = u.uno
 		where pno=#{pno}
 		order by rdate desc
+		 ]]>
+	</select>
+	
+	<!-- 해당 프로젝트 글번호, 댓글 카운트 -->
+	<select id="ReplyCount" resultMap="resultReply">
+	 <![CDATA[
+			select bno,count(*) as rcount from reply 
+			where pno=#{pno}
+			group by bno
 		 ]]>
 	</select>
 	

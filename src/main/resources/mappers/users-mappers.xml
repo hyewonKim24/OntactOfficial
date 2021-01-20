@@ -27,6 +27,7 @@
 	<resultMap type="ProjectMemberDto" id="resultProjectMember">
 		<id property="pno" column="pno" />
 		<result property="uno" column="uno" />
+		<result property="ufilepath" column="ufilepath" />
 		<result property="padmin" column="padmin" />
 		<result property="uname" column="uname" />
 	</resultMap>	
@@ -173,7 +174,7 @@
 	<!--  해당 프로젝트 유저 list 출력-->
 	<select id="listProjectMember" resultType="arraylist" resultMap="resultProjectMember">
 	 	<![CDATA[
-		select u.uname, u.uno, u.uemail, pm.padmin, p.pname 
+		select u.uname, u.uno, u.uemail, u.ufilepath, pm.padmin, p.pname 
 		from users u
     	inner join project_member pm
     	on pm.uno=u.uno

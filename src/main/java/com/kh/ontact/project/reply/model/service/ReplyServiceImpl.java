@@ -35,4 +35,10 @@ public class ReplyServiceImpl implements ReplyService{
 		return rpDao.updateReply(dto);
 	}
 
+	@Override
+	public List<ReplyDto> ReplyCount(String pno) throws Exception {
+		return rpDao.ReplyCount(pno);
+	}
+
+
 }

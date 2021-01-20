@@ -26,5 +26,5 @@ public class ReplyDto {
 	private Date rdate;
 	private String rdesc;
 	private String uname;
-
+	private int rcount;
 }

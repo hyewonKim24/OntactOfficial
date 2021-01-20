@@ -19,6 +19,9 @@ public class ReplyDao {
 	public List<ReplyDto> ListReply(String pno) throws Exception{
 		return sqlSession.selectList("Reply.ListReply", pno);
 	}
+	public List<ReplyDto> ReplyCount(String pno) throws Exception{
+		return sqlSession.selectList("Reply.ReplyCount",pno);
+	}
 	public int deleteReply(String rno) throws Exception{
 		return sqlSession.delete("Reply.deleteReply", rno);
 	}

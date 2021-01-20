@@ -276,14 +276,45 @@ body {
 </style>
 <script>
 	//div 랜덤 배경색
-	/* window.onload = function () {
+		$(document).ready(function() {
 		function backgroundColor() { // div 랜덤 배경색
 		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
 		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
 		    var color = backgroundColor[randome];
 		    return color;
 		};
-		$.each(listpj, function(index, listpj) {
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/project/listajax",
+			success: function (object) {
+				$('.pj_board_list').html('');
+				
+				console.log("ajax:" + object + "성공");
+				for(var i=0 in object){
+				var color = backgroundColor();
+				var print ="<a href='${pageContext.request.contextPath}/project/projectDetail?pno="+ object[i].pno+"'>";
+				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
+				print += " <div>"+object[i].pname+"</div>";
+				print += " <div class='pj_team_list'>";
+				if(object[i].pjteam !=undefined){
+					print += " <div>" +object[i].pjteam+"</div>";
+				}
+				print += "</div><div> <span>"+object[i].pjmembercnt+"</span> <span>명 참여중</span></div>";
+				if(object[i].popen==0){
+					print += "<span> <img src='${pageContext.request.contextPath}/resources/img/locked-4-white.png' class='lock_1'></span>";
+				}
+				print += "</div></a>";
+				$(".pj_board_list").append(print);
+			}//for문 끝
+				
+			},
+			error: function () {
+				console.log("list 불러오기 실패");
+			}
+		});
+		
+		
+		/* $.each(listpj, function(index, listpj) {
             var color = backgroundColor();
             var proDiv = '';
             
@@ -294,7 +325,8 @@ body {
             proDiv += '<div class="proDiv-star"><i class="far fa-star"></i></div>'
             proDiv += '</div>'
             $('.pj_box').prepend(proDiv);
-        });  */
+        }); */  
+        });  
 	
 	//<div id="pj_project" class="pj_box">
 	
@@ -427,7 +459,7 @@ body {
 					<c:if test="${empty listpj}">
 					</c:if> -->
 					<!-- 프로젝트가 있는 경우 -->
-					<c:if test="${!empty listpj}">
+					<%-- <c:if test="${!empty listpj}">
 						<c:forEach var="listpj" items="${listpj}" varStatus="status">
 							<!-- project Detail -->
 							<a href="${pageContext.request.contextPath}/project/projectDetail?pno=${listpj.pno}">
@@ -446,7 +478,7 @@ body {
 								</div>
 							</a>
 						</c:forEach>
-					</c:if>
+					</c:if> --%>
 				</div>
 			</div>
 		</div>

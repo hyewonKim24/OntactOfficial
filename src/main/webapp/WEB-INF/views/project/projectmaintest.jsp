@@ -1461,7 +1461,7 @@
 				width: 250px;
 				height: 100%;
 				margin: 80px 0 0 950px;
-				z-index: 99;
+				z-index: 89;
 			}
 			/* 윤진 : 이전화면 버튼 div*/
 			.rightBar #prevbtn {
@@ -1682,15 +1682,19 @@
 			}
 			
 			.invite-search-wrap{
-				display:none;
-				position: relative;
+				position: fixed;
 			    width: 500px;
+			    left: 50%;
+			    margin-left: -21%;
 			    height: 580px;
-			    margin: 100px auto;
-			    background: #fefefe;
-			    border:1px solid #fff;
-			    z-index:95;
-			    overflow: scroll;
+			    top: 40%;
+			    margin-top: -150px;
+			    overflow: auto;
+			    border: 1px solid #dadbdb;
+			    background-color: rgb(255, 255, 255);
+			    box-sizing: border-box;
+			    display:none;
+			    z-index:99;
 			}
 			
 			.invite-title{
@@ -1769,7 +1773,7 @@
 	        float:right;
         }
         .invite-names{
-	        width: 400px;
+	        width: 380px;
 	        height:50px;
 	        line-height:20px;
 	        padding-top:15px;
@@ -1792,7 +1796,8 @@
 	        display:inline-block;
 	        float:right;
 	        text-align: right;
-	        padding-top:5px;
+	        padding-top:8px;
+	        padding-right:20px;
 	    }
 	    
 	    .invite-check{
@@ -1852,11 +1857,6 @@
         	border-radius: 3px;
         	background: #432D73;
         	margin-left:5px;
-        }
-        .inviteList-table tr:last-child td{
-        	margin-bottom:100px;
-        	background-color: black;
-        	display:none;
         }
         /* 파일 css */
             .imgsrc{
@@ -3616,7 +3616,13 @@
                        			</div>
                        			<!-- 여기까지 -->
 							</div>
-							<div class="replyCount">댓글 10개</div>
+							
+							<!-- 댓글 갯수 출력 -->
+							<c:forEach items="${rclist}" var="clist" varStatus="i">
+								<c:if test="${clist.bno eq tlist.bno}">
+										<div class="replyCount">댓글 <span class="rcount">${clist.rcount}</span>개</div>
+								</c:if>
+							</c:forEach>
 							<div class="threeBtn">
 								<ul>
 									<li>
@@ -3639,8 +3645,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-
+							</div>
+							
+							
 						<div class="reply">
 							<!--  <button class="replyMore">이전 댓글 더보기</button> -->
 							<br>
@@ -3726,8 +3733,11 @@
 										//댓글 삭제
 										$(".replyDelete").click(function () {
 											var parent = $(this).parent();
+											var parents = $(this).closest('');
 											var parentDiv = parent.parent();
 											var rno = parentDiv.find(".rno").val();
+											var rcount = parents.find(".rcount").val();
+											console.log("댓글개수"+rcount);
 											$.ajax({
 												url: "${pageContext.request.contextPath}/project/replydelete",
 												data: {
@@ -3736,6 +3746,7 @@
 												dataType: "json",
 												success: function (data) {
 													parentDiv.remove();
+													console.log("댓글개수"+rcount);
 												},
 												error: function () {
 													console.log("삭제 실패");
@@ -3889,60 +3900,55 @@
 					<div id="pjmembox">
 						<div class="allpj_title">
 							전체참여자
-							<span>5명</span>
-							<a href="#" class="allpjmem">전체보기</a>
+							<span>${userListSize}명</span>
 						</div>
 						<div class="part-title">관리자&nbsp;(1)</div>
-						<div id="pjmemlist">
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">김혜원</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
-							<div class="part-title">내부참여자&nbsp;(4)</div>
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">이윤진</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
-							<ul>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">이혜림</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">오은실</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-								<li class="btnhover">
-									<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="userimg" width="32px">
-									<span class="pjusername">김봉영</span>
-									<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/img/chat-04.png"
-											class="chatsvg"></a>
-								</li>
-							</ul>
+							<div id="pjmemlist">
+								<c:forEach items="${userlist }" var="ulist">
+									<c:if test="${ulist.padmin eq 1}">
+										<ul>
+											<li class="btnhover">
+												<c:if test="${empty ulist.ufilepath}">
+												<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+													class="userimg" width="32px">
+												</c:if>
+												<c:if test="${not empty ulist.ufilepath}">
+												<img src="${ulist.ufilepath}" class="userimg" width="32px">
+												</c:if>
+												<span class="pjusername">${ulist.uname}</span>
+												<!-- 개인채팅방 -->
+												<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${ulist.uno}&chatuname=${ulist.uname}" onclick="window.open(this.href, '', 'width=470, height=650'); return false;"> 
+												<img src="${pageContext.request.contextPath}/resources/img/chat-04.png" class="chatsvg"></a>
+											</li>
+										</ul>
+									</c:if>
+								</c:forEach>
+								
+								
+								<div class="part-title">내부참여자&nbsp;(${userSize})</div>
+								
+								<c:forEach items="${userlist }" var="ulist">
+									<c:if test="${ulist.padmin eq 0}">
+										<ul>
+											<li class="btnhover">
+												<c:if test="${empty ulist.ufilepath}">
+												<img src="${pageContext.request.contextPath}/resources/img/user-3.png"
+													class="userimg" width="32px">
+												</c:if>
+												<c:if test="${not empty ulist.ufilepath}">
+												<img src="${ulist.ufilepath}" class="userimg" width="32px">
+												</c:if>
+												<span class="pjusername">${ulist.uname}</span>
+												<!-- 개인채팅방 -->
+												<a href="${pageContext.request.contextPath}/chat/chatroom?chatuno=${ulist.uno}&chatuname=${ulist.uname}" onclick="window.open(this.href, '', 'width=470, height=650'); return false;"> 
+												<img src="${pageContext.request.contextPath}/resources/img/chat-04.png" class="chatsvg"></a>
+											</li>
+										</ul>
+									</c:if>
+								</c:forEach>
+							
+							</div>
 						</div>
-					</div>
 					<a href="${pageContext.request.contextPath}/chat/projectchat?pno=${pno}"
 						onClick="window.open(this.href,'', 'width=470, height=650'); return false;">
 						<div id="pjchatbox">

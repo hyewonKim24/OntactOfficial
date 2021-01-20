@@ -42,10 +42,10 @@
 	<result property="rdesc" column="rdesc" />
 	</resultMap>
 	
-	<!-- boardAll 추가 -->
+	<!-- 혜원 : boardAll 추가 -->
 	<insert id="insertBoardAllTask">
 	 <![CDATA[
-	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},'2','0',sysdate)
+	 	insert into boardall values (bno_se.nextval, #{pno} ,#{uno},#{bname},#{bopen},#{btype},'0',sysdate)
 		]]>
 	</insert>
 	

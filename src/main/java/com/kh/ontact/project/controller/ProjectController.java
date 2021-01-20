@@ -151,4 +151,24 @@ public class ProjectController {
 			return "redirect:list";
 		}
 	}
+	
+	
+	
+	//프로젝트 list 뿌리는 ajax
+	@RequestMapping(value = "/project/listajax")
+	@ResponseBody
+	public List<ProjectDto> listajax(Authentication authentication) {
+		List<ProjectDto> listpj = new ArrayList<ProjectDto>();
+		try {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String uno = userdetail.getUno();
+			System.out.println("내 uno" + uno);
+			listpj= pjService.selectListProject(uno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+			return listpj;
+	}
+	
+	
 }
