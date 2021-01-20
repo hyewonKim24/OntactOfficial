@@ -660,6 +660,16 @@
 		            let check = $("input[name=fname]:checked");
 		            $(check).each(function (index) {
 		                let fname = $(this).val();
+		                if(fname.substr(12,2)==="s_"){
+			                let s = fname.indexOf("s_");
+			                let after = fname.indexOf("-");
+			                if(s<after){
+			                	let first = fname.slice(0,s);
+			                	let second = fname.slice(s+2, fname.length);
+			                	fname = first+second;
+			                	console.log(fname);
+			                }
+		                }
 		                setTimeout(function () {
 		                    window.location = "${pageContext.request.contextPath}/files/download?fileName=" + fname;
 		                }, interval * (index + 1));

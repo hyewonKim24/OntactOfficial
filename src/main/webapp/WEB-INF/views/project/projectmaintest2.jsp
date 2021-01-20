@@ -3639,7 +3639,6 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 
 	  //게시글 저장 버튼 클릭 이벤트 처리
 	  $("#writebtn").click(function (event) {
-	  	console.log("드러옴");
 	      //event.preventDefault();
 	      var that = $(this);
 	      filesSubmit(that);

@@ -86,7 +86,6 @@ public class UploadFileUtils {
 	// 파일 다운을 위한 HttpHeader 설정
 	public static HttpHeaders downHttpHeaders(String fileName) throws Exception {
 		HttpHeaders httpHeaders = new HttpHeaders();
-
 		fileName = fileName.substring(fileName.indexOf("_") + 1); // UUID 제거
 		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
 		// 파일명 한글 인코딩처리

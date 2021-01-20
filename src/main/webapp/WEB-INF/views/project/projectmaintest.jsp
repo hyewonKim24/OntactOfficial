@@ -1993,36 +1993,38 @@
 						                </a>
 						            </div>
 						            <div class="textfooter_side">
-						                <div class="public">
-						                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-						                        &#9660;</span>
+						            	<div class="footerwrap">
+							                <div class="public">
+							                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_admin" style="display: none;">
+							                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_setting" style="display: none;">
+							                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+							                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+							                    <ul>
+							                        <li class="set_li">
+							                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>전체공개</strong>
+							                                <span>전체 사람들에게 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                        <li class="set_li_admin">
+							                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>관리자만</strong>
+							                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                    </ul>
+							                </div>
 						                </div>
-						                <div class="public_admin" style="display: none;">
-						                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-						                        &#9660;</span>
-						                </div>
-						                <div class="public_setting" style="display: none;">
-						                    <h1 class="public_setting_title">게시물 공개 대상</h1>
-						                    <input type="hidden" id="taskopen" name="bopen" value="0" />
-						                    <ul>
-						                        <li class="set_li">
-						                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
-						                            <div class="p_set_con">
-						                                <strong>전체공개</strong>
-						                                <span>전체 사람들에게 공개됩니다.</span>
-						                            </div>
-						                        </li>
-						                        <li class="set_li_admin">
-						                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
-						                            <div class="p_set_con">
-						                                <strong>관리자만</strong>
-						                                <span>프로젝트 관리자에게만 공개됩니다.</span>
-						                            </div>
-						                        </li>
-						                    </ul>
-						                </div>
-						            </div>
 						            <button type="submit" id="writebtn" class="writebtn">올리기</button>
+						            </div>
 						        </div>
 						    </form>
 						</div>
@@ -2180,39 +2182,36 @@
 		                                    </a>
 										</div>
 										<div class="textfooter_side">
-											<div class="public">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-													&#9660;</span>
-											</div>
-											<div class="public_admin" style="display: none;">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-													&#9660;</span>
-											</div>
-											<div class="public_setting" style="display: none;">
-												<h1 class="public_setting_title">게시물 공개 대상</h1>
-												<input type="hidden" id="taskopen" name="taskopen"
-													value="0" />
-												<ul>
-													<li class="set_li">
-														<img src="${pageContext.request.contextPath}/resources/img/worldwide.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>전체공개</strong>
-															<span>전체 사람들에게 공개됩니다.</span>
-														</div>
-													</li>
-													<li class="set_li_admin">
-														<img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>관리자만</strong>
-															<span>프로젝트 관리자에게만 공개됩니다.</span>
-														</div>
-													</li>
-												</ul>
-											</div>
+											<div class="footerwrap">
+								                <div class="public">
+								                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_admin" style="display: none;">
+								                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_setting" style="display: none;">
+								                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+								                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+								                    <ul>
+								                        <li class="set_li">
+								                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>전체공개</strong>
+								                                <span>전체 사람들에게 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                        <li class="set_li_admin">
+								                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>관리자만</strong>
+								                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                    </ul>
+								                </div>
+						                	</div>
 											<button type="button" class="writebtn" id="writetask"
 												onclick="taskSubmit()">올리기</button>
 										</div>
@@ -2404,36 +2403,38 @@
                                 <a href=""><img src="${pageContext.request.contextPath}/resources/img/picture-2.png" class="textfooter_func"></a>
                             </div>
                             <div class="textfooter_side">
-                                <div class="public">
-                                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-                                        &#9660;</span>
-                                </div>
-                                <div class="public_admin" style="display: none;">
-                                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-                                        &#9660;</span>
-                                </div>
-                                <div class="public_setting" style="display: none;">
-                                    <h1 class="public_setting_title">게시물 공개 대상</h1>
-                                    <input type="hidden" id="taskopen" name="bopen" value="0" />
-                                    <ul>
-                                        <li class="set_li">
-                                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
-                                            <div class="p_set_con">
-                                                <strong>전체공개</strong>
-                                                <span>전체 사람들에게 공개됩니다.</span>
-                                            </div>
-                                        </li>
-                                        <li class="set_li_admin">
-                                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
-                                            <div class="p_set_con">
-                                                <strong>관리자만</strong>
-                                                <span>프로젝트 관리자에게만 공개됩니다.</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                                <div class="footerwrap">
+							               	<div class="public">
+							                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_admin" style="display: none;">
+							                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+							                        &#9660;</span>
+							                </div>
+							                <div class="public_setting" style="display: none;">
+							                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+							                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+							                    <ul>
+							                        <li class="set_li">
+							                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>전체공개</strong>
+							                                <span>전체 사람들에게 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                        <li class="set_li_admin">
+							                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+							                            <div class="p_set_con">
+							                                <strong>관리자만</strong>
+							                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+							                            </div>
+							                        </li>
+							                    </ul>
+							                </div>
+						                </div>
                            <button class="writebtn" onclick="insertSchedule()">올리기</button>
+                            </div>
                         </div>
                         </form>
                     </div>
@@ -2678,41 +2679,39 @@
 													class="textfooter_func"></a>
 										</div>
 										<div class="textfooter_side">
-											<input type="hidden" id="bopen" name="bopen" value="0" />
-											<div class="public">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
-													&#9660;</span>
-											</div>
-											<div class="public_admin" style="display: none;">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
-													&#9660;</span>
-											</div>
-											<div class="public_setting" style="display: none;">
-												<h1 class="public_setting_title">게시물 공개 대상</h1>
-												<ul>
-													<li class="set_li"><img
-															src="${pageContext.request.contextPath}/resources/img/worldwide.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>전체공개</strong> <span>전체 사람들에게
-																공개됩니다.</span>
-														</div>
-													</li>
-													<li class="set_li_admin"><img
-															src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"
-															class="setimg">
-														<div class="p_set_con">
-															<strong>관리자만</strong> <span>프로젝트 관리자에게만
-																공개됩니다.</span>
-														</div>
-													</li>
-												</ul>
-											</div>
-											<button type="button" class="writebtn"
+											<div class="footerwrap">
+								                <div class="public">
+								                    <img src="${pageContext.request.contextPath}/resources/img/worldwide.png"><span>전체공개
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_admin" style="display: none;">
+								                    <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png"><span>관리자만
+								                        &#9660;</span>
+								                </div>
+								                <div class="public_setting" style="display: none;">
+								                    <h1 class="public_setting_title">게시물 공개 대상</h1>
+								                    <input type="hidden" class="taskopen" name="bopen" value="0" />
+								                    <ul>
+								                        <li class="set_li">
+								                            <img src="${pageContext.request.contextPath}/resources/img/worldwide.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>전체공개</strong>
+								                                <span>전체 사람들에게 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                        <li class="set_li_admin">
+								                            <img src="${pageContext.request.contextPath}/resources/img/unlocked-1.png" class="setimg">
+								                            <div class="p_set_con">
+								                                <strong>관리자만</strong>
+								                                <span>프로젝트 관리자에게만 공개됩니다.</span>
+								                            </div>
+								                        </li>
+								                    </ul>
+								                </div>
+						                </div>
+										<button type="button" class="writebtn"
 												onclick="todoSubmit()">올리기</button>
-										</div>
+									  </div>
 									</div>
 								</form>
 							</div>
@@ -2834,21 +2833,6 @@
 									} */
 								});
 								//윤진 : 할일 insert
-								//게시글 작성 공개여부 설정
-								$(".textfooter_side").on("click", function (e) {
-									e.preventDefault();
-									$(".public_setting").toggle();
-									$('.set_li').on('click', function () {
-										$(".public").show();
-										$(".public_admin").hide();
-										$("#bopen").val("0");
-									});
-									$('.set_li_admin').on('click', function () {
-										$(".public").hide();
-										$(".public_admin").show();
-										$("#bopen").val("1");
-									});
-								})
 								//글작성 버튼 submit
 								function todoSubmit() {
 									var frm = document.todo_frm;
@@ -4189,25 +4173,20 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		
 		<script>
 			//게시글 작성 공개여부 설정
-			$(".textfooter_side").on("click", function (e) {
+			$(".footerwrap").on("click", function (e) {
 				e.preventDefault();
-				$(".public_setting").toggle();
-				// if($('#pub_dropdown').data('clicked',true)){
-				//     $("#pub").show();
-				//     $("#admin").hide();
-				// } else if($('#admin_dropdown').data('clicked',true)){
-				//     $("#pub").show();
-				//     $("#admin").hide();
-				// }
-				$('.set_li').on('click', function () {
-					$(".public").show();
-					$(".public_admin").hide();
-					$("#taskopen").val("0");
+				let parent = $(this);
+				parent.find(".public_setting").toggle();
+
+				parent.find('.set_li').on('click', function () {
+					parent.find(".public").show();
+					parent.find(".public_admin").hide();
+					parent.find(".taskopen").val("0");
 				});
-				$('.set_li_admin').on('click', function () {
-					$(".public").hide();
-					$(".public_admin").show();
-					$("#taskopen").val("1");
+				parent.find('.set_li_admin').on('click', function () {
+				 	parent.find(".public").hide();
+				 	parent.find(".public_admin").show();
+				 	parent.find(".taskopen").val("1");
 				});
 			})
 			//게시글 작성 상자 늘어나기
