@@ -1782,7 +1782,6 @@ $(".list_delbtn").off().on("click", function (e) {
     // db 삭제
     $(this).get(0).click();
     }
-    
 });
 
         </script>

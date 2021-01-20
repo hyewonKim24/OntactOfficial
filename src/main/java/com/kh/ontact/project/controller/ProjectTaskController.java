@@ -22,6 +22,7 @@ import com.kh.ontact.chatalert.model.dto.ChatAlertDto;
 import com.kh.ontact.chatmember.model.dto.ChatMemberDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
+import com.kh.ontact.project.commonboard.model.service.CommonboardService;
 import com.kh.ontact.project.files.model.dto.FilesDto;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
@@ -47,6 +48,9 @@ public class ProjectTaskController {
 	ProjectMemberService pmService;
 	@Autowired
 	AlertService alertService;
+	//은실 임의로 넣음
+	@Autowired
+	CommonboardService commonboardservice;
 	
 	//혜원 코드
 	@RequestMapping(value="/project/projecttest",method=RequestMethod.GET)
@@ -124,6 +128,9 @@ public class ProjectTaskController {
 				System.out.println("글 replylist"+rlist+"글 replylist");
 				pmlist=usersService.projectInviteList(dto);
 				System.out.println("프로젝트 초대 리스트:"+pmlist);
+				//은실 임의로 넣음
+				mv.addObject("blist", commonboardservice.getCommonboard());
+				mv.addObject("file", commonboardservice.getFileboard(pno));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -384,7 +391,7 @@ public class ProjectTaskController {
 			List<Integer> slist = new ArrayList<Integer>();
 			try {
 				slist=taskService.taskStateList(pno);
-				System.out.println("그래프"+slist);
+				//System.out.println("그래프"+slist);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

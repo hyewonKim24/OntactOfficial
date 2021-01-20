@@ -36,9 +36,10 @@ public class CommonboardController {
 		}
 		
 		@RequestMapping("/ins")
-		public String insertCommonboard(FilesDto file, BoardAllDto alldto, CommonboardDto comdto) {
+		public ModelAndView insertCommonboard(ModelAndView mv, FilesDto file, BoardAllDto alldto, CommonboardDto comdto) {
 			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String uno = user.getUno();
+			String pno = alldto.getPno();
 			alldto.setUno(uno);
 			alldto.setBtype(1);
 			System.out.println(file.getFilelist());
@@ -48,18 +49,23 @@ public class CommonboardController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			 
-			return "redirect:/project/commonboard/cboard";
+			
+			mv.addObject("pno", pno);
+			mv.setViewName("redirect:/project/projectDetail");
+			return mv;
+//			return "redirect:/project/commonboard/cboard";
 		}
 		
 		@RequestMapping("/del")
-		public String deleteCommonboard(@RequestParam int bno) {
+		public ModelAndView deleteCommonboard(ModelAndView mv, @RequestParam int bno, @RequestParam String pno) {
 			 try {
 				commonboardservice.deleteCommonboard(bno);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			 
-			return "redirect:/project/commonboard/cboard";
+			mv.addObject("pno", pno);
+			mv.setViewName("redirect:/project/projectDetail");
+			return mv;
 		}
 }
