@@ -84,8 +84,8 @@ public class PjDetailControlle {
 		rclist=replyService.ReplyCount(pno);
 		System.out.println("댓글 카운트 list"+rclist);
 		userListSize = ulist.size();
-		int rs = alertService.alertProRead(aldto);
-		System.out.println("프로젝트 알림 읽음 개수 :"+rs);
+//		int rs = alertService.alertProRead(aldto);
+//		System.out.println("프로젝트 알림 읽음 개수 :"+rs);
 		
 		//프로젝트 초대 리스트
 		pmlist=usersService.projectInviteList(dto);

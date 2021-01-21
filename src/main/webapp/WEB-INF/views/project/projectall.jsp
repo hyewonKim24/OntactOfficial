@@ -299,8 +299,8 @@ body {
 		function backgroundColor() { // div 랜덤 배경색
 		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
 		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
-		    var color = backgroundColor[randome];
-		    return color;
+		     var color = backgroundColor[randome];
+			   return color;
 		};
 		
 		$.ajax({
@@ -312,6 +312,7 @@ body {
 				for(var i=0 in object){
 				var color = backgroundColor();
 				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].PNO+"'>";
+				
 				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
 				print += " <div>"+object[i].PNAME+"</div>";
 				print += " <div class='pj_team_list'>";

@@ -635,21 +635,21 @@ input:focus {
 				$("#chat-alarm-count").html('');
 				$("#chat-alarm-counts").html(''); 
 				
-				$("#chat-alarm-count").css("display","inline");
-				$("#chat-alarm-counts").css("display","inline"); 
-				
+				console.log("채팅 알림수"+object);
 				if(object==0 || object==null){
-				$("#chat-alarm-count").remove();
-				$("#chat-alarm-counts").remove(); 
-				}else{
+						$("#chat-alarm-counts").css("display","none");
+						$("#chat-alarm-count").css("display","none");
+				}else{ 
 					if(object>9){
-						$("#chat-alarm-count").remove();
+						$("#chat-alarm-count").css("display","none");
+						$("#chat-alarm-counts").css("display","inline-block");
 						$("#chat-alarm-counts").append(object);
 					}else{
-						$("#chat-alarm-counts").remove(); 
+						$("#chat-alarm-counts").css("display","none");
+						$("#chat-alarm-count").css("display","inline-block");
 						$("#chat-alarm-count").append(object);
-					}					
-				}
+					}		
+				}			
 			},
 			error:function(){
 				console.log("실패");
@@ -1008,6 +1008,7 @@ input:focus {
                     </svg> &nbsp; 직원 초대
 			</a> <span class="header-icon-wrap"> <a href="#"
 					class="header-right-icon" id="chat-icon"> 
+					<span id="chat-alarm-ajax"></span>
 					<span class="alarm-count" id="chat-alarm-count"></span> 
 					<span class="alarm-counts" id="chat-alarm-counts"></span> 
 					
@@ -1031,10 +1032,9 @@ input:focus {
                         </svg>
 				</a> <a href="#" id="alarm-icon" class="header-right-icon"> 
 						
-						<span class="alarm-count" id="alarm-count">
-						</span> 
-						<span class="alarm-counts" id="alarm-counts">
-						</span> 
+						<span id="alarm-ajax"></span>
+						<span class="alarm-count" id="alarm-count"></span> 
+						<span class="alarm-counts" id="alarm-counts"></span> 
 						
 						<!--알림 아이콘--> <svg version="1.1"
 							id="Capa1" xmlns="http://www.w3.org/2000/svg"
@@ -1300,20 +1300,22 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 						console.log("새글 등록 됐을때 : "+object+"알림추가")
 						$("#alarm-count").html('');
 						$("#alarm-counts").html('');
-						if(object==0 || object==null){
-							$("#alarm-count").remove();
-							$("#alarm-counts").remove(); 
-						}else{
-							if(object>8){
-								var count=object+1;
+						$("#alarm-count").css("display","inline");
+						$("#alarm-counts").css("display","inline");
+
+						var count=object+1;
+						
+						if(object==0){
+							var html="<span class='alarm-count' id='alarm-count'>"+count+"</span>"; 
+							$("#alarm-ajax").append(html);
+						}
+						else if(object>8){
 								$("#alarm-count").remove();
 								$("#alarm-counts").append(count);
-							}else{
-								var count=object+1;
+						}else{
 								$("#alarm-count").append(count);
 								$("#alarm-counts").remove(); 
 							}			
-						}
 					},
 					error:function(){
 						console.log("실패");

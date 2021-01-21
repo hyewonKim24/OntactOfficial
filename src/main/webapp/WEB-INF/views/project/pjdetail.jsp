@@ -32,6 +32,14 @@
 	<link href="${pageContext.request.contextPath}/resources/css/lightbox.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/resources/js/lightbox.min.js"></script>
     <script src="https://kit.fontawesome.com/22634e2e1a.js" crossorigin="anonymous"></script>
+    <script>
+	// 웹소켓 연결
+	var sock = new WebSocket("ws://" + location.host + "/ontact/alert");
+	var pno = ${ pno };
+	let socketMsg = pno;
+	console.log("msgmsg : " + socketMsg);
+	
+    </script>
 	</head>
 	
 	<body>
@@ -452,16 +460,14 @@
 								});
 								// 은실 파일 인서트 추가함
 								//업무 글작성 버튼 눌렀을 때 + 소켓 알림
-								// 웹소켓 연결
-								var sock = new WebSocket("ws://" + location.host + "/ontact/alert");
-								var pno = ${ pno };
-								let socketMsg = pno;
-								console.log("msgmsg : " + socketMsg);
+
+								
 								function taskSubmit() {
 									sendMessage();
 									function sendMessage() {
 										sock.send(pno);
 										console.log("글 작성 소켓 보냄");
+										alert('소켓 보냄');
 									}
 									
 									 var str = "";
@@ -588,7 +594,15 @@
 						for(i=0; i<test.length; i++){
 							console.log(test.uname);	
 						}
+						
 						function insertSchedule(){
+							sendMessage();
+							function sendMessage() {
+								sock.send(pno);
+								console.log("글 작성 소켓 보냄");
+								alert('소켓 보냄');
+							}
+							
 							var frm = document.sche_frm;
 							frm.action = "${pageContext.request.contextPath}/project/schedule/ins";
 							frm.method = "post";
@@ -976,7 +990,15 @@
 								});
 								//윤진 : 할일 insert
 								//글작성 버튼 submit
+								
 								function todoSubmit() {
+									sendMessage();
+									function sendMessage() {
+										sock.send(pno);
+										console.log("글 작성 소켓 보냄");
+										alert('소켓 보냄');
+									}
+									
 									var frm = document.todo_frm;
 									frm.action = "${pageContext.request.contextPath}/project/todoinsert";
 									frm.method = "get";
@@ -2941,7 +2963,17 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	      filesSubmit(that);
 	  });
 	  //게시글 입력/수정 submit 처리시에 첨부파일 정보도 함께 처리 (일반글)
+		
+			
 	  function filesSubmit(that) {
+				sendMessage();
+				function sendMessage() {
+					sock.send(pno);
+					console.log("글 작성 소켓 보냄");
+					alert('소켓 보냄');
+		
+				}
+				
 	  	console.log("설마설마"+that)
 	      var str = "";
 	      $(".imgsrc").each(function(index){
