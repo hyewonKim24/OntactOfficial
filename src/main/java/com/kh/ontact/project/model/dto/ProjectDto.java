@@ -25,6 +25,8 @@ public class ProjectDto implements Serializable{
 	private String pdesc;
 	private Date pdate;
 	private int popen;
+	//알림관련
+	private String cnt;
 	
 	// 프로젝트 전체 목록 : 인원수, 부서보관함목록
 	private String pjmembercnt;

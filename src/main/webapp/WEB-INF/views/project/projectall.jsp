@@ -273,6 +273,25 @@ body {
 	float: right;
 	transform:translate(-25px, -22px);
 }
+
+/* 알림 */
+.pj_cnt{
+    position: absolute;
+    display: inline-block;
+    top: -10px;
+    right: -10px;
+    padding: 6px 6px 0;
+    min-width: 24px;
+    height: 24px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: -0.5px;
+    background-color: #fc0d1b;
+    border-radius: 24px;
+    z-index: 100;
+}
 </style>
 <script>
 	//div 랜덤 배경색
@@ -292,16 +311,19 @@ body {
 				console.log("ajax:" + object + "성공");
 				for(var i=0 in object){
 				var color = backgroundColor();
-				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].pno+"'>";
+				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].PNO+"'>";
 				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
-				print += " <div>"+object[i].pname+"</div>";
+				print += " <div>"+object[i].PNAME+"</div>";
 				print += " <div class='pj_team_list'>";
-				if(object[i].pjteam !=undefined){
-					print += " <div>" +object[i].pjteam+"</div>";
+				if(object[i].DNAME !=undefined){
+					print += " <div>" +object[i].DNAME+"</div>";
 				}
 				print += "</div><div> <span>"+object[i].pjmembercnt+"</span> <span>명 참여중</span></div>";
-				if(object[i].popen==0){
+				if(object[i].POPEN==0){
 					print += "<span> <img src='${pageContext.request.contextPath}/resources/img/locked-4-white.png' class='lock_1'></span>";
+				}
+				if(object[i].cnt !=undefined){
+					print += " <span class='pj_cnt'>" +object[i].cnt+"</span>";
 				}
 				print += "</div></a>";
 				$(".pj_board_list").append(print);

@@ -47,11 +47,11 @@ public class TaskServiceImpl implements TaskService {
 			System.out.println(rs+"보드올 인서트");
 			System.out.println(rs+"개 insert 성공");
 			
+			//알림 기능 ( 나 제외한 프로젝트 멤버들에게 알림 추가 ) 
 			ProjectMemberDto pmdto= new ProjectMemberDto();
-			AlertDto adto = null;
 			pmdto.setUno(dto.getUno());
 			pmdto.setPno(dto.getPno());
-			//알림 기능하게되면 나 제외한 다른 사람들에게 알림추가
+			AlertDto adto = null;
 			List<String> plist =pmService.AlertProList(pmdto);
 			System.out.println("프로젝트 리스트:"+plist);
 			for(int i=0;i<plist.size();i++) {

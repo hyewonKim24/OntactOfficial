@@ -59,10 +59,12 @@ public class TodoController {
 			System.out.println("controller진입");
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno=userdetail.getUno();
+			String uname=userdetail.getUname();
 			
 			BoardAllDto bdto= new BoardAllDto();
 			bdto.setPno(pno);
 			bdto.setUno(uno);
+			bdto.setUname(uname);
 			bdto.setBname(bname);
 			bdto.setBopen(bopen);
 			System.out.println("boardAllDto"+ bdto);

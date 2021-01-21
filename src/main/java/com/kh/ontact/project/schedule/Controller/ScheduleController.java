@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.kh.ontact.alert.model.dto.AlertDto;
+import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.dayoff.model.dto.DayoffDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
@@ -30,6 +32,7 @@ import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
 import com.kh.ontact.project.schedule.model.service.ScheduleService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
@@ -45,6 +48,7 @@ public class ScheduleController {
 	BoardAllService baService;
 	@Autowired
 	UsersService usersService;
+
 	
 	//스케줄 디테일로 들어가기
 	@RequestMapping(value="/scheduleboard" ,method=RequestMethod.GET)
@@ -89,9 +93,11 @@ public class ScheduleController {
 		 	System.out.println("공개여부" + bopen);
 		 	System.out.println("프로젝트 넘버 " + pno);
 		try {
+			
 			System.out.println("프로젝트 일정 글 인서트진입");
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno=userdetail.getUno();
+			String uname=userdetail.getUname();
 			System.out.println("세션값확인 : " + uno);
 			System.out.println("무엇이" + attendee);
 			String start = sstart + " " +  sstarttime;
@@ -101,6 +107,7 @@ public class ScheduleController {
 			
 			alldto.setPno(pno);
 		    alldto.setUno(uno);
+		    alldto.setUname(uname);
 		    alldto.setBname(bname);
 		    alldto.setBopen(bopen);
 		    
@@ -112,6 +119,8 @@ public class ScheduleController {
 		    
 		    scheduleServ.insertSchedule(alldto, s, attendee);
 			mv.addObject("message", "success");
+			
+			 
 			
 		}catch(Exception e) {
 			e.printStackTrace();

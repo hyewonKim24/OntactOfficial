@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ontact.alert.model.dto.AlertDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 @Repository("alertDao")
 public class AlertDao {
@@ -32,6 +33,12 @@ public class AlertDao {
 	}
 	public int alertAllRead(String uno) throws Exception {
 		return sqlSession.update("Alert.alertAllRead",uno);
+	}
+	public int alertProRead(AlertDto dto) throws Exception {
+		return sqlSession.update("Alert.alertProRead",dto);
+	}
+	public int alertBoardRead(AlertDto dto) throws Exception {
+		return sqlSession.update("Alert.alertBoardRead",dto);
 	}
 	
 

@@ -150,7 +150,7 @@ public class ChatController {
 	}
 
 	// 그룹채팅방 만들기
-	@RequestMapping(value = "/chatinvite")
+	@RequestMapping(value = "/chatinviteadd")
 	public ModelAndView chatinvite(@RequestParam(name = "chatuno") List<String> chatuno,
 			@RequestParam(name = "chatuname") List<String> chatuname, ChatMemberDto mdto, ChatDto dto,
 			ChatAlertDto adto, Authentication authentication, ModelAndView mv) {
@@ -392,8 +392,6 @@ public class ChatController {
 					mv.addObject("chatname", chatname);
 					mv.setViewName("redirect:/chat/chatroomdetail");
 				}
-				
-				 
 
 			} catch (Exception e) {
 				e.printStackTrace();

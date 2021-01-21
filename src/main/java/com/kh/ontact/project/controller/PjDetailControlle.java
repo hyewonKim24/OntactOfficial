@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ontact.alert.model.dto.AlertDto;
 import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllViewDto;
@@ -61,6 +62,11 @@ public class PjDetailControlle {
 		dto.setPno(pno);
 		dto.setCno(cno);
 		dto.setUno(uno);
+		AlertDto aldto = new AlertDto();
+		aldto.setPno(pno);
+		aldto.setUno(uno);
+		
+		
 		List<UsersDto> pmlist = new ArrayList<UsersDto>();
 		int userListSize = 0;
         
@@ -77,10 +83,10 @@ public class PjDetailControlle {
 		//댓글 카운트수
 		rclist=replyService.ReplyCount(pno);
 		System.out.println("댓글 카운트 list"+rclist);
-		//프로젝트 유저리스트
-		ulist=usersService.listProjectMember(pno);
-		System.out.println("프로젝트 user 리스트"+ulist);
 		userListSize = ulist.size();
+		int rs = alertService.alertProRead(aldto);
+		System.out.println("프로젝트 알림 읽음 개수 :"+rs);
+		
 		//프로젝트 초대 리스트
 		pmlist=usersService.projectInviteList(dto);
 		System.out.println("프로젝트 초대 리스트:"+pmlist);

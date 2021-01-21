@@ -1,5 +1,7 @@
 package com.kh.ontact.project.commonboard.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -7,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ontact.alert.model.dto.AlertDto;
+import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.commonboard.model.dto.CommonboardDto;
 import com.kh.ontact.project.commonboard.model.service.CommonboardService;
 import com.kh.ontact.project.files.model.dto.FilesDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 
 @RequestMapping("/project/commonboard")
@@ -18,6 +24,11 @@ import com.kh.ontact.users.model.dto.CustomUserDetails;
 public class CommonboardController {
 	@Autowired
 	CommonboardService commonboardservice;
+	//혜원 알림기능 추가
+	@Autowired
+	ProjectMemberService pmService;
+	@Autowired
+	AlertService alertService;
 	
 	// 메인화면 이동
 		@RequestMapping("/cboard")
@@ -39,8 +50,10 @@ public class CommonboardController {
 		public ModelAndView insertCommonboard(ModelAndView mv, FilesDto file, BoardAllDto alldto, CommonboardDto comdto) {
 			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String uno = user.getUno();
+			String uname=user.getUname();
 			String pno = alldto.getPno();
 			alldto.setUno(uno);
+			alldto.setUname(uname);
 			alldto.setBtype(1);
 			System.out.println(file.getFilelist());
 			

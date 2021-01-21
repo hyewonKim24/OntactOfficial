@@ -61,4 +61,21 @@
 		update alert set acount=0 where uno=#{uno}
 	]]>
 	</update>
+	
+	<!-- 프로젝트 알림 읽음 -->
+	<update id="alertProRead">
+	 <![CDATA[
+		update alert set acount=0 where pno=#{pno} and uno=#{uno}
+	]]>
+	</update>
+	
+	<!-- 글 알림 읽음 -->
+	<update id="alertBoardRead">
+	 <![CDATA[
+		update alert set acount=0 where bno=#{bno} and uno=#{uno}
+	]]>
+	</update>
+	
+	
+	
 </mapper>

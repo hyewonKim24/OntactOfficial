@@ -388,7 +388,7 @@
 									});
 									$(".task-res-list").click(function () {
 										$p = $(this).parents(".task-02");
-										$(".task-res").val($(this).text());
+										$p.find(".task-res").val($(this).text());
 										$p.find(".task-res-add-wrap").hide();
 									});
 									$(".task-pri").click(function () {
@@ -2349,7 +2349,7 @@
            	
 <!--우측 사이드바-->
 			<div class="rightBar">
-				<a href="#">
+				<a href="${pageContext.request.contextPath}/project/all/list">
 					<div id="prevbtn">
 						<svg version="1.1" class="prevsvg rightsvg" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

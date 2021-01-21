@@ -88,6 +88,8 @@
 
         .invite-rs{
             line-height: 40px;
+            height: 520px;
+            overflow: scroll;
         }
         .tel-my-img{
 	        line-height: 68px;
@@ -181,11 +183,6 @@
         	background: #432D73;
         	margin-left:5px;
         }
-        .inviteList-table tr:last-child td{
-        	margin-bottom:100px;
-        	background-color: black;
-        	display:none;
-        }
     </style>
 </head>
 <body>
@@ -221,7 +218,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
                 </span>
                 <input type="text" class="chat-search-input" placeholder="이름, 이메일으로 대화상대 검색">
             </div>
-			<form action="${pageContext.request.contextPath}/chat/chatinvite" method="post" class="chatfrm1">
+			<form action="${pageContext.request.contextPath}/chat/chatinviteadd" method="post" class="chatfrm1">
             <div class="invite-rs">
               <c:if test="${empty ulist }">
                	 검색 결과가 없습니다.

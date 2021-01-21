@@ -403,7 +403,6 @@ public class TaskController {
 			List<Integer> slist = new ArrayList<Integer>();
 			try {
 				slist=taskService.taskStateList(pno);
-				System.out.println("그래프"+slist);
 				//System.out.println("그래프"+slist);
 			} catch (Exception e) {
 				e.printStackTrace();

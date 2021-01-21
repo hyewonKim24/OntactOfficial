@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ontact.alert.model.dao.AlertDao;
 import com.kh.ontact.alert.model.dto.AlertDto;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 @Service("alertService")
 public class AlertServiceImpl implements AlertService {
@@ -44,6 +45,14 @@ public class AlertServiceImpl implements AlertService {
 		int rs= alertDao.alertAllRead(uno);
 		System.out.println("알림 전체 읽음:"+rs);
 		return alertDao.alertAllList(uno);
+	}
+	@Override
+	public int alertProRead(AlertDto dto) throws Exception {
+		return alertDao.alertProRead(dto);
+	}
+	@Override
+	public int alertBoardRead(AlertDto dto) throws Exception {
+		return alertDao.alertBoardRead(dto);
 	}
 
 }
