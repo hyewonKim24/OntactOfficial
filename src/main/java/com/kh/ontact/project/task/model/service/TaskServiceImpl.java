@@ -37,7 +37,19 @@ public class TaskServiceImpl implements TaskService {
 	AlertService alertService;
 	@Autowired
 	FilesDao filesdao;
-	
+	@Override
+	public List<TaskDto> selectOne(BoardAllDto Bdto) throws Exception {
+		return taskDao.selectOne(Bdto);
+	}
+	@Override
+	public List<TaskDto> PListPTaskAll(HashMap<String, String> paramMap)
+			throws Exception {
+		return taskDao.PListTaskAll(paramMap);
+	}
+	@Override
+	public int listCount(int to) {
+		return taskDao.listCount(to);
+	}
 	//업무 글 등록 + 알림 등록 
 	@Override
 	public int insertTask(FilesDto file, TaskDto tdto,BoardAllDto dto) throws Exception {

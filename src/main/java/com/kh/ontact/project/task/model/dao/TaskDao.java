@@ -8,13 +8,23 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 
 @Repository("taskDao")
 public class TaskDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
+	public List<TaskDto> selectOne(BoardAllDto Bdto) { //글 가져오기
+		return sqlSession.selectList("Task.selectOne" ,Bdto);
+	}
+	public int listCount(int to) {
+		return sqlSession.selectOne("Task.listCount",to);
+	}
+	public List<TaskDto> PListTaskAll( HashMap<String, String> paramMap) throws Exception{
+		return sqlSession.selectList("Task.PListTaskAll", paramMap);
+	}
+//	추가한거
 	public int insertTask(TaskDto dto) throws Exception {
 		return sqlSession.insert("Task.insertTask",dto);
 	}

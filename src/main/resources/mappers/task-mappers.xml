@@ -33,6 +33,39 @@
 	<result property="bdate" column="bdate" />
 	</resultMap>
 	
+	<select id="PListTaskAll" resultType="map" resultMap="resultTask">
+	<![CDATA[
+			select b.pno, b.uno, b.bno, t.tstate, t.tpriority, b.bname, t.taskmanager, b.bdate, u.uname 
+            from project p 
+            inner join boardall b on p.pno = b.pno
+            inner join task t on b.bno = t.bno
+            inner join users u on u.uno = b.uno
+            where (u.uname =#{uname} or t.taskmanager like =#{uname}) and t.tstate = #{tstate}
+            order by t.tstart
+		]]>
+	</select>
+	<!-- 트정업무 개수 조회 -->
+		<select id="selectOne" resultType="map" resultMap="resultTask">
+	<![CDATA[
+		select t.bno as bno,u.uname as uname,t.tstate as tstate,t.tstart as tstart,t.tend as tend,t.trate as trate,
+		t.tpriority as tpriority,t.tmemo as tmemo,t.taskmanager as taskmanager,b.pno as pno,
+		b.uno as uno,b.bname as bname,b.bopen as bopen,b.btype as btype,b.bfirst as bfirst,b.bdate as bdate
+		from boardall b
+		inner join task t
+		    on t.bno=b.bno
+		inner join users u
+		    on b.uno = u.uno
+		where b.pno=#{pno} and t.bno=#{bno}
+		order by bno desc
+		]]>
+	</select>
+		<!-- task 전체 개수 조회 -->
+	<select id="listCount" resultType="int">
+			<![CDATA[
+			SELECT count(*) FROM boardall where pno=#{pno}
+			]]>
+	</select>
+	
 	<!-- boardAll 추가 -->
 	<insert id="insertTask">
 	 <![CDATA[
