@@ -40,6 +40,14 @@ public class UsersServiceImpl implements UsersService{
 	public void joinBusiness(UsersDto userdto, CompanyDto companydto) throws Exception {
 		companydao.joinBusiness(companydto);
 		usersDao.joinBusiness(userdto);
+		String[] dname = {"개발팀","기획팀","영업팀","마케팅팀"};
+		for(String str:dname) {
+			usersDao.joinbusdept(str);
+			String pname = str;
+			usersDao.joinProject(pname);
+			usersDao.joinProjectMember();
+			usersDao.joinProjectDept();
+		}
 	}
 	
 	//비즈니스 회원가입 중복체크

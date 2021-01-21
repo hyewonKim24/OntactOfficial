@@ -55,8 +55,6 @@ public class CommonboardController {
 			alldto.setUno(uno);
 			alldto.setUname(uname);
 			alldto.setBtype(1);
-			System.out.println(file.getFilelist());
-			
 			 try {
 				commonboardservice.insertCommonboard(file, alldto, comdto);
 			} catch (Exception e) {

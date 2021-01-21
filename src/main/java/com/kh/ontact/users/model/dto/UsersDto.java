@@ -20,10 +20,7 @@ public class UsersDto {
 	private String uname;
 	private String utell;
 	private String upwd;
-	private String utmppwd;
 	private String urank;
-	private Date uregdate;
-	private Date uresdate;
 	private int ustate;
 	private String ufilename;
 	private String ufilepath;

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="../main/header.jsp"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -355,10 +356,12 @@
     </header>
     <section>
         <aside>
-            <button id="aside_back">&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
+            <a href="${pageContext.request.contextPath}/project/all/list">
+            <button id="aside_back"><&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
+            </a>
             <ul>
-                <li><a href="#">계정 정보</a></li>
-                <li><a href="#">비밀번호 설정</a></li>
+                <li><a href="${pageContext.request.contextPath}/user/mypage/detail">계정 정보</a></li>
+                <li><a href="${pageContext.request.contextPath}/user/mypage/updpwd">비밀번호 설정</a></li>
             </ul>
         </aside>
         <article>
@@ -495,7 +498,7 @@
                             </div>
                         </li>
                     </ul>
-                </form>
+                   </div>
             </div>
         </article>
     </section>

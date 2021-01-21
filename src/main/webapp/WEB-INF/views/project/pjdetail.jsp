@@ -2364,7 +2364,7 @@
 					</div>
 				</a>
 				<div id="rightbtns">
-					<a href="#">
+					<a href="${pageContext.request.contextPath}/files/list">
 						<div class="rightbtn btnhover">
 							<div>
 								<svg version="1.1" class="fileboxsvg rightsvg"

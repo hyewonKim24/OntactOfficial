@@ -230,7 +230,7 @@
     .errormsg{
         font-size:13px;
         width:226px;
-        text-align:left;
+        text-align:center;
         margin:20px auto 0 auto;
         position:relative;
     }
@@ -395,12 +395,10 @@
             </div>
             <span class="modal_numberbox" style="cursor:pointer">
                 <input type="text" id="modal_number" maxlength="6" onkeypress="">
-                <span id="modal_time">3:00</span>
             </span>
             <div class="errormsg">
                 <p id="msgwrapper">
-                    <span id="errorrmsg_content">인증번호</span>
-                    <a href="javascript:remail()" id="resend">재전송</a>
+                    <span id="errorrmsg_content"></span>
                 </p>
             </div>
             <button id="modal_send" class="modal_send_false" disabled="disabled">확인</button>

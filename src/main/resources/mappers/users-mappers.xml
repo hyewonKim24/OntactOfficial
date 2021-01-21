@@ -40,6 +40,29 @@
 		VALUES(UNO_SE.NEXTVAL, CNO_SE.CURRVAL, #{uemail} , #{uname} , #{upwd} , '대표', 'ROLE_ADMIN', 1 )
 		]]>
 	</insert>
+	<!-- 가입시 기본 부서 생성 -->
+	<insert id="joinbusdept" flushCache="true">
+		<![CDATA[
+		INSERT INTO DEPT 
+		VALUES(DNO_SE.NEXTVAL, CNO_SE.CURRVAL, #{dname})
+		]]>
+	</insert>
+	<!-- 가입시 부서 프로젝트 생성 -->
+	<insert id="joinProject" flushCache="true"> 
+		<![CDATA[ 
+			insert into project(pno, pname) values(PNO_SE.NEXTVAL, #{pname}) 
+		]]> 
+	</insert> 
+	<insert id="joinProjectMember" flushCache="true"> 
+		<![CDATA[ 
+			insert into project_member values (pno_se.currval, UNO_SE.CURRVAL, 1) 
+		]]> 
+	</insert>
+	<insert id="joinProjectDept" flushCache="true"> 
+		<![CDATA[ 
+			insert into project_dept values (pno_se.currval, DNO_SE.CURRVAL) 
+		]]> 
+	</insert> 
 	
 	<!-- 이메일 중복체크 -->
 	<select id="emailChk" resultType="string">

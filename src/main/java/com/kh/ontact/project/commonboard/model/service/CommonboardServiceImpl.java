@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ontact.alert.model.dto.AlertDto;
 import com.kh.ontact.alert.model.service.AlertService;
-import com.kh.ontact.commons.util.MediaUtils;
 import com.kh.ontact.project.boardall.model.dao.BoardAllDao;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.commonboard.model.dao.CommonboardDao;
@@ -45,9 +44,6 @@ public class CommonboardServiceImpl implements CommonboardService{
 		commonboardDao.insertCommonboard(dto);
 		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
-		int listsize = file.getFilelist().size();
-		System.out.println(listsize);
-		
 		System.out.println("알림인서트 시작");
 		//알림 기능 ( 나 제외한 프로젝트 멤버들에게 알림 추가 ) 
 		ProjectMemberDto pmdto= new ProjectMemberDto();
@@ -69,11 +65,10 @@ public class CommonboardServiceImpl implements CommonboardService{
 				
 		
 		//파일이 없다면
-		if(listsize==0) {
+		if(file.getFilelist()==null)
 			return;
-		}
 		//파일이 있다면
-		
+		int listsize = file.getFilelist().size();
 		int result = 0;
 		for(int i=0; i<listsize; i++) {
 			paramMap.put("pno", alldto.getPno());
@@ -87,8 +82,6 @@ public class CommonboardServiceImpl implements CommonboardService{
 			result += filesdao.addFile(paramMap);
 		}
 		System.out.println(result+"행 추가되었습니다.");
-		
-		
 	}
 	
 	// 글+파일삭제

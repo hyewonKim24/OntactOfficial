@@ -450,7 +450,9 @@
                 padding: 6px 15px;
             }
 
-            .boardResult {
+			/* 수정에서 추가 */
+            .boardResult,
+            .boardedit {
                 width: 650px;
                 padding: 7px 25px;
             }

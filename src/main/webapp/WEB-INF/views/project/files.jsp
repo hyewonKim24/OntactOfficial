@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="../main/header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,18 +39,18 @@
         color: #333333;
     }
 
-    .header {
+    .headersection {
         position: relative;
         width: 100%;
         height: 60px;
         background-color: #fff;
     }
 
-    .header div {
+     .headersection div {
         width: 1200px;
         height: 60px;
         margin: 0 auto;
-    }
+    } 
 
     input:focus {
         outline: none;
@@ -382,6 +383,8 @@
 
     .piclist_wrapper{
     padding: 20px 0px 0 20px;
+    display:flex;
+    flex-wrap:wrap;
     }
     .piclist_tr{
     display: inline-block;
@@ -439,7 +442,7 @@
 </style>
 
 <body>
-    <div class="header">
+    <div class="headersection">
         <div>헤더 들어갈 자리</div>
     </div>
     <div class="main">
@@ -462,7 +465,7 @@
                 <a class="title_thumb class">
                     <img src="${pageContext.request.contextPath}/resources/img/storage.png">
                 </a>
-                <a class="title_close" style="cursor:pointer">
+                <a href="${pageContext.request.contextPath}/project/all/list" class="title_close" style="cursor:pointer">
                     <span class="title_close_btn btn" style="color:#fff;">닫기</span>
                 </a>
             </div>

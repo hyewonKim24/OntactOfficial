@@ -20,6 +20,18 @@ public class UsersDao {
 	public void joinBusiness(UsersDto dto) throws Exception{
 		sqlSession.insert("Users.joinBusiness",dto);
 	}
+	public void joinbusdept(String dname) throws Exception{
+		sqlSession.insert("Users.joinbusdept",dname);
+	}
+	public void joinProject(String pname) throws Exception{
+		sqlSession.insert("Users.joinProject",pname);
+	}
+	public void joinProjectMember() throws Exception{
+		sqlSession.insert("Users.joinProjectMember");
+	}
+	public void joinProjectDept() throws Exception{
+		sqlSession.insert("Users.joinProjectDept");
+	}
 	
 	// 이메일 중복체크
 	public String emailChk(String uemail) throws Exception {

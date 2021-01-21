@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="../main/header.jsp"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -178,10 +179,12 @@
     </header>
     <section>
         <aside>
+            <a href="${pageContext.request.contextPath}/project/all/list">
             <button id="aside_back"><&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
+            </a>
                     <ul>
-                        <li><a href="#">계정 정보</a></li>
-                        <li><a href="#">비밀번호 설정</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/mypage/detail">계정 정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/mypage/updpwd">비밀번호 설정</a></li>
                     </ul>
         </aside>
         <article>
