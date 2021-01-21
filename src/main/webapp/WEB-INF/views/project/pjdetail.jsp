@@ -775,27 +775,21 @@
 													name="tdcontent" placeholder="할일 입력">
 												<!--할일 마감일 지정 버튼-->
 												<input type="text" class="todo-03 todoicon todo-date1"
-													name="tdate" readonly>
+													name="tddate" readonly>
 												<!--할일 담당자 지정 모달 / 해당 project 유저 list 뿌리기-->
 												<div class="tdp-wrap">
 													<img src="${pageContext.request.contextPath}/resources/img/addperson.png"
 														class="todo-04 todoicon">
 													<div class="tdp-add-wrap">
-														<input type="hidden" class="tdp">
 														<div class="tdp-add">
 															<ul>
-																<%-- <c:forEach items="${userlist}"
-																	var="ulist">
-																	<li
-																		class="tdp-list tdp-list${e.count}">
-																		${ulist.uname}
-																		<input type="hidden"
-																			class="tdp-uno" name="tduno"
-																			value="${ulist.uno}">
+																<input type="hidden" class="tdp" name="tduno" value="">
+																<c:forEach items="${userlist}" var="ulist" varStatus="e">
+																	<li class="tdp-list tdp-list${e.count}">${ulist.uname}
+																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
 																	</li>
-																	<img src="${ulist.ufilepath}">
-																		
-																</c:forEach> --%>
+																	<%-- <img src="${ulist.ufilepath}"> --%>
+																</c:forEach>
 															</ul>
 														</div>
 													</div>
@@ -859,6 +853,7 @@
 								//윤진: todo 마감일 datepicker 선언
 								var tdcnt = 2;
 								$(function () {
+									$('.todoform').find('.todo-date1')
 									$('.todo-date1').datepicker({
 										dateFormat: 'mm/dd' //Input Display Format 변경
 										, showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -895,9 +890,11 @@
 										'<div class="tdp-wrap">' + '\n' +
 										'<img src="${pageContext.request.contextPath}/resources/img/addperson.png" class="todo-04 todoicon">' + '\n' +
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +
-										'<ul>' + '\n' + '<c:forEach items="${userlist}" var="ulist">' + '\n' +
+										'<ul>' + '\n' + 
+										'<input type="hidden" class="tdp" name="tduno" value="">'+ '\n' +
+										'<c:forEach items="${userlist}" var="ulist">' + '\n' +
 										'<li class="tdp-list tdp-list${e.count}">${ulist.uname}' + '\n' +
-										'<input type="hidden" class="tdp-uno" name="tduno" value="${ulist.uno}"></li>' + '\n' +
+										'<input type="hidden" class="tdp-uno" value="${ulist.uno}"></li>' + '\n' +
 										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>' +
 										'</li>'
 									$(".todoinput").append(todoinput);
@@ -963,10 +960,15 @@
 									$p = $(this).parent(".tdp-wrap");
 									$p.find(".tdp-add-wrap").toggle();
 								});
-								$(document).on('click', ".tdp-list", function () {
-									$p = $(this).parent().parent().parent().parent(".tdp-wrap");
-									$p.find(".tdp-add-wrap").hide();
-									$(".tdp").val($(this).text());
+								//할일 담당자 선택
+								$(document).on('click', ".tdp-list", function (e) {
+									e.stopPropagation();
+									$p = $(this).find('.tdp-uno');
+									$p.parents(".tdp-add-wrap").hide();
+									var a = $p.val();	
+									console.log(a);
+									$(this).parents('.tdp-add').find('.tdp').val(a);
+									
 									/* if('${ulist.uname}' != null){
 												$p.find(".todo-04").attr('src', '${ulist.ufilepath}');                    	    	
 												console.log('filepath: ${ulist.ufilepath}');

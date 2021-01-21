@@ -67,7 +67,7 @@ public class TodoController {
 			bdto.setBopen(bopen);
 			System.out.println("boardAllDto"+ bdto);
 			System.out.println("b:"+pno+bname+bopen);
-			System.out.println("tdcontent:"+tdcontent+"tdate:"+tddate+"tduno:"+tduno);
+			System.out.println("tdcontent:"+tdcontent+"tddate:"+tddate+"tduno:"+tduno);
 			List<TodoDto> tdlist = new ArrayList<TodoDto>();
 			TodoDto td = null;
 			
@@ -84,7 +84,7 @@ public class TodoController {
 				e.printStackTrace();
 			}
 			mv.addObject("pno", pno);
-			mv.setViewName("redirect:/project/projectDetail");
+			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 			
 	}
