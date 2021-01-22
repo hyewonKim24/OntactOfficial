@@ -592,7 +592,7 @@
 					    } 
 						var test ='${userlist}';
 						for(i=0; i<test.length; i++){
-							console.log(test.uname);	
+							
 						}
 						
 						function insertSchedule(){
@@ -759,12 +759,7 @@
 				                 }
 				            }
 				        })
-				        function changeAttendee(){
-				            var change = $("input[name='attendee-child']").val();
-				            console.log("왜이래" +change)            
-				            $("input[name='attendee']").val(change);
 				
-				        }
 				    });
 				    </script>
 <!-- 혜림 일정 글 작성 부분 끝 -->
@@ -1960,6 +1955,7 @@
                     <div class="result_wrap">
                         <!-- 일정, 제목-->
                         <div class="rtitle">
+                        	<input type="hidden" value="${blist.bno}" readonly>
                             <input type="text" value="${blist.bname}" readonly>
                         </div>
                        	<c:forEach items="${blist.scheduleDto}" var="s" varStatus="e">
@@ -1979,22 +1975,20 @@
                             <button class="js-open  open-button">참석자 변경</button>
                             <!-- 참석자 모달 -->
                             <div class="js-layer  layer  hide">
-                            <!-- <div id="attendee-modal"> -->
-                                <!-- <div class="attendee_modal-layer"></div> -->
 		                             <div class="ModalPopup">
-                                    <!-- <div class="attendee-modal-content"> -->
+		                             <form name="pickAttendee_frm">
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
-                              			  
+                              			  <input type="hidden" name="pno" id="pno" value="${pno}">
                                             <div class="attendee-search">
                                                 <input type="text" placeholder="참석자 이름 검색">
                                                 <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
                                             </div>
+                                            
                                             <div class="attendee-people">
                                                 <!-- 선택된 참가자가 표시됨  -->
-                                                <form name="pickAttendee_frm">
                                                 <div class="pick-attendee"></div>
-                                                </form>
+                                                
                                                 <c:forEach items="${userlist}" var="ulist" varStatus="e"> 
                                                 <div class="userlist_wrap">
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
@@ -2008,8 +2002,20 @@
                                                 <button class="edit-btn" onclick="changeAttendee()">확인</button>
                                                 </div> 
                                             </div>
+                                            
+                                            </form>
                                         </div>
                                     </div>
+                                    <script type="text/javascript">
+                                    function changeAttendee(){
+            				        	var frm = document.pickAttendee_frm;
+            				        	console.log("aaa : " + ${blist.bno} + " / "+ ${pno});
+            							frm.action = "${pageContext.request.contextPath}/project/schedule/upd?bno=${blist.bno}&pno=${pno}";
+            							frm.method = "post";
+            							frm.submit();
+            				
+            				        }
+                                    </script>
                                 
                             </div>
                             <div id="mask"></div>
@@ -2435,7 +2441,7 @@
 							</div>
 							<div>업무</div>
 						</div>
-					</a> <a href="#">
+					</a> <a href="${pageContext.request.contextPath}/schedule?pno=${pno}">
 						<div class="rightbtn btnhover">
 							<div>
 								<svg version="1.1" class="schedulesvg rightsvg"

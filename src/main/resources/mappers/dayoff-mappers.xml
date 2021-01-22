@@ -33,6 +33,10 @@
 		select * from dayoff where uno = #{uno} order by offstart
 	</select>
 	
+	<select id="listCount" resultType="int" parameterType ="java.util.HashMap">
+		select count(dfno) from dayoff where offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart
+	</select>
+	
 	<select id="searchDayoff" parameterType ="java.util.HashMap"
 		resultType="arraylist" resultMap="resultDayoff">
 		select * from dayoff where offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart

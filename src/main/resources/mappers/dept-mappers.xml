@@ -29,11 +29,11 @@
 	<!-- 혜림 조직도 -->
 	<!-- 부서 전체 -->
 	<select id="listCount" resultType="int">
-		select count(*) from dept 
+		select count(dno) from dept where cno = #{cno}
 	</select>
 	<select id="selectDept" resultType="arraylist"
 		resultMap="resultDept">
-		select dname from dept 
+		select dname from dept where cno = #{cno}
 	</select>
 	<!-- <select id="selectDtOne" parameterType="string" resultType="DeptDto">
 		select * from dept where dno = #{dno} 
@@ -41,18 +41,18 @@
 	
 	<!-- 부서 검색 -->
 	<select id="searchlistCount" resultType="int">
-		select count(*) from dept where dname = #{keyword}
+		select count(dno) from dept where cno = #{cno} and dname = #{keyword} 
 	</select>
 	<select id="searchDept" resultType="arraylist"
 		resultMap="resultDept">
-		select dname from dept where dname = #{keyword} 
+		select dname from dept where cno = #{cno} and dname = #{keyword} 
 	</select>
 	<!-- 부서 추가 -->
 	<insert id="insertDept" flushCache="true" statementType="PREPARED">  
-		insert into dept values(DNO_SE.nextval, #{cno}, #{dname}
+		insert into dept values(DNO_SE.nextval, #{cno}, #{dname})
 	</insert>
 	<!-- 부서 삭제 -->
-	<delete id="deleteDept" flushCache="true" statementType="PREPARED">  
-		delete from dept where dname = #{dname}
+	<delete id="deleteDept" parameterType ="java.util.HashMap">  
+		delete from dept where cno = #{cno} and dname = #{dno}
 	</delete>
 </mapper>

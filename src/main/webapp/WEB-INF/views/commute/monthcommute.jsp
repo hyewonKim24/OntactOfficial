@@ -193,6 +193,35 @@
             element.siblings('li').find('ul').slideUp();
 		}
 	    });
+        
+        $('#search').on('click', function(){
+    		if(fnMemberValidation() == false) {
+                return;
+                console.log("false로 들어옴");
+          }else if(nMemberValidation() == true){
+             console.log("true로 들어옴");
+    			
+     	   var frm = document.search_frm;
+     	   frm.action = "${pageContext.request.contextPath}/commute/monthlylist";
+     	   frm.method = "post";
+     	   frm.submit();
+    	}else{
+     	   return;
+     	}
+    	});
+        
+        function fnMemberValidation(){
+   	 	 if($('#startDate').val() == '' || $('#startdate').val() == 0){
+   		   alert("시작 날짜를 선택해주세요");
+   	 	   return false;
+   	 	 }
+   	 	 if($('#endDate').val() == '' || $('#enddate').val() == 0){
+   	 	   alert("종료 날짜를 선택해주세요");
+   	  	   return false;
+   	  	 }
+    	  return true;
+    	 };
+    	 
     });
     </script>
 </head>
@@ -221,14 +250,14 @@
         <div class="article">
             <div class="conTitle">월 근무내역</div>
             <div class="option">
-            <form action="<c:url value="/commute/monthlylist"/>" method="get">
+            <form name="search_frm">
                 <table>
                     <tr>
                         <td>기간 선택</td>
                         <td><input type="Date" id="startDate" name="startdate" placeholder="시작일을 선택하세요" autocomplete="off" style="width:170px; height:30px; padding : 0 10px; color : #787878;"> 
                         &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
                         <input type="Date" id="endDate" name="enddate" placeholder="종료일을 선택하세요" autocomplete="off" style="width:170px; height:30px; padding : 0 10px;color : #787878;"></td>
-                        <td><button name="submit">조회</button></td>
+                        <td><button id="search">조회</button></td>
                     </tr>
                 </table>
                 </form>

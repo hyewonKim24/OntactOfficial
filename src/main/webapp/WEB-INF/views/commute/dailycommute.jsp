@@ -471,7 +471,7 @@ canvas {
 					</div>
 				</div>
 				<div class="option">
-					<form action="<c:url value="/commute/dailylist"/>" method="get">
+					<form action="${pageContext.request.contextPath}/commute/dailylist" method="get" name="search_frm">
 						<table>
 							<tr>
 								<td>기간 선택</td>
@@ -564,5 +564,41 @@ canvas {
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+    $('#search').on('click', function(){
+		if(fnMemberValidation() == false) {
+            return;
+            console.log("false로 들어옴");
+      }else if(nMemberValidation() == true){
+         console.log("true로 들어옴");
+			
+ 	   var frm = document.search_frm;
+ 	   frm.action = "${pageContext.request.contextPath}/commute/dailylist";
+ 	   frm.method = "post";
+ 	   frm.submit();
+	}else{
+ 	   return;
+ 	}
+	});
+		
+	 
+function fnMemberValidation(){
+	 	 if($('#startdate').val() == '' || $('#startdate').val() == 0){
+		   alert("시작 날짜를 선택해주세요");
+	 	   return false;
+	 	 }
+	 	 if($('#enddate').val() == '' || $('#enddate').val() == 0){
+	 	   alert("종료 날짜를 선택해주세요");
+	  	   return false;
+	  	 }
+		 if($('input[name=cstate]:radio:checked').length < 1){
+	 	   alert("상태를 선택해주세요");
+	 	   $('#uname').focus();
+	 	   return false;
+		 }
+ 	   
+ 	  return true;
+ 	 };
+	</script>
 </body>
 </html>

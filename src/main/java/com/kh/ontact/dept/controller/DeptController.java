@@ -1,5 +1,7 @@
 package com.kh.ontact.dept.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,10 +39,15 @@ public class DeptController {
 			Authentication authentication, ModelAndView mv) {
 			System.out.println("Dept 리스트진입");
 			System.out.println("부서이름이 들어왔나?" + dname);
+			
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String cno=userdetail.getCno();
+			System.out.println("세션값확인 : " + cno);
+			
 		try {
 			int currentPage = page;
 //			부서 출력
-			int deptlistCount1 = deptServ.listCount();
+			int deptlistCount1 = deptServ.listCount(cno);
 			int deptlistCount2 = deptServ.searchlistCount();
 //			부서 사원 출력
 			int listCount1 = usersService.listCountFirst();
@@ -52,7 +59,7 @@ public class DeptController {
 			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
 
 			mv.addObject("deptlistCount", deptlistCount1);
-			mv.addObject("selectDept", deptServ.selectDept());
+			mv.addObject("selectDept", deptServ.selectDept(cno));
 			mv.setViewName("/commute/organogram");
 
 //			미분류그룹 default
@@ -123,7 +130,7 @@ public class DeptController {
 //		}
 //		return mv;
 //	}
-	
+	//
 	//부서 생성
 	@RequestMapping(value = "/commute/deptins", method = RequestMethod.POST)
 	public String insertDept(DeptDto d, RedirectAttributes rttr) {
@@ -146,10 +153,17 @@ public class DeptController {
 	@RequestMapping(value = "/commute/deptdel", method = RequestMethod.GET)
 	public ModelAndView deleteDept(
 			@RequestParam(name = "dno") String dno,
-			HttpServletRequest request, ModelAndView mv) {
+			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
 		try {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String cno=userdetail.getCno();
+			System.out.println("세션값확인 : " + cno);
+		
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("startdate", cno);
+			paramMap.put("enddate", dno);
 //			dno에 포함되어 있는 사람이 없는 경우에만 삭제가능하도록 
-			deptServ.deleteDept(dno);
+			deptServ.deleteDept(paramMap);
 			mv.setViewName("redirect:/commute/organlist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

@@ -41,16 +41,17 @@ public class UserdayoffController {
 			String uno=userdetail.getUno();
 			System.out.println("세션값확인 : " + uno);
 			//
+			HashMap<String, String> paramMap = new HashMap<String, String>();
 			int currentPage = page;
 ///			 한 페이지당 출력할 목록 갯수, 페이징
-			int listCount = dayoffServ.allListCount(uno);
-			System.out.println(listCount);
-			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+			int listCount1 = dayoffServ.allListCount(uno);
+			int listCount2 = dayoffServ.listCount(paramMap);
+			System.out.println(listCount1);
+			int maxPage = (int) ((double) listCount1 / LIMIT + 0.9);
 			
 			String start =  startdate;
 			String end = enddate;
 			
-			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
 			
@@ -60,11 +61,14 @@ public class UserdayoffController {
 				System.out.println(dayoffServ.selectDayoff(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
-				mv.addObject("listCount", listCount);
+				mv.addObject("listCount", listCount1);
 				mv.setViewName("commute/dayoff");
 			} else if(startdate != null && enddate != null) {
 				System.out.println("else로 들어옴");
 				mv.addObject("list", dayoffServ.searchDayoff(paramMap));
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("listCount", listCount2);
 				mv.setViewName("commute/dayoff");
 			}
 //			if (startdate != null && enddate != null) {

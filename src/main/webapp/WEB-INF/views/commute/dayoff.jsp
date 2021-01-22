@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>  
+    
     <style>
      *{
         margin : 0;
@@ -263,58 +263,58 @@
        			
        		}); */
        		
-    //    $('#insertDf').on('click', function(){
-    //    		if(fnMemberValidation() == false) {
-    //                return;
-    //                console.log("false로 들어옴");
-    //          }else if(nMemberValidation() == true){
-    //             console.log("true로 들어옴");
-    //    			confirm("제출하시겠습니까?");
-    //    			alert("제출 완료");
-    //     	   var frm = document.frm;
-    //     	   frm.action = "<c:url value='/dayoff/dayoffins'/>";
-    //     	   frm.method = "post";
-    //     	   frm.submit();
-    //     	}else{
-    //     	   return;
-    //     	}
-    //    	});
+        $('#insertDf').on('click', function(){
+        		if(fnMemberValidation() == false) {
+                    return;
+                    console.log("false로 들어옴");
+              }else if(nMemberValidation() == true){
+                 console.log("true로 들어옴");
+        			confirm("제출하시겠습니까?");
+        			alert("제출 완료");
+         	   var frm = document.frm;
+         	   frm.action = "<c:url value='/dayoff/dayoffins'/>";
+         	   frm.method = "post";
+         	   frm.submit();
+        	}else{
+         	   return;
+         	}
+        	});
        		
         	 
-    //     function fnMemberValidation(){
-    //     	 if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
-    //     	   alert("부서를 선택해주세요");
-    //     	   $('#name').focus();
-    //     	   return false;
-    //     	 }
-    //     	 if($.trim($('#uname').val()) == ''){
-    //     	   alert("이름을 입력해주세요");
-    //     	   $('#uname').focus();
-    //     	   return false;
-    //     	  }
-    //     	 if($.trim($('#dayoffStart').val()) == ''){
-    //        	   alert("휴가 시작일을 선택해주세요.");
-    //        	   $('#dayoffStart').focus();
-    //        	   return false;
-    //        	  }
-    //     	 if($.trim($('#dayoffEnd').val()) == ''){
-    //           	alert("휴가 종료일을 선택해주세요.");
-    //           	$('#dayoffEnd').focus();
-    //           	return false;
-    //           }
-    //     	 if($.trim($('#offdays').val()) == ''){
-    //             alert("일수를 입력해주세요.");
-    //             $('#offdays').focus();
-    //             return false;
-    //            }
-    //     	 if($.trim($('#offreason').val()) == ''){
-    //        	   alert("휴가사유를 입력해주세요");
-    //        	   $('#offreason').focus();
-    //        	   return false;
-    //        	  }
+        function fnMemberValidation(){
+         	 if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
+        	   alert("부서를 선택해주세요");
+         	   $('#name').focus();
+         	   return false;
+         	 }
+        	 if($.trim($('#uname').val()) == ''){
+         	   alert("이름을 입력해주세요");
+         	   $('#uname').focus();
+         	   return false;
+        	  }
+         	 if($.trim($('#dayoffStart').val()) == ''){
+            	   alert("휴가 시작일을 선택해주세요.");
+            	   $('#dayoffStart').focus();
+           	   return false;
+           	  }
+        	 if($.trim($('#dayoffEnd').val()) == ''){
+               	alert("휴가 종료일을 선택해주세요.");
+               	$('#dayoffEnd').focus();
+              	return false;
+             }
+         	 if($.trim($('#offdays').val()) == ''){
+                 alert("일수를 입력해주세요.");
+                 $('#offdays').focus();
+                 return false;
+                }
+         	 if($.trim($('#offreason').val()) == ''){
+            	   alert("휴가사유를 입력해주세요");
+           	   $('#offreason').focus();
+   	        	   return false;
+            	  }
         	  
-    //     	  return true;
-    //     	 };
+         	  return true;
+         	 };
    }); 
     	
     </script>

@@ -89,7 +89,7 @@
 
 	<!--업무 : 내업무 (5), 요청한 업무(1), 전체 업무 where 절 사라지게 -->
 	<select id="selectAllTask" resultMap="resultSchedule">
-		select p.pno, p.pname, b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, t.tstart, t.tend, t.tmemo, t.taskmanager
+		select p.pno, p.pname, b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, t.tstart as sstart, t.tend as send, t.tmemo as smemo, t.taskmanager as attendees
 			from project p 
 			inner join boardall b on p.pno = b.pno
 			inner join task t on b.bno = t.bno

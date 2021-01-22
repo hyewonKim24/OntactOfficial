@@ -25,6 +25,11 @@ public class DayoffServiceImpl implements DayoffService{
 		return dayoffDao.selectDayoff(startPage, limit, uno);
 	}
 	@Override
+	public int listCount(HashMap<String, String> paramMap) {
+		return dayoffDao.listCount(paramMap);
+	}
+	
+	@Override
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap) {
 		return dayoffDao.searchDayoff(paramMap);
 	}

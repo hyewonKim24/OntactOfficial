@@ -23,7 +23,7 @@ public interface CommuteService {
 	
 	public List<CommuteDto> selectMonthCommute(int startPage, int limit, String uno);
 	
-	public int msearchCount();
+	public int msearchCount(HashMap<String, String> paramMap);
 	
 	public List<CommuteDto> searchMonthCommute(HashMap<String, String> paramMap);
 	

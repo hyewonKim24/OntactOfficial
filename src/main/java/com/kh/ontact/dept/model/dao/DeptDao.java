@@ -22,11 +22,11 @@ public class DeptDao {
 	}
 	
 	//혜림
-	public int listCount() {
-		return sqlSession.selectOne("Dept.listCount");
+	public int listCount(String cno) {
+		return sqlSession.selectOne("Dept.listCount", cno);
 	}
-	public List<DeptDto> selectDept() {
-		return sqlSession.selectList("Dept.selectDept");
+	public List<DeptDto> selectDept(String cno) {
+		return sqlSession.selectList("Dept.selectDept", cno);
 	}
 	public DeptDto selectDtOne(String dno) { 
 		return sqlSession.selectOne("Dept.selectDtOne", dno);
@@ -40,8 +40,8 @@ public class DeptDao {
 	public int insertDept(DeptDto d) { // 글 입력 
 		return sqlSession.insert("Dept.insertDept", d);
 	}
-	public int deleteDept(String dno) { // 글 삭제 
-		return sqlSession.delete("Dept.deleteDept", dno);
+	public int deleteDept(HashMap<String, String> paramMap) { // 글 삭제 
+		return sqlSession.delete("Dept.deleteDept", paramMap);
 	}
 	//은실
 	public String dnameChk(String dno) throws Exception {

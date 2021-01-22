@@ -11,6 +11,8 @@ public interface DayoffService {
 	
 	public List<DayoffDto> selectDayoff(int startPage, int limit, String uno);
 	
+	public int listCount(HashMap<String, String> paramMap);
+	
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap);
 	
 	public DayoffDto selectDfOne(String dfno);

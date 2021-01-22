@@ -75,8 +75,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 		 scheduleDao.selectOneSchedule(s);
 	}
 	@Override
-	public int updateSchedule(ScheduleDto s) {  
-		return scheduleDao.updateSchedule(s);
+	public void updateSchedule(ScheduleDto s, String attendee) {  
+		
+		if(attendee!=null) {
+			String [] array = attendee.split(",");
+			for(int i=0; i<array.length; i++ ) {
+				attendee = array[i];
+				System.out.println("서비스에서 값" + attendee);
+				s.setAttendee(attendee);		
+				scheduleDao.updateSchedule(s);	
+			}
+		} else {
+			scheduleDao.updateSchedule(s);
+		}
+		
 	}
 	@Override
 	public int deleteSchedule(int bno) { 

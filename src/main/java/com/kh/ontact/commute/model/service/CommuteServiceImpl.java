@@ -57,8 +57,8 @@ public class CommuteServiceImpl implements CommuteService {
 
 	
 	@Override
-	public int msearchCount() {
-		return commuteDao.msearchCount();
+	public int msearchCount(HashMap<String, String> paramMap) {
+		return commuteDao.msearchCount(paramMap);
 	}
 
 	@Override

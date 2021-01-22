@@ -255,6 +255,12 @@
         border: none;
         border-radius: 3px;
     }
+    #addDname{
+    	display : none;
+    	width : 130px;
+    	height : 25px;
+    	verticle-align : middle;
+    }
     </style>
     <script>
         // html dom 이 다 로딩된 후 실행된다.
@@ -290,7 +296,12 @@
                 var temp = $(".deptname:contains('" + k + "')");
                 $(temp).show();
             })
-        
+       		
+            $("#addBtn").click(function() {
+                $("#addDname").css("display", "block");
+                
+            })
+            
         });
     </script>
 </head>
@@ -339,15 +350,20 @@
                         </li>
                         </c:forEach>
                         </c:if>
+                        <li>
+                        	<input type ="text" name="dname" id="addDname">
+                        </li>
                     </ul>
                 </div>
                 <div class="notyet">
                     <div><a href="">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
+                <%-- <sec:authorize access="hasRole('ROLE_USER')"> --%>
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
                     <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
                     <button id="editBtn"><img src="${pageContext.request.contextPath}/resources/img/edit-1.png" style="width: 19px; height: 20px;"></button>
+                <%-- </sec:authorize> --%>
                 </div>
                 <div class="detail">
                 

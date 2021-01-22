@@ -23,6 +23,9 @@ public class DayoffDao {
 		RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
 		return sqlSession.selectList("DayoffMapper.selectDayoff",uno,row);
 	}
+	public int listCount(HashMap<String, String> paramMap) {
+		return sqlSession.selectOne("DayoffMapper.listCount", paramMap);
+	}
 	public List<DayoffDto> searchDayoff(HashMap<String, String> paramMap) { 
 		return sqlSession.selectList("DayoffMapper.searchDayoff", paramMap);
 	}

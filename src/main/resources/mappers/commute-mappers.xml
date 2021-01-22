@@ -22,7 +22,7 @@
 	<select id="selectDailyCommute" 
 		resultType="arraylist"
 		resultMap="resultCommute">
-		select * from commute where uno = #{uno}
+		select * from commute where uno = #{uno} order by cdate desc
 	</select>
 	
 	<!-- 출퇴근 시간 기간별 조회 : 정상, 지각, 기타 -->
@@ -39,7 +39,7 @@
 		select * from commute 
 		where cstate = #{cstate}
 		and cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
-		and uno = #{uno}
+		and uno = #{uno} order by cdate desc
 
 	</select>
 	
@@ -77,6 +77,7 @@
 		select count(*) from commute c, overwork o
 			where c.uno = o.uno and c.cdate = o.owdate and c.uno = #{uno}
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd')
+			order by cdate desc
 		<!-- 	where c.uname = o.uname and c.cdate = o.owdate and c.uname= #{uno} 
 			and c.cdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd'); -->
 	</select>

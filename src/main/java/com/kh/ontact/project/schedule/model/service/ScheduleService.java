@@ -14,7 +14,7 @@ public interface ScheduleService {
 	
 	public void selectOneSchedule(ScheduleDto s); 
 	
-	public int updateSchedule(ScheduleDto s);
+	public void updateSchedule(ScheduleDto s, String attendee);
 	
 	public int deleteSchedule(int bno) ;
 	

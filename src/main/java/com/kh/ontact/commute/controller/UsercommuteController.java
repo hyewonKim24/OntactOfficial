@@ -35,7 +35,7 @@ public class UsercommuteController {
 	public static final int LIMIT = 10;
 	
 //	출퇴근 메인페이지
-	@RequestMapping(value = "/commute/dailylist", method = RequestMethod.GET)
+	@RequestMapping(value = "/commute/dailylist", method = {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView selectDailCommute(
 			@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "cstate", required = false) String cstate,
@@ -56,13 +56,13 @@ public class UsercommuteController {
 			System.out.println("start" + start);
 			String end = enddate;
 			System.out.println("end" + end);
-		//
+		
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("cstate", state);
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
 			paramMap.put("uno", uno);
-			//
+			
 			//페이징
 			int currentPage = page;
 			int listCount1 = commuteServ.allListCount(uno);
@@ -72,14 +72,14 @@ public class UsercommuteController {
 			System.out.println(listCount1);
 			System.out.println(listCount2);
 		    
-			if (startdate == null && enddate == null) {
+			if (startdate == null || startdate == "" && enddate == null || enddate == "" ) {
 				System.out.println("if로 들어옴");
 				mv.addObject("list", commuteServ.selectDailyCommute(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
 				mv.addObject("listCount", listCount1);
 				mv.setViewName("commute/dailycommute");
-			} else if(startdate != null && enddate != null) {
+			} else if(startdate != null && enddate != null || cstate == "" ) {
 				System.out.println("else로 들어옴");
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
@@ -231,15 +231,7 @@ public class UsercommuteController {
 			System.out.println(uno);
 			// 한 페이지당 출력할 목록 갯수, 페이징
 			int currentPage = page;
-			//
-			int allListCount = commuteServ.mAllCount(uno);
-			System.out.println("카운트1 : " + allListCount);
-			int allmaxPage = (int) ((double) allListCount / LIMIT + 0.9);
-			int searchListCount = commuteServ.msearchCount();
-			System.out.println("카운트2 : " + searchListCount);
-			int searchmaxPage = (int) ((double) searchListCount / LIMIT + 0.9);
-			
-		    //
+
 			//검색
 			String start =  startdate;
 			System.out.println("start" + start);
@@ -250,6 +242,15 @@ public class UsercommuteController {
 			search.put("uno", uno);
 			search.put("startdate", start);
 			search.put("enddate", end);
+
+			int allListCount = commuteServ.mAllCount(uno);
+			System.out.println("카운트1 : " + allListCount);
+			int allmaxPage = (int) ((double) allListCount / LIMIT + 0.9);
+			
+			int searchListCount = commuteServ.msearchCount(search);
+			System.out.println("카운트2 : " + searchListCount);
+			int searchmaxPage = (int) ((double) searchListCount / LIMIT + 0.9);
+			
 			//
 			if (startdate == null && enddate == null) {
 				System.out.println("if로 들어옴");
