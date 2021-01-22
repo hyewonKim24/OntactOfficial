@@ -9,9 +9,13 @@ import com.kh.ontact.project.files.model.dto.FilesDto;
 import com.kh.ontact.project.task.model.dto.TaskDto;
 
 public interface TaskService {
+	//업무리스트
+	List<TaskDto> PListTaskAll(String pno) throws Exception;
+	List<TaskDto> PListTaskMy(HashMap<String, String> paramMap) throws Exception;
+	List<TaskDto> PListTaskRequire(HashMap<String, String> paramMap) throws Exception;
+	//혜원
 	List<TaskDto> selectOne(BoardAllDto Bdto) throws Exception;
 	public int listCount(int to);
-	List<TaskDto> PListPTaskAll(HashMap<String, String> paramMap) throws Exception;
 	public int insertTask(FilesDto file, TaskDto tdto,BoardAllDto dto) throws Exception;
 	List<TaskDto> ListTaskAll(String pno) throws Exception;
 	int deleteTask(int bno) throws Exception;

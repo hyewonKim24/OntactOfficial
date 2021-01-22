@@ -63,7 +63,7 @@ public class FilesListController {
 					list.get(i).setFsize(util.getFileSize(fsize));
 				}
 				mv.addObject("listpj", pjService.selectListProject(uno));
-				System.out.println(pjService.selectListProject(uno));
+				System.out.println(pjService.selectListProject(uno)+"프로젝트리스트");
 				mv.addObject("flist", list);
 			} catch (Exception e) {
 				e.printStackTrace();

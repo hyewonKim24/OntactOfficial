@@ -21,9 +21,23 @@ public class TaskDao {
 	public int listCount(int to) {
 		return sqlSession.selectOne("Task.listCount",to);
 	}
-	public List<TaskDto> PListTaskAll( HashMap<String, String> paramMap) throws Exception{
-		return sqlSession.selectList("Task.PListTaskAll", paramMap);
+	
+	// 업무 게시판 부분
+	// 전체 업무 보기
+	public List<TaskDto> PListTaskAll(String pno) throws Exception{
+		return sqlSession.selectList("Task.PListTaskAll",pno);
 	}
+	// 내 업무
+	public List<TaskDto> PListTaskMy( HashMap<String, String> paramMap) throws Exception{
+		return sqlSession.selectList("Task.PListTaskMy", paramMap);
+	}
+	// 요청한 업무
+	public List<TaskDto> PListTaskRequire( HashMap<String, String> paramMap) throws Exception{
+		return sqlSession.selectList("Task.PListTaskRequire", paramMap);
+	}
+	
+	
+	
 //	추가한거
 	public int insertTask(TaskDto dto) throws Exception {
 		return sqlSession.insert("Task.insertTask",dto);

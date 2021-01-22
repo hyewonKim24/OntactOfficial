@@ -40,6 +40,10 @@ public class TaskDto {
 	private String runame;
 	private List<ReplyDto> replydto;
 	
+	//rownum
+	private String rownum;
+	
+	
 	// Proejct Detail 전체 리스트
 	public TaskDto(int bno, String tstate, Date tstart, Date tend, String trate, String tpriority, String taskmanager,
 			String tmemo) {

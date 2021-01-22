@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 <meta charset="UTF-8">
+	<sec:csrfMetaTags />
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <style>
         body{
@@ -116,6 +118,32 @@
         .board-listheader thead{
             border-bottom: 1px solid #c0c0c0;
         }
+        
+        /* 업무 상태 */
+        .icon_task1{
+		background-color: #4aaefb;
+		}
+		.icon_task2{
+			background-color: #50b766;
+		}
+		.icon_task3{
+			background-color: #2e417e;
+		}
+		.icon_task4{
+			background-color: #d2d3d6;
+		}
+		
+		.icon_task1, .icon_task2, .icon_task3, .icon_task4{
+		    display: inline-block;
+		    width: 68px;
+		    height: 18px;
+		    line-height: 16px;
+		    font-size: 12px;
+		    color: #fff;
+		    font-weight: 700;
+		    text-align: center;
+		    border-radius: 2px;
+		}
     </style>
 </head>
 
@@ -137,93 +165,18 @@
 
 
                 <li class="menu">상태</li>
-                <li class="menu"><input type="checkbox" name="chk" class="task" value="4"  id="id4"><label
+                <li class="menu"><input type="radio" name="state" class="task" value="4"  id="id4"><label
                         for="id4"> 요청</label></li>
-                <li class="menu"><input type="checkbox" name="chk" class="task" value="5" id="id5"><label
+                <li class="menu"><input type="radio" name="state" class="task" value="5" id="id5"><label
                         for="id5"> 진행</label></li>
-                <li class="menu"><input type="checkbox" name="chk" class="task" value="6" id="id7"><label
-                        for="id7"> 완료</label></li>
-                <li class="menu"><input type="checkbox" name="chk" class="task" value="7" id="id8"><label
-                        for="id8"> 보류</label></li>
+                <li class="menu"><input type="radio" name="state" class="task" value="6" id="id6"><label
+                        for="id6"> 완료</label></li>
+                <li class="menu"><input type="radio" name="state" class="task" value="7" id="id7"><label
+                        for="id7"> 보류</label></li>
             </ul>
 
         </div>
- <script type="text/javascript">
- var checkArr = [];     // 배열 초기화
-	$("input[name='chk']").change(function(){
-		$("input:checkbox[name=chk]:checked").each(function(i) {
-	        checkArr.push($(this).val());// 체크된 것만 값을 뽑아서 배열에 push
-	        console.log("뭐야 : " + checkArr);
-	    });
-		var allData = {"valueChk": checkArr};
-		console.log(allData);				
-	    $.ajax({
-	    	contentType : 'application/json; charset:UTF-8',
-	        url: '${pageContext.request.contextPath}/ptask',
-	        type: 'get',
-	        dataType : 'json',
-	        data: allData,
-	        success : function(result) {
-	        	alert("성공");
-				console.log(result);
-					var events = [];
-					if (result != null) {
-						$.each(result, function(index, element) {
-							console.log(element);
-							var sstart = element.sstart;
-							var send = element.send;
-							var bname = element.bname;
-							
-							var startdate = moment(sstart).format('YYYY-MM-DD');
-							var enddate = moment(send).format('YYYY-MM-DD'); 
-							
-							var aaa = startdate + "/" + bname;
-							console.log("확인 event" + startdate + "," + bname);
-							events.push({
-									title : aaa,
-									start : startdate,
-									end : enddate,
-									/* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
-									color:"#ff3399"   */
-							}); //.push()
-							console.log(event); 
-						}); //.each()
-						console.log(events);
-					}//if end  
-					successCallback(events);
-				}//success: function end   
-	    });
-	});
-    </script>
-    
-<style>
-.icon_task1{
-	background-color: #4aaefb;
-}
-.icon_task2{
-	background-color: #50b766;
-}
-.icon_task3{
-	background-color: #2e417e;
-}
-.icon_task4{
-	background-color: #d2d3d6;
-}
 
-.icon_task1, .icon_task2, .icon_task3, .icon_task4{
-    display: inline-block;
-    width: 68px;
-    height: 18px;
-    line-height: 16px;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 700;
-    text-align: center;
-    border-radius: 2px;
-}
-
-
-</style>
 
         <div class="contents">
              	  <input type="hidden" name="pno" id="pno" value="${pno}">
@@ -231,8 +184,10 @@
                 <div class="task_title">전체 업무(${listCount})</div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     onclick="location.href=''">닫기</button>
+                    <sec:authentication property="principal.uname" var="uname"/>
+                    <input type="hidden" value="${uname}" id="uname">
                 <div class="atask_list">
-                    <table width="100%" class="board-listheader" cellpadding="0" cellspacing="0">
+                    <table id="tasktable" width="100%" class="board-listheader" cellpadding="0" cellspacing="0">
                         
                         <thead>
                             <tr>
@@ -245,8 +200,8 @@
                             </tr>
                         </thead>
                           <c:forEach var="tasklist" items="${tasklist}" varStatus="status">
-                            <tr>
-                                <th>${tasklist.bno }</th>
+                            <tr class="list">
+                                <th>${tasklist.rownum }</th>
                                 <th>
                                 <c:choose>
                                 <c:when test="${tasklist.tstate  eq '1' }"><span class="icon_task1">요청</span></c:when>
@@ -255,41 +210,13 @@
                                 <c:when test="${tasklist.tstate  eq '4' }"><span class="icon_task4">보류</span></c:when>
                                 </c:choose>
                                 </th>
-                                <th>${tasklist.tpriority }</th>
+                                <th class="tpriority">${tasklist.tpriority }</th>
                                 <th style="text-align: left;"><a href="${pageContext.request.contextPath}/project/ptask?pno=${pno}&bno=${tasklist.bno}">
-                                ${tasklist.bname}</a></th>
-                                <th>${tasklist.taskmanager}</th>
-                                <th>${tasklist.bdate }</th>
+                                ${tasklist.boardalldto.bname}</a></th>
+                                <th class="taskmanager">${tasklist.taskmanager}</th>
+                                <th>${tasklist.boardalldto.bdate }</th>
                             </tr>
                             </c:forEach>
-							<td colspan="6">
-							<c:if test="${currentPage <= 1}">
-						&lt; &nbsp;
-						</c:if> <c:if test="${currentPage > 1}">
-									<c:url var="dailyprev" value="/ptask">
-										<c:param name="page" value="${currentPage-1}" />
-									</c:url>
-									<a href="${dailyprev}">&lt; &nbsp; &nbsp; &nbsp; </a>
-								</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
-								<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
-									<!-- eq : == / ne : != -->
-									<c:if test="${p eq currentPage}">
-										<font color="red" size="4"><b>${p} &nbsp; &nbsp;
-												&nbsp;</b></font>
-									</c:if>
-									<c:if test="${p ne currentPage}">
-										<c:url var="dailychk" value="/ptask">
-											<c:param name="page" value="${p}" />
-										</c:url>
-										<a href="${dailychk}">${p} &nbsp; &nbsp; &nbsp;</a>
-									</c:if>
-								</c:forEach> <c:if test="${currentPage >= maxPage}"> &nbsp; &gt;
-							</c:if> <c:if test="${currentPage < maxPage}">
-									<c:url var="dailynext" value="/ptask">
-										<c:param name="page" value="${currentPage+1}" />
-									</c:url>
-									<a href="${dailynext}">&nbsp; &gt;</a>
-								</c:if></td>
                 </table>
                 </div>
 
@@ -297,6 +224,148 @@
         </div>
 
     </div>
+    
+    <script>
+    $("input:radio[id='id1']").prop("checked",true);
+    let header = $("meta[name='_csrf_header']").attr("content");
+    let token = $("meta[name='_csrf']").attr("content");
+    
+    // 업무 구분
+    $("#id1").click(function(){
+    	let pno = $('#pno').val();
+    	$("#id4").prop("checked", false);
+    	$("#id5").prop("checked", false);
+    	$("#id6").prop("checked", false);
+    	$("#id7").prop("checked", false);
+    	$.ajax({
+			url: "${pageContext.request.contextPath}/project/taskmy",
+			type: "POST",
+			data: {pno:pno},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+			},
+			success: function (list) {
+			    console.log(list);
+			    taskappend(list);
+			}
+		})
+    })
+    
+    $("#id2").click(function(){
+    	let pno = $('#pno').val();
+    	$("#id4").prop("checked", false);
+    	$("#id5").prop("checked", false);
+    	$("#id6").prop("checked", false);
+    	$("#id7").prop("checked", false);
+    	$.ajax({
+			url: "${pageContext.request.contextPath}/project/taskrequire",
+			type: "POST",
+			data: {pno:pno},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+			},
+			success: function (list) {
+			    console.log(list);
+			    taskappend(list);
+			}
+		})
+    })
+    
+    $("#id3").click(function(){
+    	let pno = $('#pno').val();
+    	$("#id4").prop("checked", false);
+    	$("#id5").prop("checked", false);
+    	$("#id6").prop("checked", false);
+    	$("#id7").prop("checked", false);
+    	$.ajax({
+			url: "${pageContext.request.contextPath}/project/taskall",
+			type: "POST",
+			data: {pno:pno},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+			},
+			success: function (list) {
+			    console.log(list);
+			    taskappend(list);
+			}
+		})
+    })
+    
+    
+    // 업무 리스트 append
+		function taskappend(list){
+        	 $("#tasktable").text("");
+        	 let html="";
+			html += '<thead><tr><th>번호</th><th>상태</th><th>우선순위</th><th width="40%;">제목</th><th>담당자</th><th>수정일</th></tr></thead>'
+        	 for(let i=0; i<list.length; i++){
+        		html += "<tr class='list'>";
+        		html += "<th>"+list[i].rownum+"</th>";
+        		html += "<th>";
+        		if(list[i].tstate==="1"){
+        			html += '<span class="icon_task1">요청</span>';
+        		} else if(list[i].tstate==="2"){
+        			html += '<span class="icon_task2">진행</span>';
+        		} else if(list[i].tstate==="3"){
+        			html += '<span class="icon_task3">완료</span>';
+        		} else {
+        			html += '<span class="icon_task4">보류</span>';
+        		}
+        		html += '</th> <th class="tpriority">'+list[i].tpriority+'</th>';
+        		html += '<th style="text-align: left;">'+list[i].boardalldto.bname+'</th>';
+        		html += '<th class="taskmanager">'+list[i].taskmanager+'</th>'
+        		html += '<th>'+list[i].boardalldto.bdate+'</th></tr>'
+         };
+        	 $('#tasktable').append(html);
+    };
+    
+    // 상태 분류
+    $(document).on("click","#id4",function(){
+    	$(".list").hide();
+    	$(".list").each(function(index){
+       		let state1 = $(this).find('.icon_task1');
+       		if(state1.text()==="요청"){
+       			console.log("요청클릭")
+       			$(this).css("display","table-row");
+       		}
+       });
+    });
+    
+    $(document).on("click","#id5",function(){
+    	$(".list").hide();
+    	$(".list").each(function(index){
+       		let state1 = $(this).find('.icon_task2');
+       		if(state1.text()==="진행"){
+       			console.log("진행클릭")
+       			$(this).css("display","table-row");
+       		}
+       });
+    });
+    
+    $(document).on("click","#id6",function(){
+    	$(".list").hide();
+    	$(".list").each(function(index){
+       		let state1 = $(this).find('.icon_task3');
+       		if(state1.text()==="완료"){
+       			console.log("완료클릭")
+       			$(this).css("display","table-row");
+       		}
+       });
+    });
+    
+    $(document).on("click","#id7",function(){
+    	$(".list").hide();
+    	$(".list").each(function(index){
+       		let state1 = $(this).find('.icon_task4');
+       		if(state1.text()==="보류"){
+       			console.log("보류클릭")
+       			$(this).css("display","table-row");
+       		}
+       });
+    });
+    
+    </script>
+    
+    
 </body>
 
 </html>

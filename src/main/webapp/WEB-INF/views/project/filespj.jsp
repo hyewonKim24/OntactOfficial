@@ -163,7 +163,7 @@
     /* 왼쪽 메뉴 */
     .file_menu {
         width: 250px;
-        height: 100%;
+        /* height: 100%; */
         overflow-x:hidden;
         overflow-y: hidden;
         background-color: #fff;
@@ -494,8 +494,8 @@
                             <c:forEach items="${listpj}" var="pj">
                             <li class="project_list_sub">
                                 <a class="pjlist" style="cursor:pointer;">
-                                    <span>${pj.pname }</span>
-                                    <input type="hidden" value="${pj.pno}" class="pno">
+                                    <span>${pj.PNAME }</span>
+                                    <input type="hidden" value="${pj.PNO}" class="pno">
                                 </a>
                             </li>
                             </c:forEach>

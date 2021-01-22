@@ -18,6 +18,7 @@
 	<result property="taskmanager" column="taskmanager" />
 	<result property="uname" column="uname" />
 	<result property="runame" column="runame" />
+	<result property="rownum" column="rownum"/>
 	<collection property="boardalldto" resultMap="resultBoardAll"></collection>
 	</resultMap>
 	
@@ -35,15 +36,87 @@
 	
 	<select id="PListTaskAll" resultType="map" resultMap="resultTask">
 	<![CDATA[
-			select b.pno, b.uno, b.bno, t.tstate, t.tpriority, b.bname, t.taskmanager, b.bdate, u.uname 
-            from project p 
-            inner join boardall b on p.pno = b.pno
-            inner join task t on b.bno = t.bno
-            inner join users u on u.uno = b.uno
-            where (u.uname =#{uname} or t.taskmanager like =#{uname}) and t.tstate = #{tstate}
-            order by t.tstart
+		select rownum, x.*
+		        from( select t.bno as bno 
+		            ,u.uname as uname
+		            ,t.tstate as tstate
+		            ,t.trate as trate
+		            ,t.tpriority as tpriority
+		            ,t.tmemo as tmemo
+		            ,t.taskmanager as taskmanager
+		            ,b.pno as pno
+		            ,b.uno as uno
+		            ,b.bname as bname
+		            ,b.bdate as bdate
+		            from boardall b
+		            inner join task t
+		                on t.bno=b.bno
+		            inner join users u
+		                on b.uno = u.uno
+		            where b.pno=#{pno}
+		            order by bno desc) x
 		]]>
 	</select>
+	
+	<select id="PListTaskMy" resultType="map" resultMap="resultTask">
+	<![CDATA[
+			select e.*
+		    from
+		    (select rownum, x.*
+		        from( select t.bno as bno 
+		            ,u.uname as uname
+		            ,t.tstate as tstate
+		            ,t.trate as trate
+		            ,t.tpriority as tpriority
+		            ,t.tmemo as tmemo
+		            ,t.taskmanager as taskmanager
+		            ,b.pno as pno
+		            ,b.uno as uno
+		            ,b.bname as bname
+		            ,b.bdate as bdate
+		            from boardall b
+		            inner join task t
+		                on t.bno=b.bno
+		            inner join users u
+		                on b.uno = u.uno
+		            where b.pno=#{pno}
+		            order by bno desc)x
+		    )e
+		    where e.uname=#{uname}
+		]]>
+	</select>
+	
+	<select id="PListTaskRequire" resultType="map" resultMap="resultTask">
+	<![CDATA[
+			select e.*
+		    from
+		    (select rownum, x.*
+		        from( select t.bno as bno 
+		            ,u.uname as uname
+		            ,t.tstate as tstate
+		            ,t.trate as trate
+		            ,t.tpriority as tpriority
+		            ,t.tmemo as tmemo
+		            ,t.taskmanager as taskmanager
+		            ,b.pno as pno
+		            ,b.uno as uno
+		            ,b.bname as bname
+		            ,b.bdate as bdate
+		            from boardall b
+		            inner join task t
+		                on t.bno=b.bno
+		            inner join users u
+		                on b.uno = u.uno
+		            where b.pno=#{pno}
+		            order by bno desc)x
+		    )e
+		    where taskmanager=#{uname}
+		]]>
+	</select>
+	
+	
+	
+	
 	<!-- 트정업무 개수 조회 -->
 		<select id="selectOne" resultType="map" resultMap="resultTask">
 	<![CDATA[

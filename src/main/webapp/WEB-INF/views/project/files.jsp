@@ -25,8 +25,7 @@
     html,
     body {
         width: 100%;
-        height: 100%;
-        
+       /*  height: 100%; */
         position: relative;
         font-size: 14px;
         font-family: Noto Sans KR;
@@ -108,6 +107,7 @@
         width:100%;
         height:100%;
         display:flex;
+        overflow:scroll;
     }
     .title_close{
         width: 70px;
@@ -161,7 +161,7 @@
     /* 왼쪽 메뉴 */
     .file_menu {
         width: 250px;
-        height: 100%;
+        /* height: 100%; */
         overflow-x:hidden;
         overflow-y: hidden;
         background-color: #fff;
@@ -385,6 +385,7 @@
     padding: 20px 0px 0 20px;
     display:flex;
     flex-wrap:wrap;
+    
     }
     .piclist_tr{
     display: inline-block;
@@ -490,8 +491,8 @@
                             <c:forEach items="${listpj}" var="pj">
                             <li class="project_list_sub">
                                 <a class="pjlist" style="cursor:pointer;">
-                                    <span>${pj.pname }</span>
-                                    <input type="hidden" value="${pj.pno}" class="pno">
+                                    <span>${pj.PNAME }</span>
+                                    <input type="hidden" value="${pj.PNO}" class="pno">
                                 </a>
                             </li>
                             </c:forEach>

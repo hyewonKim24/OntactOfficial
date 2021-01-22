@@ -37,14 +37,25 @@ public class TaskServiceImpl implements TaskService {
 	AlertService alertService;
 	@Autowired
 	FilesDao filesdao;
+	
+	// 업무 리스트
+	@Override
+	public List<TaskDto> PListTaskAll(String pno) throws Exception{
+		return taskDao.PListTaskAll(pno);
+	}
+	@Override
+	public List<TaskDto> PListTaskMy(HashMap<String, String> paramMap) throws Exception {
+		return taskDao.PListTaskMy(paramMap);
+	}
+	@Override
+	public List<TaskDto> PListTaskRequire(HashMap<String, String> paramMap) throws Exception {
+		return taskDao.PListTaskRequire(paramMap);
+	}
+	
+	// 혜원
 	@Override
 	public List<TaskDto> selectOne(BoardAllDto Bdto) throws Exception {
 		return taskDao.selectOne(Bdto);
-	}
-	@Override
-	public List<TaskDto> PListPTaskAll(HashMap<String, String> paramMap)
-			throws Exception {
-		return taskDao.PListTaskAll(paramMap);
 	}
 	@Override
 	public int listCount(int to) {

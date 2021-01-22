@@ -61,18 +61,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	//로그인 후 url 설정
 	protected void resultRedirectStrategy(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        
-        if(savedRequest!=null) {
-            String targetUrl = savedRequest.getRedirectUrl();
-            redirectStratgy.sendRedirect(request, response, targetUrl);
-            //권한있는 페이지
-        } else {
+//        
+//        SavedRequest savedRequest = requestCache.getRequest(request, response);
+//        
+//        if(savedRequest!=null) {
+//            String targetUrl = savedRequest.getRedirectUrl();
+//            redirectStratgy.sendRedirect(request, response, targetUrl);
+//            //권한있는 페이지
+//        } else {
             redirectStratgy.sendRedirect(request, response, defaultUrl);
-            //로그인페이지
-        }
-        
+//            //로그인페이지
+//        }
+//        
     }
 
 	public String getUemail() {
