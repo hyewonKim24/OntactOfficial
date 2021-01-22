@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../main/header.jsp"%>
 <%@ include file="pjsidebar.jsp" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -28,7 +29,7 @@ body {
 }
 
 #pj_board {
-	margin: 20px auto 0 230px;
+	margin: 80px auto 0 230px;
 	width: 970px;
 }
 
@@ -335,20 +336,6 @@ body {
 				console.log("list 불러오기 실패");
 			}
 		});
-		
-		
-		/* $.each(listpj, function(index, listpj) {
-            var color = backgroundColor();
-            var proDiv = '';
-            
-           	proDiv += '<div class="pj_box" style="background-color:' + color + '";>'
-            proDiv += '<div class="proDiv-title">' + listpj.pname;
-            proDiv += '<input type="hidden" value="' + listpj.pno + '"></div>';
-            proDiv += '<div class="proDiv-contents">' + listpj.pdesc + '</div>'
-            proDiv += '<div class="proDiv-star"><i class="far fa-star"></i></div>'
-            proDiv += '</div>'
-            $('.pj_box').prepend(proDiv);
-        }); */  
         });  
 	
 	//<div id="pj_project" class="pj_box">

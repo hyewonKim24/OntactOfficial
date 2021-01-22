@@ -1393,24 +1393,24 @@
 			}
 			/* 윤진 :체크박스 설정*/
 			/*unchecked */
-			.todo-cont-list input[type="checkbox"] {
+			.todo-cont-list li input[name="tdcheck"] {
 				display: none;
 				width: 10%;
 			}
-			.todo-cont-list input[type="checkbox"]+label {
+			.todo-cont-list li input[name="tdcheck"]+label {
 				display: inline-block;
 				width: 20px;
 				height: 20px;
 				margin: 10px 10px 10px 25px;
 				vertical-align: middle;
-				background: url("${pageContext.request.contextPath}/resources/img/checked-2-01.png") left top no-repeat;
+				background: url("../img/checked-2-01.png") left top no-repeat;
 				cursor: pointer;
 				background-size: cover;
 				float: left;
 			}
 			/*checked */
-			.todo-cont-list input[type="checkbox"]:checked+label {
-				background: url("${pageContext.request.contextPath}/resources/img/checked-2-02.png") top no-repeat;
+			.todo-cont-list li input[name="tdcheck"]:checked+label {
+				background: url("../img/checked-2-02.png") top no-repeat;
 				background-size: cover;
 			}
 			/* 윤진 :할일 내용*/
@@ -1950,16 +1950,31 @@
    margin: 0 10px;
    line-height: 44px;
    font-weight: 700;
-   background-color: tran;
+   background-color: transparent;
 }
 
 .tddate{
 	border: none;
 	width: 45px;
 	text-align: center;
+	cursor: pointer;
 }
 /*할일 담당자 */
 .todo-08{
-    width: 25px;
+    width: 32px;
     margin-top:10px;
+}
+.todo-09{
+	width: 50px;
+	height: 15px;
+	font-size: 12px;
+	display: none;
+	text-align: center;
+	border:none;
+	border-radius: 5px;
+	color: #ffffff;
+	background-color: #333333;
+	position: absolute;
+	right: 0;
+	z-index:21;
 }

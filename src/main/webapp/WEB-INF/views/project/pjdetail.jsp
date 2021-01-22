@@ -2153,12 +2153,13 @@
                               <div class="todo-title">
                                   <div class="todo-list-title">${blist.bname }</div>
                                   <span class="todo-list-per">33%</span>
-                                  <span class="todo-list-ing">완료 1 / 전체 3</span>
+                                  <span class="todo-list-ing">완료<span class="tdcompcnt-${blist.bno}"></span>/ 전체 ${blist.todoViewDto.size()}</span>
                               </div>
-                              <ul class="todo-cont-list">
+                              <ul class="todo-cont-list todo-cont-list-${blist.bno}">
+                                 	<%-- <input type="hidden" class="todo-cont-list-${blist.bno}" value="bno-${blist.bno}"> --%>
                               <c:forEach items="${blist.todoViewDto}" var="todo" varStatus="e">
-                                  <li>
-                                      <input type="checkbox" class="todo-05" id="todocheck-${todo.tdno}" name="tdcheck" value="${todo.tdcheck}"><label for="todocheck-${todo.tdno}"></label>
+                                  <li class="todo tdno-${todo.tdno}">
+                                    <input type="checkbox" class="todo-05" id="todocheck-${todo.tdno}" name="tdcheck" value="${todo.tdcheck}"><label for="todocheck-${todo.tdno}"></label>
                               		<input type="hidden" class="tdno" name="tdno" value="${todo.tdno}">
                                       <c:if test="${todo.tdcheck eq 0}">
                                           <script>
@@ -2172,8 +2173,9 @@
                                               $(function(){
                                               	$("#todocheck-${todo.tdno}").prop("checked", true);
                                               });
-                                          </script>	
+                                          </script>
                                       </c:if>
+                                      
                                       <script>
                                       // 할일 체크 상태 변경
                                       $(function(){
@@ -2183,6 +2185,7 @@
                                       	console.log(tdno);
                                       	console.log(pno);
                                           if($(this).is(":checked")==true){
+                                        	  
                                                   $.ajax({
                                                       url: "${pageContext.request.contextPath}/project/tdchecktrue",
                                                       data: {
@@ -2214,19 +2217,43 @@
                                                   }
                                               });
                                           };
-                                      });
+                                      	});
+			                            $(".tdno-${todo.tdno}", function(){
+			                            	/* var aaa = $(this).find("input:checkbox[id='todocheck-${todo.tdno}']:checked").length; */
+			                            	var aaa = $(this).find("input:checkbox[name=tdcheck]:checked").length;
+                                            console.log("******"+aaa);
+                                            $(this).parents('.todo-cont').find(".tdcompcnt-${blist.bno}").text(aaa);
+			                            	
+			                            	/* var aaa = $('.todo-cont-list-${blist.bno}').find("input:checkbox[name=tdcheck]:checked").length;
+			                                console.log(aaa);
+			                                $(".tdcompcnt").html(aaa); */
+			                             });
+                                      	
+                                      	/* $('.todo').each(function(){
+                                      		var todo = $(this).find('.ttt').val();
+                                      		console.log("****"+todo);
+                                      	}); */
+                                      	
+                                      	
+                                      	/*var todo = $('.todo').children('.ttt').val();
+                                      	console.log('ddd---' + todo); */
+                                      	/* var tdchkcnt = $("."+todo).find('input[name=tdcheck]:checked').length; */
+                                      	
+                                      	/*var tdchkcnt = $("input[name=tdcheck]:checked").length;
+                                      	 var tdchkcnt = $("#todocheck-${todo.tdno}").prop("checked", true).length();*/
+                                      	
+                                      	/* console.log("으아아ㅏ"+ tdchkcnt );
+                                      	$('.tdchkcnt').text(tdchkcnt);  */
                                       });
                                       </script>
                                       <div class="todo-06" >${todo.tdcontent}</div>
-                                     	<div class="todo-07">
-                                      	<input type="text" class="tddate" id="tddate-${todo.tdno}" name="tddate" value="${todo.tddate}" >
+                                      <div class="todo-07">
+                                      	<input type="text" class="tddate" id="tddate-${todo.tdno}" onfocus="this.blur();" name="tddate" value="${todo.tddate}" >
                                       </div>
                                       <script>
                                       // 할일 체크 상태 변경
                                       $(function(){
                                       	$("#tddate-${todo.tdno}").click(function(){
-                                      		var tdno = ${todo.tdno};
-                                      		var tddate = ${todo.tddate};
                                       		$(this).datepicker({
                   				    	        dateFormat: 'mm/dd' //Input Display Format 변경
                   				    	        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -2249,17 +2276,13 @@
                   				    	        	console.log($(this));
                   				    	        	$(this).val(date);
                   				    	        	console.log($(this).val()); 
-                  				    	        	
-                  				    	        	console.log("Selected date: " + dateText + "; input's current value: " + this.value);
-                                  	    	        var pno=${pno};
-                                                  	var bno=${blist.bno};
-                                                  	var tstart =dateText;
-                                                  	console.log(tstart+"값");
+                  				    	        	var tdno = ${todo.tdno};
+                                              		var tddate = date;
                                                   		$.ajax({
                                       						url: "${pageContext.request.contextPath}/project/tddateupdate",
                                       						data: {
-                                      							"tdno" : bno,
-                                      							"tddate" : pno
+                                      							"tdno" : tdno,
+                                      							"tddate" : tddate
                                       						},
                                       						dataType: "json",
                                       						success:function(data){
@@ -2269,18 +2292,31 @@
                                       							console.log("update 실패");
                                       						}
                                                   	});
-                                  	    	        $(this).change();
                   				    	        }
                   				    	    });
                                       	});
                                      	});
                                       </script>
-                                      <img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="20px" class="todo-08">
+                                      <c:if test="${todo.ufilepath == null}">
+                                      	<img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="20px" class="todo-08 todo-08-${todo.tdno}">
+                                     	<input type="text" class="todo-09" value="">
+                                      </c:if>
+                                      <c:if test="${todo.ufilepath != null}">
+                                      	<img src="${todo.ufilepath}" class="todo-08 todo-08-${todo.tdno} userimg">
+                                      	<input type="text" class="todo-09" value="">
+                                      </c:if>
+                                     	<script>
+                                     		$(".todo-08-${todo.tdno}").hover(function(){
+                                     			$(this).next().css("display","inline-block");
+                                     			$(this).next().val("${todo.uname}");
+                                     		},function(){
+                                     			$(this).next().css("display","none");
+                                     		});
+                                     	</script>
                                   </li>
-                              </c:forEach>	
+                              </c:forEach>
                               </ul>
                           </div>
-                         
 							
                       </div>
                       	

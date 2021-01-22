@@ -24,7 +24,7 @@ public class TodoController {
 	@Autowired
 	private TodoService todoService;
 	
-	//윤진 : todo 프로젝트 디테일로 들어가기
+	//윤진 : todo 디테일로 들어가기
 	@SuppressWarnings("finally")
 	@RequestMapping(value="project/todo",  method = RequestMethod.GET)
 	public ModelAndView selectTodoList(ModelAndView mv, Authentication authentication, BoardAllViewDto ball){
