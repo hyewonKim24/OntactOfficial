@@ -183,7 +183,10 @@
 	<!-- 해당 cno의 내 정보 빼고 users list 불러오기 -->
 	<select id="ChatUsersList" resultType="arraylist" resultMap="resultUsers" >
  	<![CDATA[
-		SELECT * FROM USERS WHERE CNO=#{cno} AND UNO NOT IN (#{uno})
+		SELECT u.uno,u.cno,c.cname,u.uname,u.ufilepath,u.urank,u.uemail FROM USERS u
+		inner join company c
+		on c.cno=u.cno
+		where u.cno=#{cno} and UNO NOT IN (#{uno})
 		]]>
 	</select>
 		

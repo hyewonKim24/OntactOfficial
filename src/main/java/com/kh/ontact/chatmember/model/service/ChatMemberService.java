@@ -15,5 +15,5 @@ public interface ChatMemberService {
 	List<String> SearchChatno(ChatMemberDto c) throws Exception;
 	int chatmemCount(String chatno) throws Exception;
 	List<String> chatmemName(String chatno) throws Exception;
-
+	int projectInsertmember(List<ChatMemberDto> c) throws Exception;
 }

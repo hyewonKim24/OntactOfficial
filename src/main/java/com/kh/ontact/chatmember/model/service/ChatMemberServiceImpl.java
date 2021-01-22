@@ -21,6 +21,16 @@ public class ChatMemberServiceImpl implements ChatMemberService{
 	public int insertChatMember(ChatMemberDto c) throws Exception {
 		return chatMemDao.insertChatMember(c);
 	}
+	
+	@Override
+	public int projectInsertmember(List<ChatMemberDto> c) throws Exception {
+		int rs =0;
+		for(int i=0;i<c.size();i++) {
+			rs += chatMemDao.insertChatMember(c.get(i));
+		}
+		return rs;
+		
+	}
 
 	@Override
 	public List<ChatDto> mychatlist(String uno) throws Exception {

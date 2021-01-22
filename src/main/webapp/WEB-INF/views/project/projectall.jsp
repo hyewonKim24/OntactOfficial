@@ -291,7 +291,7 @@ body {
     letter-spacing: -0.5px;
     background-color: #fc0d1b;
     border-radius: 24px;
-    z-index: 100;
+    z-index: 2;
 }
 </style>
 <script>

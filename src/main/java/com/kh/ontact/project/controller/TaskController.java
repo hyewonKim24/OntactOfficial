@@ -474,63 +474,7 @@ public class TaskController {
 		}
 		
 		
-		
-		//프로젝트 멤버 초대 창 열기
-		//채팅방 초대하기
-		@RequestMapping(value = "/project/projectinvite", method = RequestMethod.GET)
-		public ModelAndView projectinvite(@RequestParam(name = "pno") String pno, ModelAndView mv, UsersDto dto) {
-			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String cno = user.getCno();
-			String uno = user.getUno();
-			dto.setPno(pno);
-			dto.setCno(cno);
-			dto.setUno(uno);
-			List<UsersDto> ulist = null;
-			try {
-				ulist=usersService.projectInviteList(dto);
-				System.out.println("프로젝트 초대 리스트:"+ulist);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			mv.addObject("ulist", ulist);
-			mv.addObject("pno", pno);
-			mv.setViewName("project/projectinvite");
-			return mv;
-		}
-		
-		//프로젝트 멤버  insert
-		@RequestMapping(value = "/project/projectmemberinsert")
-		public ModelAndView projectmemberinsert(@RequestParam(name = "uno") List<String> uno,
-				@RequestParam(value = "pno", required = false) int pno, ModelAndView mv) {
-
-			List<ProjectMemberDto> listdto = new ArrayList<ProjectMemberDto>();
-			ProjectMemberDto dto =null;
-			String ppno= Integer.toString(pno);
-			int membercount =0;
-			String mcount=null;
-			try {
-				for (String a : uno) {
-					dto = new ProjectMemberDto();
-					dto.setPno(ppno);
-					dto.setUno(a);
-					listdto.add(dto);
-					membercount++;
-					System.out.println("카운트:"+membercount);
-				}
-				int rs =pmService.projectMeberinvite(listdto);
-				System.out.println("멤버추가"+rs);
-				mcount=Integer.toString(membercount);
-				
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			mv.addObject("mcount", mcount);
-			mv.addObject("pno",ppno);
-			mv.setViewName("redirect:/project/pjdetail");
-			return mv;
-		}
-
+	
 		
 	
 }

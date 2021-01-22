@@ -467,7 +467,6 @@
 									function sendMessage() {
 										sock.send(pno);
 										console.log("글 작성 소켓 보냄");
-										alert('소켓 보냄');
 									}
 									
 									 var str = "";
@@ -600,7 +599,6 @@
 							function sendMessage() {
 								sock.send(pno);
 								console.log("글 작성 소켓 보냄");
-								alert('소켓 보냄');
 							}
 							
 							var frm = document.sche_frm;
@@ -991,7 +989,6 @@
 									function sendMessage() {
 										sock.send(pno);
 										console.log("글 작성 소켓 보냄");
-										alert('소켓 보냄');
 									}
 									
 									var frm = document.todo_frm;
@@ -1191,9 +1188,7 @@
 									value="${_csrf.token}" />
 								<input type="hidden" name="pno" id="pno" value="${pno}">
 								<div class="textbody">
-									<div class="title">
-										${blist.bname}
-									</div>
+									<h2 class="title">${blist.bname}</h2>
 									<div id="task-01">
 										<img src="${pageContext.request.contextPath}/resources/img/svg/clock-history.svg"
 											width="20px" height="20px" id="task-icon01">
@@ -3012,7 +3007,6 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 				function sendMessage() {
 					sock.send(pno);
 					console.log("글 작성 소켓 보냄");
-					alert('소켓 보냄');
 		
 				}
 				

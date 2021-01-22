@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,13 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ontact.chat.model.service.ChatService;
+import com.kh.ontact.chatmember.model.dto.ChatMemberDto;
+import com.kh.ontact.chatmember.model.service.ChatMemberService;
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
 import com.kh.ontact.project.model.dto.ProjectDto;
 import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.projectDept.model.dto.ProjectDeptDto;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
+import com.kh.ontact.users.model.dto.UsersDto;
+import com.kh.ontact.users.model.service.UsersService;
 
 @Controller
 public class ProjectController {
@@ -31,6 +38,15 @@ public class ProjectController {
 	private ProjectService pjService;
 	@Autowired
 	private DeptService deptServ;
+	@Autowired
+	private UsersService usersService;
+	@Autowired
+	private ProjectMemberService pmService;
+	@Autowired
+	private ChatService chatService;
+	@Autowired
+	private ChatMemberService chatMemService;
+
 
 	// 프로젝트 전체목록
 	@RequestMapping(value = "/project/all/list", method = RequestMethod.GET)
@@ -170,5 +186,73 @@ public class ProjectController {
 			return listpj;
 	}
 	
+	//프로젝트 멤버 초대 창 열기
+	//채팅방 초대하기
+	@RequestMapping(value = "/project/projectinvite", method = RequestMethod.GET)
+	public ModelAndView projectinvite(@RequestParam(name = "pno") String pno, ModelAndView mv, UsersDto dto) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String cno = user.getCno();
+		String uno = user.getUno();
+		dto.setPno(pno);
+		dto.setCno(cno);
+		dto.setUno(uno);
+		List<UsersDto> ulist = null;
+		try {
+			ulist=usersService.projectInviteList(dto);
+			System.out.println("프로젝트 초대 리스트:"+ulist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("ulist", ulist);
+		mv.addObject("pno", pno);
+		mv.setViewName("project/projectinvite");
+		return mv;
+	}
+	
+	//프로젝트 멤버  insert
+	@RequestMapping(value = "/project/projectmemberinsert")
+	public ModelAndView projectmemberinsert(@RequestParam(name = "uno") List<String> uno,
+			@RequestParam(value = "pno", required = false) int pno, ModelAndView mv) {
+		List<ProjectMemberDto> listdto = new ArrayList<ProjectMemberDto>();
+		ProjectMemberDto dto =null;
+		String ppno= Integer.toString(pno);
+		int membercount =0;
+		String mcount=null;
+		ChatMemberDto chatdto =null;
+		List<ChatMemberDto> chatlist = new ArrayList<ChatMemberDto>();
+		try {
+			//프로젝트 채팅방에 추가하기
+			String chatno = chatService.searchProChat(ppno);
+			for (String a : uno) {
+				dto = new ProjectMemberDto();
+				dto.setPno(ppno);
+				dto.setUno(a);
+				listdto.add(dto);
+				membercount++;
+				
+				//프로젝트 채팅방 추가
+				chatdto = new ChatMemberDto();
+				chatdto.setUno(a);
+				chatdto.setCreatchat(0);
+				chatdto.setChatno(chatno);
+				chatlist.add(chatdto);
+				System.out.println("카운트:"+membercount);
+				}
+			int rs =pmService.projectMeberinvite(listdto);
+			System.out.println("멤버추가"+rs);
+			mcount=Integer.toString(membercount);
+
+			int chatrs = chatMemService.projectInsertmember(chatlist);
+			System.out.println("플젝채팅방에 멤버 추가됨:"+chatrs);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("mcount", mcount);
+		mv.addObject("pno",ppno);
+		mv.setViewName("redirect:/project/pjdetail");
+		return mv;
+	}
+
 	
 }

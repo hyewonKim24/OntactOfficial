@@ -564,49 +564,97 @@ input:focus {
 	background: rgb(0, 0, 0);
 	opacity: 0.3;
 	z-index: 500;
-	display: none;
+	display:none;
 }
-
+.prof-bg-img{
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+}
 .prof-info {
+	background-color: #fff;
+	z-index: 512;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding: 10px 20px 0;
+	}
+.prof-info-wrap{
 	position: fixed;
 	width: 300px;
-	height: 300px;
+	height: 600px;
 	background-color: #fff;
-	z-index: 9000;
-	top: 30%;
+	z-index: 510;
+	top: 10%;
 	left: 40%;
 	border: 1px solid #fff;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	display: none;
+	dispaly:none;
 }
 
 .prof-exit {
-	margin-right: 10px;
-	margin-top: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+	z-index: 900;
+}
+
+.prof-top{
+	position: relative;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #e9eaed;
 }
 
 .prof-name {
-	float: left;
 	font-size: 30px;
 	font-weight: bold;
 	line-height: 50px;
-	padding: 10px;
-	margin-top: 20px;
-	margin-left: 10px;
+	pading-left:10px;
+	color:#505050;
 }
 
 .prof-cname {
-	font-size: 13px;
+	font-size: 18px;
 	line-height: 20px;
-	padding: 10px;
-	margin-top: 50px;
-	margin-left: 10px;
+	pading-left:10px;
+	color:#787878;
 }
 #Logout{
 	background-color: #fff;
 	border:none;
 	display:inline-block;
+}
+.prof-bottom{
+	padding-top:10px;
+}
+
+.prof-icon{
+	padding-right:10px;
+	vertical-align: middle;
+}
+.prof-content{
+	padding:10px 0 10px 0;
+
+}
+.prof-chat{
+	display:inline-block;
+	width: 260px;
+	height: 35px;
+	background-color: #432D73;
+	color:#fff;
+	border:1px solid #432D73;
+	border-radius: 10px;
+}
+.prof-bottom a{
+	color:#fff;
+	text-decoration: none;
+	font-size:15px;
+	line-height: 35px;
+	text-align: center;
 }
 .profile-img{
     content: "";
@@ -670,19 +718,21 @@ input:focus {
 						$("#alarm-count").html('');
 						$("#alarm-counts").html('');
 
-						$("#alarm-count").css("display","inline");
-						$("#alarm-counts").css("display","inline");
+						$("#alarm-count").css("display","none");
+						$("#alarm-counts").css("display","none");
 						
 						if(data==0 || data==null){
-							$("#alarm-count").remove();
-							$("#alarm-counts").remove();
+							$("#alarm-count").css("display","none");
+							$("#alarm-counts").css("display","none");
 						}else{
 							if(data>9){
-								$("#alarm-count").remove();
+								$("#alarm-count").css("display","none");
+								$("#alarm-counts").css("display","inline-block");
 								$("#alarm-counts").append(data);
 							}else{
+								$("#alarm-counts").css("display","none");
+								$("#alarm-count").css("display","inline-block");
 								$("#alarm-count").append(data);
-								$("#alarm-counts").remove(); 
 							}			
 						}
 						allChatAlert();
@@ -720,8 +770,10 @@ input:focus {
 					printHTML += "<a href=\"${pageContext.request.contextPath}/chat/chatroomdetail?chatno="+object[i].chatno+"\""+
 					" target='_blank' onClick=\"window.open(this.href,\'\', \'width=470, height=650\'); return false;\">";
 					printHTML += "<span class='chat-room-name' >";
-					printHTML += " <p class='chatlist-name'> "+ object[i].chatno +")"+ object[i].chatname;
-					printHTML += "<span class='chat-room-count'> "+object[i].mcount +"</span></span></p>";
+					printHTML += " <p class='chatlist-name'> "+ object[i].chatname;
+					printHTML += "<span class='chat-room-count'> ";
+					printHTML += "<img src='${pageContext.request.contextPath}/resources/img/svg/people-fill.svg' width='10px' height='10px'>&nbsp;"+object[i].mcount;
+					printHTML += "</span></span></p>";
 					printHTML += "<span class='chat-recent-content'>"+object[i].content+"</span>"
 					if(object[i].chatcount!=null && object[i].chatcount!=0){
 						printHTML += "<span class='chat-alert-count'>"+ object[i].chatcount +"</span></a></td>";
@@ -802,31 +854,78 @@ input:focus {
 			$(".chat-tab1").css("border", "none");
 			$(".chat-tab-wrap").hide();
 			$(".tel-tab-wrap").show();
+			$(".prof-info-wrap").css("display", "none");
 			$.ajax({
 			url: "${pageContext.request.contextPath}/userlist",
 			success:function(object){
 				$(".tel-all").html('');
 					var html="<table id='tel-list-table'>";
 				for(var i=0 in object){
-					console.log(object+"성공");
 					html+="<form action='${pageContext.request.contextPath}/chat/chatroomnew' method='post' id='chatfrm1'>";
 					html += "<tr class='tel-other'>";
-					html += "<input type='hidden' name='chatuno' value='"+object[i].uno+"'>";
-					html += "<input type='hidden' name='chatuname' value='"+object[i].uname+"'>";
 					if(object[i].ufilepath==null){
-					html += "<td><img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px' class='tel-my-img'></td>";
+						html += "<td><img src='${pageContext.request.contextPath}/resources/img/user-3.png' width='35px' height='35px' class='tel-my-img'></td>";
 					}else{
-					html += "<td><img src='"+object[i].ufilepath+"' width='35px' height='35px' class='tel-my-img'></td>";
+						html += "<td><img src='"+object[i].ufilepath+"' width='35px' height='35px' class='tel-my-img'></td>";
 					}
 					html += "<td class='tel-all-desc'>";
-					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname +" </a>";
+					html += "<a href='#' class='tel-prof-modal'>" +object[i].uname;
+					html += "<input type='hidden' name='chatuno' class='chatuno' value='"+object[i].uno+"'>";
+					html += "<input type='hidden' name='chatuname' class='chatuname' value='"+object[i].uname+"'>";
+					html += "<input type='hidden' name='ufilepath' class='ufilepath' value='"+object[i].ufilepath+"'>";
+					html += "<input type='hidden' name='dname' class='dname' value='"+object[i].dname+"'>";
+					html += "<input type='hidden' name='urank' class='urank' value='"+object[i].urank+"'>";
+					html += "<input type='hidden' name='uemail' class='uemail' value='"+object[i].uemail+"'>";
+					html += "<input type='hidden' name='cname' class='cname' value='"+object[i].cname+"'></a>";
 					html += " <a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+ object[i].uno+"&chatuname="+ object[i].uname+"\" onClick= \"window.open(this.href, \'\', \'width=470, height=650\'); return false;\">";
 					html += "<img src='${pageContext.request.contextPath}/resources/img/svg/chat-03.svg' width='30px' height='25px' class='tel-chat-icon'></a>";
 					html += "</td></tr></form>";
-					
 				}
 					html += "</table>";
 					$(".tel-all").append(html);
+					
+					$(".tel-other").click(function(){
+					});
+					
+					$(".tel-prof-modal").click(function() {
+						$(".prof-chat-wrap").html('');
+						$(".prof-bg-img").html('');
+						
+						var uno = $(this).find('.chatuno').val();
+						var uname = $(this).find('.chatuname').val();
+						var cname = $(this).find('.cname').val();
+						var dname = $(this).find('.dname').val();
+						var uemail = $(this).find('.uemail').val();
+						var urank = $(this).find('.urank').val();
+						var ufilepath = $(this).find('.ufilepath').val();
+						
+						console.log("ufilepath"+ufilepath);
+						
+/* 						if(ufilepath!=null || ufilepath!="null" ||ufilepath!=""){
+							var printhtml = "<img src='"+ufilepath+"' class='prof-bg-img'><a href='#' class='prof-exit'> &times;</a>";
+							$(".prof-bg-img").append(printhtml);
+						}else if(ufilepath==null || ufilepath=="null"){  */
+							var printhtml = "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' class='prof-bg-img'><a href='#' class='prof-exit'> &times;</a>";
+							$(".prof-bg-img").append(printhtml);
+/* 						} */ 
+							
+						var chathtml = "<a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+uno+"&chatuname="+uname+"\" onClick= \"window.open(this.href, \'\', \'width=470, height=650\'); return false;\" class='prof-chat'>채팅하기</a>";
+						$(".prof-chat-wrap").append(chathtml);
+						
+						$(".prof-name").text(uname);
+						$(".prof-cname").text(cname);
+						$(".prof-email").text(uemail);
+						$(".prof-cname").text(cname);
+						$(".prof-urank").text(urank);
+						$(".prof-info-dim").css("display", "block");
+						$(".prof-info-wrap").css("display", "block");
+						$(".prof-exit").click(function() {
+							$(".prof-info-dim").css("display", "none");
+							$(".prof-info-wrap").css("display", "none");
+						}); 
+					}); 
+
+						
 			},
 			error:function(){
 				console.log("실패");
@@ -909,16 +1008,6 @@ input:focus {
 		
 		
 		
-		
-		$(".tel-prof-modal").click(function() {
-			$(".prof-info-dim").css("display", "block");
-			$(".prof-info").css("display", "block");
-		});
-
-		$(".prof-exit").click(function() {
-			$(".prof-info-dim").css("display", "none");
-			$(".prof-info").css("display", "none");
-		});
 		
 		//채팅 검색기능
 		$("#chat-search-input").keyup(function(){
@@ -1197,24 +1286,38 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 											
 											
 
+										</div>
 											<!-- 연락처에서 이름 클릭했을 때 info 모달 -->
 											<div class="prof-info-dim"></div>
+											<div class="prof-info-wrap">
+											<div class="prof-bg-img">
+												</div>
 											<div class="prof-info">
-												<a href="#" class="prof-exit"> <svg version="1.1"
-														id="Capa1" xmlns="http://www.w3.org/2000/svg"
-														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-														viewBox="0 0 31.112 31.112"
-														style="enable-background: new 0 0 31.112 31.112;"
-														xml:space="preserve" width="12px" height="12px"
-														fill="#111111" storke="#111111" stroke-width="3px">
-<polygon
-															points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
-	29.698,31.112 31.112,29.698 16.97,15.556 " /></svg></a>
-												<p class="prof-name"></p>
-												<p class="prof-cname"></p>
+												<div class="prof-top">
+													<p class="prof-name"></p>
+													<p class="prof-cname"></p>
+												</div>
+												<div class="prof-bottom">
+													<p class="prof-content">
+													<img src="${pageContext.request.contextPath}/resources/img/svg/envelope-fill.svg" width="15px" height="15px" class="prof-icon">
+													<span class="prof-email"></span>
+													</p>
+													<p class="prof-content">
+													<img src="${pageContext.request.contextPath}/resources/img/svg/building.svg" width="15px" height="15px" class="prof-icon">
+													<span class="prof-dname"></span>
+													</p>
+													<p class="prof-content">
+													<img src="${pageContext.request.contextPath}/resources/img/svg/id-card-4.svg" width="15px" height="15px" class="prof-icon">
+													<span class="prof-urank"></span>
+													</p><br>
+													<span class="prof-chat-wrap">
+													</span>
+													
+												</div>
+												
+											</div>
 											</div>
 
-										</div>
 									</div>
 								</div>
 							</div>
@@ -1493,6 +1596,7 @@ $(document).ready(function() {
 				}
 			});
 		
+
 });
 </script>
 

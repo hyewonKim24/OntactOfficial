@@ -110,7 +110,7 @@ public class HeaderController {
 		List<UsersDto> ulist=null;
 		try {
 			ulist=usersService.ChatUsersList(dto);
-			//System.out.println("header controller"+ulist);
+			System.out.println("연락처 유저 리스트:"+ulist);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
