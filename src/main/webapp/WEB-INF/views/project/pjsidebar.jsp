@@ -487,7 +487,7 @@ input:checked+.slider:before {
 <body>
 	<div id="leftsidebar">
 		<nav id="pj_sidebar">
-			<button type="button" id="new_pj_btn" onclick="newpjmodal">+&nbsp;새
+			<button type="button" id="new_pj_btn">+&nbsp;새
 				프로젝트</button>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/project/all/list"> <svg version="1.1" class="pj_btn"

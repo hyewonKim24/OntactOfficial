@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ include file="../main/header.jsp"%>
 <%@ include file="./pjsidebar.jsp"%>
@@ -40,6 +41,11 @@
 	console.log("msgmsg : " + socketMsg);
 	
     </script>
+	<script>
+	//윤진: 할일 checked 변수선언
+	let todochecked_cnt = 0;
+	console.log("****** ~: "+todochecked_cnt);
+	</script>
 	</head>
 	
 	<body>
@@ -2150,17 +2156,23 @@
                           <div class="todo-cont">
                               <div class="todo-title">
                                   <div class="todo-list-title">${blist.bname }</div>
-                                  <span class="todo-list-per">33%</span>
+                                  <span class="todo-list-per">%</span>
                                   <span class="todo-list-ing">완료<span class="tdcompcnt-${blist.bno}"></span>/ 전체 ${blist.todoViewDto.size()}</span>
                               </div>
                               <ul class="todo-cont-list todo-cont-list-${blist.bno}">
                                  	<%-- <input type="hidden" class="todo-cont-list-${blist.bno}" value="bno-${blist.bno}"> --%>
-                              <c:forEach items="${blist.todoViewDto}" var="todo" varStatus="e">
+
+                              <c:forEach items="${blist.todoViewDto}" var="todo" varStatus="vs">
+                              	<c:if test="${todo != null}">
+                              	<input type="hidden" class="tdlength" value="${fn:length(blist.todoViewDto)}">
                                   <li class="todo tdno-${todo.tdno}">
-                                    <input type="checkbox" class="todo-05" id="todocheck-${todo.tdno}" name="tdcheck" value="${todo.tdcheck}"><label for="todocheck-${todo.tdno}"></label>
+                                    <input type="checkbox" class="todo-05" id="todocheck-${todo.tdno}" name="tdcheck" value="${todo.tdcheck}">
+                                    <label for="todocheck-${todo.tdno}"></label>
                               		<input type="hidden" class="tdno" name="tdno" value="${todo.tdno}">
+                              		
                                       <c:if test="${todo.tdcheck eq 0}">
                                           <script>
+                                      console.log("****** --: "+todochecked_cnt);
                                               $(function(){
                                                   $("#todocheck-${todo.tdno}").prop("checked", false);
                                               });
@@ -2168,6 +2180,8 @@
                                       </c:if>
                                       <c:if test="${todo.tdcheck eq 1}">
                                           <script>
+                                      todochecked_cnt++;
+                                      console.log("****** c: "+todochecked_cnt);
                                               $(function(){
                                               	$("#todocheck-${todo.tdno}").prop("checked", true);
                                               });
@@ -2192,6 +2206,18 @@
                                                       },
                                                       dataType: "json",
                                                       success:function(data){
+                                                          var todocheckedevent = $(".tdcompcnt-${blist.bno}").text();
+                                                          var todocheckedevent_cnt = Number(todocheckedevent);
+                                                          console.log("****** todocheckedevent_cnt++ "+todocheckedevent_cnt);
+                                                          $(".tdcompcnt-${blist.bno}").text(todocheckedevent_cnt+1);
+                                                          
+                                                          var e = $(".tdlength").val();
+                                                          console.log("e:"+e);
+                                                          var zzz = Math.round((todocheckedevent_cnt/e)*100);
+                                                          console.log("zzz"+zzz);
+                                                          $(".todo-list-per").prepend(zzz);
+                                                          
+                                                          //$(".tdcompcnt-${blist.bno}").text(a);
                                                           console.log("ajax_todoCheck:"+data+"chk 성공");
                                                       },
                                                       error:function(){
@@ -2208,6 +2234,13 @@
                                                   },
                                                   dataType: "json",
                                                   success:function(data){
+                                                      var todocheckedevent = $(".tdcompcnt-${blist.bno}").text();
+                                                      var todocheckedevent_cnt = Number(todocheckedevent);
+                                                      console.log("****** todocheckedevent_cnt-- "+todocheckedevent_cnt);
+                                                      $(".tdcompcnt-${blist.bno}").text(todocheckedevent_cnt-1);
+                                                      //$(".tdcompcnt-${blist.bno}").text(a);
+                                                      
+                                                      
                                                       console.log("ajax_todoCheck:"+data+"unchk 성공");
                                                   },
                                                   error:function(){
@@ -2216,32 +2249,6 @@
                                               });
                                           };
                                       	});
-			                            $(".tdno-${todo.tdno}", function(){
-			                            	/* var aaa = $(this).find("input:checkbox[id='todocheck-${todo.tdno}']:checked").length; */
-			                            	var aaa = $(this).find("input:checkbox[name=tdcheck]:checked").length;
-                                            console.log("******"+aaa);
-                                            $(this).parents('.todo-cont').find(".tdcompcnt-${blist.bno}").text(aaa);
-			                            	
-			                            	/* var aaa = $('.todo-cont-list-${blist.bno}').find("input:checkbox[name=tdcheck]:checked").length;
-			                                console.log(aaa);
-			                                $(".tdcompcnt").html(aaa); */
-			                             });
-                                      	
-                                      	/* $('.todo').each(function(){
-                                      		var todo = $(this).find('.ttt').val();
-                                      		console.log("****"+todo);
-                                      	}); */
-                                      	
-                                      	
-                                      	/*var todo = $('.todo').children('.ttt').val();
-                                      	console.log('ddd---' + todo); */
-                                      	/* var tdchkcnt = $("."+todo).find('input[name=tdcheck]:checked').length; */
-                                      	
-                                      	/*var tdchkcnt = $("input[name=tdcheck]:checked").length;
-                                      	 var tdchkcnt = $("#todocheck-${todo.tdno}").prop("checked", true).length();*/
-                                      	
-                                      	/* console.log("으아아ㅏ"+ tdchkcnt );
-                                      	$('.tdchkcnt').text(tdchkcnt);  */
                                       });
                                       </script>
                                       <div class="todo-06" >${todo.tdcontent}</div>
@@ -2310,10 +2317,22 @@
                                      		},function(){
                                      			$(this).next().css("display","none");
                                      		});
+                                     		var tdlist = $(".tdno-${todo.tdno}").size();
+                                            console.log("rrr"+tdlist);
                                      	</script>
                                   </li>
+                              	</c:if>
                               </c:forEach>
                               </ul>
+								<script>
+                              	//$(".tdno-${todo.tdno}", function(){
+                                  console.log("****** ${blist.bno} " + "${blist.bno}");
+                                  console.log("****** todochecked_cnt "+todochecked_cnt);
+                                  var a = todochecked_cnt;
+                                  $(".tdcompcnt-${blist.bno}").text(a);
+                                  todochecked_cnt = 0;
+	                  			//});
+                              </script>
                           </div>
 							
                       </div>
