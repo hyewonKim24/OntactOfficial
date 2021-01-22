@@ -32,6 +32,9 @@ public class UsersDao {
 	public void joinProjectDept() throws Exception{
 		sqlSession.insert("Users.joinProjectDept");
 	}
+	public void joinCompanyProject(String pno) throws Exception{
+		sqlSession.insert("Users.joinCompanyProject", pno);
+	}
 	
 	// 이메일 중복체크
 	public String emailChk(String uemail) throws Exception {
@@ -41,6 +44,12 @@ public class UsersDao {
 	// 유저 회원가입
 	public int joinGuest(UsersDto dto) throws Exception {
 		return sqlSession.insert("Users.joinGuest", dto);
+	}
+	public String pnoChk(String pname) throws Exception {
+		return sqlSession.selectOne("Users.pnoChk", pname);
+	}
+	public String joinDefaultPj(String pno) throws Exception {
+		return sqlSession.selectOne("Users.joinDefaultPj", pno);
 	}
 
 	// 임시비밀번호 확인

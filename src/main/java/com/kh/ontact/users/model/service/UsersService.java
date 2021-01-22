@@ -11,21 +11,22 @@ import com.kh.ontact.users.util.PwdRegisterRequest;
 import com.kh.ontact.users.util.RegisterRequest;
 
 public interface UsersService {
-	public void joinBusiness(UsersDto userdto, CompanyDto companydto) throws Exception;
-	public void joinBusinessChk(RegisterRequest regReq) throws Exception;
-	public String findCno(String curl) throws Exception;
-	public void joinGuest(UsersDto userdto) throws Exception;
-	public void joinGuestChk(GuestRegisterRequest regReq) throws Exception;
-	public void pwdChk(UsersDto userdto) throws Exception;
-	public int updateTmppwd(UsersDto dto) throws Exception;
-	public CompanyDto findCompany(String cno) throws Exception;
-	public String dnameChk(String dno) throws Exception;
-	public int updateUrank(HashMap<String, String> paramMap) throws Exception;
-	public int updateUtell(HashMap<String, String> paramMap) throws Exception;
-	public int updateCname(HashMap<String, String> paramMap) throws Exception;
-	public int updateCtel(HashMap<String, String> paramMap) throws Exception;
-	public int updateProfile(HashMap<String, String> paramMap) throws Exception;
-	public int deleteProfile(String uno) throws Exception;
+	void joinBusiness(UsersDto userdto, CompanyDto companydto) throws Exception;
+	void joinBusinessChk(RegisterRequest regReq) throws Exception;
+	String findCno(String curl) throws Exception;
+	String findCname(String curl) throws Exception;
+	void joinGuest(UsersDto userdto, String cname) throws Exception;
+	void joinGuestChk(GuestRegisterRequest regReq) throws Exception;
+	void pwdChk(UsersDto userdto) throws Exception;
+	int updateTmppwd(UsersDto dto) throws Exception;
+	CompanyDto findCompany(String cno) throws Exception;
+	String dnameChk(String dno) throws Exception;
+	int updateUrank(HashMap<String, String> paramMap) throws Exception;
+	int updateUtell(HashMap<String, String> paramMap) throws Exception;
+	int updateCname(HashMap<String, String> paramMap) throws Exception;
+	int updateCtel(HashMap<String, String> paramMap) throws Exception;
+	int updateProfile(HashMap<String, String> paramMap) throws Exception;
+	int deleteProfile(String uno) throws Exception;
 	
 	//시큐리티
 	void countFailure(String username);

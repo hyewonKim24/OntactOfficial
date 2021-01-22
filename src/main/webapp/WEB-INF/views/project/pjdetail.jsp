@@ -44,6 +44,7 @@
 	<script>
 	//윤진: 할일 checked 변수선언
 	let todochecked_cnt = 0;
+	let todochecked_percent = 0;
 	console.log("****** ~: "+todochecked_cnt);
 	</script>
 	</head>
@@ -1782,7 +1783,7 @@
 								 <div class="uploadFiles">
 			                       		<ul class="uploadedFileList-real">
 								<c:forEach items="${file}" var="file" varStatus="e">
-								<c:if test="${tlist.bno eq file.bno }">
+								<c:if test="${blist.bno eq file.bno }">
 			                       			<li data-src="${file.fname }" class="uploadedFileList-real-li ${tlist.bno}">
 			                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
 			                       				<div class="boardimg-info-real">
@@ -2156,8 +2157,8 @@
                           <div class="todo-cont">
                               <div class="todo-title">
                                   <div class="todo-list-title">${blist.bname }</div>
-                                  <span class="todo-list-per">%</span>
-                                  <span class="todo-list-ing">완료<span class="tdcompcnt-${blist.bno}"></span>/ 전체 ${blist.todoViewDto.size()}</span>
+                                  <span class="todo-list-per-${blist.bno}">%</span>
+                                  <span class="todo-list-ing">완료<span class="tdcompcnt-${blist.bno}"></span>/ 전체 <span class="todo-list-ed-${blist.bno}">${blist.todoViewDto.size()}</span></span>
                               </div>
                               <ul class="todo-cont-list todo-cont-list-${blist.bno}">
                                  	<%-- <input type="hidden" class="todo-cont-list-${blist.bno}" value="bno-${blist.bno}"> --%>
@@ -2196,8 +2197,8 @@
                                       	var pno = $("#pno").val();
                                       	console.log(tdno);
                                       	console.log(pno);
+                                    	
                                           if($(this).is(":checked")==true){
-                                        	  
                                                   $.ajax({
                                                       url: "${pageContext.request.contextPath}/project/tdchecktrue",
                                                       data: {
@@ -2210,6 +2211,12 @@
                                                           var todocheckedevent_cnt = Number(todocheckedevent);
                                                           console.log("****** todocheckedevent_cnt++ "+todocheckedevent_cnt);
                                                           $(".tdcompcnt-${blist.bno}").text(todocheckedevent_cnt+1);
+                                                          
+                                                          //퍼센트 구하기
+                                                          var todocnt =  $(".tdcompcnt-${blist.bno}").text();
+                                                          var allcnt = $(".todo-list-ed-${blist.bno}").text();
+                                                          var percent = (todocnt / allcnt)*100;
+                                                          $(".todo-list-per-${blist.bno}").text(percent+"%"); 
                                                           
                                                           var e = $(".tdlength").val();
                                                           console.log("e:"+e);
@@ -2240,6 +2247,11 @@
                                                       $(".tdcompcnt-${blist.bno}").text(todocheckedevent_cnt-1);
                                                       //$(".tdcompcnt-${blist.bno}").text(a);
                                                       
+                                                      //퍼센트 구하기
+                                                      var todocnt =  $(".tdcompcnt-${blist.bno}").text();
+                                                      var allcnt = $(".todo-list-ed-${blist.bno}").text();
+                                                      var percent = (todocnt / allcnt)*100;
+                                                      $(".todo-list-per-${blist.bno}").text(percent+"%"); 
                                                       
                                                       console.log("ajax_todoCheck:"+data+"unchk 성공");
                                                   },
@@ -2248,6 +2260,8 @@
                                                   }
                                               });
                                           };
+                                          
+                                          
                                       	});
                                       });
                                       </script>
@@ -2329,7 +2343,12 @@
                                   console.log("****** ${blist.bno} " + "${blist.bno}");
                                   console.log("****** todochecked_cnt "+todochecked_cnt);
                                   var a = todochecked_cnt;
+                                  var b = $(".todo-list-ed-${blist.bno}").text();
+								  //완료한 할일 수
                                   $(".tdcompcnt-${blist.bno}").text(a);
+                                  //퍼센트 구하기
+                                  var percent = (a / b)*100;
+								  $(".todo-list-per-${blist.bno}").text(percent+"%");                               
                                   todochecked_cnt = 0;
 	                  			//});
                               </script>

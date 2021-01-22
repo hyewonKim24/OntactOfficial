@@ -63,6 +63,12 @@
 			insert into project_dept values (pno_se.currval, DNO_SE.CURRVAL) 
 		]]> 
 	</insert> 
+	<!-- 가입시 회사 프로젝트 생성 -->
+	<insert id="joinCompanyProject" flushCache="true"> 
+		<![CDATA[ 
+			insert into project(pno, pname) values(PNO_SE.NEXTVAL, #{cname}) 
+		]]> 
+	</insert> 
 	
 	<!-- 이메일 중복체크 -->
 	<select id="emailChk" resultType="string">
@@ -79,6 +85,16 @@
 		values (UNO_SE.NEXTVAL, #{cno}, #{uemail}, #{uname}, #{upwd}, 1)
 		]]>
 	</insert>
+	<select id="pnoChk" resultType="string">
+		<![CDATA[
+		select pno from project where pname=#{pname}
+		]]>
+	</select>
+	<insert id="joinDefaultPj" flushCache="true"> 
+		<![CDATA[ 
+			insert into project_member values(#{pno}, UNO_SE.CURRVAL, 0) 
+		]]> 
+	</insert> 
 	
 	<!-- 비밀번호 찾기 -->
 	<select id="pwdChk" resultType="string">

@@ -1869,6 +1869,9 @@
             width:150px;
             height:150px;
             }
+            .boardimg-info-real a{
+            font-size:13px;
+            }
         /* 윤진 :할일 리스트*/
 .todo-cont {
     width: 95%;

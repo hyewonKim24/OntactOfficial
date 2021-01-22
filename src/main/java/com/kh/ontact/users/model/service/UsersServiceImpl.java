@@ -2,6 +2,7 @@ package com.kh.ontact.users.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,9 @@ public class UsersServiceImpl implements UsersService{
 			usersDao.joinProjectMember();
 			usersDao.joinProjectDept();
 		}
+		String cname = "'"+companydto.getCname()+"' 업무공유방";
+		usersDao.joinCompanyProject(cname);
+		usersDao.joinProjectMember();
 	}
 	
 	//비즈니스 회원가입 중복체크
@@ -62,15 +66,27 @@ public class UsersServiceImpl implements UsersService{
 			 throw new AlreadyExistingCurlException(regReq.getCurl()+" is duplicate id.");
 		}
 	}
+	
+	
 	@Override
 	public String findCno(String curl) throws Exception {
 		return companydao.findCno(curl);
 	}
+	@Override
+	public String findCname(String curl) throws Exception {
+		String cname = companydao.findCname(curl);
+		String pname="'"+cname+"' 업무공유방";
+		String pno = usersDao.pnoChk(pname);
+		logger.info("플젝이름"+pname);
+		logger.info("프로젝트번호"+pno);
+		return pno;
+	}
 	
 	//유저 가입
 	@Override
-	public void joinGuest(UsersDto userdto) throws Exception {
+	public void joinGuest(UsersDto userdto, String pno) throws Exception {
 		usersDao.joinGuest(userdto);
+		usersDao.joinDefaultPj(pno);
 	}
 	
 	//유저 회원가입 중복체크

@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ontact.commons.util.UploadFileUtils;
+import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.users.exception.AlreadyExistingCurlException;
 import com.kh.ontact.users.exception.AlreadyExistingEmailException;
@@ -186,7 +188,8 @@ public class UsersMainController {
 			String pwd = pwdEncoder.encode(inputPass);
 			userdto.setUpwd(pwd);
 
-			usersService.joinGuest(userdto);
+			String pno = usersService.findCname(curl);
+			usersService.joinGuest(userdto, pno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -374,6 +377,8 @@ public class UsersMainController {
 			paramMap.put("uno", uno);
 			paramMap.put("ufilename", ufilename);
 			paramMap.put("ufilepath", ufilepath);
+			System.out.println(ufilepath+"패스");
+			System.out.println(ufilename+"네임");
 			usersService.updateProfile(paramMap);
 			user.setUfilepath(ufilepath);
 			user.setUfilename(ufilename);

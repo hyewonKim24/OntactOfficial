@@ -27,6 +27,10 @@ public class CompanyDao {
 	public String findCno(String curl) throws Exception {
 		return sqlSession.selectOne("Company.findCno", curl);
 	}
+	// 유저 가입시 회사 이름 찾기
+	public String findCname(String curl) throws Exception {
+		return sqlSession.selectOne("Company.findCname", curl);
+	}
 	
 	// 마이페이지 - 회사 정보 가져오기
 	public CompanyDto findCompany(String cno) throws Exception{

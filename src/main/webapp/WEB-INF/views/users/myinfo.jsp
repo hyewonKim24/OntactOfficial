@@ -386,7 +386,7 @@
 	                            <input type="file" id="uploadphoto" accept="image/*" name="image" style="display:none;">
 	                            <a id="removephoto" onclick="deleteFileWrtPage()">사진 삭제</a>
 	                            <input type="hidden" id="ufilename" name="ufilename">
-	                            <input type="hidden" id="ufilepath" name="ufilepath">
+	                            <input type="hidden" id="ufilepath2" name="ufilepath">
 	                            <input type="hidden" id="dbufilename" value="${dbufilename}">
 	                        </div>
 	                        <button type="submit" id="photobtn">사진 등록하기</button>
@@ -715,7 +715,7 @@
     		// 파일 정보 처리
     	    var fileInfo = getFileInfo(data);
     		$("#ufilename").val(fileInfo.fullName);
-    		$("#ufilepath").val(fileInfo.imgSrc);
+    		$("#ufilepath2").val(fileInfo.imgSrc);
     		console.log(fileInfo.fullName);
     		console.log(fileInfo.imgSrc);
     		$("#profile").attr("src",fileInfo.imgSrc);
