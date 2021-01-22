@@ -728,36 +728,6 @@
 			                    $("#aabbcc").val(place.place_name);
 			                });
 			            }
-			            
-				     	
-						//참석자 변경 모달
-				        $('.js-open').click(function () {
-				            var $layer = $('.js-layer');
-				            $layer.removeClass('hide');
-				        });
-				        $('.closebtn').click(function () {
-				            var $layer = $('.js-layer');
-				            $layer.addClass('hide');
-				        });
-				        
-				        $(".pick").click(function(){
-				            if($(this).is(":checked") == true){
-				                $p=$(this).parent(".userlist_wrap");
-				                var user = $p.find("span").text();
-				                // var add = '<span>'+ user +'</span>'
-				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendee-child">'
-				                $(".pick-attendee").append(add);
-				            } else if($(this).is(":checked") == false){
-				                $p=$(this).parent(".userlist_wrap");
-				                var user = $p.find("span").text();
-				                if($("." + user).val() == user){
-				                    var aaa = $(".test").val();
-				                    console.log(aaa);
-				                    $("." + user).remove();
-				                 }
-				            }
-				        })
-				
 				    });
 				    </script>
 <!-- 혜림 일정 글 작성 부분 끝 -->
@@ -1971,10 +1941,9 @@
                             <!-- 참석자 모달 -->
                             <div class="js-layer  layer  hide">
 		                             <div class="ModalPopup">
-		                             <form name="pickAttendee_frm">
+		                             
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
-                              			  <input type="hidden" name="pno" id="pno" value="${pno}">
                                             <div class="attendee-search">
                                                 <input type="text" placeholder="참석자 이름 검색">
                                                 <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
@@ -1982,35 +1951,69 @@
                                             
                                             <div class="attendee-people">
                                                 <!-- 선택된 참가자가 표시됨  -->
+                                            <form name="pickAttendee_frm" method="get" action="${pageContext.request.contextPath}/project/schedule/upd">
+                                                <input type="hidden" name="pno" id="pno" value="${pno}">
+                                                <input type="hidden" name="bno" id="bno" value="${blist.bno}">
                                                 <div class="pick-attendee"></div>
-                                                
+
                                                 <c:forEach items="${userlist}" var="ulist" varStatus="e"> 
                                                 <div class="userlist_wrap">
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
                                                     <span>${ulist.uname}</span>
-                                                    <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno }">
-                                                    <input type="checkbox" class="pick" value="+ 선택">
+                                                    <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno}">
+                                                    <input type="checkbox" class="pick pick${e.count}" value="+ 선택">
+                                                    
                                                 </div>
+                                                <script type="text/javascript">
+            				    	//참석자 변경 모달
+            				        $('.js-open').click(function () {
+            				        	/* var $layer = $('.js-layer'); */
+            				        	/* var $layer = $(this).next();  */
+            				        	var $layer = $(this).parent(".rschepeople");
+            				            var aaa = $layer.find('.js-layer');
+            				            aaa.removeClass('hide');
+            				        	/* $layer.removeClass('hide'); */
+            				        });
+            				        $('.closebtn').click(function () {
+            				            var $layer = $('.js-layer');
+            				            $layer.addClass('hide');
+            				        });
+            				        console.log("값찍어보기 :" + '${e.count}');
+            				        $('.pick${e.count}').click(function(e){
+            				        	/* $(this).unbind("click"); */
+            				        	e.stopPropagation();
+            				        	alert("클릭햇다");
+            				            if($(this).is(":checked") == true){
+            				                $p=$(this).parent(".userlist_wrap");
+            				                var user = $p.find("span").text();
+            				                // var add = '<span>'+ user +'</span>'
+            				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendeeChange">'
+            				                $(".pick-attendee").append(add);
+            				            } else if($(this).is(":checked") == false){
+            				                $p=$(this).parent(".userlist_wrap");
+            				                var user = $p.find("span").text();
+            				                if($("." + user).val() == user){
+            				                    var aaa = $(".test").val();
+            				                    console.log(aaa);
+            				                    $("." + user).remove();
+            				                 }
+            				            }
+            				        })
+            				        
+                                    </script>
+                                    
                                                 </c:forEach>
                                                 <div class="modal-btn">
                                                 <button class="edit-btn closebtn" >취소</button>
-                                                <button class="edit-btn" onclick="changeAttendee()">확인</button>
+                                                <button class="edit-btn" type="submit" onclick="changeAttendee()">확인</button>
                                                 </div> 
+											</form>
                                             </div>
                                             
-                                            </form>
+                                            
                                         </div>
                                     </div>
-                                    <script type="text/javascript">
-                                    function changeAttendee(){
-            				        	var frm = document.pickAttendee_frm;
-            				        	console.log("aaa : " + ${blist.bno} + " / "+ ${pno});
-            							frm.action = "${pageContext.request.contextPath}/project/schedule/upd?bno=${blist.bno}&pno=${pno}";
-            							frm.method = "post";
-            							frm.submit();
-            				
-            				        }
-                                    </script>
+                                    
                                 
                             </div>
                             <div id="mask"></div>

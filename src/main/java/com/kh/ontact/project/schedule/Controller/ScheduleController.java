@@ -118,9 +118,6 @@ public class ScheduleController {
 		    
 		    scheduleServ.insertSchedule(alldto, s, attendee);
 			mv.addObject("message", "success");
-			
-			 
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
@@ -132,24 +129,24 @@ public class ScheduleController {
 	}
 	
 	//프로젝트 일정 
-		@RequestMapping(value = "/project/schedule/upd", method = RequestMethod.POST)
+		@RequestMapping(value = "/project/schedule/upd", method = RequestMethod.GET)
 		public ModelAndView updateSchedule(ModelAndView mv, ScheduleDto s,
-				@RequestParam(name = "bno") int bno,
-				@RequestParam(name = "attendee", required = false) String attendee,
-				@RequestParam(name = "pno") String pno,
+				
+				@RequestParam(name = "attendeeChange", required = false) String attendee,
+				
 				Authentication authentication) {
+			System.out.println("프로젝트 일정 참여자 업데이트진입");
 			 	
-			 	System.out.println("프로젝트 넘버 " + pno);
+			 	
 			 	System.out.println("참석자 변경 " + attendee);
 			try {
-				System.out.println("프로젝트 일정 참여자 업데이트진입");
 				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 				String uno=userdetail.getUno();
 				System.out.println("세션값확인 : " + uno);
 				System.out.println("무엇이" + attendee);
 				
-			    
-			    s.setBno(bno);
+				System.out.println("글번호 : " + s.getBno());
+				System.out.println("프로젝트번호 : " + s.getPno());
 			    s.setAttendee(attendee);
 			    
 			    scheduleServ.updateSchedule(s, attendee);
@@ -160,7 +157,7 @@ public class ScheduleController {
 				mv.addObject("msg", e.getMessage());
 				mv.setViewName("/errorpage");
 			}
-			mv.addObject("pno", pno);
+			mv.addObject("pno", s.getPno());
 			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}

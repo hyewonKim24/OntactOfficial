@@ -116,11 +116,14 @@ public class UsersDao {
 			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
 			return sqlSession.selectList("Users.selectOgUser",dname,row);
 		}
-		//부서 수정
+		
+		//사원 부서 수정, 삭제 조건
 		public int updateDept(UsersDto u) { // 글 수정 
 			return sqlSession.update("Users.updateDept", u);
 		}
-		
+		public List<UsersDto> deleteOrgani(String dname) { // 특정 페이지 단위의 게시글 조
+			return sqlSession.selectList("Users.deleteOrgani", dname);
+		}
 		
 
 }

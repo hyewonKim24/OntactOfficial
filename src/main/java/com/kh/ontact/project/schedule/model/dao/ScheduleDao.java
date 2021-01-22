@@ -25,6 +25,7 @@ public class ScheduleDao {
 	}
 	
 	public int updateSchedule(ScheduleDto s) { 
+		System.out.println("sche 다오 업데이트 진입");
 		return sqlSession.insert("ScheduleMapper.updateSchedule",s);
 	}
 	public int deleteSchedule(int bno) {  
@@ -37,12 +38,11 @@ public class ScheduleDao {
 	
 //	전체 일정
 	public List<ScheduleDto> selectAllSche(HashMap<String, String> paramMap1) {
-		System.out.println("sche 다오까지 왔는데,,111");
+		
 //		System.out.println(paramMap.get("uname"));
 		return sqlSession.selectList("ScheduleMapper.selectAllSche", paramMap1);
 	}
 	public List<ScheduleDto> selectAllTask(HashMap<String, String> paramMap2) {
-		System.out.println("sche 다오까지 왔는데,,222");
 		return sqlSession.selectList("ScheduleMapper.selectAllTask", paramMap2);
 	}
 	

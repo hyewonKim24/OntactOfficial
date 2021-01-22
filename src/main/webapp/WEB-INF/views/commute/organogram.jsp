@@ -25,7 +25,7 @@
         color: rgb(17,17,17);
     }
     a {
-		text-decoration: none;h
+		text-decoration: none;
 		color: #111111;
 	}
     .headersection {
@@ -150,7 +150,7 @@
         width: 158px;
         height: 40px;
         line-height: 40px;
-        padding-left: 40px;    
+        padding-left : 15px;
     }
     .team ul li:nth-child(1){
         width: 183px;
@@ -174,7 +174,7 @@
         width: 200px;
         height: 40px;
         line-height: 40px;
-        padding-left: 15px;
+        padding-left: 30px;
         border: 1px solid #e7e7e7;
         border-bottom: 0;
         box-sizing: border-box;
@@ -257,12 +257,36 @@
     }
     #addDname{
     	display : none;
-    	width : 130px;
-    	height : 25px;
+    	width : 120px;
+    	height : 30px;
     	verticle-align : middle;
+    	float : left;
+    	border: 1px solid #e7e7e7;
+    	box-sizing: border-box;
     }
+    .goDept{
+    	display : none;
+    	width : 25px;
+    	height : 25px;
+    	box-sizing: border-box;
+    	background-color : #e7e7e7; 
+    	border: none;
+    }
+    .dnamechk{
+    	margin-right : 10px;
+   	width : 14px;
+   	height : 14px;
+    	
+    }
+
     </style>
     <script>
+    	//부서 추가 알림
+	    var result='${message}';
+		console.log(result);
+		if(result == "success") {
+	        alert("부서가 추가되었습니다.");
+	    } 
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
 	        $('.sidenav li.menu>a').on('click', function(){
@@ -281,26 +305,47 @@
 				element.siblings('li').find('li').removeClass('open');
 	            element.siblings('li').find('ul').slideUp();
 			}
-		    });
-	       /*  var dname= ${dname}
-	        $(".deptname").on("click", function(){
-	        	var dname = $(this).find(".dname").val();
-	        	console.log(dname);
-	        	$("#firstttl").html(dname);
-	        })
-			console.log("ssldkjfs"); */
-	    
+		 });
+	    	//부서 검색
 	        $("#keyword").keyup(function() {
                 var k = $(this).val();
                 $(".deptname").hide();
                 var temp = $(".deptname:contains('" + k + "')");
                 $(temp).show();
             })
-       		
+            //부서 리스트
+       		$(".deptname${e.count}").click(function() {
+				var frm = document.dept_frm;
+				frm.action = "${pageContext.request.contextPath}/commute/organlist"
+				frm.method = "get"
+				frm.submit();
+			});
+	        $("#deleteBtn").click(function() {
+	        	
+				var frm = document.dept_frm;
+				frm.action = "${pageContext.request.contextPath}/commute/deptdel"
+				frm.method = "get"
+				frm.submit();
+			});
+            //부서 추가        
             $("#addBtn").click(function() {
                 $("#addDname").css("display", "block");
-                
+                $(".goDept").css("display", "block");   
             })
+            $("#addDname").keydown(function(key) {
+				if (key.keyCode == 13) {
+					var frm = document.dept_add_frm;
+					frm.action = "${pageContext.request.contextPath}/commute/deptins"
+					frm.method = "get"
+					frm.submit();
+				}
+			});
+            
+            
+	        
+	        
+	        
+  
             
         });
     </script>
@@ -338,31 +383,50 @@
                 <div class="team">
                     <ul>
                         <li style="font-weight: 700;">
-                            <button id="deptBtn"><img src ="${pageContext.request.contextPath}/resources/img/substract.png" style="width: 8px; height: 8px;"></button>
+                            <button id="deptBtn">
+                            	<img src ="${pageContext.request.contextPath}/resources/img/substract.png" style="width: 8px; height: 8px;">
+                            </button>
                             &nbsp; ONTACT<span>(${deptlistCount})</span>
                         </li>
                         <c:if test="${not empty selectDept}">
-						<c:forEach var="dp" items="${selectDept}" varStatus="status">
-                        <li class="deptname">
-                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}">
-                        	${dp.dname}<input type ="hidden" value="${dp.dname}" name="dname" class="dname">
-                        	</a>
-                        </li>
-                        </c:forEach>
+							<c:forEach var="dp" items="${selectDept}" varStatus="e">
+		                        <form name="dept_frm">
+		                        <li class="deptname${e.count}">
+			                        <!-- <a href=""> -->
+			                        <input type ="hidden" value="<sec:authentication property="principal.cno" var="cno"/>${cno}" name="cno">
+			                        <input type ="checkbox" value="${dp.dname}" name="dnamechk" class="dnamechk" id="dept${e.count}">${dp.dname}
+			                        &nbsp; &nbsp; <input type ="hidden" value="${dp.dname}" name="dname" class="dname">
+			                        <!-- </a> -->
+		                        </li>
+		                        </form>
+	                        </c:forEach>
                         </c:if>
-                        <li>
+                        
+                        <li style="padding-left:30px;">
+                        <form name="dept_add_frm">
                         	<input type ="text" name="dname" id="addDname">
+                        	<!-- <input type ="submit" class="goDept" value="+"> -->
+                        </form>
                         </li>
                     </ul>
                 </div>
                 <div class="notyet">
-                    <div><a href="">미분류그룹</a></div>
+                    <div><a href="${pageContext.request.contextPath}/commute/organlist?dname=null">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
                 <%-- <sec:authorize access="hasRole('ROLE_USER')"> --%>
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
                     <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
+	                    <div id="gomodal">
+							<div class="modal_layer"></div>
+							<div class="modal_content">
+								<div class="modalTitle">QR</div>
+								<div id="qrout1"></div>
+								<button class="close">닫기</button>
+							</div>
+						</div>
                     <button id="editBtn"><img src="${pageContext.request.contextPath}/resources/img/edit-1.png" style="width: 19px; height: 20px;"></button>
+                    
                 <%-- </sec:authorize> --%>
                 </div>
                 <div class="detail">
@@ -441,10 +505,10 @@
 					</tr>
                         </table>
                     </div>
-                    <div class="move_wrap">
+                    <!-- <div class="move_wrap">
                         <button id="moveBtn">다른 조직으로 이동</button>
                         &nbsp; <span>0명</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
     </div>

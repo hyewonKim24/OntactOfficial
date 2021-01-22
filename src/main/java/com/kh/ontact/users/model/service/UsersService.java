@@ -49,5 +49,5 @@ public interface UsersService {
 	public int listCount(String dname);
 	public List<UsersDto> selectOgUser(int startPage, int limit, String dname);
 	public int updateDept(UsersDto u); 
-		
+	public List<UsersDto> deleteOgUser(String dname);
 }

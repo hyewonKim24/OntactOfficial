@@ -260,9 +260,6 @@ body {
 
 }
 
-.sidenav ul li:nth-child(4){
-	
-}
                
 </style>
 <script>

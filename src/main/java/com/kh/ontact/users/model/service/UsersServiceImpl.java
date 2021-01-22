@@ -206,10 +206,8 @@ public class UsersServiceImpl implements UsersService{
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
+		public List<UsersDto> deleteOgUser(String dname) {
+			return usersDao.deleteOrgani(dname);
+		}
 
-
-
-		
-	
-
-}
+	}

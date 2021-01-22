@@ -1278,7 +1278,7 @@
                 $p=$(this).parent(".userlist_wrap");
                 var user = $p.find("span").text();
                 // var add = '<span>'+ user +'</span>'
-                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendee-child">'
+                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendeeChange">'
                 $(".pick-attendee").append(add);
             } else if($(this).is(":checked") == false){
                 $p=$(this).parent(".userlist_wrap");

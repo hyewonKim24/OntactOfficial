@@ -1,6 +1,7 @@
 package com.kh.ontact.dept.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
+import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
+import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
 
 @Controller
@@ -130,14 +133,19 @@ public class DeptController {
 //		}
 //		return mv;
 //	}
-	//
+	
 	//부서 생성
-	@RequestMapping(value = "/commute/deptins", method = RequestMethod.POST)
-	public String insertDept(DeptDto d, RedirectAttributes rttr) {
+	@RequestMapping(value = "/commute/deptins", method = {RequestMethod.POST,RequestMethod.GET})
+	public String insertDept(DeptDto d, RedirectAttributes rttr, Authentication authentication) {
 		try {
-			System.out.println("인서트진입");
+			System.out.println("부서 생성 인서트진입");
 			System.out.println(d.getDname());
-		
+			System.out.println(d.getCno());
+			
+			List<UsersDto> users = usersService.deleteOgUser(d.getDname());
+			if(users.size() > 0) {
+				rttr.addFlashAttribute("message", "사원이 존재하는 부서는 삭제하실 수 없습니다.");
+			}
 			deptServ.insertDept(d);
 			rttr.addFlashAttribute("message", "success");
 			
@@ -153,15 +161,17 @@ public class DeptController {
 	@RequestMapping(value = "/commute/deptdel", method = RequestMethod.GET)
 	public ModelAndView deleteDept(
 			@RequestParam(name = "dno") String dno,
+			@RequestParam(name = "cno") String cno,
 			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
 		try {
-			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-			String cno=userdetail.getCno();
-			System.out.println("세션값확인 : " + cno);
+			System.out.println("부서 삭제 인서트진입");
+			System.out.println("부서번호 : "+dno);
+			System.out.println("회사번호 : "+ cno);
 		
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("startdate", cno);
 			paramMap.put("enddate", dno);
+			
 //			dno에 포함되어 있는 사람이 없는 경우에만 삭제가능하도록 
 			deptServ.deleteDept(paramMap);
 			mv.setViewName("redirect:/commute/organlist");
