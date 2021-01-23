@@ -14,8 +14,8 @@ public class ProjectMemberDao {
 	private SqlSession sqlSession;
 
 	// 프로젝트 생성 : 멤버 영입
-	public int insertProjectMember(String uno) {
-		return sqlSession.insert("Project.insertProjectMember", uno);
+	public int insertProjectMember(ProjectMemberDto pjm) {
+		return sqlSession.insert("Project.insertProjectMember", pjm);
 	}
 	// 프로젝트 리스트 ( 내 uno 제외 )
 	public List<String> AlertProList(ProjectMemberDto dto) {

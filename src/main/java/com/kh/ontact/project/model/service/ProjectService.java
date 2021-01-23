@@ -18,7 +18,7 @@ public interface ProjectService {
 	public ProjectDto selectOneTeam(HashMap<String, String> paramMap) throws Exception;
 	
 	//프로젝트 생성
-	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception;
+	public void insertProject(ProjectDto pj, ProjectMemberDto pjm, List<ProjectDeptDto> pjdlist) throws Exception;
 	
 	//미보관 프로젝트
 	public List<ProjectDto> selectListPjUns(String uno) throws Exception;

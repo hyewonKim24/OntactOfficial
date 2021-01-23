@@ -767,12 +767,13 @@
 													<div class="tdp-add-wrap">
 														<div class="tdp-add">
 															<ul>
-																<input type="hidden" class="tdp" name="tduno" value="">
+																<input type="hidden" class="tdp" name="tduno" value=""/>
+																<input type="hidden" class="tdp-file" value=""/>
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
-																	<li class="tdp-list tdp-list${e.count}">${ulist.uname}
+																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
+																		<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">
 																	</li>
-																	<%-- <img src="${ulist.ufilepath}"> --%>
 																</c:forEach>
 															</ul>
 														</div>
@@ -882,8 +883,8 @@
 										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">+ '\n' +
 										'<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">'+ '\n' +
 										'</li>' + '\n' +
-										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>' +
-										'</li>'
+										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>'+ '\n' +'</li>'
+										
 									$(".todoinput").append(todoinput);
 									$('.todoform').find('.todo-date' + tdcnt).datepicker({
 										dateFormat: 'mm/dd' //Input Display Format 변경

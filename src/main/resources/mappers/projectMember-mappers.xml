@@ -4,6 +4,7 @@
 	<resultMap type="ProjectMemberDto" id="resultProjectMember">
 		<id property="pno" column="pno" />
 		<result property="uno" column="uno" />
+		<result property="cno" column="cno" />
 		<result property="padmin" column="padmin" />
 		<result property="uname" column="uname" />
 	</resultMap>
@@ -12,7 +13,7 @@
 	<insert id="insertProjectMember" parameterType="string"
 		flushCache="true" statementType="PREPARED">
 		insert into project_member
-		values(PNO_SE.CURRVAL, #{uno}, #{padmin})
+		values(PNO_SE.CURRVAL, #{uno}, #{padmin}, #{cno})
 	</insert>
 	
 	<!-- 알림생성 위한 프로젝트 리스트 ( 내 uno 제외 ) -->
@@ -25,7 +26,7 @@
 	<!-- 프로젝트 멤버 초대로 추가 -->
 	<insert id="projectMeberinvite" parameterType="string" flushCache="true" statementType="PREPARED">
 		 <![CDATA[
-			insert into project_member values(#{pno},#{uno},0)
+			insert into project_member values(#{pno},#{uno},0, #{cno})
 		]]>
 	</insert>
 	

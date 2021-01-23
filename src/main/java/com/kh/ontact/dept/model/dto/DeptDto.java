@@ -16,6 +16,4 @@ public class DeptDto {
 	private String dno;
 	private String cno;
 	private String dname;
-	
-	private UsersDto usersdto;
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../main/header.jsp"%>
-<%@ include file="pjsidebar.jsp"%>
+<%@ include file="pjsidebar.jsp" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
@@ -271,8 +271,70 @@ body {
 	float: right;
 	transform:translate(-25px, -22px);
 }
+
+/* 알림 */
+.pj_cnt{
+    position: absolute;
+    display: inline-block;
+    top: -10px;
+    right: -10px;
+    padding: 6px 6px 0;
+    min-width: 24px;
+    height: 24px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: -0.5px;
+    background-color: #fc0d1b;
+    border-radius: 24px;
+    z-index: 2;
+}
 </style>
 <script>
+	//div 랜덤 배경색
+		$(document).ready(function() {
+		function backgroundColor() { // div 랜덤 배경색
+		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
+		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
+		     var color = backgroundColor[randome];
+			   return color;
+		};
+		
+ 		$.ajax({
+			url: "${pageContext.request.contextPath}/project/pjteam/listajax",
+			success: function (object) {
+				$('.pj_board_list').html('');
+				
+				console.log("ajax:" + object + "성공");
+				for(var i=0 in object){
+				var color = backgroundColor();
+				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].pno+"'>";
+				
+				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
+				print += " <div>"+object[i].pname+"</div>";
+				print += " <div class='pj_team_list'>";
+				if(object[i].pjteam !=undefined){
+					print += " <div>" +object[i].pjteam+"</div>";
+				}
+				print += "</div><div> <span>"+object[i].pjmembercnt+"</span> <span>명 참여중</span></div>";
+				if(object[i].popen==0){
+					print += "<span> <img src='${pageContext.request.contextPath}/resources/img/locked-4-white.png' class='lock_1'></span>";
+				}
+				if(object[i].cnt !=undefined){
+					print += " <span class='pj_cnt'>" +object[i].cnt+"</span>";
+				}
+				print += "</div></a>";
+				$(".pj_board_list").append(print);
+			}//for문 끝
+				
+			},
+			error: function () {
+				console.log("list 불러오기 실패");
+			}
+		}); 
+        });  
+	
 	$(document).ready(function() {
 		$(".pj_team_list").mouseover(function() {
 			$(this).css("overflow-y", "scroll");
@@ -347,34 +409,14 @@ body {
 		<div id="pj_board_bottom">
 			<div id="section_project">
 				<div class="pj_title">
-					<c:if test="${!empty dname}">
 					<span>${dname}</span> <span><a href="#" id="pj_edit">편집</a></span>
-				</div></c:if>
+				</div>
 				<div class="pj_board_list">
 					<!-- 프로젝트가 하나도 없을 경우-->
 					<c:if test="${empty pjteam}">
-						<div class="emptymsg">첫번쨰 프로젝트를 생성해주세요</div>
+						<div>프로젝트를 생성해 주세요.</div>
 					</c:if> 
-					<!-- 부서보관함에 프로젝트가 있는 경우 -->
-				<c:if test="${!empty pjteam}">
-						<c:forEach var="pjteam" items="${pjteam}" varStatus="status">
-							<a href="#">
-								<div id="pj_project" class="pj_box">
-									<div>${pjteam.pname}</div>
-									<div class="pj_team_list">
-										<div>${pjteam.pjteam}</div>
-									</div>
-									<div>
-										<span>${pjteam.pjmembercnt}</span> <span>명 참여중</span>
-									</div>
-									<c:if test="${pjteam.popen == 0 }">
-										<span> <img src="${pageContext.request.contextPath}/resources/img/locked-4-white.png" class="lock_1">
-										</span>
-									</c:if>
-								</div>
-							</a>
-						</c:forEach>
-					</c:if>
+
 				</div>
 			</div>
 		</div>
