@@ -66,7 +66,6 @@ body {
 }
 
 .menu_title {
-	color: #939394;
 	font-weight: 560;
 	font-size: 15px;
 	height: 25px;
@@ -222,6 +221,8 @@ input[type=checkbox]:after {
 	margin: 0;
 	height: 100%;
 	background-color: #ffffff;
+	overflow: scroll;
+
 }
 
 .board-listheader {
@@ -274,6 +275,10 @@ input[type=checkbox]:after {
 	text-align: center;
 	border-radius: 2px;
 }
+.list{
+	overflow: :scroll;
+	
+	}
 </style>
 </head>
 
@@ -286,23 +291,20 @@ input[type=checkbox]:after {
 		<div class="ptask_sidebar">
 			<ul>
 				<li class="menu">업무 구분</li>
-				<li class="menu"><input type="radio" name="chk" value="1"
-					id="id1"><label for="id1">내 업무</label></li>
-				<li class="menu"><input type="radio" name="chk" value="2"
-					id="id2"><label for="id2">요청한 업무</label></li>
-				<li class="menu"><input type="radio" name="chk" value="3"
-					id="id3"><label for="id3">전체 업무</label></li>
+				<label for="id1"><li class="menu"><input type="radio" name="chk" value="1" id="id1">내 업무</li></label>
+				<label for="id2"><li class="menu"><input type="radio" name="chk" value="2" id="id2">요청한 업무</li></label>
+				<label for="id3"><li class="menu"><input type="radio" name="chk" value="3" id="id3">전체 업무</li></label>
 
 
 				<li class="menu_title two">상태</li>
-				<li class="menu"><input type="radio" name="state" class="task"
-					value="4" id="id4"><label for="id4"> 요청</label></li>
-				<li class="menu"><input type="radio" name="state" class="task"
-					value="5" id="id5"><label for="id5"> 진행</label></li>
-				<li class="menu"><input type="radio" name="state" class="task"
-					value="6" id="id6"><label for="id6"> 완료</label></li>
-				<li class="menu"><input type="radio" name="state" class="task"
-					value="7" id="id7"><label for="id7"> 보류</label></li>
+				<label for="id4"><li class="menu"><input type="radio" name="state" class="task"
+					value="4" id="id4"> 요청</li></label>
+				<label for="id5"><li class="menu"><input type="radio" name="state" class="task"
+					value="5" id="id5"> 진행</li></label>
+				<label for="id6"><li class="menu"><input type="radio" name="state" class="task"
+					value="6" id="id6"> 완료</li></label>
+				<label for="id7"><li class="menu"><input type="radio" name="state" class="task"
+					value="7" id="id7"> 보류</li></label>
 			</ul>
 
 		</div>
@@ -311,7 +313,16 @@ input[type=checkbox]:after {
 		<div class="contents">
 			<input type="hidden" name="pno" id="pno" value="${pno}">
 			<div class="ptask_section">
-				<div class="task_title">전체 업무(${listCount})</div>
+			<c:forEach var="tasklist" items="${tasklist}" varStatus="status">
+				<div class="task_title"> 
+				<c:choose>
+				<c:when test="${tasklist.taskmanager eq tasklist.uname }"> 내업무(${listcount})
+				</c:when>
+				<c:when test="${tasklist.tstate  eq '1' }"> 요청한 업무(${listcount})
+				</c:when>
+				</c:choose>
+				</div>
+				</c:forEach>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/project/all/list'">닫기</button>
 				<sec:authentication property="principal.uname" var="uname" />
