@@ -29,7 +29,8 @@ body {
 }
 
 #pj_board {
-	margin: 80px auto 0 230px;
+	margin: 80px auto;
+	padding-left: 230px;
 	width: 970px;
 }
 
@@ -85,6 +86,7 @@ body {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
 
 /*부서명*/
 .pj_box>.pj_team_list {
@@ -338,8 +340,6 @@ body {
 		});
         });  
 	
-	//<div id="pj_project" class="pj_box">
-	
 	$(document).ready(function() {
 		$(".pj_team_list").mouseover(function() {
 			$(this).css("overflow-y", "scroll");
@@ -357,42 +357,26 @@ body {
 		});
 	});
 	// modal
-	// window.onload = function () {
-	//     var modal = document.getElementById("pjmoveModal");
-	//     var btn = document.getElementById("pj_edit");
-	//     var span = document.getElementsByClassName("close")[0];
-	//     // When the user clicks the button, open the modal 
-	//     btn.onclick = function () {
-	//         modal.style.display = "block";
-	//     }
-	//     // When the user clicks on <span> (x), close the modal
-	//     span.onclick = function () {
-	//         modal.style.display = "none";
-	//     }
+	window.onload = function () {
+	     var modal = document.getElementById("pjmoveModal");
+	     var btn = document.getElementById("pj_edit");
+	     var span = document.getElementsByClassName("close")[0];
+	     // When the user clicks the button, open the modal 
+	     btn.onclick = function () {
+	         modal.style.display = "block";
+	     }
+	     // When the user clicks on <span> (x), close the modal
+	     span.onclick = function () {
+	         modal.style.display = "none";
+	     }
 
-	//     // When the user clicks anywhere outside of the modal, close it
-	//     window.onclick = function (event) {
-	//         if (event.target == modal) {
-	//             modal.style.display = "none";
-	//         }
-	//     }
-	// };
-
-	/* 	$.ajax({
-	 url: "${pageContext.request.contextPath}/project/all/list",
-	 type: "GET",
-	 contentType: "application/json; charset=utf-8;",
-	 dataType: "json",
-	 success: function(data){
-	 console.log("aaa");
-	 for(var i =0; i<data.length; i++){
-	 $('.result').append('<span>' + data[i].pname + '</span>');
-	 }
-	 },
-	 error: function(){
-	 alert("projectlist err");
-	 }
-	 }); */
+	     // When the user clicks anywhere outside of the modal, close it
+	     window.onclick = function (event) {
+	         if (event.target == modal) {
+	             modal.style.display = "none";
+	         }
+	     }
+	 };
 </script>
 
 <body>
@@ -431,7 +415,7 @@ body {
 			<div id="section_company">
 				<div class="pj_title">All</div>
 				<c:if test="${!empty pjc}">
-					<a href="#">
+					<a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjc.pno}">
 						<div id="pj_company" class="pj_box">
 							<div>${pjc.cname}</div>
 							<div class="pj_team_list"></div>
@@ -446,7 +430,7 @@ body {
 			<div id="section_team">
 				<div class="pj_title">Team</div>
 				<c:if test="${!empty pjd}">
-					<a href="#">
+					<a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjd.pno}">
 						<div id="pj_team" class="pj_box">
 							<div>${pjd.dname}</div>
 							<div class="pj_team_list"></div>
@@ -465,30 +449,11 @@ body {
 					<span>Project</span> <span><a href="#" id="pj_edit">편집</a></span>
 				</div>
 				<div class="pj_board_list">
-					<!-- 프로젝트가 하나도 없을 경우
+					<!-- 프로젝트가 하나도 없을 경우-->
 					<c:if test="${empty listpj}">
-					</c:if> -->
-					<!-- 프로젝트가 있는 경우 -->
-					<%-- <c:if test="${!empty listpj}">
-						<c:forEach var="listpj" items="${listpj}" varStatus="status">
-							<!-- project Detail -->
-							<a href="${pageContext.request.contextPath}/project/projectDetail?pno=${listpj.pno}">
-								<div id="pj_project" class="pj_box">
-									<div>${listpj.pname}</div>
-									<div class="pj_team_list">
-										<div>${listpj.pjteam}</div>
-									</div>
-									<div>
-										<span>${listpj.pjmembercnt}</span> <span>명 참여중</span>
-									</div>
-									 <c:if test="${listpj.popen == 0 }">
-										<span> <img src="${pageContext.request.contextPath}/resources/img/locked-4-white.png" class="lock_1">
-										</span>
-									</c:if>
-								</div>
-							</a>
-						</c:forEach>
-					</c:if> --%>
+						<div>프로젝트를 생성해 주세요.</div>
+					</c:if> 
+
 				</div>
 			</div>
 		</div>

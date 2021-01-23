@@ -27,8 +27,8 @@ public class ProjectDao {
 	}
 	
 	// 프로젝트 전체목록 : 부서명
-	public ProjectDto selectOneTeam(String uno){
-		return sqlSession.selectOne("Project.selectOneTeam", uno);
+	public ProjectDto selectOneTeam(HashMap<String, String> paramMap){
+		return sqlSession.selectOne("Project.selectOneTeam", paramMap);
 	}
 	
 	// 프로젝트 생성

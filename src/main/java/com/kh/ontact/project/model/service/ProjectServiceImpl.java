@@ -37,8 +37,8 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	//프로젝트 목록 : 부서
 	@Override
-	public ProjectDto selectOneTeam(String uno) throws Exception {
-		return pjDao.selectOneTeam(uno);
+	public ProjectDto selectOneTeam(HashMap<String, String> paramMap) throws Exception {
+		return pjDao.selectOneTeam(paramMap);
 	}
 
 	// 프로젝트 생성

@@ -15,7 +15,7 @@ public interface ProjectService {
 	public ProjectDto selectOneCompany(String uno) throws Exception;
 	
 	//프로젝트 목록 : 부서
-	public ProjectDto selectOneTeam(String uno) throws Exception;
+	public ProjectDto selectOneTeam(HashMap<String, String> paramMap) throws Exception;
 	
 	//프로젝트 생성
 	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception;

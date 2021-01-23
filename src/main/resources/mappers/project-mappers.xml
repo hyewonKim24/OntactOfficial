@@ -4,29 +4,38 @@
 
 	<!-- 윤진 / 프로젝트목록--> 
 	<!-- 프로젝트 전체 목록 : 회사 -->
-	<select id="selectOneCompany" resultMap="selectOneComTeam">
-		<![CDATA[
-			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt
-			    from 
-			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
-			    left join  
-			        (select cno, count(*) as ucnt from users group by cno  ) uc
-			    on c.cno = uc.cno
-		]]>
-	</select>
-	<resultMap type="ProjectDto" id="selectOneComTeam">
+	<resultMap type="ProjectDto" id="selectOneCom">
 		<id column="cno" property="cno" />
 		<result column="cname" property="cname" />
 		<result column="ucnt" property="ucnt" />
+		<result column="pno" property="pno" />
 	</resultMap>
+	<select id="selectOneCompany" resultMap="selectOneCom">
+		<![CDATA[
+			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt, p.pno as pno
+			    from 
+			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
+			    left join  
+			        (select cno, count(*) as ucnt from users group by cno  ) uc on c.cno = uc.cno
+			    inner join project p on trim(p.pname) = trim(c.cname) 
+		]]>
+	</select>
 
 	<!-- 프로젝트 전체 목록 : 부서 -->
-	<select id="selectOneTeam" resultMap="selectOneComTeam">
+	<resultMap type="ProjectDto" id="selectOneTeam">
+		<id column="dno" property="dno" />
+		<result column="dname" property="dname" />
+		<result column="cno" property="cno" />
+		<result column="ucnt" property="ucnt" />
+		<result column="pno" property="pno" />
+	</resultMap>
+	<select id="selectOneTeam" resultMap="selectOneTeam"  parameterType="HashMap">
 		<![CDATA[
-			select d.dno as dno, d.dname as dname, u.ucnt as ucnt
-			    from (select d.dno, d.dname from dept d join users u on d.dno = u.dno where u.uno = #{uno}) d
-			    join (select dno, count(*) as ucnt from users group by dno ) u
-			    on d.dno = u.dno
+			select  d.dno as dno, d.dname as dname, u.cno as cno, u.ucnt as ucnt, p.pno as pno
+			   from (select d.dno, d.dname from dept d join users u on d.dno = u.dno where u.uno = #{uno}) d
+    			inner join (select u.dno, u.cno, count(*) as ucnt from users u group by u.dno, u.cno ) u on d.dno = u.dno
+    			inner join project p on trim(p.pname) = trim(d.dname)
+    			where u.cno = #{cno} and u.dno = #{dno}
 		]]>
 	</select>
 
