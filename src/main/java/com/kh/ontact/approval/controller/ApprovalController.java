@@ -17,6 +17,7 @@ import com.kh.ontact.users.model.dto.CustomUserDetails;
 
 
 @Controller
+@RequestMapping("/project")
 public class ApprovalController {
 	
 	@Autowired

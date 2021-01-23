@@ -74,7 +74,10 @@ header {
 }
 
 .container {
-	overflow: hidden;
+			position: relative;
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .wrap_title {
@@ -113,48 +116,47 @@ header {
 /*헤더부분 END*/
 
 /*aside부분*/
-#apaside {
-	width: 240px;
-	height: 100%;
-	background-color: #F2F2F2;
-	display: inline-block;
-	position: absolute;
-	/* padding-top: 24px; */
-}
+		#apaside {
+			width: 210px;
+			height: 100%;
+			background-color: #F2F2F2;
+			display: inline-block;
+			position: absolute;
+			/* padding-top: 24px; */
+		}
 
-/* .menu {
+
+		.menu li a {
+			padding: 16px 0 16px 19px;
+		}
+
+ 
+ 		.menu_list:hover{
+ 			background-color: #e7e7e7;
+ 		}
+		.link_menu {
+			text-decoration: none;
+			display: block;
+			position: relative;
+			min-height: 55px;
 			padding: 17px 44px 14px 32px;
-		} */
-.menu li a {
-	padding: 16px 0 16px 19px;
-}
-
-.menu_list:nth-child(1) {
-	border-bottom: none;
-}
-
-.menu_list {
-	border: 1px solid black;
-}
-
-.link_menu {
-	text-decoration: none;
-	display: block;
-	position: relative;
-	min-height: 55px;
-	padding: 17px 44px 14px 32px;
-	box-sizing: border-box;
-	color: #333333;
-	font-size: 14px;
-	font-weight: 600;
-}
+			box-sizing: border-box;
+			color: #333333;
+			font-size: 14px;
+			font-weight: 600;
+		}
 
 /*aside부분 END*/
 
 /*section부분  */
 .page_section {
-	padding-left: 280px;
-	padding-right: 100px;
+    position: absolute;
+     width: 970px; 
+    height: 860px;
+    left: 210px;
+    padding: 40px 0 40px 40px;
+    border-left: 1px solid #e7e7e7;
+    box-sizing: border-box;
 }
 
 /*section부분 END */
@@ -222,7 +224,7 @@ header {
 	<div class="container">
 		<div id="apaside">
 			<ul class="menu">
-				<li class="menu_list"><a href="#" class="link_menu">전자결재
+				<li class="menu_list"><a href="${pageContext.request.contextPath}/project/driftlist" class="link_menu">전자결재
 						기안함</a></li>
 				<li class="menu_list"><a href="#" class="link_menu">전자결재
 						결재함</a></li>

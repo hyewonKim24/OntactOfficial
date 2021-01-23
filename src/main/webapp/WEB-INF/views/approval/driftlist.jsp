@@ -28,7 +28,10 @@
 		}
 
 		.container {
-			overflow: hidden;
+			position: relative;
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
 		}
 
 		.wrap_title {
@@ -69,7 +72,7 @@
 
 		/*aside부분*/
 		#apaside {
-			width: 240px;
+			width: 210px;
 			height: 100%;
 			background-color: #F2F2F2;
 			display: inline-block;
@@ -85,14 +88,18 @@
 			padding: 16px 0 16px 19px;
 		}
 
-		.menu_list:nth-child(1) {
+/* 		.menu_list:nth-child(1) {
 			border-bottom: none;
 		}
 
 		.menu_list {
 			border: 1px solid black;
 		}
-
+ */
+ 
+ 		.menu_list:hover{
+ 			background-color: #e7e7e7;
+ 		}
 		.link_menu {
 			text-decoration: none;
 			display: block;
@@ -110,14 +117,20 @@
 		/*section부분  */
 
 		.page_section {
-			padding-left: 280px;
-			padding-right: 100px;
+    position: absolute;
+    /* width: 970px; */
+    height: 860px;
+    left: 210px;
+    padding: 40px 0 40px 40px;
+    border-left: 1px solid #e7e7e7;
+    box-sizing: border-box;
 
 		}
 
 		/*section부분 END */
 		.main_section {
 			padding-top: 30px;
+			    width: 970px;
 
 		}
 
@@ -164,6 +177,7 @@
 			background-color: #5A3673;
 			color: #fff;
 			font-size: 12px;
+			cursor: pointer;
 
 		}
 	</style>
@@ -192,7 +206,7 @@
 	<div class="container">
 		<div id="apaside">
 			<ul class="menu">
-				<li class="menu_list"><a href="#" class="link_menu">전자결재 기안함</a></li>
+				<li class="menu_list"><a href="${pageContext.request.contextPath}/project/driftlist" class="link_menu">전자결재 기안함</a></li>
 				<li class="menu_list"><a href="#" class="link_menu">전자결재 결재함</a></li>
 			</ul>
 		</div>
@@ -200,6 +214,7 @@
 
 
 		<div class="page_section">
+			<div>
 			<h2>전자결재 기안함</h2>
 			<hr>
 			<div class="main_section">
@@ -265,6 +280,7 @@
 								</c:if></td>
 						</tr>
 						</table>
+						</div>
 			</div>
 				<div class="apwritebtn">
 				<button type="button" id="apwritebtn" name="apwritebtn" onclick="window.location='driftform'">기안작성하기</button>
