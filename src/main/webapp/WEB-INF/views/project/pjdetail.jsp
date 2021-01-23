@@ -767,8 +767,8 @@
 													<div class="tdp-add-wrap">
 														<div class="tdp-add">
 															<ul>
-																<input type="hidden" class="tdp" name="tduno" value=""/>
-																<input type="hidden" class="tdp-file" value=""/>
+																<input type="hidden" class="tdp" name="tduno" value="">
+																<input type="hidden" class="tdp-file" value="">
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
 																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
@@ -877,10 +877,10 @@
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +
 										'<ul>' + '\n' + 
 										'<input type="hidden" class="tdp" name="tduno" value="">'+ '\n' +
-										'<input type="hidden" class="tdp-file" value=""/>'+ '\n' +
+										'<input type="hidden" class="tdp-file" value="">'+ '\n' +
 										'<c:forEach items="${userlist}" var="ulist">' + '\n' +
 										'<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}' + '\n' +
-										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">+ '\n' +
+										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">'+ '\n' +
 										'<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">'+ '\n' +
 										'</li>' + '\n' +
 										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>'+ '\n' +'</li>'
@@ -964,13 +964,13 @@
 									var ufile = $('.tdp-file').val();
 									if(ufile == null || ufile ==''){
 										console.log("********filepath:" + ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').attr('src','${pageContext.request.contextPath}/resources/img/user-3.png');
-										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
+										$(this).parents(".tdp-wrap").find('.todo-04').attr('src','${pageContext.request.contextPath}/resources/img/user-3.png');
+										$(this).parents(".tdp-wrap").find('.todo-04').addClass('userimg');
 									}
 									else if(ufile != null || ufile !=''){
 										console.log("filepath:" + ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').attr('src', ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
+										$(this).parents(".tdp-wrap").find('.todo-04').attr('src', ufile);
+										$(this).parents(".tdp-wrap").find('.todo-04').addClass('userimg');
 									}
 								});
 								//윤진 : 할일 insert
