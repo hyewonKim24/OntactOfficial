@@ -14,6 +14,18 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
 <style>
+ html,
+    body {
+        width: 100%;
+       /*  height: 100%; */
+        position: relative;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+        background-color: rgb(242, 242, 242);
+    }
+
+
 a {
 	text-decoration: none;
 }

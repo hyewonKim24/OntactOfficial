@@ -62,14 +62,13 @@ public class ProjectController {
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("uno", uno);
 			paramMap.put("cno", cno);
-			paramMap.put("dno", dno);
 
 			mv.addObject("pjc", pjService.selectOneCompany(uno));
 			System.out.println("내 회사 결과 : " + pjService.selectOneCompany(uno));
 			mv.addObject("pjd", pjService.selectOneTeam(paramMap));
 			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
-			mv.addObject("listpj", pjService.selectListProject(uno));
-			System.out.println("project List 결과 : " + pjService.selectListProject(uno));
+			mv.addObject("listpj", pjService.selectListProject(paramMap));
+			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));
 			mv.setViewName("project/projectall");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,9 +83,13 @@ public class ProjectController {
 		response.setContentType("text/html;charset=UTF-8");
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uno = userdetail.getUno();
-		System.out.println("내 uno" + uno);
+		String cno = userdetail.getCno();
 		
-		mv.addObject("pjuns",pjService.selectListPjUns(uno));
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("cno", cno);
+		
+		mv.addObject("pjuns",pjService.selectListPjUns(paramMap));
 		mv.setViewName("project/pjuns");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,28 +147,41 @@ public class ProjectController {
 	//사이드바 : 프로젝트 생성
 	@SuppressWarnings("finally")
 	@RequestMapping(value="/project/all/ins", method=RequestMethod.GET)
-	public String insertProject(ProjectDto pj, ProjectMemberDto pjm, ProjectDeptDto pjd, 
+	public String insertProject(ProjectDto pj, ProjectMemberDto pjm,
 			HttpServletRequest request, RedirectAttributes rttr, Authentication authentication,
 			@RequestParam(value="pname", required=true) String pname, 
 			@RequestParam(value="pdesc", required=false) String pdesc, 
 			@RequestParam(value="popen", defaultValue="1", required=false) int popen, 
-			@RequestParam(value="dno", required=false) String dno){
+			@RequestParam(value="dno", required=false) List<String> dno){
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uno = userdetail.getUno();
+		String cno = userdetail.getCno();
 		
 		System.out.println("프로젝트 insert controller 진입");
-		System.out.println("pname: "+pname+" pdesc:"+pdesc+ " uno:"+uno);
+		System.out.println("pname: "+pname+" pdesc:"+pdesc+ " uno:"+uno+ " cno:"+cno);
 		System.out.println("dno" + dno);
+		List<ProjectDeptDto> pjdlist = new ArrayList<ProjectDeptDto>();
+		ProjectDeptDto pjd = null;
 		try {
 			if(pname != null) {
 				System.out.println("insert if문 진입");
 				pj.setPname(pname);
 				pj.setPdesc(pdesc);
 				pj.setPopen(popen);
+				pj.setCno(cno);
 				pjm.setUno(uno);
-				pjd.setDno(dno);
-				System.out.println("pj_"+pj+"pjm_"+pjm+"pjd_"+pjd);
-				pjService.insertProject(pj, uno, dno);
+				pjm.setCno(cno);
+				if(dno !=null) {
+					for(int i=0; i<dno.size(); i++ ) {
+						pjd = new ProjectDeptDto();
+						pjd.setDno(dno.get(i));
+						pjd.setCno(cno);
+						pjdlist.add(pjd);
+					}
+					pjService.insertProject(pj, pjm, pjdlist);	
+				}else {
+					pjService.insertProject(pj, pjm, pjdlist);	
+				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -184,13 +200,63 @@ public class ProjectController {
 		try {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno = userdetail.getUno();
-			System.out.println("내 uno" + uno);
-			listpj= pjService.selectListProject(uno);
+			String cno = userdetail.getCno();
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
+			paramMap.put("cno", cno);
+			System.out.println("paramMap:"+paramMap);
+			
+			listpj= pjService.selectListProject(paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 			return listpj;
 	}
+	// 미보관 프로젝트 목록 ajax
+	@ResponseBody
+	@RequestMapping(value="/project/uns/listajax", method = RequestMethod.GET)
+	public List<ProjectDto> selectListProjectUns(Authentication authentication, HttpServletResponse response) {
+		List<ProjectDto> pjuns = new ArrayList<ProjectDto>();
+		try {
+		response.setContentType("text/html;charset=UTF-8");
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno = userdetail.getUno();
+		String cno = userdetail.getCno();
+		
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("cno", cno);
+		
+		pjuns = pjService.selectListPjUns(paramMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return pjuns;
+	}
+	// 부서별 프로젝트 목록 ajax
+	@ResponseBody
+	@RequestMapping(value="/project/pjteam/listajax", method = RequestMethod.GET)
+	public List<ProjectDto> selectListProjectTeam(Authentication authentication, HttpServletResponse response,
+			@RequestParam(value = "dname", required = false) String dname) {
+		List<ProjectDto> pjteam = new ArrayList<ProjectDto>();
+		try {
+		response.setContentType("text/html;charset=UTF-8");
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno = userdetail.getUno();
+		System.out.println("내 uno" + uno);
+		
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("dname", dname);
+		
+		pjteam = pjService.selectListPjTeam(paramMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return pjteam;
+	}
+	
 	
 	//프로젝트 멤버 초대 창 열기
 	//채팅방 초대하기
@@ -219,6 +285,8 @@ public class ProjectController {
 	@RequestMapping(value = "/project/projectmemberinsert")
 	public ModelAndView projectmemberinsert(@RequestParam(name = "uno") List<String> uno,
 			@RequestParam(value = "pno", required = false) int pno, ModelAndView mv) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String cno = user.getCno();
 		List<ProjectMemberDto> listdto = new ArrayList<ProjectMemberDto>();
 		ProjectMemberDto dto =null;
 		String ppno= Integer.toString(pno);
@@ -232,24 +300,29 @@ public class ProjectController {
 			for (String a : uno) {
 				dto = new ProjectMemberDto();
 				dto.setPno(ppno);
+				dto.setCno(cno);
 				dto.setUno(a);
 				listdto.add(dto);
 				membercount++;
 				
 				//프로젝트 채팅방 추가
-				chatdto = new ChatMemberDto();
-				chatdto.setUno(a);
-				chatdto.setCreatchat(0);
-				chatdto.setChatno(chatno);
-				chatlist.add(chatdto);
+				if(chatno!=null) {
+					chatdto = new ChatMemberDto();
+					chatdto.setUno(a);
+					chatdto.setCreatchat(0);
+					chatdto.setChatno(chatno);
+					chatlist.add(chatdto);
+				}
 				System.out.println("카운트:"+membercount);
 				}
 			int rs =pmService.projectMeberinvite(listdto);
 			System.out.println("멤버추가"+rs);
 			mcount=Integer.toString(membercount);
 
-			int chatrs = chatMemService.projectInsertmember(chatlist);
-			System.out.println("플젝채팅방에 멤버 추가됨:"+chatrs);
+			if(chatno!=null) {
+				int chatrs = chatMemService.projectInsertmember(chatlist);
+				System.out.println("플젝채팅방에 멤버 추가됨:"+chatrs);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

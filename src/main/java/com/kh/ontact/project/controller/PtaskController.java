@@ -1,4 +1,4 @@
-package com.kh.ontact.project.controller;
+﻿package com.kh.ontact.project.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.commonboard.model.service.CommonboardService;
+import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
@@ -41,29 +42,44 @@ public class PtaskController {
 	UsersService usersService;
 	@Autowired
 	CommonboardService commonboardservice;
+	@Autowired
+	ProjectService pjService;
 
 	public static final int LIMIT = 20;
 
 	@RequestMapping(value = "/task")
 	public ModelAndView ptaskMy(ModelAndView mv, Authentication authentication,
-			 @RequestParam(name = "pno") String pno) {
+			 @RequestParam(name = "pno", required = false) String pno) {
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uname = userdetail.getUname();
 //		String pno = "22"; // 임시
+		String cno = userdetail.getCno();
 		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("pno", pno);
 		paramMap.put("uname", uname);
 
 		List<TaskDto> task = null;
 		try {
 			task = taskService.PListTaskMy(paramMap);
+			//혜원 : 추가 코드 (삭제금지)
+			String ppno=null;
+			System.out.println("프로젝트 번호:"+pno);
+			if(pno==null || pno.equals("")) {
+				ppno = pjService.SelectCompanyPno(cno);
+				System.out.println("회사 프로젝트 번호:"+ppno);
+				task = taskService.PListTaskMy(paramMap);
+				paramMap.put("pno", ppno);
+				mv.addObject("pno", ppno);
+			}else {
+				paramMap.put("pno", pno);
+				task = taskService.PListTaskMy(paramMap);
+				mv.addObject("pno", pno);
+			}
 			System.out.println("업무 리스트 : " + task);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		mv.addObject("tasklist", task);
-		mv.addObject("pno", pno);
 		mv.addObject("listsize", task.size());
 		mv.setViewName("project/ptask");
 		return mv;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ontact.project.files.model.dto.FilesDto;
+import com.kh.ontact.project.model.dto.ProjectDto;
 
 @Repository("filesDao")
 public class FilesDao {
@@ -21,6 +22,10 @@ public class FilesDao {
 	}
 	public List<FilesDto> MygetFileboard(String uno) throws Exception {
 		return sqlSession.selectList("Files.MygetFileboard", uno);
+	}
+	// 파일 리스트 프로젝트
+	public List<ProjectDto> filepjlist(String cno) throws Exception {
+		return sqlSession.selectList("Files.filepjlist", cno);
 	}
 
 	// 글 인서트시 파일 인서트
@@ -49,48 +54,48 @@ public class FilesDao {
 
 	// 여기부터 파일메뉴
 	// 전체프로젝트 불러오기
-	public List<FilesDto> filelist() throws Exception {
-		return sqlSession.selectList("Files.filelist");
+	public List<FilesDto> filelist(String cno) throws Exception {
+		return sqlSession.selectList("Files.filelist", cno);
 	}
 
 	// 파일명 내림차순
-	public List<FilesDto> fnamedesc() throws Exception {
-		return sqlSession.selectList("Files.fnamedesc");
+	public List<FilesDto> fnamedesc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fnamedesc", cno);
 	}
 
 	// 파일명 오름차순
-	public List<FilesDto> fnameasc() throws Exception {
-		return sqlSession.selectList("Files.fnameasc");
+	public List<FilesDto> fnameasc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fnameasc", cno);
 	}
 
 	// 크기 내림차순
-	public List<FilesDto> fsizedesc() throws Exception {
-		return sqlSession.selectList("Files.fsizedesc");
+	public List<FilesDto> fsizedesc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fsizedesc", cno);
 	}
 
 	// 크기 오름차순
-	public List<FilesDto> fsizeasc() throws Exception {
-		return sqlSession.selectList("Files.fsizeasc");
+	public List<FilesDto> fsizeasc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fsizeasc", cno);
 	}
 
 	// 등록자 내림차순
-	public List<FilesDto> unamedesc() throws Exception {
-		return sqlSession.selectList("Files.unamedesc");
+	public List<FilesDto> unamedesc(String cno) throws Exception {
+		return sqlSession.selectList("Files.unamedesc", cno);
 	}
 
 	// 등록자 오름차순
-	public List<FilesDto> unameasc() throws Exception {
-		return sqlSession.selectList("Files.fsizeasc");
+	public List<FilesDto> unameasc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fsizeasc", cno);
 	}
 
 	// 최근 업로드순 내림차순
-	public List<FilesDto> fdatedesc() throws Exception {
-		return sqlSession.selectList("Files.fdatedesc");
+	public List<FilesDto> fdatedesc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fdatedesc", cno);
 	}
 
 	// 최근 업로드순 오름차순
-	public List<FilesDto> fdateasc() throws Exception {
-		return sqlSession.selectList("Files.fdateasc");
+	public List<FilesDto> fdateasc(String cno) throws Exception {
+		return sqlSession.selectList("Files.fdateasc", cno);
 	}
 
 	

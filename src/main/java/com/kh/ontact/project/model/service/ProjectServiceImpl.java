@@ -25,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService{
 
 	// 프로젝트 전체 목록
 	@Override
-	public List<ProjectDto> selectListProject(String uno) throws Exception {
-		return pjDao.selectListProject(uno);
+	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) throws Exception {
+		return pjDao.selectListProject(paramMap);
 	}
 
 	//프로젝트 목록 : 회사
@@ -43,30 +43,30 @@ public class ProjectServiceImpl implements ProjectService{
 
 	// 프로젝트 생성
 	@Override
-	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception {
+	public void insertProject(ProjectDto pj, ProjectMemberDto pjm, List<ProjectDeptDto> pjdlist) throws Exception {
 		pjDao.insertProject(pj);
-		pjmDao.insertProjectMember(uno);
-		if(dno!=null) {
-			String [] array = dno.split(",");
-			for(int i=0; i<array.length; i++ ) {
-				dno = array[i];
-				pjdDao.insertProjectDept(dno);	
-			}
-		} else {
-			pjdDao.insertProjectDept(dno);
+		pjmDao.insertProjectMember(pjm);
+		int rs=0;
+		for(int i=0; i<pjdlist.size(); i++) {
+			rs += pjdDao.insertProjectDept(pjdlist.get(i));
 		}
 	}
 	
 	// 미보관 프로젝트
 	@Override
-	public List<ProjectDto> selectListPjUns(String uno) throws Exception{
-		return pjDao.selectListPjUns(uno);
+	public List<ProjectDto> selectListPjUns(HashMap<String, String> paramMap) throws Exception{
+		return pjDao.selectListPjUns(paramMap);
 	}
 	
 	// 부서별 보관함 프로젝트 목록
 	@Override
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap)throws Exception{
 		return pjDao.selectListPjTeam(paramMap);
+	}
+
+	@Override
+	public String SelectCompanyPno(String cno) throws Exception {
+		return pjDao.SelectCompanyPno(cno);
 	}
 	
 }

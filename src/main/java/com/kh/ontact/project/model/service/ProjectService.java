@@ -9,7 +9,7 @@ import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 
 public interface ProjectService {
 	//프로젝트 전체 목록 : 프로젝트명, 공개여부
-	public List<ProjectDto> selectListProject(String uno) throws Exception;
+	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) throws Exception;
 
 	//프로젝트 목록 : 회사
 	public ProjectDto selectOneCompany(String uno) throws Exception;
@@ -18,12 +18,15 @@ public interface ProjectService {
 	public ProjectDto selectOneTeam(HashMap<String, String> paramMap) throws Exception;
 	
 	//프로젝트 생성
-	public void insertProject(ProjectDto pj, String uno, String dno) throws Exception;
+	public void insertProject(ProjectDto pj, ProjectMemberDto pjm, List<ProjectDeptDto> pjdlist) throws Exception;
 	
 	//미보관 프로젝트
-	public List<ProjectDto> selectListPjUns(String uno) throws Exception;
+	public List<ProjectDto> selectListPjUns(HashMap<String, String> paramMap) throws Exception;
 
 	// 부서별 보관함 프로젝트 목록
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap) throws Exception;
 
+	
+	// 회사 프로젝트 pno 불러오기
+	public String SelectCompanyPno(String cno) throws Exception;
 }

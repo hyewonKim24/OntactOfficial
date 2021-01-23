@@ -767,12 +767,13 @@
 													<div class="tdp-add-wrap">
 														<div class="tdp-add">
 															<ul>
-																<input type="hidden" class="tdp" name="tduno" value="">
+																<!-- <input type="hidden" class="tdp" name="tduno" value="">
+																<input type="hidden" class="tdp-file" value=""> -->
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
-																	<li class="tdp-list tdp-list${e.count}">${ulist.uname}
+																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
+																		<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">
 																	</li>
-																	<%-- <img src="${ulist.ufilepath}"> --%>
 																</c:forEach>
 															</ul>
 														</div>
@@ -858,7 +859,7 @@
 										, onSelect: function (date) {
 											console.log("date : " + date);
 											$('.todo-date1').css("display", "inline-block");
-											$('img.ui-datepicker-trigger').css('display', 'none');
+											$('.todo-date1').parent().find('img.ui-datepicker-trigger').css('display', 'none');
 											/* $('.todo-date1').val(date); */
 											console.log($('.todo-date1').val());
 										}
@@ -876,14 +877,14 @@
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +
 										'<ul>' + '\n' + 
 										'<input type="hidden" class="tdp" name="tduno" value="">'+ '\n' +
-										'<input type="hidden" class="tdp-file" value=""/>'+ '\n' +
+										'<input type="hidden" class="tdp-file" value="">'+ '\n' +
 										'<c:forEach items="${userlist}" var="ulist">' + '\n' +
 										'<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}' + '\n' +
-										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">+ '\n' +
+										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">'+ '\n' +
 										'<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">'+ '\n' +
 										'</li>' + '\n' +
-										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>' +
-										'</li>'
+										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>'+ '\n' +'</li>'
+										
 									$(".todoinput").append(todoinput);
 									$('.todoform').find('.todo-date' + tdcnt).datepicker({
 										dateFormat: 'mm/dd' //Input Display Format 변경
@@ -949,29 +950,25 @@
 								});
 								//할일 담당자 선택
 								$(document).on('click', ".tdp-list${ulist.uno}", function (e) {
-									e.stopPropagation();
-									$p = $(this).find('.tdp-uno');
-									$f = $(this).find('.ufilepath');
-									$p.parents(".tdp-add-wrap").hide();
-									
-									var a = $p.val();	
-									console.log(a);
-									$(this).parents('.tdp-add').find('.tdp').val(a);
-									var b = $f.val();
-									console.log(b);
-									$(this).parents('.tdp-add').find('.tdp-file').val(b);
-									var ufile = $('.tdp-file').val();
-									if(ufile == null || ufile ==''){
-										console.log("********filepath:" + ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').attr('src','${pageContext.request.contextPath}/resources/img/user-3.png');
-										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
-									}
-									else if(ufile != null || ufile !=''){
-										console.log("filepath:" + ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').attr('src', ufile);
-										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
-									}
-								});
+			                        e.stopPropagation();
+			                        let uno = $(this).find('.tdp-uno').val();
+			                        let ufilepath = $(this).find('.ufilepath').val();
+			                        $(this).parents(".tdp-add-wrap").hide();
+			
+			                        let profile = $(this).parents('.todo').find('.todo-04');
+			                        console.log("profile : "+profile);
+			                        console.log("ufilepath : " + ufilepath);
+			                        console.log("uno : " + uno);
+			                        if (ufilepath == null || ufilepath == '') {
+			                            profile.attr('src', '${pageContext.request.contextPath}/resources/img/user-3.png');
+			                            profile.addClass('userimg');
+			                        }
+			                        else if (ufilepath != null || ufilepath != '') {
+			                            console.log("filepath:" + ufilepath);
+			                            profile.attr('src', ufilepath);
+			                            profile.addClass('userimg');
+			                        }
+			                    });
 								//윤진 : 할일 insert
 								//글작성 버튼 submit
 								
@@ -1039,11 +1036,11 @@
 					<c:forEach items="${file}" var="file" varStatus="e">
 					<c:if test="${blist.bno eq file.bno }">
                        			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
-                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
+                       				<a href="${file.fpath }" class="boardimg-name-real"><span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span></a>
                        				<div class="boardimg-info-real">
-	                       				<a href="${file.fpath }" class="boardimg-name-real">
+	                       				<%-- <a href="${file.fpath }" class="boardimg-name-real">
 	                       					<i class="fa fa-paperclip"></i>${file.foriginalname }
-	                       				</a>
+	                       				</a> --%>
                        				</div>
                        				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
                        			</li>
@@ -3103,7 +3100,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	          let parent = $(this).parents('.uploadedFileList-real-li');
 	          if(fname.substr(12,2)==="s_"){
 	              parent.find('.boardimg-name-real').attr("data-lightbox", "uploadImages");
-	              parent.find(".fa-paperclip").attr("class", "fa fa-camera");
+	              //parent.find(".fa-paperclip").attr("class", "fa fa-camera");
 	          }
 	      })
 	  }	

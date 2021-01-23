@@ -314,16 +314,16 @@ body {
 				console.log("ajax:" + object + "성공");
 				for(var i=0 in object){
 				var color = backgroundColor();
-				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].PNO+"'>";
+				var print ="<a href='${pageContext.request.contextPath}/project/pjdetail?pno="+ object[i].pno+"'>";
 				
 				print += "<div id='pj_project' class='pj_box' style='background-color:" + color + "';>";
-				print += " <div>"+object[i].PNAME+"</div>";
+				print += " <div>"+object[i].pname+"</div>";
 				print += " <div class='pj_team_list'>";
-				if(object[i].DNAME !=undefined){
-					print += " <div>" +object[i].DNAME+"</div>";
+				if(object[i].pjteam !=undefined){
+					print += " <div>" +object[i].pjteam+"</div>";
 				}
 				print += "</div><div> <span>"+object[i].pjmembercnt+"</span> <span>명 참여중</span></div>";
-				if(object[i].POPEN==0){
+				if(object[i].popen==0){
 					print += "<span> <img src='${pageContext.request.contextPath}/resources/img/locked-4-white.png' class='lock_1'></span>";
 				}
 				if(object[i].cnt !=undefined){
@@ -422,7 +422,10 @@ body {
 							<div>
 								<span>${pjc.ucnt}</span> <span>명 참여중</span>
 							</div>
-							<button type="button" title="선택" class="pjCheck"></button>
+							<c:if test="${pjc.cnt !=undefined }">
+								<span class='pj_cnt'>${pjc.cnt}</span>
+							</c:if>
+							<!-- <button type="button" title="선택" class="pjCheck"></button> -->
 						</div>
 					</a>
 				</c:if>
@@ -437,6 +440,9 @@ body {
 							<div>
 								<span>${pjd.ucnt}</span> <span>명 참여중</span>
 							</div>
+							<c:if test="${pjd.cnt !=undefined }">
+								<span class='pj_cnt'>${pjd.cnt}</span>
+							</c:if>
 						</div>
 					</a>
 				</c:if>
@@ -446,7 +452,7 @@ body {
 		<div id="pj_board_bottom">
 			<div id="section_project">
 				<div class="pj_title">
-					<span>Project</span> <span><a href="#" id="pj_edit">편집</a></span>
+					<!-- <span>Project</span> <span><a href="#" id="pj_edit">편집</a></span> -->
 				</div>
 				<div class="pj_board_list">
 					<!-- 프로젝트가 하나도 없을 경우-->

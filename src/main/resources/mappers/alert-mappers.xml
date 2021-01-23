@@ -75,7 +75,4 @@
 		update alert set acount=0 where bno=#{bno} and uno=#{uno}
 	]]>
 	</update>
-	
-	
-	
 </mapper>

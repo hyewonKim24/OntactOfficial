@@ -25,7 +25,7 @@
     html,
     body {
         width: 100%;
-       /*  height: 100%; */
+        height: 100%;
         position: relative;
         font-size: 14px;
         font-family: Noto Sans KR;
@@ -107,7 +107,7 @@
         width:100%;
         height:100%;
         display:flex;
-        overflow:scroll;
+       /*  overflow-y:scroll; */
     }
     .title_close{
         width: 70px;
@@ -244,7 +244,11 @@
         line-height: 28px;
         cursor:pointer;
     }
-
+    .file_list_wrapper{
+    	height: 90%;
+    	overflow-y:scroll;
+    }
+    
     .project_all:hover,
     .project_list_sub:hover,
     .piclist_tr:hover {
@@ -385,7 +389,8 @@
     padding: 20px 0px 0 20px;
     display:flex;
     flex-wrap:wrap;
-    
+    height: 85%;
+    overflow-y:scroll;
     }
     .piclist_tr{
     display: inline-block;
@@ -491,8 +496,8 @@
                             <c:forEach items="${listpj}" var="pj">
                             <li class="project_list_sub">
                                 <a class="pjlist" style="cursor:pointer;">
-                                    <span>${pj.PNAME }</span>
-                                    <input type="hidden" value="${pj.PNO}" class="pno">
+                                    <span>${pj.pname }</span>
+                                    <input type="hidden" value="${pj.pno}" class="pno">
                                 </a>
                             </li>
                             </c:forEach>

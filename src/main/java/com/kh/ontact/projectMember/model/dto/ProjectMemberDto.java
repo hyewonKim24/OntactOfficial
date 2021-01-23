@@ -14,6 +14,7 @@ public class ProjectMemberDto {
 	private String pno;
 	private String uno;
 	private int padmin;
+	private String cno;
 	private String uname;
 	private String pname;
 	private String ufilepath;

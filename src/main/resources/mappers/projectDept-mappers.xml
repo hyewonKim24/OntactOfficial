@@ -5,6 +5,7 @@
 		<!-- extends="DeptDto" -->
 		<id property="pno" column="pno" />
 		<result property="dno" column="dno" />
+		<result property="cno" column="cno" />
 	</resultMap>
 
 	<!-- 프로젝트 생성 : 부서 입력 -->
@@ -12,7 +13,7 @@
 		flushCache="true" statementType="PREPARED">
 		insert into project_dept values
 		<foreach collection="list" item="item" separator=",">
-			(PNO_SE.CURRVAL, #{item.DNO})
+			(PNO_SE.CURRVAL, #{item.DNO}, #{cno})
 		</foreach>
 	</insert>
 </mapper>

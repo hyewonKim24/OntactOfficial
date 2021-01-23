@@ -17,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class ProjectDeptDto {
 	private String pno;
 	private String dno;
-	
+	private String cno;	
 }
