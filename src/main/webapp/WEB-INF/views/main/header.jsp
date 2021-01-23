@@ -884,9 +884,6 @@ input:focus {
 					html += "</table>";
 					$(".tel-all").append(html);
 					
-					$(".tel-other").click(function(){
-					});
-					
 					$(".tel-prof-modal").click(function() {
 						$(".prof-chat-wrap").html('');
 						$(".prof-bg-img").html('');
@@ -901,13 +898,13 @@ input:focus {
 						
 						console.log("ufilepath"+ufilepath);
 						
-/* 						if(ufilepath!=null || ufilepath!="null" ||ufilepath!=""){
-							var printhtml = "<img src='"+ufilepath+"' class='prof-bg-img'><a href='#' class='prof-exit'> &times;</a>";
-							$(".prof-bg-img").append(printhtml);
-						}else if(ufilepath==null || ufilepath=="null"){  */
+						if(ufilepath==null || ufilepath=="null"){  
 							var printhtml = "<img src='${pageContext.request.contextPath}/resources/img/user-3.png' class='prof-bg-img'><a href='#' class='prof-exit'> &times;</a>";
 							$(".prof-bg-img").append(printhtml);
-/* 						} */ 
+						}else if(ufilepath!=null || ufilepath!="null" ||ufilepath!=""){
+							var printhtml = "<img src='"+ufilepath+"' class='prof-bg-img'><a href='#' class='prof-exit'> &times;</a>";
+							$(".prof-bg-img").append(printhtml);
+						}
 							
 						var chathtml = "<a href=\"${pageContext.request.contextPath}/chat/chatroom?chatuno="+uno+"&chatuname="+uname+"\" onClick= \"window.open(this.href, \'\', \'width=470, height=650\'); return false;\" class='prof-chat'>채팅하기</a>";
 						$(".prof-chat-wrap").append(chathtml);
@@ -915,7 +912,11 @@ input:focus {
 						$(".prof-name").text(uname);
 						$(".prof-cname").text(cname);
 						$(".prof-email").text(uemail);
-						$(".prof-cname").text(cname);
+						if(dname==null){
+							$(".prof-dname").text(dname);
+						}else{
+							$(".prof-dname").text('-');
+						}
 						$(".prof-urank").text(urank);
 						$(".prof-info-dim").css("display", "block");
 						$(".prof-info-wrap").css("display", "block");
@@ -1048,10 +1049,6 @@ input:focus {
 		});
 		
 		
-		//채팅창 클릭했을 때 모달창 닫기 ㅠㅠ 안먹힘 
-		$(".chat-name").click(function(){
-			$(".chat-wrap").hide();
-		});
 		
 		
 	});
@@ -1064,10 +1061,12 @@ input:focus {
 			<sec:authentication property="principal.uno" var="uno"/>
 			<sec:authentication property="principal.uname" var="uname"/>
 			<sec:authentication property="principal.ufilepath" var="ufilepath"/>
+			<sec:authentication property="principal.urank" var="urank"/>
 			<sec:csrfInput />
 			<input type="hidden" value='${uname}' name="sessionuserid" id="sessionuserid">
 			<input type="hidden" value="${uno}" id="uno" name="uno">
 			<input type="hidden" value="${ufilepath}" id="ufilepath" name="ufilepath">
+			<input type="hidden" value="${urank}" id="urank" name="urank">
 			
 			
 	<div class="header-wrap">
@@ -1270,8 +1269,12 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 									<div class="tel-name">
 										<p class="tel-title">내 프로필</p>
 										<div class="tel-my">
-										 	<img src="${pageContext.request.contextPath}/resources/img/user-3.png" 
-															  width="35px" height="35px" class="tel-my-img">
+										<c:if test="${empty ufilepath}">
+										 	<img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="35px" height="35px" class="tel-my-img">
+										</c:if>
+										<c:if test="${not empty ufilepath}">
+										 	<img src="${ufilepath}" width="35px" height="35px" class="tel-my-img">
+										</c:if>
 											<span class="tel-my-desc"> <a href="#">${uname }</a> <span>
 													
 											</span>
@@ -1595,6 +1598,26 @@ $(document).ready(function() {
 				frm.submit();
 				}
 			});
+		
+		//내 프로필에서 눌렀을때 모달 뜨기
+		$(".tel-my-desc").click(function(){
+			var uname= $("#uname").val();
+			var uemail= $("#uemail").val();
+			var dname= $("#dname").val();
+			var urank= $("#urank").val();
+			
+			$(".prof-name").text(uname);
+			$(".prof-cname").text(cname);
+			$(".prof-email").text(uemail);
+			$(".prof-dname").text(dname);
+			$(".prof-urank").text(urank);
+			$(".prof-info-dim").css("display", "block");
+			$(".prof-info-wrap").css("display", "block");
+			$(".prof-exit").click(function() {
+				$(".prof-info-dim").css("display", "none");
+				$(".prof-info-wrap").css("display", "none");
+			}); 
+		});
 		
 
 });

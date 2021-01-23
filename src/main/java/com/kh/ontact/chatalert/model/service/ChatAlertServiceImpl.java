@@ -32,7 +32,7 @@ public class ChatAlertServiceImpl implements ChatAlertService{
 	}
 
 	@Override
-	public int AllChatAlert(String uno) throws Exception {
+	public Integer AllChatAlert(String uno) throws Exception {
 		return chatalertDao.AllChatAlert(uno);
 	}
 

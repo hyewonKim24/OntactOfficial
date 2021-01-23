@@ -417,11 +417,17 @@ input:checked+.slider:before {
 					for (var i = 0; i < data.length; i++) {
 						$("#pjteam").append('<input type="checkbox" name="dno" value="'+ data[i].dno + '">'+data[i].dname+'<br>');
 					}
+					
+					//혜원 코드 추가
+					$("#newpjModal").css("display","block");
+					$(".close").click(function(){
+						$("#newpjModal").css("display","none");
+					});
 				},
 				error : function() {
 					alert("newpj modal : pjteam load error");
 				}
-			})
+			});
 		});
 		
 		//프로젝트 생성 모달 부서 체크박스

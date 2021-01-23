@@ -174,6 +174,10 @@ tfoot {
     }
     #modal_number{
         border:none;
+        text-align: center;
+    }
+    #modal_number:focus{
+        outline: none;
     }
     #modal_time{
         color:red;

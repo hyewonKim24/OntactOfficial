@@ -50,23 +50,23 @@
 	<!-- 가입시 부서 프로젝트 생성 -->
 	<insert id="joinProject" flushCache="true"> 
 		<![CDATA[ 
-			insert into project(pno, pname) values(PNO_SE.NEXTVAL, #{pname}) 
+			insert into project(pno, pname, cno) values(PNO_SE.NEXTVAL, #{pname}, CNO_SE.CURRVAL) 
 		]]> 
 	</insert> 
 	<insert id="joinProjectMember" flushCache="true"> 
 		<![CDATA[ 
-			insert into project_member values (pno_se.currval, UNO_SE.CURRVAL, 1) 
+			insert into project_member values (pno_se.currval, UNO_SE.CURRVAL, 1, CNO_SE.CURRVAL) 
 		]]> 
 	</insert>
 	<insert id="joinProjectDept" flushCache="true"> 
 		<![CDATA[ 
-			insert into project_dept values (pno_se.currval, DNO_SE.CURRVAL) 
+			insert into project_dept values (pno_se.currval, DNO_SE.CURRVAL, CNO_SE.CURRVAL) 
 		]]> 
 	</insert> 
 	<!-- 가입시 회사 프로젝트 생성 -->
 	<insert id="joinCompanyProject" flushCache="true"> 
 		<![CDATA[ 
-			insert into project(pno, pname) values(PNO_SE.NEXTVAL, #{cname}) 
+			insert into project(pno, pname, cno) values(PNO_SE.NEXTVAL, #{cname}, CNO_SE.CURRVAL) 
 		]]> 
 	</insert> 
 	
@@ -90,9 +90,9 @@
 		select pno from project where pname=#{pname}
 		]]>
 	</select>
-	<insert id="joinDefaultPj" flushCache="true"> 
+	<insert id="joinDefaultPj" flushCache="true" parameterType="hashMap"> 
 		<![CDATA[ 
-			insert into project_member values(#{pno}, UNO_SE.CURRVAL, 0) 
+			insert into project_member values(#{pno}, UNO_SE.CURRVAL, 0, #{cno}) 
 		]]> 
 	</insert> 
 	

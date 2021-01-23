@@ -28,8 +28,12 @@ public class ChatAlertDao {
 	public int EachChatAlert(ChatAlertDto dto) throws Exception{
 		return sqlSession.selectOne("ChatAlert.EachChatAlert", dto);
 	}
-	public int AllChatAlert(String uno) throws Exception{
-		return sqlSession.selectOne("ChatAlert.AllChatAlert", uno);
+	public Integer AllChatAlert(String uno) throws Exception{
+		Integer rs = sqlSession.selectOne("ChatAlert.AllChatAlert", uno);
+		if(rs==null) {
+			return 0;
+		}
+		return rs;
 	}
 	
 	

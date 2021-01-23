@@ -9,6 +9,6 @@ public interface ChatAlertService {
 	public int updateChatAlertPlus(ChatAlertDto dto) throws Exception;
 	public int updateChatAlertReset(ChatAlertDto dto) throws Exception;
 	public int EachChatAlert(ChatAlertDto dto) throws Exception;
-	public int AllChatAlert(String uno) throws Exception;
+	public Integer AllChatAlert(String uno) throws Exception;
 	
 }
