@@ -263,7 +263,7 @@ public class UsersMainController {
 		return mv;
 	}
 
-	// 비밀번호 찾기 이동
+	// 비밀번호 찾기 유효성 검사
 	@RequestMapping(value = "/main/pwdforgetmail", method = RequestMethod.GET)
 	public ModelAndView updateTmppwd() {
 		ModelAndView mv = new ModelAndView("users/pwdforget");
@@ -347,7 +347,7 @@ public class UsersMainController {
 
 	// 마이페이지 - 계정정보
 	@RequestMapping(value = "/user/mypage/detail", method = RequestMethod.GET)
-	public ModelAndView selectOneUser(UsersDto userdto) {
+	public ModelAndView mypage(UsersDto userdto) {
 		ModelAndView mv = new ModelAndView();
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();

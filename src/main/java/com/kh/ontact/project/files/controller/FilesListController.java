@@ -30,8 +30,6 @@ public class FilesListController {
 	@Autowired
 	private FilesDao filesDao;
 	@Autowired
-	private ProjectService pjService;
-	@Autowired
 	private FilesService filesService;
 	
 	//*****파일리스트******
@@ -55,15 +53,16 @@ public class FilesListController {
 			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 					.getPrincipal();
 			String uno = user.getUno();
+			String cno = user.getCno();
 			System.out.println(uno);
 			try {
-				List<FilesDto> list = filesDao.filelist();
+				List<FilesDto> list = filesDao.filelist(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
 				}
-				mv.addObject("listpj", pjService.selectListProject(uno));
-				System.out.println(pjService.selectListProject(uno)+"프로젝트리스트");
+				mv.addObject("listpj", filesDao.filepjlist(cno));
+				System.out.println(filesDao.filepjlist(cno)+"프로젝트리스트");
 				mv.addObject("flist", list);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -78,8 +77,11 @@ public class FilesListController {
 		public List<FilesDto> fnameasc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fnameasc();
+				list = filesDao.fnameasc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -96,8 +98,11 @@ public class FilesListController {
 		public List<FilesDto> fnamedesc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fnamedesc();
+				list = filesDao.fnamedesc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -114,8 +119,11 @@ public class FilesListController {
 		public List<FilesDto> fsizeasc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fsizeasc();
+				list = filesDao.fsizeasc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -132,8 +140,11 @@ public class FilesListController {
 		public List<FilesDto> fsizedesc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fsizedesc();
+				list = filesDao.fsizedesc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -150,8 +161,11 @@ public class FilesListController {
 		public List<FilesDto> unameasc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.unameasc();
+				list = filesDao.unameasc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -168,8 +182,11 @@ public class FilesListController {
 		public List<FilesDto> unamedesc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.unamedesc();
+				list = filesDao.unamedesc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -186,8 +203,11 @@ public class FilesListController {
 		public List<FilesDto> fdateasc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fdateasc();
+				list = filesDao.fdateasc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -204,8 +224,11 @@ public class FilesListController {
 		public List<FilesDto> fdatedesc() {
 			MediaUtils util = new MediaUtils();
 			List<FilesDto> list = null;
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
+			String cno = user.getCno();
 			try {
-				list = filesDao.fdatedesc();
+				list = filesDao.fdatedesc(cno);
 				for (int i = 0; i < list.size(); i++) {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
@@ -237,6 +260,7 @@ public class FilesListController {
 			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 					.getPrincipal();
 			String uno = user.getUno();
+			String cno = user.getCno();
 			
 			//파일 삭제시 페이지 유지 위함
 			Map<String, ?> pno2 = RequestContextUtils.getInputFlashMap(request);
@@ -250,7 +274,7 @@ public class FilesListController {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
 				}
-				mv.addObject("listpj", pjService.selectListProject(uno));
+				mv.addObject("listpj", filesDao.filepjlist(cno));
 				mv.addObject("flist", list);
 				mv.addObject("pno", pno);
 			} catch (Exception e) {

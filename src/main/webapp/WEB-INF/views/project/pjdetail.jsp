@@ -1040,11 +1040,11 @@
 					<c:forEach items="${file}" var="file" varStatus="e">
 					<c:if test="${blist.bno eq file.bno }">
                        			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
-                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
+                       				<a href="${file.fpath }" class="boardimg-name-real"><span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span></a>
                        				<div class="boardimg-info-real">
-	                       				<a href="${file.fpath }" class="boardimg-name-real">
+	                       				<%-- <a href="${file.fpath }" class="boardimg-name-real">
 	                       					<i class="fa fa-paperclip"></i>${file.foriginalname }
-	                       				</a>
+	                       				</a> --%>
                        				</div>
                        				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
                        			</li>
@@ -3104,7 +3104,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	          let parent = $(this).parents('.uploadedFileList-real-li');
 	          if(fname.substr(12,2)==="s_"){
 	              parent.find('.boardimg-name-real').attr("data-lightbox", "uploadImages");
-	              parent.find(".fa-paperclip").attr("class", "fa fa-camera");
+	              //parent.find(".fa-paperclip").attr("class", "fa fa-camera");
 	          }
 	      })
 	  }	

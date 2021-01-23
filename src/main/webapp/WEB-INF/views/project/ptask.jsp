@@ -18,17 +18,25 @@
 <sec:csrfMetaTags />
 <title>ontact, 서로 연결되는 온라인 공간</title>
 <style>
-body {
-	background-color: #f6f6f6;
-}
+ html,
+    body {
+        width: 100%;
+       /*  height: 100%; */
+        position: relative;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+        background-color: rgb(242, 242, 242);
+    }
 
-.header {
+
+.headersection {
 	position: relative;
 	width: 100%;
 	height: 60px;
 }
 
-.header div {
+.headersection div {
 	width: 1200px;
 	height: 60px;
 	margin: 0 auto;
@@ -39,6 +47,7 @@ body {
 	width: 1200px;
 	height: 100%;
 	margin: 0 auto;
+	padding-top:13px;
 }
 
 .ptask_sidebar {
@@ -310,7 +319,7 @@ input[type=checkbox]:after {
 
 
 <body>
-	<div class="header">
+	<div class="headersection">
 		<!-- <div>헤더 들어갈 자리</div> -->
 	</div>
 	<div class="main">

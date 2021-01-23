@@ -82,7 +82,8 @@
 		            where b.pno=#{pno}
 		            order by bno desc)x
 		    )e
-		    where e.uname=#{uname}
+		    where taskmanager=#{uname}
+		   
 		]]>
 	</select>
 	
@@ -110,7 +111,7 @@
 		            where b.pno=#{pno}
 		            order by bno desc)x
 		    )e
-		    where taskmanager=#{uname}
+		    where e.uname=#{uname}
 		]]>
 	</select>
 	

@@ -494,8 +494,8 @@
                             <c:forEach items="${listpj}" var="pj">
                             <li class="project_list_sub">
                                 <a class="pjlist" style="cursor:pointer;">
-                                    <span>${pj.PNAME }</span>
-                                    <input type="hidden" value="${pj.PNO}" class="pno">
+                                    <span>${pj.pname }</span>
+                                    <input type="hidden" value="${pj.pno}" class="pno">
                                 </a>
                             </li>
                             </c:forEach>

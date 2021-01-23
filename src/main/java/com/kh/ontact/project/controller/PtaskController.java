@@ -1,4 +1,4 @@
-package com.kh.ontact.project.controller;
+﻿package com.kh.ontact.project.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,11 +45,9 @@ public class PtaskController {
 	public static final int LIMIT = 20;
 
 	@RequestMapping(value = "/task")
-	public ModelAndView ptaskMy(ModelAndView mv, Authentication authentication,
-			 @RequestParam(name = "pno") String pno) {
+	public ModelAndView ptaskMy(ModelAndView mv, Authentication authentication, @RequestParam String pno) {
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uname = userdetail.getUname();
-//		String pno = "22"; // 임시
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("pno", pno);
 		paramMap.put("uname", uname);

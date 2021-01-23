@@ -25,7 +25,7 @@
     html,
     body {
         width: 100%;
-       /*  height: 100%; */
+       height: 100%;
         position: relative;
         font-size: 14px;
         font-family: Noto Sans KR;
@@ -107,7 +107,7 @@
         width:100%;
         height:100%;
         display:flex;
-        overflow:scroll;
+       /*  overflow-y:scroll; */
     }
     .title_close{
         width: 70px;
@@ -264,6 +264,7 @@
         -moz-border-radius: 0 5px 5px 0;
         -webkit-border-radius: 0 5px 5px 0;
         margin-left:4px;
+        
     }
 
     .file_list_index {
@@ -491,8 +492,8 @@
                             <c:forEach items="${listpj}" var="pj">
                             <li class="project_list_sub">
                                 <a class="pjlist" style="cursor:pointer;">
-                                    <span>${pj.PNAME }</span>
-                                    <input type="hidden" value="${pj.PNO}" class="pno">
+                                    <span>${pj.pname }</span>
+                                    <input type="hidden" value="${pj.pno}" class="pno">
                                 </a>
                             </li>
                             </c:forEach>
