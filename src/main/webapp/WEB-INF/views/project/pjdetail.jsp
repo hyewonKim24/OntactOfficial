@@ -767,8 +767,8 @@
 													<div class="tdp-add-wrap">
 														<div class="tdp-add">
 															<ul>
-																<input type="hidden" class="tdp" name="tduno" value="">
-																<input type="hidden" class="tdp-file" value="">
+																<!-- <input type="hidden" class="tdp" name="tduno" value="">
+																<input type="hidden" class="tdp-file" value=""> -->
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
 																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
@@ -859,7 +859,7 @@
 										, onSelect: function (date) {
 											console.log("date : " + date);
 											$('.todo-date1').css("display", "inline-block");
-											$('img.ui-datepicker-trigger').css('display', 'none');
+											$('.todo-date1').parent().find('img.ui-datepicker-trigger').css('display', 'none');
 											/* $('.todo-date1').val(date); */
 											console.log($('.todo-date1').val());
 										}
@@ -950,29 +950,25 @@
 								});
 								//할일 담당자 선택
 								$(document).on('click', ".tdp-list${ulist.uno}", function (e) {
-									e.stopPropagation();
-									$p = $(this).find('.tdp-uno');
-									$f = $(this).find('.ufilepath');
-									$p.parents(".tdp-add-wrap").hide();
-									
-									var a = $p.val();	
-									console.log(a);
-									$(this).parents('.tdp-add').find('.tdp').val(a);
-									var b = $f.val();
-									console.log(b);
-									$(this).parents('.tdp-add').find('.tdp-file').val(b);
-									var ufile = $('.tdp-file').val();
-									if(ufile == null || ufile ==''){
-										console.log("********filepath:" + ufile);
-										$(this).parents(".tdp-wrap").find('.todo-04').attr('src','${pageContext.request.contextPath}/resources/img/user-3.png');
-										$(this).parents(".tdp-wrap").find('.todo-04').addClass('userimg');
-									}
-									else if(ufile != null || ufile !=''){
-										console.log("filepath:" + ufile);
-										$(this).parents(".tdp-wrap").find('.todo-04').attr('src', ufile);
-										$(this).parents(".tdp-wrap").find('.todo-04').addClass('userimg');
-									}
-								});
+			                        e.stopPropagation();
+			                        let uno = $(this).find('.tdp-uno').val();
+			                        let ufilepath = $(this).find('.ufilepath').val();
+			                        $(this).parents(".tdp-add-wrap").hide();
+			
+			                        let profile = $(this).parents('.todo').find('.todo-04');
+			                        console.log("profile : "+profile);
+			                        console.log("ufilepath : " + ufilepath);
+			                        console.log("uno : " + uno);
+			                        if (ufilepath == null || ufilepath == '') {
+			                            profile.attr('src', '${pageContext.request.contextPath}/resources/img/user-3.png');
+			                            profile.addClass('userimg');
+			                        }
+			                        else if (ufilepath != null || ufilepath != '') {
+			                            console.log("filepath:" + ufilepath);
+			                            profile.attr('src', ufilepath);
+			                            profile.addClass('userimg');
+			                        }
+			                    });
 								//윤진 : 할일 insert
 								//글작성 버튼 submit
 								
