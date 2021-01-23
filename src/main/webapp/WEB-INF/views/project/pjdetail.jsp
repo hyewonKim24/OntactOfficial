@@ -876,9 +876,12 @@
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +
 										'<ul>' + '\n' + 
 										'<input type="hidden" class="tdp" name="tduno" value="">'+ '\n' +
+										'<input type="hidden" class="tdp-file" value=""/>'+ '\n' +
 										'<c:forEach items="${userlist}" var="ulist">' + '\n' +
-										'<li class="tdp-list tdp-list${e.count}">${ulist.uname}' + '\n' +
-										'<input type="hidden" class="tdp-uno" value="${ulist.uno}"></li>' + '\n' +
+										'<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}' + '\n' +
+										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">+ '\n' +
+										'<input type="hidden" class="ufilepath" value="${ulist.ufilepath}">'+ '\n' +
+										'</li>' + '\n' +
 										'</c:forEach>' + '\n' + '</ul>' + '\n' + '</div>' + '\n' + '</div>' + '\n' + '</div>' +
 										'</li>'
 									$(".todoinput").append(todoinput);
@@ -945,18 +948,29 @@
 									$p.find(".tdp-add-wrap").toggle();
 								});
 								//할일 담당자 선택
-								$(document).on('click', ".tdp-list", function (e) {
+								$(document).on('click', ".tdp-list${ulist.uno}", function (e) {
 									e.stopPropagation();
 									$p = $(this).find('.tdp-uno');
+									$f = $(this).find('.ufilepath');
 									$p.parents(".tdp-add-wrap").hide();
+									
 									var a = $p.val();	
 									console.log(a);
 									$(this).parents('.tdp-add').find('.tdp').val(a);
-									
-									/* if('${ulist.uname}' != null){
-												$p.find(".todo-04").attr('src', '${ulist.ufilepath}');                    	    	
-												console.log('filepath: ${ulist.ufilepath}');
-									} */
+									var b = $f.val();
+									console.log(b);
+									$(this).parents('.tdp-add').find('.tdp-file').val(b);
+									var ufile = $('.tdp-file').val();
+									if(ufile == null || ufile ==''){
+										console.log("********filepath:" + ufile);
+										$p.parents(".tdp-wrap").find('.todo-04').attr('src','${pageContext.request.contextPath}/resources/img/user-3.png');
+										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
+									}
+									else if(ufile != null || ufile !=''){
+										console.log("filepath:" + ufile);
+										$p.parents(".tdp-wrap").find('.todo-04').attr('src', ufile);
+										$p.parents(".tdp-wrap").find('.todo-04').addClass('userimg');
+									}
 								});
 								//윤진 : 할일 insert
 								//글작성 버튼 submit
@@ -2161,11 +2175,8 @@
                                   <span class="todo-list-ing">완료<span class="tdcompcnt-${blist.bno}"></span>/ 전체 <span class="todo-list-ed-${blist.bno}">${blist.todoViewDto.size()}</span></span>
                               </div>
                               <ul class="todo-cont-list todo-cont-list-${blist.bno}">
-                                 	<%-- <input type="hidden" class="todo-cont-list-${blist.bno}" value="bno-${blist.bno}"> --%>
-
                               <c:forEach items="${blist.todoViewDto}" var="todo" varStatus="vs">
                               	<c:if test="${todo != null}">
-                              	<input type="hidden" class="tdlength" value="${fn:length(blist.todoViewDto)}">
                                   <li class="todo tdno-${todo.tdno}">
                                     <input type="checkbox" class="todo-05" id="todocheck-${todo.tdno}" name="tdcheck" value="${todo.tdcheck}">
                                     <label for="todocheck-${todo.tdno}"></label>
@@ -2215,16 +2226,10 @@
                                                           //퍼센트 구하기
                                                           var todocnt =  $(".tdcompcnt-${blist.bno}").text();
                                                           var allcnt = $(".todo-list-ed-${blist.bno}").text();
-                                                          var percent = (todocnt / allcnt)*100;
+                                                          var d = (todocnt / allcnt)*100
+                                                          var percent = Math.round(d);
                                                           $(".todo-list-per-${blist.bno}").text(percent+"%"); 
                                                           
-                                                          var e = $(".tdlength").val();
-                                                          console.log("e:"+e);
-                                                          var zzz = Math.round((todocheckedevent_cnt/e)*100);
-                                                          console.log("zzz"+zzz);
-                                                          $(".todo-list-per").prepend(zzz);
-                                                          
-                                                          //$(".tdcompcnt-${blist.bno}").text(a);
                                                           console.log("ajax_todoCheck:"+data+"chk 성공");
                                                       },
                                                       error:function(){
@@ -2249,8 +2254,9 @@
                                                       
                                                       //퍼센트 구하기
                                                       var todocnt =  $(".tdcompcnt-${blist.bno}").text();
-                                                      var allcnt = $(".todo-list-ed-${blist.bno}").text();
-                                                      var percent = (todocnt / allcnt)*100;
+                                                          var allcnt = $(".todo-list-ed-${blist.bno}").text();
+                                                          var d = (todocnt / allcnt)*100
+                                                          var percent = Math.round(d);
                                                       $(".todo-list-per-${blist.bno}").text(percent+"%"); 
                                                       
                                                       console.log("ajax_todoCheck:"+data+"unchk 성공");
@@ -2347,7 +2353,8 @@
 								  //완료한 할일 수
                                   $(".tdcompcnt-${blist.bno}").text(a);
                                   //퍼센트 구하기
-                                  var percent = (a / b)*100;
+                                  var d = (a / b)*100;
+                                  var percent = Math.round(d);
 								  $(".todo-list-per-${blist.bno}").text(percent+"%");                               
                                   todochecked_cnt = 0;
 	                  			//});

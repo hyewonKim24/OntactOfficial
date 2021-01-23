@@ -56,12 +56,18 @@ public class ProjectController {
 			response.setContentType("text/html;charset=UTF-8");
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno = userdetail.getUno();
-			System.out.println("내 uno" + uno);
+			String cno = userdetail.getCno();
+			String dno = userdetail.getDno();
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
+			paramMap.put("cno", cno);
+			paramMap.put("dno", dno);
 
 			mv.addObject("pjc", pjService.selectOneCompany(uno));
 			System.out.println("내 회사 결과 : " + pjService.selectOneCompany(uno));
-			mv.addObject("pjd", pjService.selectOneTeam(uno));
-			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(uno));
+			mv.addObject("pjd", pjService.selectOneTeam(paramMap));
+			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
 			mv.addObject("listpj", pjService.selectListProject(uno));
 			System.out.println("project List 결과 : " + pjService.selectListProject(uno));
 			mv.setViewName("project/projectall");

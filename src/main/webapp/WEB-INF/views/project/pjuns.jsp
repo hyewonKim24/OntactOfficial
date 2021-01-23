@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../main/header.jsp"%>
 <%@ include file="pjsidebar.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -27,14 +28,20 @@ body {
 	width: 1200px;
 	margin: 0 auto;
 }
-
+.emptymsg{
+	margin: 0 auto;
+	color: #505050;
+	padding-top: 150px;
+}
 #pj_board {
-	margin: 20px auto 0 230px;
+	margin: 80px auto;
+	padding-left: 230px;
 	width: 970px;
 }
 
 #pj_board a {
 	text-decoration: none;
+	color: #505050;
 }
 
 #pj_board_bottom>#section_project>.pj_board_list {
@@ -147,7 +154,6 @@ body {
 	background-image: url("icon/circle_white.svg");
 	background-color: transparent;
 }
-
 /*modal_프로젝트 부서함 이동 모달*/
 .pj-modal-move {
 	display: none;
@@ -335,9 +341,10 @@ body {
 					<span>미보관 프로젝트</span> <span><a href="#" id="pj_edit">편집</a></span>
 				</div>
 				<div class="pj_board_list">
-					<!-- 프로젝트가 하나도 없을 경우
-					<c:if test="${empty listpj}">
-					</c:if> -->
+					<!-- 프로젝트가 하나도 없을 경우-->
+					<c:if test="${empty pjuns}">
+						<div class="emptymsg">미보관 프로젝트가 없습니다.</div>
+					</c:if> 
 					<!-- 미보관 프로젝트가 있는 경우 -->
 					<c:if test="${!empty pjuns}">
 						<c:forEach var="pjuns" items="${pjuns}" varStatus="status">
