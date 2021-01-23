@@ -15,7 +15,7 @@
 		<![CDATA[
 			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt, p.pno as pno, a.cnt as cnt
 			    from 
-			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
+			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno=#{uno}) c
 			    left join  
 			        (select cno, count(*) as ucnt from users group by cno) uc on c.cno = uc.cno
 			    inner join project p on trim(p.pname) = trim(c.cname)
@@ -58,7 +58,7 @@
 		    from project pj 
 		        inner join company c on c.cno = pj.cno
 		        inner join 
-		            (select uno, pno, count(uno) as pjmembercnt from project_member group by uno,pno) pjm on pj.pno = pjm.pno
+		            (select pno, count(pno) as pjmembercnt from project_member where cno =#{cno} group by pno) pjm on pj.pno = pjm.pno
 		        left join
 		            (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
 		                from project_dept pjd, dept d 
@@ -66,7 +66,7 @@
 		                group by pjd.pno) pjteam 
 		        on pj.pno = pjteam.pno 
 		        full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on pj.pno = a.pno
-		    where pjm.uno = #{uno} and pj.pname <> c.cname
+		    where pj.pname <> c.cname
 		    order by pj.pno desc
 	     ]]>
 	</select>
@@ -75,19 +75,19 @@
 	<select id="selectListPjUns" resultMap="projectListMap">
 		<![CDATA[
 			select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam, a.cnt as cnt
-			    from project pj 
-			        inner join company c on c.cno = pj.cno
-			        inner join 
-			            (select uno, pno, count(uno) as pjmembercnt from project_member group by uno,pno) pjm on pj.pno = pjm.pno
-			        left join
-			            (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
-			                from project_dept pjd, dept d 
-			                where d.dno = pjd.dno 
-			                group by pjd.pno) pjteam 
-			        on pj.pno = pjteam.pno 
-			        full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno =#{uno} and acount=1) a on pj.pno = a.pno
-			    where pjm.uno = #{uno} and pj.pname <> c.cname and pjteam.dname is null
-			    order by pj.pno desc
+		    from project pj 
+		        inner join company c on c.cno = pj.cno
+		        inner join 
+		            (select pno, count(pno) as pjmembercnt from project_member where cno =#{cno} group by pno) pjm on pj.pno = pjm.pno
+		        left join
+		            (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
+		                from project_dept pjd, dept d 
+		                where d.dno = pjd.dno 
+		                group by pjd.pno) pjteam 
+		        on pj.pno = pjteam.pno 
+		        full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on pj.pno = a.pno
+		    where pj.pname <> c.cname and pjteam.dname is null
+		    order by pj.pno desc
 	     ]]>
 	</select>
 

@@ -67,8 +67,8 @@ public class ProjectController {
 			System.out.println("내 회사 결과 : " + pjService.selectOneCompany(uno));
 			mv.addObject("pjd", pjService.selectOneTeam(paramMap));
 			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
-			mv.addObject("listpj", pjService.selectListProject(uno));
-			System.out.println("project List 결과 : " + pjService.selectListProject(uno));
+			mv.addObject("listpj", pjService.selectListProject(paramMap));
+			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));
 			mv.setViewName("project/projectall");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,9 +83,13 @@ public class ProjectController {
 		response.setContentType("text/html;charset=UTF-8");
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uno = userdetail.getUno();
-		System.out.println("내 uno" + uno);
+		String cno = userdetail.getCno();
 		
-		mv.addObject("pjuns",pjService.selectListPjUns(uno));
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("cno", cno);
+		
+		mv.addObject("pjuns",pjService.selectListPjUns(paramMap));
 		mv.setViewName("project/pjuns");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,8 +177,8 @@ public class ProjectController {
 						pjd.setDno(dno.get(i));
 						pjd.setCno(cno);
 						pjdlist.add(pjd);
-						pjService.insertProject(pj, pjm, pjdlist);	
 					}
+					pjService.insertProject(pj, pjm, pjdlist);	
 				}else {
 					pjService.insertProject(pj, pjm, pjdlist);	
 				}
@@ -196,8 +200,14 @@ public class ProjectController {
 		try {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno = userdetail.getUno();
-			System.out.println("내 uno" + uno);
-			listpj= pjService.selectListProject(uno);
+			String cno = userdetail.getCno();
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
+			paramMap.put("cno", cno);
+			System.out.println("paramMap:"+paramMap);
+			
+			listpj= pjService.selectListProject(paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -212,9 +222,13 @@ public class ProjectController {
 		response.setContentType("text/html;charset=UTF-8");
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		String uno = userdetail.getUno();
-		System.out.println("내 uno" + uno);
+		String cno = userdetail.getCno();
 		
-		pjuns = pjService.selectListPjUns(uno);
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("cno", cno);
+		
+		pjuns = pjService.selectListPjUns(paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

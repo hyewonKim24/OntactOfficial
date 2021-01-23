@@ -25,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService{
 
 	// 프로젝트 전체 목록
 	@Override
-	public List<ProjectDto> selectListProject(String uno) throws Exception {
-		return pjDao.selectListProject(uno);
+	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) throws Exception {
+		return pjDao.selectListProject(paramMap);
 	}
 
 	//프로젝트 목록 : 회사
@@ -54,8 +54,8 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	// 미보관 프로젝트
 	@Override
-	public List<ProjectDto> selectListPjUns(String uno) throws Exception{
-		return pjDao.selectListPjUns(uno);
+	public List<ProjectDto> selectListPjUns(HashMap<String, String> paramMap) throws Exception{
+		return pjDao.selectListPjUns(paramMap);
 	}
 	
 	// 부서별 보관함 프로젝트 목록
