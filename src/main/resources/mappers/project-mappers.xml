@@ -12,12 +12,14 @@
 	</resultMap>
 	<select id="selectOneCompany" resultMap="selectOneCom">
 		<![CDATA[
-			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt, p.pno as pno
-			    from 
-			        (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
-			    left join  
-			        (select cno, count(*) as ucnt from users group by cno  ) uc on c.cno = uc.cno
-			    inner join project p on trim(p.pname) = trim(c.cname) 
+			select c.cno as cno, c.cname as cname, uc.ucnt as ucnt, p.pno
+		    from 
+		    (select c.cno, c.cname from company c join users u on c.cno = u.cno where u.uno = #{uno}) c
+		    left join
+		    (select cno, count(*) as ucnt from users group by cno) uc
+		    on c.cno = uc.cno
+		    inner join project p
+		    on p.cno = c.cno and p.pname=c.cname
 		]]>
 	</select>
 

@@ -715,9 +715,21 @@
     		// 파일 정보 처리
     	    var fileInfo = getFileInfo(data);
     		$("#ufilename").val(fileInfo.fullName);
-    		$("#ufilepath2").val(fileInfo.imgSrc);
-    		console.log(fileInfo.fullName);
-    		console.log(fileInfo.imgSrc);
+			
+    		// 원본 파일이 들어가도록
+    		let imgSrc = fileInfo.imgSrc;
+            
+            let s = imgSrc.indexOf("s_");
+            let after = imgSrc.indexOf("-");
+            if(s<after){
+              let first = imgSrc.slice(0,s);
+              let second = imgSrc.slice(s+2, imgSrc.length);
+              imgSrc = first+second;
+              console.log(imgSrc+": 원본");
+            }
+            
+    		
+    		$("#ufilepath2").val(imgSrc);
     		$("#profile").attr("src",fileInfo.imgSrc);
 			$("#userphoto_menu").hide();
         	$("#photobtn").show()

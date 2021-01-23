@@ -38,6 +38,11 @@
 		 insert into files(fname,pno,bno,uno,fsize,fpath,imgsrc,foriginalname) values (#{fname},#{pno},#{bno},#{uno},#{fsize},#{fpath},#{imgsrc},#{foriginalname})
 	</insert>
 	
+	<!-- 내가 쓴 글 파일 불러오기 -->
+	<select id="MygetFileboard" resultMap="resultFile">
+		select fname, bno, fpath, imgsrc, foriginalname from files where uno=#{uno}
+	</select>
+	
 	<!-- ******파일 리스트 불러오기****** -->
 	<select id="filelist" resultMap="resultfilelist">
 		select f.*, u.uname from files f

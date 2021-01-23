@@ -43,6 +43,15 @@
 		 ]]>
 	</select>
 	
+	<!-- 내가쓴글 댓글카운트 -->
+	<select id="MyReplyCount" resultMap="resultReply">
+	 <![CDATA[
+			select bno,count(*) as rcount from reply 
+			where uno=#{uno}
+			group by bno
+		 ]]>
+	</select>
+	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteReply" parameterType="string">
 	 <![CDATA[
