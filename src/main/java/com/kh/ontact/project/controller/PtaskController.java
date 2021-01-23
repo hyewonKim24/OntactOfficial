@@ -63,6 +63,7 @@ public class PtaskController {
 		
 		mv.addObject("tasklist", task);
 		mv.addObject("pno", pno);
+		mv.addObject("listsize", task.size());
 		mv.setViewName("project/ptask");
 		return mv;
 	}

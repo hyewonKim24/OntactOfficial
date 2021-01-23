@@ -11,4 +11,5 @@ public interface ReplyService {
 	int deleteReply(String rno) throws Exception;
 	int updateReply(ReplyDto dto) throws Exception;
 	List<ReplyDto> ReplyCount(String pno) throws Exception;
+	List<ReplyDto> MyReplyCount(String uno) throws Exception;
 }

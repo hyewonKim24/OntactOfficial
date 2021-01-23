@@ -276,7 +276,7 @@ input[type=checkbox]:after {
 	border-radius: 2px;
 }
 .list{
-	overflow: :scroll;
+	overflow-y: :scroll;
 	
 	}
 </style>
@@ -313,16 +313,10 @@ input[type=checkbox]:after {
 		<div class="contents">
 			<input type="hidden" name="pno" id="pno" value="${pno}">
 			<div class="ptask_section">
-			<c:forEach var="tasklist" items="${tasklist}" varStatus="status">
-				<div class="task_title"> 
-				<c:choose>
-				<c:when test="${tasklist.taskmanager eq tasklist.uname }"> 내업무(${listcount})
-				</c:when>
-				<c:when test="${tasklist.tstate  eq '1' }"> 요청한 업무(${listcount})
-				</c:when>
-				</c:choose>
-				</div>
-				</c:forEach>
+					<div class="task_title">
+						<span class="counttitle">내 업무</span>
+						<span class="taskcount">(${listsize})</span>
+					</div>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/project/all/list'">닫기</button>
 				<sec:authentication property="principal.uname" var="uname" />
@@ -396,8 +390,10 @@ input[type=checkbox]:after {
 					xhr.setRequestHeader(header, token); // 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
 				},
 				success : function(list) {
-					console.log(list);
+					//console.log(list);
 					taskappend(list);
+					$(".counttitle").text("내 업무");
+					$(".taskcount").text('('+list.length+')');
 				}
 			})
 		})
@@ -418,8 +414,10 @@ input[type=checkbox]:after {
 					xhr.setRequestHeader(header, token); // 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
 				},
 				success : function(list) {
-					console.log(list);
+					//console.log(list);
 					taskappend(list);
+					$(".counttitle").text("요청한 업무");
+					$(".taskcount").text('('+list.length+')');
 				}
 			})
 		})
@@ -440,8 +438,10 @@ input[type=checkbox]:after {
 					xhr.setRequestHeader(header, token); // 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
 				},
 				success : function(list) {
-					console.log(list);
+					//console.log(list);
 					taskappend(list);
+					$(".counttitle").text("전체 업무");
+					$(".taskcount").text('('+list.length+')');
 				}
 			})
 		})
@@ -478,47 +478,55 @@ input[type=checkbox]:after {
 
 		// 상태 분류
 		$(document).on("click", "#id4", function() {
+			let count = 0;
 			$(".list").hide();
 			$(".list").each(function(index) {
 				let state1 = $(this).find('.icon_task1');
 				if (state1.text() === "요청") {
-					console.log("요청클릭")
 					$(this).css("display", "table-row");
+					count++;
 				}
 			});
+			$(".taskcount").text('('+count+')');
 		});
 
 		$(document).on("click", "#id5", function() {
+			let count = 0;
 			$(".list").hide();
 			$(".list").each(function(index) {
 				let state1 = $(this).find('.icon_task2');
 				if (state1.text() === "진행") {
-					console.log("진행클릭")
 					$(this).css("display", "table-row");
+					count++;
 				}
 			});
+			$(".taskcount").text('('+count+')');
 		});
 
 		$(document).on("click", "#id6", function() {
+			let count = 0;
 			$(".list").hide();
 			$(".list").each(function(index) {
 				let state1 = $(this).find('.icon_task3');
 				if (state1.text() === "완료") {
-					console.log("완료클릭")
 					$(this).css("display", "table-row");
+					count++;
 				}
 			});
+			$(".taskcount").text('('+count+')');
 		});
 
 		$(document).on("click", "#id7", function() {
+			let count = 0;
 			$(".list").hide();
 			$(".list").each(function(index) {
 				let state1 = $(this).find('.icon_task4');
 				if (state1.text() === "보류") {
-					console.log("보류클릭")
 					$(this).css("display", "table-row");
+					count++;
 				}
 			});
+			$(".taskcount").text('('+count+')');
 		});
 	</script>
 

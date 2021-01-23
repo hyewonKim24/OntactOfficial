@@ -19,6 +19,9 @@ public class FilesDao {
 	public List<FilesDto> getFileboard(String pno) throws Exception {
 		return sqlSession.selectList("Files.getFileboard", pno);
 	}
+	public List<FilesDto> MygetFileboard(String uno) throws Exception {
+		return sqlSession.selectList("Files.MygetFileboard", uno);
+	}
 
 	// 글 인서트시 파일 인서트
 	public int addFile(HashMap<String, String> paramMap) throws Exception {

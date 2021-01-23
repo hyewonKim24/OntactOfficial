@@ -668,7 +668,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg> 전체 일정
 				</a></li>
-				<li><a href="#"> <svg version="1.1"
+				<li><a href="${pageContext.request.contextPath}/files/list"> <svg version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
@@ -686,7 +686,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg> 전체 파일
 				</a></li>
-				<li><a href="#"> <svg version="1.1"
+				<li><a href="${pageContext.request.contextPath}/project/mydetail"> <svg version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
