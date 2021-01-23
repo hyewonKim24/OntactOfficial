@@ -125,7 +125,7 @@ public class ApprovalController {
 		String cno=userdetail.getCno();
 		String ceo = null;
 		try {
-			ceo = companyService.SelectCEO(cno);
+			ceo = companyService.SelectCEO(cno);	
 			System.out.println("ceo이름"+ceo);
 			
 			//dept name뿌리는거 가져와야함. 추후 수정 예정. 
