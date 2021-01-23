@@ -351,17 +351,15 @@ input[type=checkbox]:after {
 				<sec:authentication property="principal.uname" var="uname" />
 				<input type="hidden" value="${uname}" id="uname">
 				<div class="atask_list">
-					<table id="tasktable" width="100%" class="board-listheader"
-						cellpadding="0" cellspacing="0">
-
-						<thead>
+					<table id="tasktable" width="100%" class="board-listheader" >
+					<thead>
 							<tr>
-								<th>번호</th>
-								<th>상태</th>
-								<th>우선순위</th>
-								<th width="58%;">제목</th>
-								<th>담당자</th>
-								<th>수정일</th>
+								<th style="width: 9%">번호</th>
+								<th style="width: 9%">상태</th>
+								<th style="width: 9%">우선순위</th>
+								<th style="width: 55%">제목</th>
+								<th style="width: 9%">담당자</th>
+								<th style="width: 9%">수정일</th>
 							</tr>
 						</thead>
 						<c:forEach var="tasklist" items="${tasklist}" varStatus="status">
@@ -479,7 +477,9 @@ input[type=checkbox]:after {
 		function taskappend(list) {
 			$("#tasktable").text("");
 			let html = "";
-			html += '<thead><tr><th>번호</th><th>상태</th><th>우선순위</th><th width="40%;">제목</th><th>담당자</th><th>수정일</th></tr></thead>'
+			html += '<thead><tr><th style="width: 9%">번호</th><th style="width: 9%">상태</th><th style="width: 9%">우선순위</th><th style="width: 55%">제목</th><th style="width: 9%">담당자</th><th style="width: 9%">수정일</th></tr></thead>'
+			
+				
 			for (let i = 0; i < list.length; i++) {
 				html += "<tr class='list'>";
 				html += "<th>" + list[i].rownum + "</th>";

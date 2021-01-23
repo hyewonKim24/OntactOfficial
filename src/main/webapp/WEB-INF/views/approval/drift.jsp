@@ -149,15 +149,23 @@ header {
 }
 
 .board-listheader td {
-	padding: 5px 0;
+	padding: 15px 0;
 	vertical-align: middle;
 	font-size: 12px;
 	border: 1px solid #c0c0c0;
-}
-
-.board-listheader tbody tr {
 	text-align: center;
 }
+
+/* .board-listheader tbody tr {
+	text-align: center;
+} */
+
+ .board-listheader tbody tr td:nth-child(1) {
+	font-weight:700;
+	text-align: center;
+	width: 17%;
+}
+
 
 .apwrite {
 	float: right;
@@ -446,7 +454,7 @@ header {
 
 
 		<div class="page_section">
-			<h2>전자결재 결재함</h2>
+			<h2 style="FONT-SIZE: 29PX;">전자결재 결재함</h2>
 			<hr>
 			<div class="main_section">
 				<h2>${apno.apformat }</h2>
@@ -504,7 +512,7 @@ header {
 					<tr>
 						<td>장소</td>
 						<td>${apno.applace }</td>
-						<td>일시</td>
+						<td style="width: 5%">일시</td>
 						<td>${apno.apstate }</td>
 					</tr>
 					<tr>

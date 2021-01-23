@@ -51,11 +51,14 @@
         $('#endDate').datepicker('setDate', 'today');          
     });
     
+    window.onload = function printName() {
+        const name = document.getElementById('startDate').value;
+        document.getElementById("result").innerHTML = name;
+    }
     function printName() {
         const name = document.getElementById('startDate').value;
-        document.getElementById("result").innerText = name;
+        document.getElementById("result").innerHTML = name;
     }
-    
     
     function show_alert() {
     	swal("기안이 등록되었습니다.");
@@ -183,6 +186,7 @@ header {
 	vertical-align: middle;
 	font-size: 12px;
 	border: 1px solid #c0c0c0;
+	font-weight: 700;
 }
 
 .board-listheader tbody tr {
@@ -212,26 +216,40 @@ header {
 	width: 200px;
 	height: 30px;
 	color: #787878;
+	  border: 1px solid #c0c0c0;
+    box-sizing: border-box;
 }
 .opt_bt_a {
 	width: 200px;
-	height: 24px;
+	height: 28px;
 	color: #787878;
+	    border: 1px solid #c0c0c0;
+    box-sizing: border-box;
 }
 .opt_bt_b {
 	width: 330px;
-	height: 24px;
+	height: 36px;
 	color: #787878;
+	border: 1px solid #c0c0c0;
+    box-sizing: border-box;
 }
 .opt_bt_c{
 	height: 30px;
 }
 .section_a{
 	font-weight: 600;
-	padding-bottom: 30px;
+	padding-bottom: 9px;
 }
 .text{
 	padding-right: 10px;
+}
+.text_a{
+	padding-left: 25px;
+	padding-right: 10px;
+}
+.mainsection input{
+	 border: 1px solid #c0c0c0;
+    box-sizing: border-box;
 }
 </style>
 <title>ontact, 서로 연결되는 온라인 공간</title>
@@ -263,7 +281,7 @@ header {
 					href="${pageContext.request.contextPath}/project/driftlist"
 					class="link_menu">전자결재 기안함</a></li>
 				<li class="menu_list"><a
-					href="${pageContext.request.contextPath}/project/lists"
+					href="${pageContext.request.contextPath}/project/list"
 					class="link_menu">전자결재 결재함</a></li>
 			</ul>
 		</div>
@@ -272,7 +290,7 @@ header {
 		<form action="${pageContext.request.contextPath}/appinsert"
 			method="post" enctype="tmultipart/form-data">
 			<div class="page_section">
-				<h2>기안 작성하기</h2>
+				<h2 style="font-size: 29px;">기안 작성하기</h2>
 				<hr>
 
 				<div class="main_section">
@@ -281,7 +299,7 @@ header {
 							<option value="선택하세요">선택하세요</option>
 							<option value="품의서">품의서</option>
 							<option value="보고서">보고서</option>
-						</select> <span class="text">결제자</span>
+						</select> <span class="text_a">결재자</span>
 						 <select class="opt_bt" name="apperson">
 							<option value="선택하세요">선택하세요</option>
 							<option value="${ceo}">${ceo}</option>
@@ -296,9 +314,10 @@ header {
 							<option value="2">기획팀</option>
 							<option value="3">영업팀</option>
 							<option value="4">마케팅팀</option>
-						</select> <span class="text">기안자</span>
+						</select> <span class="text_a">기안자</span>
 						 <input type="text" class="opt_bt_a" name="apdrafter">
-						<span class="text">기안 일시 </span><input type="text" id="startDate" onchange="printName()"
+						<span class="text_a">기안 일시 </span>
+						<input type="text" class="opt_bt" id="startDate" onchange="printName()"
 							name="apdate">
 					</div>
 					<hr>
@@ -316,7 +335,7 @@ header {
 						<tr>
 							<td>장소</td>
 							<td><input type="text" name="applace" class="opt_bt_c"
-								style="width: 90%; border: 0;"></td>
+								style="width: 86%; border: 0;"></td>
 							<td>일시</td>
 							<td id="result"></td>
 						</tr>
@@ -327,8 +346,8 @@ header {
 						</tr>
 						<tr>
 							<td>회의 내용</td>
-							<td colspan="3"><textarea name="apcontent" class="opt_bt_c"
-									style="resize: none; width: 90%; height: 100%; border: 0;"></textarea>
+							<td colspan="3"><input type="text" name="apcontent" class="opt_bt_c"
+									style="resize: none; width: 90%; height: 100%; border: 0;">
 							</td>
 						</tr>
 						<tr>
@@ -342,9 +361,7 @@ header {
 								style="width: 90%; border: 0;"></td>
 						</tr>
 					</table>
-
 				</div>
-
 				<div class="apwrite">
 					<button type="submit" onclick="show_alert();" id="apwritebtn"
 						name="apwritebtn">기안등록하기</button>
