@@ -306,19 +306,23 @@ public class ProjectController {
 				membercount++;
 				
 				//프로젝트 채팅방 추가
-				chatdto = new ChatMemberDto();
-				chatdto.setUno(a);
-				chatdto.setCreatchat(0);
-				chatdto.setChatno(chatno);
-				chatlist.add(chatdto);
+				if(chatno!=null) {
+					chatdto = new ChatMemberDto();
+					chatdto.setUno(a);
+					chatdto.setCreatchat(0);
+					chatdto.setChatno(chatno);
+					chatlist.add(chatdto);
+				}
 				System.out.println("카운트:"+membercount);
 				}
 			int rs =pmService.projectMeberinvite(listdto);
 			System.out.println("멤버추가"+rs);
 			mcount=Integer.toString(membercount);
 
-			int chatrs = chatMemService.projectInsertmember(chatlist);
-			System.out.println("플젝채팅방에 멤버 추가됨:"+chatrs);
+			if(chatno!=null) {
+				int chatrs = chatMemService.projectInsertmember(chatlist);
+				System.out.println("플젝채팅방에 멤버 추가됨:"+chatrs);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

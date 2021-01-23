@@ -63,5 +63,10 @@ public class ProjectServiceImpl implements ProjectService{
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap)throws Exception{
 		return pjDao.selectListPjTeam(paramMap);
 	}
+
+	@Override
+	public String SelectCompanyPno(String cno) throws Exception {
+		return pjDao.SelectCompanyPno(cno);
+	}
 	
 }

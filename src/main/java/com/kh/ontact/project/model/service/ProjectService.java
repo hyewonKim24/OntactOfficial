@@ -26,4 +26,7 @@ public interface ProjectService {
 	// 부서별 보관함 프로젝트 목록
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap) throws Exception;
 
+	
+	// 회사 프로젝트 pno 불러오기
+	public String SelectCompanyPno(String cno) throws Exception;
 }

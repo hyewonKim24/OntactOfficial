@@ -45,4 +45,13 @@ public class ProjectDao {
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap){
 		return sqlSession.selectList("Project.selectListPjTeam", paramMap);
 	}
+	
+	
+	
+	
+	// 회사 프로젝트 pno 불러오기
+	public String SelectCompanyPno(String cno) throws Exception{
+		return sqlSession.selectOne("Project.SelectCompanyPno", cno);
+	}
+	
 }

@@ -136,4 +136,17 @@
 				(pno_se.currval, #{dno,jdbcType=VARCHAR},#{cno}) 
 			]]> 
 	</insert> 
+	
+	
+	
+	
+	<!-- 혜원: 회사 프로젝트 번호 불러오기 -->
+	<select id="SelectCompanyPno" resultType="string">
+		<![CDATA[ 
+			select p.pno from project p
+			inner join company c
+			on p.pname=c.cname
+			where p.cno=#{cno}
+		]]> 
+	</select>
 </mapper>
