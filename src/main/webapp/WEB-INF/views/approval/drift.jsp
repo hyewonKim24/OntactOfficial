@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../main/header.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,19 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	cursor: pointer;
+}
+
+a:link {
+	color: black;
+}
+
+a:visited {
+	color: black;
+	asd
+}
+
 /*헤더부분*/
 header {
 	background-color: #F2F2F2;
@@ -30,10 +44,11 @@ header {
 }
 
 .container {
-			position: relative;
-    width: 1200px;
-    height: 100%;
-    margin: 0 auto;
+	position: relative;
+	width: 1200px;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 63px;
 }
 
 .wrap_title {
@@ -72,22 +87,20 @@ header {
 /*헤더부분 END*/
 
 /*aside부분*/
-		#apaside {
-			width: 210px;
-			height: 100%;
-			background-color: #F2F2F2;
-			display: inline-block;
-			position: absolute;
-			/* padding-top: 24px; */
-		}
+#apaside {
+	width: 210px;
+	height: 100%;
+	display: inline-block;
+	position: absolute;
+	/* padding-top: 24px; */
+}
 
-		/* .menu {
+/* .menu {
 			padding: 17px 44px 14px 32px;
 		} */
-
-		.menu li a {
-			padding: 16px 0 16px 19px;
-		}
+.menu li a {
+	padding: 16px 0 16px 19px;
+}
 
 /* 		.menu_list:nth-child(1) {
 			border-bottom: none;
@@ -97,32 +110,32 @@ header {
 			border: 1px solid black;
 		}
  */
- 
- 		.menu_list:hover{
- 			background-color: #e7e7e7;
- 		}
-		.link_menu {
-			text-decoration: none;
-			display: block;
-			position: relative;
-			min-height: 55px;
-			padding: 17px 44px 14px 32px;
-			box-sizing: border-box;
-			color: #333333;
-			font-size: 14px;
-			font-weight: 600;
-		}
+.menu_list:hover {
+	background-color: #e7e7e7;
+}
+
+.link_menu {
+	text-decoration: none;
+	display: block;
+	position: relative;
+	min-height: 55px;
+	padding: 17px 44px 14px 32px;
+	box-sizing: border-box;
+	color: #333333;
+	font-size: 14px;
+	font-weight: 600;
+}
 /*aside부분 END*/
 
 /*section부분  */
 .page_section {
-    position: absolute;
-    width: 970px; 
-    height: 860px;
-    left: 210px;
-    padding: 40px 0 40px 40px;
-    border-left: 1px solid #e7e7e7;
-    box-sizing: border-box;
+	position: absolute;
+	width: 970px;
+	height: 860px;
+	left: 210px;
+	padding: 40px 0 40px 40px;
+	border-left: 1px solid #e7e7e7;
+	box-sizing: border-box;
 }
 
 /*section부분 END */
@@ -150,8 +163,6 @@ header {
 	float: right;
 	padding-top: 20px;
 }
-
-
 
 .n_title {
 	padding: 20px 0;
@@ -188,6 +199,7 @@ header {
 	color: #fff;
 	font-size: 12px;
 }
+
 #new_pj_btn_a {
 	width: 100px;
 	line-height: 30px;
@@ -205,6 +217,7 @@ header {
 	font-weight: bold;
 	line-height: 50px;
 }
+
 .close:hover, .close:focus {
 	color: #000;
 	text-decoration: none;
@@ -250,13 +263,13 @@ header {
 
 .sb-modal-body {
 	width: 100%;
-    /* padding: 2px 16px; */
-    display: flex;
-    flex-direction: column;
-    height: 200px;
-    display: inline-block;
-    margin: 0 auto;
-    text-align: center;
+	/* padding: 2px 16px; */
+	display: flex;
+	flex-direction: column;
+	height: 200px;
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .sb-modal-body>#stateupdate {
@@ -275,7 +288,8 @@ header {
 	text-align: center;
 	background-color: white;
 }
-.close_a{
+
+.close_a {
 	width: 22%;
 	height: 45px;
 	margin: 0 auto;
@@ -291,6 +305,7 @@ header {
 	text-align: center;
 	background-color: white;
 }
+
 .cclose {
 	color: #333333;
 	float: right;
@@ -298,6 +313,7 @@ header {
 	font-weight: bold;
 	line-height: 50px;
 }
+
 .cclose:hover, .cclose:focus {
 	color: #000;
 	text-decoration: none;
@@ -344,13 +360,13 @@ header {
 
 .ssb-modal-body {
 	width: 100%;
-    /* padding: 2px 16px; */
-    display: flex;
-    flex-direction: column;
-    height: 125px;
-    display: inline-block;
-    margin: 0 auto;
-    text-align: center;
+	/* padding: 2px 16px; */
+	display: flex;
+	flex-direction: column;
+	height: 125px;
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .ssb-modal-body>#stateupdatea {
@@ -369,7 +385,8 @@ header {
 	text-align: center;
 	background-color: white;
 }
-.cclose_a{
+
+.cclose_a {
 	width: 22%;
 	height: 45px;
 	margin: 0 auto;
@@ -385,7 +402,8 @@ header {
 	text-align: center;
 	background-color: white;
 }
-#pname{
+
+#pname {
 	text-align: center;
 	padding: 15px 0 15px 0;
 }
@@ -395,7 +413,7 @@ header {
 
 <body>
 
-	<header>
+	<!-- 	<header>
 		<div class="wrap_title">
 			<h1 class="doc_title">
 				<a href="#" style="color: black;">전자결재</a>
@@ -410,16 +428,18 @@ header {
 			</div>
 
 		</div>
-	</header>
+	</header> -->
 
 	<div class="container">
 		<input type="hidden" name="apno" value="${apno.apno}">
 		<div id="apaside">
 			<ul class="menu">
-				<li class="menu_list"><a href="${pageContext.request.contextPath}/project/driftlist" class="link_menu">전자결재
-						기안함</a></li>
-				<li class="menu_list"><a href="#" class="link_menu">전자결재
-						결재함</a></li>
+				<li class="menu_list"><a
+					href="${pageContext.request.contextPath}/project/driftlist"
+					class="link_menu">전자결재 기안함</a></li>
+				<li class="menu_list"><a
+					href="${pageContext.request.contextPath}/project/list"
+					class="link_menu">전자결재 결재함</a></li>
 			</ul>
 		</div>
 
@@ -437,14 +457,12 @@ header {
 					</tr>
 					<tr>
 						<td>기안부서</td>
-						<td>
-						<c:choose>
+						<td><c:choose>
 								<c:when test="${apno.dno eq '1' }">개발팀</c:when>
 								<c:when test="${apno.dno eq '2' }">기획팀</c:when>
 								<c:when test="${apno.dno eq '3' }">영업팀</c:when>
 								<c:when test="${apno.dno eq '4' }">마케팅팀</c:when>
-						</c:choose>
-						</td>
+							</c:choose></td>
 					</tr>
 					<tr>
 						<td>기안자</td>
@@ -464,7 +482,7 @@ header {
 						<td style="padding: 3px 50px; text-align: center;">팀장</td>
 					</tr>
 					<tr>
-						<td style="padding: 30px 0; text-align: center;">A</td>
+						<td style="padding: 30px 0; text-align: center;"></td>
 					</tr>
 					<tr>
 						<td style="padding: 3px 50px; text-align: center;">${apno.apperson }</td>
@@ -509,8 +527,8 @@ header {
 				</table>
 			</div>
 
-	
-			
+
+
 			<script>
 	
 			window.onload = function() {
@@ -569,8 +587,9 @@ header {
 			
 			</script>
 			<div class="apwrite">
-				<button type="button" id="new_pj_btn_a" name="apwritebtn" onclick="newpjModal_a">반려</button>
-				
+				<button type="button" id="new_pj_btn_a" name="apwritebtn"
+					onclick="newpjModal_a">반려</button>
+
 				<div id="newpjModal_a" class="ssb-modal">
 					<!-- Modal content -->
 					<div class="ssb-modal-content">
@@ -578,20 +597,23 @@ header {
 							<span class="cclose">&times;</span>
 							<h4>반려사유입력</h4>
 						</div>
-						<form action="${pageContext.request.contextPath}/updateaprejection" method="get">
-						<input type="hidden" name="apno" value="${apno.apno}">
-						<div id="pname">
-							<textarea cols="40" rows="8" placeholder="반려 사유를 입력해주세요(50자 내외)" name="aprejection" style="resize: none;"></textarea>
+						<form
+							action="${pageContext.request.contextPath}/updateaprejection"
+							method="get">
+							<input type="hidden" name="apno" value="${apno.apno}">
+							<div id="pname">
+								<textarea cols="40" rows="8" placeholder="반려 사유를 입력해주세요(50자 내외)"
+									name="aprejection" style="resize: none;"></textarea>
 							</div>
 							<div class="ssb-modal-body">
-							
-								<input type="submit" id="stateupdatea" value="확 인" /> 
-								<input type="button" class="cclose_a" value="취 소" />
-								</div>
-								</form>
+
+								<input type="submit" id="stateupdatea" value="확 인" /> <input
+									type="button" class="cclose_a" value="취 소" />
+							</div>
+						</form>
 					</div>
-				</div> 
-					 
+				</div>
+
 				<%-- <button type="button" id="apwritebtn" onclick="window.location='stateupdate?apno=${apno.apno }'">결재완료</button> --%>
 				<button type="button" id="new_pj_btn" onclick="newpjModal">결재완료</button>
 
@@ -601,13 +623,13 @@ header {
 						<div class="sb-modal-header">
 							<span class="close">&times;</span>
 						</div>
-							<div class="sb-modal-body">
+						<div class="sb-modal-body">
 							<h5>결재 하시겠습니까</h5>
-								<input type="submit" id="stateupdate" value="확 인" /> 
-								<input type="button" class="close_a" value="취 소" />
-							</div>
+							<input type="submit" id="stateupdate" value="확 인" /> <input
+								type="button" class="close_a" value="취 소" />
+						</div>
 					</div>
-				</div> 
+				</div>
 			</div>
 
 		</div>

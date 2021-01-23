@@ -59,6 +59,40 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "list", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public ModelAndView aapprovalService(ModelAndView mv,
+			@RequestParam(name = "page", defaultValue = "1") int page,
+			Authentication authentication) {
+		try {
+			int currentPage = page;
+			int listCount = ApproService.listCount();
+			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+			//세션값
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String uno=userdetail.getUno();
+		    
+//			System.out.println("뭘까유" + ApproService.selectList());
+			
+			mv.addObject("list", ApproService.selectList(currentPage,LIMIT,uno));
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("listCount", listCount);
+			System.out.println(ApproService.selectList(currentPage,LIMIT,uno));
+			mv.setViewName("approval/list");
+		
+//			int listCount = ApproService.totalCount();
+//			mv.addObject("listCount", listCount);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+
+		return mv;
+	}
+	
+	
 	
 	@RequestMapping(value = "drift", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public ModelAndView approvalDetail(ModelAndView mv,

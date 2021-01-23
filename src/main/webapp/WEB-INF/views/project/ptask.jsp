@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ include file="../main/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -195,7 +196,7 @@ input[type=checkbox]:after {
 }
 
 .task_title {
-	width: 830px;
+	width: 860px;
 	height: 45px;
 	font-size: 18px;
 	text-align: left;
@@ -221,8 +222,36 @@ input[type=checkbox]:after {
 	margin: 0;
 	height: 100%;
 	background-color: #ffffff;
-	overflow: scroll;
+	overflow: auto;
+	padding-right: 30px;
+}
 
+.atask_list::-webkit-scrollbar {
+	width: 10px;
+}
+
+.atask_list::-webkit-scrollbar-thumb {
+	background-color: #a5a5a5;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.atask_list::-webkit-scrollbar-thumb:hover {
+	background-color: #888;
+	cursor: pointer;
+}
+.atask_list::-webkit-scrollbar-thumb:active {
+	background-color: #888;
+	cursor: pointer;
+}
+
+.atask_list::-webkit-scrollbar-track {
+	background-color: #e9eaed;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+	margin: 20px 0;
+	width: 1px;
 }
 
 .board-listheader {
@@ -236,13 +265,14 @@ input[type=checkbox]:after {
 }
 
 .board-listheader thead {
-	border-bottom: 1px solid #c0c0c0;
+	border-bottom: 1px solid #969696;;
+	color: #969696;
 }
 
 .board-listheader thead th {
-	font-weight: 600;
-	icon_task1
+	font-weight: 700;
 }
+
 .menu_title.two {
 	padding-top: 40px;
 }
@@ -275,36 +305,35 @@ input[type=checkbox]:after {
 	text-align: center;
 	border-radius: 2px;
 }
-.list{
-	overflow-y: :scroll;
-	
-	}
 </style>
 </head>
 
 
 <body>
 	<div class="header">
-		<div>헤더 들어갈 자리</div>
+		<!-- <div>헤더 들어갈 자리</div> -->
 	</div>
 	<div class="main">
 		<div class="ptask_sidebar">
 			<ul>
 				<li class="menu">업무 구분</li>
-				<label for="id1"><li class="menu"><input type="radio" name="chk" value="1" id="id1">내 업무</li></label>
-				<label for="id2"><li class="menu"><input type="radio" name="chk" value="2" id="id2">요청한 업무</li></label>
-				<label for="id3"><li class="menu"><input type="radio" name="chk" value="3" id="id3">전체 업무</li></label>
+				<label for="id1"><li class="menu"><input type="radio"
+						name="chk" value="1" id="id1">내 업무</li></label>
+				<label for="id2"><li class="menu"><input type="radio"
+						name="chk" value="2" id="id2">요청한 업무</li></label>
+				<label for="id3"><li class="menu"><input type="radio"
+						name="chk" value="3" id="id3">전체 업무</li></label>
 
 
 				<li class="menu_title two">상태</li>
-				<label for="id4"><li class="menu"><input type="radio" name="state" class="task"
-					value="4" id="id4"> 요청</li></label>
-				<label for="id5"><li class="menu"><input type="radio" name="state" class="task"
-					value="5" id="id5"> 진행</li></label>
-				<label for="id6"><li class="menu"><input type="radio" name="state" class="task"
-					value="6" id="id6"> 완료</li></label>
-				<label for="id7"><li class="menu"><input type="radio" name="state" class="task"
-					value="7" id="id7"> 보류</li></label>
+				<label for="id4"><li class="menu"><input type="radio"
+						name="state" class="task" value="4" id="id4"> 요청</li></label>
+				<label for="id5"><li class="menu"><input type="radio"
+						name="state" class="task" value="5" id="id5"> 진행</li></label>
+				<label for="id6"><li class="menu"><input type="radio"
+						name="state" class="task" value="6" id="id6"> 완료</li></label>
+				<label for="id7"><li class="menu"><input type="radio"
+						name="state" class="task" value="7" id="id7"> 보류</li></label>
 			</ul>
 
 		</div>
@@ -313,12 +342,12 @@ input[type=checkbox]:after {
 		<div class="contents">
 			<input type="hidden" name="pno" id="pno" value="${pno}">
 			<div class="ptask_section">
-					<div class="task_title">
-						<span class="counttitle">내 업무</span>
-						<span class="taskcount">(${listsize})</span>
-					</div>
+				<div class="task_title">
+					<span class="counttitle">내 업무</span> <span class="taskcount">(${listsize})</span>
+				</div>
 				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/project/all/list'">닫기</button>
+					aria-label="Close"
+					onclick="location.href='${pageContext.request.contextPath}/project/all/list'">닫기</button>
 				<sec:authentication property="principal.uname" var="uname" />
 				<input type="hidden" value="${uname}" id="uname">
 				<div class="atask_list">
@@ -330,7 +359,7 @@ input[type=checkbox]:after {
 								<th>번호</th>
 								<th>상태</th>
 								<th>우선순위</th>
-								<th width="40%;">제목</th>
+								<th width="58%;">제목</th>
 								<th>담당자</th>
 								<th>수정일</th>
 							</tr>
@@ -353,9 +382,9 @@ input[type=checkbox]:after {
 										</c:when>
 									</c:choose></th>
 								<th class="tpriority">${tasklist.tpriority }</th>
-								<th style="text-align: left;"><a
-									href="${pageContext.request.contextPath}/project/ptask?pno=${pno}&bno=${tasklist.bno}">
-										${tasklist.boardalldto.bname}</a></th>
+								<th style="text-align: left;"><%-- <a
+									href="${pageContext.request.contextPath}/project/ptask?pno=${pno}&bno=${tasklist.bno}"> --%>
+										${tasklist.boardalldto.bname}<!-- </a> --></th>
 								<th class="taskmanager">${tasklist.taskmanager}</th>
 								<th>${tasklist.boardalldto.bdate }</th>
 							</tr>
@@ -393,7 +422,7 @@ input[type=checkbox]:after {
 					//console.log(list);
 					taskappend(list);
 					$(".counttitle").text("내 업무");
-					$(".taskcount").text('('+list.length+')');
+					$(".taskcount").text('(' + list.length + ')');
 				}
 			})
 		})
@@ -417,7 +446,7 @@ input[type=checkbox]:after {
 					//console.log(list);
 					taskappend(list);
 					$(".counttitle").text("요청한 업무");
-					$(".taskcount").text('('+list.length+')');
+					$(".taskcount").text('(' + list.length + ')');
 				}
 			})
 		})
@@ -441,7 +470,7 @@ input[type=checkbox]:after {
 					//console.log(list);
 					taskappend(list);
 					$(".counttitle").text("전체 업무");
-					$(".taskcount").text('('+list.length+')');
+					$(".taskcount").text('(' + list.length + ')');
 				}
 			})
 		})
@@ -487,7 +516,7 @@ input[type=checkbox]:after {
 					count++;
 				}
 			});
-			$(".taskcount").text('('+count+')');
+			$(".taskcount").text('(' + count + ')');
 		});
 
 		$(document).on("click", "#id5", function() {
@@ -500,7 +529,7 @@ input[type=checkbox]:after {
 					count++;
 				}
 			});
-			$(".taskcount").text('('+count+')');
+			$(".taskcount").text('(' + count + ')');
 		});
 
 		$(document).on("click", "#id6", function() {
@@ -513,7 +542,7 @@ input[type=checkbox]:after {
 					count++;
 				}
 			});
-			$(".taskcount").text('('+count+')');
+			$(".taskcount").text('(' + count + ')');
 		});
 
 		$(document).on("click", "#id7", function() {
@@ -526,7 +555,7 @@ input[type=checkbox]:after {
 					count++;
 				}
 			});
-			$(".taskcount").text('('+count+')');
+			$(".taskcount").text('(' + count + ')');
 		});
 	</script>
 
