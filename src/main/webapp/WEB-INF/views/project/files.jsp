@@ -25,7 +25,7 @@
     html,
     body {
         width: 100%;
-       height: 100%;
+        height: 100%;
         position: relative;
         font-size: 14px;
         font-family: Noto Sans KR;
@@ -244,7 +244,11 @@
         line-height: 28px;
         cursor:pointer;
     }
-
+    .file_list_wrapper{
+    	height: 90%;
+    	overflow-y:scroll;
+    }
+    
     .project_all:hover,
     .project_list_sub:hover,
     .piclist_tr:hover {
@@ -264,7 +268,6 @@
         -moz-border-radius: 0 5px 5px 0;
         -webkit-border-radius: 0 5px 5px 0;
         margin-left:4px;
-        
     }
 
     .file_list_index {
@@ -386,7 +389,8 @@
     padding: 20px 0px 0 20px;
     display:flex;
     flex-wrap:wrap;
-    
+    height: 85%;
+    overflow-y:scroll;
     }
     .piclist_tr{
     display: inline-block;

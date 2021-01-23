@@ -201,6 +201,10 @@
         border: none;
         background-color: #f5f5f5;
     }
+    .file_list_wrapper{
+    	height: 90%;
+    	overflow-y:scroll;
+    }
     
     .project_all a {
         position: relative;
@@ -381,6 +385,8 @@
     padding: 20px 0px 0 20px;
     display:flex;
     flex-wrap:wrap;
+   	height: 85%;
+    overflow-y:scroll;
     }
     .piclist_tr{
     display: inline-block;
