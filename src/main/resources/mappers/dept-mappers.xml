@@ -26,7 +26,7 @@
 	</select>
 	<select id="selectDept" resultType="arraylist"
 		resultMap="resultDept">
-		select dname from dept where cno = #{cno}
+		select * from dept where cno = #{cno}
 	</select>
 	<!-- <select id="selectDtOne" parameterType="string" resultType="DeptDto">
 		select * from dept where dno = #{dno} 
@@ -44,8 +44,15 @@
 	<insert id="insertDept" flushCache="true" statementType="PREPARED">  
 		insert into dept values(DNO_SE.nextval, #{cno}, #{dname})
 	</insert>
+	
 	<!-- 부서 삭제 -->
 	<delete id="deleteDept" parameterType ="java.util.HashMap">  
-		delete from dept where cno = #{cno} and dname = #{dno}
+		delete from dept where cno = #{cno} and dno = #{dno}
 	</delete>
+	
+	<update id="updateDayoffApp" parameterType="string"
+		flushCache="true" statementType="PREPARED"> 
+		update users set dno = #{dno}
+		where uno = #{uno}
+	</update>
 </mapper>

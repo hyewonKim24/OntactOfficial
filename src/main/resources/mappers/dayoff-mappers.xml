@@ -4,6 +4,7 @@
 	<resultMap type="DayoffDto" id="resultDayoff">
 		<!-- property에는 vo의 필드명, column에는 db tabel의 컬럼명 두개를 map으로 연결한다 -->
 		<id property="dfno" column="dfno" />
+		<result property="cno" column="cno" />
 		<result property="uno" column="uno" />
 		<result property="dno" column="dno" />
 		<result property="dname" column="dname" />
@@ -46,19 +47,21 @@
 	
 	<!-- 휴가 신청 -->
 	<insert id="insertDayoff" flushCache="true" statementType="PREPARED"> 
-		insert into dayoff values(dfno_se.nextval, #{uno}, #{dno}, #{uname}, #{offdays}, to_date(#{offstart}, 'yyyy-mm-dd'), to_date(#{offend}, 'yyyy-mm-dd'), #{offreason}, default, default)
+		insert into dayoff values(dfno_se.nextval, #{uno}, #{offdays}, to_date(#{offstart}, 'yyyy-mm-dd'), to_date(#{offend}, 'yyyy-mm-dd'), #{offreason}, default, default)
 		<!-- insert into dayoff values(dfno_se.nextval, '2', '${dname}', '${uname}', ${offdays}, to_date('${offstart}', 'yyyy-mm-dd'), to_date('${offend}', 'yyyy-mm-dd'), '${offreason}', default, default) -->
 	</insert>
 	
 	<!-- 휴가 신청 승인여부 -->
 	<update id="updateDayoffApp" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
-		update dayoff set offapproval = #{offapproval}
-		where uno = #{uno} and dfno = #{dfno}
+		update dayoff set offapproval = 1
+		where dfno = #{dfno}
 	</update>
 	 
-	<select id="selectDfCalendar" resultType="arraylist" resultMap="resultDayoff">
-		select  offstart, offend, uname, offreason from dayoff where dno =#{dno} order by offstart
+	<select id="selectDfCalendar" parameterType ="java.util.HashMap" resultMap="resultDayoff">
+		select d.dno as dno, df.offstart as offstart, df.offend as offend, df.uno as uno, df.offreason as offreason, u.uname as uname, c.cno as cno
+        from dayoff df, dept d, users u, company c
+        where df.uno = u.uno and c.cno = #{cno} and d.dno =#{dno} order by offstart
 	</select>
 	
 </mapper>

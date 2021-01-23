@@ -46,6 +46,11 @@
 	let todochecked_cnt = 0;
 	let todochecked_percent = 0;
 	console.log("****** ~: "+todochecked_cnt);
+	
+	//혜림: 스케줄 pick cnt 변수선언
+	let pick_cnt = 0;
+	console.log("pick_cnt : " + pick_cnt);
+	
 	</script>
 	</head>
 	
@@ -1920,6 +1925,10 @@
 
 <!-- 혜림 일정 글 결과화면 -->
 		<c:if test="${blist.btype eq 3}">
+<script>
+console.log("00="+ "${blist.bno}");
+</script>
+		
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
@@ -1955,12 +1964,15 @@
                             <input type="text" value="${blist.bname}" readonly>
                         </div>
                        	<c:forEach items="${blist.scheduleDto}" var="s" varStatus="e">
+                       	<script>
+                  	     	console.log("01="+ "${e.count}");
+                       	</script>
                         <div class="rschedate">
                             <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
                             <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.sstart}"/>
                             <input type="text" id="scheSdate" name="startdate" class="d" value="${s.sstart}"> 
                             &nbsp; &nbsp; ~ &nbsp; &nbsp;
-                            <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.send}"/>
+                             <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.send}"/>
                             <input type="text" id="scheEdate" name="enddate" class="d" value="${s.send}"> 
                         </div>
                         <!-- 참가자 -->
@@ -1972,7 +1984,6 @@
                             <!-- 참석자 모달 -->
                             <div class="js-layer  layer  hide">
 		                             <div class="ModalPopup">
-		                             
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
                                             <div class="attendee-search">
@@ -1982,22 +1993,24 @@
                                             
                                             <div class="attendee-people">
                                                 <!-- 선택된 참가자가 표시됨  -->
-                                            <form name="pickAttendee_frm" method="get" action="${pageContext.request.contextPath}/project/schedule/upd">
+                                            <form name="pickAttendee_frm_${blist.bno}" id="pickAttendee_frm_${blist.bno}" method="get" action="${pageContext.request.contextPath}/project/schedule/upd">
                                                 <input type="hidden" name="pno" id="pno" value="${pno}">
                                                 <input type="hidden" name="bno" id="bno" value="${blist.bno}">
-                                                <div class="pick-attendee"></div>
+                                                <div class="pick-attendee-${blist.bno}"></div>
 
-                                                <c:forEach items="${userlist}" var="ulist" varStatus="e"> 
+                                                <c:forEach items="${userlist}" var="ulist" varStatus="ee"> 
                                                 <div class="userlist_wrap">
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
                                                     <span>${ulist.uname}</span>
                                                     <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno}">
-                                                    <input type="checkbox" class="pick pick${e.count}" value="+ 선택">
+                                                    <input type="checkbox" class="pick-${blist.bno} pick${ee.count}" name="pick-${blist.bno}" value="+ 선택">
                                                     
                                                 </div>
+                                                </c:forEach>
                                                 <script type="text/javascript">
             				    	//참석자 변경 모달
             				        $('.js-open').click(function () {
+            				        	console.log("03="+ "js-open");
             				        	/* var $layer = $('.js-layer'); */
             				        	/* var $layer = $(this).next();  */
             				        	var $layer = $(this).parent(".rschepeople");
@@ -2006,21 +2019,35 @@
             				        	/* $layer.removeClass('hide'); */
             				        });
             				        $('.closebtn').click(function () {
+            				        	console.log("04="+ "closebtn");
+            				        	
+            				        	pick_cnt=0;
+            				        	console.log("pick_cnt0 : " + pick_cnt);
+            				        	
             				            var $layer = $('.js-layer');
             				            $layer.addClass('hide');
             				        });
             				        console.log("값찍어보기 :" + '${e.count}');
-            				        $('.pick${e.count}').click(function(e){
+            				        //$('.pick${e.count}').click(function(e){
+            				        $('.pick-${blist.bno}').click(function(e){
+            				        	console.log("05====="+ e);
+            				        	console.log("05="+ ".pick-${blist.bno}");
             				        	/* $(this).unbind("click"); */
             				        	e.stopPropagation();
-            				        	alert("클릭햇다");
+            				        	console.log("클릭햇다");
             				            if($(this).is(":checked") == true){
+                				        	pick_cnt++;
+                				        	console.log("pick_cnt++ : " + pick_cnt);
+                				        	
             				                $p=$(this).parent(".userlist_wrap");
             				                var user = $p.find("span").text();
             				                // var add = '<span>'+ user +'</span>'
-            				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendeeChange">'
-            				                $(".pick-attendee").append(add);
+            				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendeeChange'+pick_cnt+'">'
+            				                $(".pick-attendee-${blist.bno}").append(add);
             				            } else if($(this).is(":checked") == false){
+                				        	pick_cnt--;
+                				        	console.log("pick_cnt-- : " + pick_cnt);
+                				        	
             				                $p=$(this).parent(".userlist_wrap");
             				                var user = $p.find("span").text();
             				                if($("." + user).val() == user){
@@ -2030,23 +2057,21 @@
             				                 }
             				            }
             				        })
-            				        
                                     </script>
-                                    
-                                                </c:forEach>
-                                                <div class="modal-btn">
-                                                <button class="edit-btn closebtn" >취소</button>
-                                                <button class="edit-btn" type="submit" onclick="changeAttendee()">확인</button>
-                                                </div> 
-											</form>
-                                            </div>
-                                            
-                                            
-                                        </div>
+                                    <script>
+                                       console.log("06="+ "/c:forEach");
+                                    </script>
+                                    <div class="modal-btn">
+                                        <!-- 취소 button 눌러도 확인과 같이 action submit 됨 -->
+                                        <button class="edit-btn closebtn" type="button" onclick="return false;">취소</button>
+                                        <button class="edit-btn" type="button" onclick="changeAttendee('${blist.bno}')">확인</button>
+                                    </div> 
+									</form>
                                     </div>
-                                    
-                                
+                                   	</div>
+                                </div>
                             </div>
+                                    
                             <div id="mask"></div>
                             <!-- <input type="text" id="schePname"> -->
 	                        </div>
@@ -2061,6 +2086,16 @@
 	                        	<textarea class="content_detail2" placeholder="${s.smemo}"></textarea>
 	                        </div>
 			                </c:forEach>
+			                
+			                
+			                       <script>
+                                                console.log("07="+ "/c:forEach");
+                                                </script>
+			                
+			                
+			                
+			                
+			                
                     	</div>
                 	</div>
                 </div>
@@ -2148,7 +2183,9 @@
 								</div>
 							</form>
 						</div>
+         <%-- </c:forEach> --%>
          </c:if>
+         
 <!-- 혜림  일정 결과화면 끝 -->
 
 <!-- 윤진 할일 결과화면 시작 -->
@@ -3244,5 +3281,16 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 				});
 			});
 		</script>
+		
+<script>
+	function changeAttendee(bno){
+		console.log("changeAttendee:" + bno);
+		pick_cnt=0;
+		var frmId = "#pickAttendee_frm_"+bno;
+		console.log("frmId:" + frmId);
+		$(frmId).submit();
+	}
+</script>
+
 	</body>
 	</html>

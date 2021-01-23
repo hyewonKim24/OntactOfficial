@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% request.setCharacterEncoding("utf-8"); %>
+
+<% response.setContentType("text/html; charset=utf-8"); %>
+
 <%@ include file="../main/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -146,15 +150,17 @@
         box-sizing: border-box;
         
     }
+    
+    .team ul li:nth-child(1){
+        width: 183px;
+        margin-left : 0;    
+    }
     .team ul li{
         width: 158px;
         height: 40px;
         line-height: 40px;
-        padding-left : 15px;
-    }
-    .team ul li:nth-child(1){
-        width: 183px;
-        padding-left: 15px;    
+        padding-left : 25px;
+        margin-left : 10px;
     }
     #deptBtn{
         width: 14px;
@@ -259,7 +265,7 @@
     	display : none;
     	width : 120px;
     	height : 30px;
-    	verticle-align : middle;
+    	vertical-align : middle;
     	float : left;
     	border: 1px solid #e7e7e7;
     	box-sizing: border-box;
@@ -272,21 +278,47 @@
     	background-color : #e7e7e7; 
     	border: none;
     }
-    .dnamechk{
+    .pickDept{
+    	display : none;
     	margin-right : 10px;
-   	width : 14px;
-   	height : 14px;
+   		width : 30px;
+   		height : 23px;
+   		vertical-align : middle;
+   		margin-right : 10px;
+   		padding :0;
+   		font-size : 11px;
+   		background-color : #5A3673;
+   		color : white;
+   		border : none;
+   		border-radius:3px;
     	
+    }
+    .dnameBtn{
+    	width : 100px;
+    	height : 35px;
+    	/* background-color : white; */
+    	border : none;
+    	
+    	text-align : left;
     }
 
     </style>
     <script>
     	//부서 추가 알림
-	    var result='${message}';
-		console.log(result);
-		if(result == "success") {
+	    var result1='${message}';
+		console.log(result1);
+		if(result1 == "success") {
 	        alert("부서가 추가되었습니다.");
-	    } 
+	    }
+		//부서 삭제 알림
+		var result2='${message2}';
+		console.log(result2);
+		if(result2 == "success") {
+	        alert("부서가 삭제되었습니다.");
+	    } else if((result2 == "failed")){
+	    	alert("사원이 존재하는 부서는 삭제하실 수 없습니다.");
+	    }
+		
         // html dom 이 다 로딩된 후 실행된다.
         $(document).ready(function() {
 	        $('.sidenav li.menu>a').on('click', function(){
@@ -313,20 +345,14 @@
                 var temp = $(".deptname:contains('" + k + "')");
                 $(temp).show();
             })
-            //부서 리스트
-       		$(".deptname${e.count}").click(function() {
-				var frm = document.dept_frm;
+            /* //부서 리스트
+       		$(".dname${e.count}").click(function() {
+				var frm = document.listDept_frm;
 				frm.action = "${pageContext.request.contextPath}/commute/organlist"
-				frm.method = "get"
+				frm.method = "post"
 				frm.submit();
-			});
-	        $("#deleteBtn").click(function() {
-	        	
-				var frm = document.dept_frm;
-				frm.action = "${pageContext.request.contextPath}/commute/deptdel"
-				frm.method = "get"
-				frm.submit();
-			});
+			}); */
+	        
             //부서 추가        
             $("#addBtn").click(function() {
                 $("#addDname").css("display", "block");
@@ -340,13 +366,56 @@
 					frm.submit();
 				}
 			});
+            $(".dnameBtn")
+            //부서 삭제
+            $("#deleteBtn").click(function() {
+            	$(".pickDept").css("display", "inline-block");
+            	
+            	
+				/* var frm = document.dept_frm;
+				frm.action = "${pageContext.request.contextPath}/commute/deptdel"
+				frm.method = "get"
+				frm.submit(); */
+			});
             
-            
-	        
-	        
-	        
-  
-            
+            $(".pickDept${e.count}").click(function() {
+            	
+            	var pt = $(this).parents(".parent_a");
+            	var dname = pt.find(".dname").val();
+            	var cno = pt.find(".cno").val();
+            	var dno = pt.find(".dno").val();
+            	console.log("aaaa" + dname);
+            	console.log("bbbb" + cno);
+            	console.log("cccc" + dno);
+            	
+            	 var header = $("meta[name='_csrf_header']").attr("content");
+                 var token = $("meta[name='_csrf']").attr("content");
+            	
+            	confirm("부서를 삭제하시겠습니까?");
+            	if(true){
+            		var dname = dname;
+            		var dno = dno;
+            		var cno  = cno;
+            		$.ajax({
+            			contentType : 'application/json charset=UTF-8',
+						url: "${pageContext.request.contextPath}/commute/deptdel",
+						data: {
+							dname : dname,
+							dno : dno,
+							cno : cno
+						},
+						success: function (data) {
+							alert(data);
+							pt.hide();
+						},
+						error: function () {
+							
+						}
+					});
+            	}else {
+            		alert("취소되었습니다.");
+            	}
+			});
         });
     </script>
 </head>
@@ -388,61 +457,64 @@
                             </button>
                             &nbsp; ONTACT<span>(${deptlistCount})</span>
                         </li>
-                        <c:if test="${not empty selectDept}">
+                        <%-- <c:if test="${not empty selectDept}"> --%>
 							<c:forEach var="dp" items="${selectDept}" varStatus="e">
-		                        <form name="dept_frm">
-		                        <li class="deptname${e.count}">
-			                        <!-- <a href=""> -->
-			                        <input type ="hidden" value="<sec:authentication property="principal.cno" var="cno"/>${cno}" name="cno">
-			                        <input type ="checkbox" value="${dp.dname}" name="dnamechk" class="dnamechk" id="dept${e.count}">${dp.dname}
-			                        &nbsp; &nbsp; <input type ="hidden" value="${dp.dname}" name="dname" class="dname">
-			                        <!-- </a> -->
+		                        <form name="listDept_frm" >
+	                				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                        <li class="parent_a">
+			                        <input type ="button" value="삭제" name="pickDept" class="pickDept pickDept${e.count}" id="dept${e.count}">
+			                        <button name="dname" class="dnameBtn dname${e.count}" onclick="goList()">${dp.dname} </button>
+			                        <input type ="hidden" value="${dp.dname}" name="dname" class="dnamehidden${e.count}">
+			                        <input type ="hidden" value="${dp.cno}" name="cno" class="cno">
+			                        <input type ="hidden" value="${dp.dno}" name="dno" class="dno">
 		                        </li>
 		                        </form>
+		                        <script>
+				                     $(".dname${e.count}").click(function(){
+			                    		var value = $(this).val();
+			                    		console.log("값을 확인 : " + value);
+			                    		var pt = $(this).find(".firstttl");
+			                    		console.log("값을 확인 : " + pt);
+			                    		pt.text(value);
+			                    		console.log("값을 확인 : " + ownoA);
+				                    }) 
+			                    </script>
+	                    
 	                        </c:forEach>
-                        </c:if>
+	                        
+                        <%-- </c:if> --%>
                         
                         <li style="padding-left:30px;">
                         <form name="dept_add_frm">
                         	<input type ="text" name="dname" id="addDname">
-                        	<!-- <input type ="submit" class="goDept" value="+"> -->
+                        	<input type ="hidden" value="<sec:authentication property="principal.cno" var="cno"/>${cno}" name="cno" id ="cno">
                         </form>
                         </li>
                     </ul>
                 </div>
                 <div class="notyet">
-                    <div><a href="${pageContext.request.contextPath}/commute/organlist?dname=null">미분류그룹</a></div>
+                    <div><a href="${pageContext.request.contextPath}/commute/organlist?">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
-                <%-- <sec:authorize access="hasRole('ROLE_USER')"> --%>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
                     <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
-	                    <div id="gomodal">
-							<div class="modal_layer"></div>
-							<div class="modal_content">
-								<div class="modalTitle">QR</div>
-								<div id="qrout1"></div>
-								<button class="close">닫기</button>
-							</div>
-						</div>
-                    <button id="editBtn"><img src="${pageContext.request.contextPath}/resources/img/edit-1.png" style="width: 19px; height: 20px;"></button>
-                    
-                <%-- </sec:authorize> --%>
+                </sec:authorize> 
                 </div>
                 <div class="detail">
-                
                     <div class="title">
                     <span id="firstttl">${dname}</span>
                     <span id="detpcount">총&nbsp;<span>${userslistCount}</span>명</span>
-                    <!-- <input type="text" id="depttitle" value="" readonly>  -->
-                
-                    </div>
+	                    <!-- <input type="text" id="depttitle" value="" readonly>  -->
+                 </div>
+                 
                     
                     <div>
                         <table>
                             <tr>
-                                <!-- <th>선택</th> -->
-                                <th>부서</th>
+                                <th>선택</th>
+                                <th>사원번호</th>
+                                <th>부서</th>                          
                                 <th>이름</th>
                                 <th>직급</th>
                                 <th>이메일</th>
@@ -450,14 +522,15 @@
                             
                         <c:if test="${userslistCount eq 0}">
 							<tr>
-								<td colspan="4" align="center">
+								<td colspan="6" align="center">
 								<br>사원이 존재하지 않습니다.<br> <br></td>
 							</tr>
 						</c:if>     
                         <c:if test="${userslistCount ne 0}">
 						<c:forEach var="og" items="${selectOgUser}" varStatus="status">
                             <tr>
-                                <!-- <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td> -->
+                                <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td>
+                                <td>${og.uno}</td>
                                 <td>${og.dname}</td>
                                 <td>${og.uname}</td>
                                 <td>${og.urank}</td>
@@ -468,7 +541,7 @@
                        
                             <!-- 앞 페이지 번호 처리 -->
 					<tr>
-						<td colspan="4">
+						<td colspan="6">
 						<c:if test="${currentPage <= 1}">
 						&lt; &nbsp;
 						</c:if>
@@ -513,5 +586,51 @@
             </div>
     </div>
 </div>
+<script>
+function checkOneS(a){
+    console.log("###checkOneS");
+    console.log("###this: " +  a);
+    var obj1 = document.getElementsByClassName('dnamechk');
+    console.log("###obj1.length: " +  obj1.length);
+    for (var i = 0; i < obj1.length; i++) {
+       console.log("###obj1[i]: " +  obj1[i]);
+       if (obj1[i] != a) {
+          obj1[i].checked = false;
+       }
+    }
+ }
+ 
+
+function goList(){
+	var listfrm = document.listDept_frm;
+	listfrm.action="${pageContext.request.contextPath}/commute/organlist?"
+	listfrm.method="post"
+	listfrm.submit();
+}
+
+ 
+/*  $("#moveBtn").click(function(){
+	 if($('input:checkbox[name="checkbox_name"]:checked').length == 0){
+		 alert("이동할 사원을 선택해주세요");
+	 } else{
+		 var
+		 $.ajax({
+ 			contentType : 'application/json charset=UTF-8',
+				url: "${pageContext.request.contextPath}/commute/deptdel",
+				data: {
+					dname : dname,
+					dno : dno,
+					cno : cno
+				},
+				success: function (data) {
+					alert(data);
+				},
+				error: function () {
+					
+				}
+			});
+	 }
+ }) */
+</script>
 </body>
 </html>

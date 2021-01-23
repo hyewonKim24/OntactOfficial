@@ -139,49 +139,12 @@ a{
 	            center: 'title',
 	            right: 'dayGridMonth,dayGridWeek,dayGridDay'
 	          },
+	        locale : 'ko',
 	        eventLimit: true,
 	        eventLimitText: "more",
 	        eventLimitClick: "popover",
 	        editable: false,
 	        droppable: true,
-	     	/* //해당 일정 클릭하면 url로 이동
-	        eventClick: function(info) {
-	        	  console.log(info);
-	              var eventObj = info.event;
-	              $.ajax({
-	            	   contentType:'application/json',
-	                   url: '${pageContext.request.contextPath}/dayoff/calendar',
-	                   dataType: 'json',
-	                   success: 
-	                       function(result) {
-	                           var events = [];
-	                           if(result!=null){
-	                           $.each(result, function(index, element) {
-	                              console.log("새로" + element);
-	                        	   if (eventObj.url) {
-	               	                alert(
-	               	                  'Clicked ' + eventObj.title + '.\n' +
-	               	                  'Will open ' + eventObj.url + ' in a new tab'
-	               	                );
-	               	                window.open(eventObj.url);
-
-	               	                info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
-	               	              } else {
-	               	                alert('Clicked ' + eventObj.title);
-	               	              }
-	                                            console.log(event);
-	                               }); //.each()
-	                               console.log(events);
-	                           }//if end  
-
-	                           
-	                           
-	                           successCallback(events);                               
-	                       }//success: function end                          
-	            }); //ajax end
-	            
-	            
-	            }, */
 	            
 	        //달력에 일정 출력
 	        events:function(info, successCallback, failureCallback){
@@ -192,7 +155,7 @@ a{
 	                   dataType: 'json',
 	                   success: 
 	                       function(result) {
-	 						 							
+	 						 			
 	                           var events = [];
 	                           if(result!=null){
 	                               
@@ -296,6 +259,8 @@ a{
 	    element.siblings('li').find('ul').slideUp();
 	}
 	});
+	
+
 </script>
 </body>
 </html>

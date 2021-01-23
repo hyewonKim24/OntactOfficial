@@ -576,7 +576,7 @@ input:checked+.slider:before {
 				</a></li>
 			</ul>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/project/driftlist"> <svg version="1.1"
+				<li><a href="${pageContext.request.contextPath}/commute/dailylist"> <svg version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
@@ -627,7 +627,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg> 근태관리
 				</a></li>
-				<li><a href="#"> <svg version="1.1"
+				<li><a href="${pageContext.request.contextPath}/project/driftlist"> <svg version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"

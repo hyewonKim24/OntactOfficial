@@ -24,6 +24,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	
 	@Autowired
 	private ScheduleDao scheduleDao;
+	
 	//혜원 알림기능 추가
 	@Autowired
 	ProjectMemberService pmService;
@@ -69,30 +70,38 @@ public class ScheduleServiceImpl implements ScheduleService {
 		 //혜원 끝
 		
 	}
-	
+	//
 	@Override
 	public void selectOneSchedule(ScheduleDto s) {  
-		 scheduleDao.selectOneSchedule(s);
+		 //scheduleDao.selectOneSchedule(s);
 	}
 	@Override
 	public void updateSchedule(ScheduleDto s, String attendee) {  
+		
+		
+		List<ScheduleDto> sTemp = scheduleDao.selectOnlySchedule(s);
+		System.out.println("one에서가지고 나온애들" + sTemp.get(0));
+		
+		scheduleDao.deleteUpdateSchedule(s.getBno());
 		
 		if(attendee!=null) {
 			String [] array = attendee.split(",");
 			for(int i=0; i<array.length; i++ ) {
 				attendee = array[i];
 				System.out.println("서비스에서 값" + attendee);
-				s.setAttendee(attendee);		
-				scheduleDao.updateSchedule(s);	
+				sTemp.get(0).setAttendee(attendee);
+				System.out.println("attendee: "+ attendee);
+				scheduleDao.insertUpdateSchedule(sTemp.get(0));	
 			}
 		} else {
-			scheduleDao.updateSchedule(s);
+			System.out.println("attendee: "+ "없다");
+			scheduleDao.insertUpdateSchedule(sTemp.get(0));
 		}
 		
 	}
 	@Override
 	public int deleteSchedule(int bno) { 
-		return scheduleDao.deleteSchedule(bno);
+		return scheduleDao.deleteUpdateSchedule(bno);
 	}
 	
 	@Override

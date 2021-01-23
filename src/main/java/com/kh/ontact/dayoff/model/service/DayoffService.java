@@ -19,8 +19,8 @@ public interface DayoffService {
 	
 	public int insertDayoff(DayoffDto d); 
 	
-	public DayoffDto updateDayoffApp(DayoffDto d, String uno); 
+	public int updateDayoffApp(String dfno); 
 	
-	public List<DayoffDto> selectDfCalendar(String dno);
+	public List<DayoffDto> selectDfCalendar(HashMap<String, String> paramMap);
 	
 }

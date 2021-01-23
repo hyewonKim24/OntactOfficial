@@ -36,7 +36,7 @@
 	<!-- 시간외 근무 삽입 -->
 	<update id="insetOverwork" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
-		insert into overwork values(OWNO_SE.nextval, '${uno}', '${dno}', to_date('${owdate}', 'yyyy-mm-dd'), ${owtime}, '${owtitle}',
+		insert into overwork values(OWNO_SE.nextval, '${uno}', to_date('${owdate}', 'yyyy-mm-dd'), ${owtime}, '${owtitle}',
 		'${owreason}', default, default)
 	<!-- qr uno 값 넣어줘야함 -->
 	</update>
@@ -44,6 +44,6 @@
 	<!-- 시간외 근무 승인여부 삽입 -->
 	<update id="updateOverworkApp" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
-		update overwork set owapproval = #{owapproval} where uno = #{uno} and owno = #{owno}
+		update overwork set owapproval = 1 where owno = #{owno}
 	</update>
 </mapper>

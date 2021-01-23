@@ -40,14 +40,9 @@ public class OverworkServiceImpl implements OverworkService{
 	}
 
 	@Override
-	public OverworkDto updateOverworkApp(OverworkDto o, String uno) {
-		int result = overworkDao.updateOverworkApp(o, uno);
-		if (result > 0) { // 읽어나온게 있다면
-			o = overworkDao.selectOwOne(o.getOwno());
-		} else {
-			o = null; //읽어나온게 없다면
-		}
-		return o; 
+	public int updateOverworkApp(String owno) {
+		
+		return overworkDao.updateOverworkApp(owno); 
 	}
 
 }

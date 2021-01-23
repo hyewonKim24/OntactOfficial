@@ -264,6 +264,14 @@
 		from users u, dept d 
 		where u.dno = d.dno and d.dname = #{dname}
 	</select>
+	
+	<select id="deleteOrgani"
+		resultMap="resultUsers">
+		select u.uno, d.dname, u.uname, u.urank, u.uemail 
+		from users u, dept d 
+		where u.dno = d.dno and d.dname = #{dname}
+	</select>
+	
 	<!-- <resultMap type="map" id="resultUsersMap">
 		<id property="u_uno" column="uno" />
 		<result property="d_dname" column="dname" />

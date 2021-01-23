@@ -264,6 +264,8 @@ body {
 </style>
 <script>
 	document.addEventListener('DOMContentLoaded',function() {
+		var pno = $("#pno").val();
+		console.log("번호" + pno);
 						/* var elems = document.querySelectorAll('.modal');
 						var instances = M.Modal.init(elems); */
 						var calendarEl = document.getElementById('calendar');
@@ -357,6 +359,7 @@ body {
 										$.ajax({
 												contentType : 'application/json',
 												url : '${pageContext.request.contextPath}/schedule/list',
+												data : {pno : pno},
 												dataType : 'json',
 												success : function(result) {
 													
@@ -448,9 +451,10 @@ body {
       </div>
       <div class="contents">
          <div class="article">
+         	
             <div class="conTitle">일정 : 프로젝트 이름</div>
             <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close" onclick="location.href=''">닫기</button>
+                  aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/project/pjdetail'">닫기</button>
             <!-- 달력 -->
             <div id='calendar'></div>
             <!-- 달력 모달 -->

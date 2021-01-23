@@ -85,10 +85,8 @@ public class UseroverworkController {
 		    o.setUno(uno);
 		    o.setDno(dno);
 		    
-		    
-		    
 			overworkServ.insertOverwork(o);
-			rttr.addFlashAttribute("message", "success");
+			rttr.addFlashAttribute("msg", "success");
 		}catch(Exception e) {
 			e.printStackTrace();
 			rttr.addFlashAttribute("msg", e.getMessage());
@@ -96,27 +94,27 @@ public class UseroverworkController {
 		}
 		return "redirect:/overwork/owlist";
 	}
-	
+	//
 	@RequestMapping(value = "/overwork/owupd", method = RequestMethod.POST)
-	public ModelAndView updateOverworkApp(OverworkDto o, 
-			@RequestParam(name = "page", defaultValue = "1") int page,
-			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView updateOverworkApp( 
+			@RequestParam(name = "hiddenname") String owno,
+			Authentication authentication, ModelAndView mv) {
 		try {
-			System.out.println("업데이트진입");
+			System.out.println("업데이트진입했다");
+			System.out.println(owno);
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 		    String uno = userdetail.getUno();
 		    
-		    overworkServ.updateOverworkApp(o,uno);
-		    
-		    if(overworkServ.updateOverworkApp(o,uno) != null) {
-				mv.addObject("owno", overworkServ.updateOverworkApp(o, uno).getOwno()); //가지고 들어가는 것
-				mv.addObject("currentPage", page); //가지고 들어가는 것
-				mv.setViewName("redirect:/overwork/owlist"); 
-			} else {
-				//이전화면으로 이동
-			}
+		    int rs = overworkServ.updateOverworkApp(owno);
+		    if(rs != 0) {
+		    	mv.addObject("msg", "success");
+		    	mv.setViewName("redirect:/overwork/owlist");
+		    } else {
+		    	mv.addObject("msg", "failed");
+		    	mv.setViewName("redirect:/overwork/owlist");
+		    }
 		} catch (Exception e) {  
-			System.out.println("transaction 실패"); 
+			System.out.println("update 실패"); 
 			mv.addObject("msg", e.getMessage()); 
 			mv.setViewName("errorPage");
 		}

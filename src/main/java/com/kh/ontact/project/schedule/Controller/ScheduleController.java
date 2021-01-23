@@ -3,6 +3,7 @@ package com.kh.ontact.project.schedule.Controller;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -129,39 +130,63 @@ public class ScheduleController {
 	}
 	
 	//프로젝트 일정 
-		@RequestMapping(value = "/project/schedule/upd", method = RequestMethod.GET)
-		public ModelAndView updateSchedule(ModelAndView mv, ScheduleDto s,
-				
-				@RequestParam(name = "attendeeChange", required = false) String attendee,
-				
-				Authentication authentication) {
-			System.out.println("프로젝트 일정 참여자 업데이트진입");
-			 	
-			 	
-			 	System.out.println("참석자 변경 " + attendee);
-			try {
-				CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
-				String uno=userdetail.getUno();
-				System.out.println("세션값확인 : " + uno);
-				System.out.println("무엇이" + attendee);
-				
-				System.out.println("글번호 : " + s.getBno());
-				System.out.println("프로젝트번호 : " + s.getPno());
-			    s.setAttendee(attendee);
-			    
-			    scheduleServ.updateSchedule(s, attendee);
-				mv.addObject("message", "success");
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-				mv.addObject("msg", e.getMessage());
-				mv.setViewName("/errorpage");
+	@RequestMapping(value = "/project/schedule/upd", method = RequestMethod.GET)
+	public ModelAndView updateSchedule(ModelAndView mv, ScheduleDto s,
+			
+			//@RequestParam(name = "attendeeChange", required = false) String attendee,
+			HttpServletRequest request,
+			RedirectAttributes redirectAttrs,
+			
+			Authentication authentication) {
+		System.out.println("프로젝트 일정 참여자 업데이트진입");
+		 	
+			String attendee = "";
+			Enumeration<String> eNames = request.getParameterNames();
+			int i = 0;
+			
+			while (eNames.hasMoreElements()) {
+				String name = eNames.nextElement().toString();
+				System.out.println("i=1=:" + i);
+				if(name.contains("attendeeChange")) {
+					if(i!=0) {
+						System.out.println("i=4=:" + i);
+						attendee = attendee+",";
+					}
+					System.out.println("i=2=:" + i);
+					i++;
+					System.out.println("i=3=:" + i);
+					String[] values = request.getParameterValues(name);		
+					for (String value : values) {
+						System.out.println("얻어온 세션 이름 [" + i + "] : " + name);
+						System.out.println("얻어온 세션 값 [" + i + "] : " + value);
+						attendee = attendee+ value;
+					}   
+				}
 			}
-			mv.addObject("pno", s.getPno());
-			mv.setViewName("redirect:/project/pjdetail");
-			return mv;
+		 	
+		 	System.out.println("참석자 변경 " + attendee);
+		try {
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String uno=userdetail.getUno();
+			System.out.println("세션값확인 : " + uno);
+			System.out.println("무엇이" + attendee);
+			
+			System.out.println("글번호 : " + s.getBno());
+			System.out.println("프로젝트번호 : " + s.getPno());
+		    s.setAttendee(attendee);
+		    
+		    scheduleServ.updateSchedule(s, attendee);
+			//mv.addObject("message", "success");
+		    redirectAttrs.addFlashAttribute("message", "Update success");
+		}catch(Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("/errorpage");
 		}
-	
+		mv.addObject("pno", s.getPno());
+		mv.setViewName("redirect:/project/pjdetail");
+		return mv;
+	}
 	// schedule 글 삭제
 	@RequestMapping(value="/project/schedule/del",method=RequestMethod.GET)
 	public ModelAndView deleteSchedule(ModelAndView mv, 
@@ -194,7 +219,7 @@ public class ScheduleController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="/schedule/list", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+	@RequestMapping(value="/schedule/list", produces = "application/text; charset=UTF-8")
 	public String selectDftest(
 			@RequestParam(name = "pno") String pno, 
 			Authentication authentication, HttpServletRequest request) {
@@ -210,7 +235,7 @@ public class ScheduleController {
 			paramMap2.put("pno", pno);
 			List<ScheduleDto> array1 = null;
 			List<ScheduleDto> array2 = null;
-			
+			//
 			paramMap1.put("uname", uname);
 			paramMap1.put("attendee", '%'+ uname+'%');
 			paramMap2.put("uname", uname);

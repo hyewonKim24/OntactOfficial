@@ -215,6 +215,21 @@
     .list table thead{
         font-weight: 700;
     }
+    .owno{
+	    width : 80px;
+	    text-align : center;
+	    border : none;
+    }
+    .accept{
+    	width: 50px;
+        height: 25px;
+        background-color: #5A3673;
+        color:#F2F2F2;
+        border : none;
+        border-radius: 3px;
+        font-size : 11px;
+        vertical-align : middle;
+    }
     </style>
     <script>
     var result='${message}';
@@ -376,23 +391,58 @@
 	                        <td colspan="7" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
 	                    </tr>
 	                    <tr>
+	                        <th style="width : 80px; text-align : center; ">신청번호</th>
 	                        <th>일자</th>
 	                        <th>시간</th>
 	                        <th>업무내용</th>
 	                        <th>사유</th>
 	                        <th>승인</th>
+	                        <th></th>
 	                    </tr>
 	                 </thead>
 	                <%-- <c:if test="${not empty list}"> --%>
-						<c:forEach var="ow" items="${list}" varStatus="status">
-	                    <tr>
+	                	<form name="updateOwApp_frm">
+	                		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                    	<input type="hidden" class="ownohidden" name="hiddenname"value="">
+                   		</form>
+	                	 
+						<c:forEach var="ow" items="${list}" varStatus="e">
+	                    <tr class="parent_td">
+	                <!-- <form name="updateOwApp_frm_test">  -->   
+	                    	<td>
+	                    	<input type="text" value="${ow.owno}" name="owno" class="owno owno${e.count}">
+	                    	</td>
 	                        <td>${ow.owdate}</td>
 	                        <td>${ow.owtime}</td>
 	                        <td>${ow.owtitle}</td>
 	                        <td>${ow.owreason}</td>
 	                        <td>${ow.owapproval}</td>
+	                        <td>
+	                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+	                        	<button class="accept${e.count}">승인</button>
+                        	</sec:authorize>
+                        	</td>
+	                    <!-- </form> -->
 	                    </tr>
-                   		</c:forEach>
+	                    <script>
+		                    $(".accept${e.count}").click(function(){
+	                    		var pt = $(".accept${e.count}").parents(".parent_td");
+	                    		var ownoA = pt.find(".owno${e.count}").val();
+	                    		console.log("값을 확인 : " + ownoA);
+	                    		$(".ownohidden").val(ownoA);
+	                    		goUpdate();
+		                    })
+	                    </script>
+	                     </c:forEach>
+	                    <script type="text/javascript">
+							function goUpdate(){
+								var updatefrm = document.updateOwApp_frm;
+								updatefrm.action="${pageContext.request.contextPath}/overwork/owupd"
+								updatefrm.method="post"
+								updatefrm.submit();
+							}
+						</script>
+                   		
                     <%-- </c:if> --%>
 			      <!-- 앞 페이지 번호 처리 -->
 					<tr align="center" height="20">
@@ -436,5 +486,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

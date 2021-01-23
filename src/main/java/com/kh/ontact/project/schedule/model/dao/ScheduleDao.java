@@ -20,19 +20,25 @@ public class ScheduleDao {
 	public int insertSchedule(ScheduleDto s) {  
 		return sqlSession.insert("ScheduleMapper.insertSchedule",s);
 	}
-	public void selectOneSchedule(ScheduleDto s) {  
-		sqlSession.insert("ScheduleMapper.selectOneSchedule",s);
+	//업데이트
+	public List<ScheduleDto> selectOnlySchedule(ScheduleDto s) {  
+		return sqlSession.selectList("ScheduleMapper.selectOnlySchedule",s);
 	}
-	
+	public int insertUpdateSchedule(ScheduleDto s) { 
+		System.out.println("sche 다오 업데이트기능을 하는 인서트 진입");
+		return sqlSession.insert("ScheduleMapper.insertUpdateSchedule",s);
+	}
+	public int deleteUpdateSchedule(int bno) { 
+		System.out.println("sche 다오 업데이트기능을 하는 인서트 진입");
+		return sqlSession.insert("ScheduleMapper.deleteUpdateSchedule",bno);
+	}
 	public int updateSchedule(ScheduleDto s) { 
 		System.out.println("sche 다오 업데이트 진입");
 		return sqlSession.insert("ScheduleMapper.updateSchedule",s);
 	}
-	public int deleteSchedule(int bno) {  
-		return sqlSession.insert("ScheduleMapper.deleteSchedule",bno);
-	}
-	public List<ScheduleDto> ListScheduleAll(String pno) throws Exception{
-		return sqlSession.selectList("ScheduleMapper.ListScheduleAll", pno);
+
+	public List<ScheduleDto> ListScheduleAll(String pno) {  
+		return sqlSession.selectList("ScheduleMapper.ListScheduleAll",pno);
 	}
 	
 	

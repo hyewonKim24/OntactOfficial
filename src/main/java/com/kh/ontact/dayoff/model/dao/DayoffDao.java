@@ -36,10 +36,11 @@ public class DayoffDao {
 		System.out.println("다오진입");
 		return sqlSession.insert("DayoffMapper.insertDayoff", d);
 	}
-	public int updateDayoffApp(DayoffDto d, String uno) { // 글 수정 
-		return sqlSession.update("DayoffMapper.updateDayoffApp", d);
+	public int updateDayoffApp(String dfno) { // 글 수정 
+		System.out.println("다오에서" + dfno);
+		return sqlSession.update("DayoffMapper.updateDayoffApp", dfno);
 	}
-	public List<DayoffDto> selectDfCalendar(String dno) {
-		return sqlSession.selectList("DayoffMapper.selectDfCalendar", dno);
+	public List<DayoffDto> selectDfCalendar(HashMap<String, String> paramMap) {
+		return sqlSession.selectList("DayoffMapper.selectDfCalendar", paramMap);
 	}
 }

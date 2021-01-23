@@ -26,6 +26,16 @@
 		<result property="taskmanager" column="taskmanager" />
 		<result property="count" column="count"/>
 	</resultMap>
+	
+	<resultMap type="ScheduleDto" id="resultScheduleDto">
+		<id property="bno" column="bno" />
+		<result property="sstart" column="sstart" />
+		<result property="send" column="send" />
+		<result property="splace" column="splace" />
+		<result property="smemo" column="smemo" />
+		<result property="attendee" column="attendee" />
+	</resultMap>
+	
 
 	<!-- boardall 인서트
 	<insert id="insertBoardAllSche">
@@ -34,18 +44,30 @@
 		]]>
 	</insert> -->
 	
-	<!-- 프로젝트 일정 글-->
+	<!-- 프로젝트 일정 글 insert-->
 	<insert id="insertSchedule" flushCache="true" statementType="PREPARED" parameterType="java.util.List">  
 		<![CDATA[
 		 insert into schedule values (bno_se.currval,#{sstart}, #{send}, #{splace}, #{smemo}, #{attendee}) 
 		]]>
 	</insert>
 	
-	<select id="selectOneSchedule" resultMap="resultSchedule">
+	<!-- 프로젝트 일정 글 update-->
+	<select id="selectOnlySchedule" resultType="arraylist"  resultMap="resultScheduleDto" parameterType="ScheduleDto">
 		<![CDATA[
 		 	select * from schedule where bno = #{bno}
 		 ]]>
 	</select>
+	<insert id="insertUpdateSchedule" flushCache="true" statementType="PREPARED" parameterType="ScheduleDto">  
+		<![CDATA[
+		 insert into schedule values (#{bno}, #{sstart}, #{send}, #{splace}, #{smemo}, #{attendee}) 
+		]]>
+	</insert>
+	<delete id="deleteUpdateSchedule">
+		<![CDATA[
+		 	delete from schedule where bno=#{bno}
+		]]>
+	</delete>
+	
 	
 	<update id="updateSchedule">
 		<![CDATA[
@@ -55,7 +77,7 @@
 	
 	<delete id="deleteSchedule">
 		<![CDATA[
-		 	delete from schedule where bno=#{bno}
+		 	delete from boardall where bno=#{bno}
 		]]>
 	</delete>
 	
@@ -94,7 +116,7 @@
 			inner join boardall b on p.pno = b.pno
 			inner join task t on b.bno = t.bno
 			inner join users u on u.uno = b.uno
-			where u.uname =#{uname} or t.taskmanager like #{attendee}
+			where p.pno = #{pno} and (u.uname =#{uname} or t.taskmanager like #{attendee})
 			order by t.tstart
 		<!-- <if test="paramMap != null"> where b.uno = #{buno} or t.taskmanager 
 			=#{svuno} </if> -->

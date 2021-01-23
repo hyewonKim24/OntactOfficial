@@ -17,5 +17,5 @@ public interface OverworkService {
 	
 	public int insertOverwork(OverworkDto o); 
 	
-	public OverworkDto updateOverworkApp(OverworkDto o, String uno); 
+	public int updateOverworkApp(String owno); 
 }

@@ -34,7 +34,7 @@ public class OverworkDao {
 		return sqlSession.insert("OverworkMapper.insetOverwork", o);
 	}
 	
-	public int updateOverworkApp(OverworkDto o, String uno) { // 글 수정 
-		return sqlSession.update("OverworkMapper.updateOverworkApp", o);
+	public int updateOverworkApp(String owno) { // 글 수정 
+		return sqlSession.update("OverworkMapper.updateOverworkApp", owno);
 	}
 }

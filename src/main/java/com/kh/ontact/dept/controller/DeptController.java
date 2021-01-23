@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,7 +47,7 @@ public class DeptController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String cno=userdetail.getCno();
 			System.out.println("세션값확인 : " + cno);
-			
+			//
 		try {
 			int currentPage = page;
 //			부서 출력
@@ -63,6 +64,7 @@ public class DeptController {
 
 			mv.addObject("deptlistCount", deptlistCount1);
 			mv.addObject("selectDept", deptServ.selectDept(cno));
+			System.out.println("뭐지" + deptServ.selectDept(cno));
 			mv.setViewName("/commute/organogram");
 
 //			미분류그룹 default
@@ -148,7 +150,7 @@ public class DeptController {
 			}
 			deptServ.insertDept(d);
 			rttr.addFlashAttribute("message", "success");
-			
+			//
 		}catch(Exception e) {
 			e.printStackTrace();
 			rttr.addFlashAttribute("msg", e.getMessage());
@@ -158,29 +160,46 @@ public class DeptController {
 	}
 	
 	//부서 삭제
-	@RequestMapping(value = "/commute/deptdel", method = RequestMethod.GET)
-	public ModelAndView deleteDept(
-			@RequestParam(name = "dno") String dno,
-			@RequestParam(name = "cno") String cno,
-			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
-		try {
-			System.out.println("부서 삭제 인서트진입");
-			System.out.println("부서번호 : "+dno);
-			System.out.println("회사번호 : "+ cno);
-		
-			HashMap<String, String> paramMap = new HashMap<String, String>();
-			paramMap.put("startdate", cno);
-			paramMap.put("enddate", dno);
+		@SuppressWarnings("unused")
+		@ResponseBody
+		@RequestMapping(value = "/commute/deptdel",  produces = "application/text; charset=utf8")
+		public String deleteDept(
+				@RequestParam(name = "dname") String dname,
+				@RequestParam(name = "dno") String dno,
+				@RequestParam(name = "cno") String cno,
+				Authentication authentication, HttpServletRequest request,
+				HttpServletResponse response
+				) {
 			
-//			dno에 포함되어 있는 사람이 없는 경우에만 삭제가능하도록 
-			deptServ.deleteDept(paramMap);
-			mv.setViewName("redirect:/commute/organlist");
-		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage());
-			mv.setViewName("errorPage");
+				String msg = null;
+			try {
+				System.out.println("부서 삭제 인서트진입");
+				System.out.println("부서번호 : "+dno);
+				System.out.println("회사번호 : "+ cno);
+				System.out.println("부서이름 : "+ dname);
+				
+				HashMap<String, String> paramMap = new HashMap<String, String>();
+				paramMap.put("cno", cno);
+				paramMap.put("dno", dno);
+
+				List<UsersDto> deptUserList = usersService.deleteOgUser(dname);
+				
+				System.out.println("어떤게들어있나 : " + deptUserList);
+				System.out.println("크기가 몇일ㄲ까 : " + deptUserList.size());
+				
+				if(deptUserList.size() == 0 || deptUserList == null) { //부서에 사람이 없는 경우만 삭제 가능하도록
+					deptServ.deleteDept(paramMap);
+					msg = "부서가 삭제 되었습니다.";
+				} else {
+					System.out.println("부서에 사원이 있는 경우!!!");
+					msg = "사원이 존재하는 부서는 삭제하실수 없습니다.";
+				}
+			} catch (Exception e) {
+				
+			}
+			return msg;
+			
 		}
-		return mv;
-	}
 	
 	
 }

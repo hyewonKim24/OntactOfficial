@@ -46,19 +46,14 @@ public class DayoffServiceImpl implements DayoffService{
 	}
 
 	@Override
-	public DayoffDto updateDayoffApp(DayoffDto d, String uno) {
-		int result = dayoffDao.updateDayoffApp(d, uno);
-		if (result > 0) { // 읽어나온게 있다면
-			d = dayoffDao.selectDfOne(d.getDfno());
-		} else {
-			d = null; //읽어나온게 없다면
-		}
-		return d;
+	public int updateDayoffApp(String dfno) {
+		System.out.println("서비스에서" + dfno);
+		return dayoffDao.updateDayoffApp(dfno);
 	}
 	
 	@Override
-	public List<DayoffDto> selectDfCalendar(String dno) {
-		return dayoffDao.selectDfCalendar(dno);
+	public List<DayoffDto> selectDfCalendar(HashMap<String, String> paramMap) {
+		return dayoffDao.selectDfCalendar(paramMap);
 	}
 
 }

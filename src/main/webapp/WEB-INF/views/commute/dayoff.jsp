@@ -209,7 +209,7 @@
     }
     .lista table{
         width: 930px;
-        height: 360px;
+        min-height : 93px;
         font-size: 14px;
         text-align: center;
     }
@@ -221,14 +221,30 @@
     .lista table thead{
         font-weight: 700;
     }
-    
+    .dfno{
+    	width : 40px;
+    	text-align : center;
+    	border : none;
+    }
+    .accept{
+    	width: 50px;
+        height: 25px;
+        background-color: #5A3673;
+        color:#F2F2F2;
+        border : none;
+        border-radius: 3px;
+        font-size : 11px;
+        vertical-align : middle;
+    }
     </style>
      <script>
-     	 var result='${message}';
+     	 var result='${msg}';
 		console.log(result);
 		if(result == "success") {
-	        alert("신청이 완료되었습니다");
-	    } 
+	        alert("승인 되었습니다.");
+	    } else if(result == "failed"){
+	    	alert("오류가 발생했습니다.");
+	    }
 		
 	    /* $('#insertDf').on('click', function(){
             console.log("들어왔다!!")
@@ -257,10 +273,8 @@
 		}
         });
         
-        
        	/* var responseMessage = "<c:out value="${message}" />"; */
        		/* $("#insertDf").on("click", function(){
-       			
        		}); */
        		
         $('#insertDf').on('click', function(){
@@ -279,43 +293,36 @@
          	   return;
          	}
         	});
-       		
         	 
         function fnMemberValidation(){
          	 if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
         	   alert("부서를 선택해주세요");
          	   $('#name').focus();
          	   return false;
-         	 }
-        	 if($.trim($('#uname').val()) == ''){
+         	 } else if($.trim($('#uname').val()) == ''){
          	   alert("이름을 입력해주세요");
          	   $('#uname').focus();
          	   return false;
-        	  }
-         	 if($.trim($('#dayoffStart').val()) == ''){
+        	  } else if($.trim($('#dayoffStart').val()) == ''){
             	   alert("휴가 시작일을 선택해주세요.");
             	   $('#dayoffStart').focus();
            	   return false;
-           	  }
-        	 if($.trim($('#dayoffEnd').val()) == ''){
+           	  } else if($.trim($('#dayoffEnd').val()) == ''){
                	alert("휴가 종료일을 선택해주세요.");
                	$('#dayoffEnd').focus();
               	return false;
-             }
-         	 if($.trim($('#offdays').val()) == ''){
+             } else if($.trim($('#offdays').val()) == ''){
                  alert("일수를 입력해주세요.");
                  $('#offdays').focus();
                  return false;
-                }
-         	 if($.trim($('#offreason').val()) == ''){
+              } else if($.trim($('#offreason').val()) == ''){
             	   alert("휴가사유를 입력해주세요");
-           	   $('#offreason').focus();
+           	   		$('#offreason').focus();
    	        	   return false;
-            	  }
-        	  
+            	}
          	  return true;
          	 };
-   }); 
+	   }); 
     	
     </script>
 </head>
@@ -403,41 +410,70 @@
                 <table>
                     <thead>
                     <tr>
-                        <td colspan="6" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
+                        <td colspan="8" style="text-align: left;">조회결과 <span>${listCount}</span>건</td>
                     </tr>
                     <tr>
-                        
+                        <th style="width : 80px;">신청번호</th>
                         <th>휴가시작일자</th>
                         <th>휴가종료일자</th>
                         <th>휴가일수</th>
                         <th>사유</th>
                         <th>신청일</th>
                         <th>상태</th>
+                        <th></th>
                     </tr>
                     </thead>
-                    <c:if test="${listCount eq 0}">
+                    
+                    <form name="updateOwApp_frm">
+	                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                    <input type="hidden" class="dfnohidden" name="hiddenname"value="">
+                   	</form>
+                   		
+                    <%-- <c:if test="${listCount eq 0}">
 						<tr>
-							<td colspan="7" align="center"><br>
+							<td colspan="8" align="center"><br>
 							<br> 신청내역이 없습니다.<br>
 							<br></td>
 						</tr>
 					</c:if>
-					<c:if test="${listCount ne 0}">
-						<c:forEach var="df" items="${list}" varStatus="status">
-                    <tr>
-                        
+					<c:if test="${listCount ne 0}"> --%>
+						<c:forEach var="df" items="${list}" varStatus="e">
+                    <tr class="parent_td">
+                        <td><input type="text" value="${df.dfno}" name="dfno" class="dfno dfno${e.count}"></td>
                         <td>${df.offstart}</td>
                         <td>${df.offend}</td>
                         <td>${df.offdays}</td>
                         <td>${df.offreason}</td>
                         <td>${df.offtime}</td>
                         <td>${df.offapproval}</td>
+                        <td>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')"> 
+                        	<button class="accept${e.count} accept">승인</button>
+                       	</sec:authorize>
+                        </td>
                     </tr>
+                     <script>
+		                    $(".accept${e.count}").click(function(){
+	                    		var pt = $(".accept${e.count}").parents(".parent_td");
+	                    		var dfnoA = pt.find(".dfno${e.count}").val();
+	                    		console.log("값을 확인 : " + dfnoA);
+	                    		$(".dfnohidden").val(dfnoA);
+	                    		goUpdate();
+		                    })
+	                    </script>
                     </c:forEach>
-                    </c:if>
+                     <script type="text/javascript">
+							function goUpdate(){
+								var updatefrm = document.updateOwApp_frm;
+								updatefrm.action="${pageContext.request.contextPath}/dayoff/dfappupd"
+								updatefrm.method="post"
+								updatefrm.submit();
+							}
+						</script>
+                    <%-- </c:if> --%>
                    <!-- 앞 페이지 번호 처리 -->
 					<tr>
-						<td colspan="6">
+						<td colspan="8">
 						<c:if test="${currentPage <= 1}">
 						&lt; &nbsp;
 						</c:if>
@@ -477,5 +513,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

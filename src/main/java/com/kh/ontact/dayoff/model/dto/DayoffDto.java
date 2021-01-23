@@ -1,15 +1,8 @@
 package com.kh.ontact.dayoff.model.dto;
 
-
-
 import java.sql.Date;
-import java.util.List;
 
-import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
-
-import com.kh.ontact.commute.model.dto.CommuteDto;
-import com.kh.ontact.dayoff.model.dao.DayoffDao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Component
 public class DayoffDto {
 	private String dfno;
+	private String cno;
 	private String uno;
 	private String dno;
 	private String dname;
