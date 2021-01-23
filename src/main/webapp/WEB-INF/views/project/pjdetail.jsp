@@ -1009,11 +1009,15 @@
                                 <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png"
                                         class="fixNotice"></a>
                             </div>
+                            
+                            <!-- 글 삭제 버튼 내 글일때만 보이기 -->
+                           <c:if test="${blist.uno eq uno}">
                             <div>
                                 <a href="" id="dropdown"><img
                                         src="${pageContext.request.contextPath}/resources/img/more-1.png"
                                         class="editoption"></a>
                             </div>
+                           </c:if>
                             <div class="editDropdown">
                                 <ul>
                                     <li>
@@ -1156,11 +1160,19 @@
 											src="${pageContext.request.contextPath}/resources/img/push-pin.png"
 											class="fixNotice"></a>
 								</div>
+								
+								<!-- 글 삭제 드롭다운 내가 쓴 글만 보이게 -->
+								                            
+                            <!-- 글 삭제 버튼 내 글일때만 보이기 -->
+                           <c:if test="${blist.uno eq uno}">
 								<div>
 									<a href="" id="dropdown"><img
 											src="${pageContext.request.contextPath}/resources/img/more-1.png"
 											class="editoption"></a>
 								</div>
+							</c:if>
+								
+								
 								<div class="editDropdown">
 									<ul>
 										<li>
@@ -1926,9 +1938,13 @@
                         <div>
                             <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
                         </div>
+                                                    
+                       <!-- 글 삭제 버튼 내 글일때만 보이기 -->
+                     <c:if test="${blist.uno eq uno}">
                         <div>
                             <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
                         </div>
+                     </c:if>
                         <div class="editDropdown">
                             <ul>
                                 <li><a href="${pageContext.request.contextPath}/project/schedule/del?bno=${blist.bno}&pno=${pno}">글 삭제</a></li>
@@ -2155,9 +2171,13 @@
                               <div>
                                   <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
                               </div>
+                                                        
+                            <!-- 글 삭제 버튼 내 글일때만 보이기 -->
+                           <c:if test="${blist.uno eq uno}">
                               <div>
                                   <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
                               </div>
+                           </c:if>
                               <div class="editDropdown">
                                   <ul>
                                       <li><a href="">글 삭제</a></li>

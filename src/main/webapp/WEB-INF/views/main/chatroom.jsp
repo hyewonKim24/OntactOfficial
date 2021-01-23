@@ -194,6 +194,8 @@ input:focus {
 #chat-moa-exit {
 	float: right;
 	margin: 20px;
+	text-decoration: none;
+	color:#505050;
 }
 
 .chat-moa-sub {
@@ -211,7 +213,7 @@ input:focus {
 .profileImg {
     width: 40px;
     float: left;
-    margin-right: 25px;
+    margin-right: 15px;
     line-height: 40px;
 	display: block;
 	padding:5px;
@@ -222,6 +224,13 @@ input:focus {
 	line-height: 40px;
 	display: block;
 	padding:5px;
+}
+.chat-mem-list .profieName{
+	font-size:12px;
+	color:#505050;
+}
+.chat-mem-list:hover {
+	background-color: #f5f5fa;
 }
 /* 채팅 내용 */
 .mycontent{
@@ -576,16 +585,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	<!--모아보기 모달-->
 	<div class="chat-dim"></div>
 	<div class="chat-moa">
-		<a href="#" id="chat-moa-exit"> <svg version="1.1"
-				xmlns="http://www.w3.org/2000/svg"
-				xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-				viewBox="0 0 31.112 31.112"
-				style="enable-background: new 0 0 31.112 31.112;"
-				xml:space="preserve" fill="#505050" width="20px" height="20px"
-				stroke="#505050">
-<polygon points="31.112,1.414 29.698,0 15.556,14.142 1.414,0 0,1.414 14.142,15.556 0,29.698 1.414,31.112 15.556,16.97 
-	29.698,31.112 31.112,29.698 16.97,15.556 " /></svg>
-		</a>
+		<a href="#" id="chat-moa-exit"> &times; </a>
 		<!-- <div class="chat-moa-sub">
 
 			<p class="chat-moa-title">모아보기</p>
@@ -596,7 +596,8 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 		<p class="chat-moa-title">채팅 참여자</p>
 		<c:forEach items="${chatmemList }" var="clist">
 		<div class="chat-mem-list">
-			<span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>${clist}</div>
+			<span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+			<span class="profieName"> ${clist}</span></div>
 		</c:forEach>
 
 
