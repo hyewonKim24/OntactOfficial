@@ -2,6 +2,7 @@ package com.kh.ontact.users.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
@@ -15,7 +16,7 @@ public interface UsersService {
 	void joinBusinessChk(RegisterRequest regReq) throws Exception;
 	String findCno(String curl) throws Exception;
 	String findCname(String curl) throws Exception;
-	void joinGuest(UsersDto userdto, String cname) throws Exception;
+	void joinGuest(UsersDto userdto, HashMap<String,String> paramMap) throws Exception;
 	void joinGuestChk(GuestRegisterRequest regReq) throws Exception;
 	void pwdChk(UsersDto userdto) throws Exception;
 	int updateTmppwd(UsersDto dto) throws Exception;

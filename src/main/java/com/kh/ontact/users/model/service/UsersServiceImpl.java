@@ -49,7 +49,7 @@ public class UsersServiceImpl implements UsersService{
 			usersDao.joinProjectMember();
 			usersDao.joinProjectDept();
 		}
-		String cname = "'"+companydto.getCname()+"' 업무공유방";
+		String cname = companydto.getCname();
 		usersDao.joinCompanyProject(cname);
 		usersDao.joinProjectMember();
 	}
@@ -75,7 +75,7 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	public String findCname(String curl) throws Exception {
 		String cname = companydao.findCname(curl);
-		String pname="'"+cname+"' 업무공유방";
+		String pname=cname;
 		String pno = usersDao.pnoChk(pname);
 		logger.info("플젝이름"+pname);
 		logger.info("프로젝트번호"+pno);
@@ -84,9 +84,9 @@ public class UsersServiceImpl implements UsersService{
 	
 	//유저 가입
 	@Override
-	public void joinGuest(UsersDto userdto, String pno) throws Exception {
+	public void joinGuest(UsersDto userdto, HashMap<String,String> paramMap) throws Exception {
 		usersDao.joinGuest(userdto);
-		usersDao.joinDefaultPj(pno);
+		usersDao.joinDefaultPj(paramMap);
 	}
 	
 	//유저 회원가입 중복체크

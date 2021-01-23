@@ -2,6 +2,7 @@ package com.kh.ontact.users.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -48,8 +49,8 @@ public class UsersDao {
 	public String pnoChk(String pname) throws Exception {
 		return sqlSession.selectOne("Users.pnoChk", pname);
 	}
-	public String joinDefaultPj(String pno) throws Exception {
-		return sqlSession.selectOne("Users.joinDefaultPj", pno);
+	public String joinDefaultPj(HashMap<String,String> paramMap) throws Exception {
+		return sqlSession.selectOne("Users.joinDefaultPj", paramMap);
 	}
 
 	// 임시비밀번호 확인

@@ -187,9 +187,13 @@ public class UsersMainController {
 			String inputPass = userdto.getUpwd();
 			String pwd = pwdEncoder.encode(inputPass);
 			userdto.setUpwd(pwd);
-
+			
 			String pno = usersService.findCname(curl);
-			usersService.joinGuest(userdto, pno);
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("cno",cno);
+			paramMap.put("pno",pno);
+			usersService.joinGuest(userdto, paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
