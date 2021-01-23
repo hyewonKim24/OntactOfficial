@@ -498,6 +498,30 @@ input:checked+.slider:before {
 	};
 </script>
 
+	<script>
+		 
+		// 전역변수 설정
+		$(document).ready(function(){
+			
+			// 글 작성 알림 카운트 ajax 추가
+			$.ajax({
+						url: "${pageContext.request.contextPath}/alertcount",
+						async : false,
+						success:function(data){
+							console.log("알림추가")
+							$(".pj_sb_alarm_all").html('');
+							$(".pj_sb_alarm_all").append(data);
+							
+						},
+						error:function(){
+							console.log("실패");
+						}
+					});
+			
+		    
+		});
+		
+</script>
 <body>
 	<div id="leftsidebar">
 		<nav id="pj_sidebar">
@@ -514,7 +538,7 @@ input:checked+.slider:before {
 	                            <rect y="17" width="50" height="3" />
 	                            <rect y="31" width="50" height="3" />
 	                        </g>
-	                    </svg>전체 <span class="pj_sb_alarm">00</span>
+	                    </svg>전체 <span class="pj_sb_alarm pj_sb_alarm_all"></span>
 				</a></li>
 				<li><a href="${pageContext.request.contextPath}/project/uns/list"> <svg version="1.1" class="pj_btn"
 							xmlns="http://www.w3.org/2000/svg"
@@ -548,7 +572,7 @@ input:checked+.slider:before {
 		C32.3,9.5,17.7,9.5,2.9,9.5z M3,40.6c14.8,0,29.4,0,44.2,0c-5.4-4.7-10.6-9.3-16.1-14c-1,1.1-1.9,2.2-2.9,3.2c-2,1.9-4.2,1.9-6.2,0
 		c-1.1-1.1-2.2-2.1-3.4-3.3C13.4,31.2,8.3,35.8,3,40.6z M48.2,39.9c0-9.9,0-19.7,0-29.6c-5.4,5.3-10.7,10.4-16.1,15.6
 		C37.5,30.6,42.8,35.1,48.2,39.9z M1.8,40c5.4-4.9,10.6-9.6,15.9-14.3C12.4,20.5,7.2,15.5,1.8,10.2C1.8,20.2,1.8,30,1.8,40z" />
-	                    </svg> 읽지않음 <span class="pj_sb_alarm">00</span>
+	                    </svg> 읽지않음 <span class="pj_sb_alarm pj_sb_alarm_all" >00</span>
 				</a></li>
 			</ul>
 			<ul>

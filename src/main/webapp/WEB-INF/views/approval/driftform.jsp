@@ -284,8 +284,7 @@ header {
 						</select> <span class="text">결제자</span>
 						 <select class="opt_bt" name="apperson">
 							<option value="선택하세요">선택하세요</option>
-							<option value="김혜원">김혜원</option>
-							<option value="이혜림">이혜림</option>
+							<option value="${ceo}">${ceo}</option>
 						</select>
 					</div>
 

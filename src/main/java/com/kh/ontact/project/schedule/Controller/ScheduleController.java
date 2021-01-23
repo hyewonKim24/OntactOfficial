@@ -169,14 +169,16 @@ public class ScheduleController {
 			@RequestParam(name = "pno") String pno) {
 				System.out.println("bno"+bno);
 				System.out.println("pno"+pno);
+				int rs=0;
 				try {
-					int rs =scheduleServ.deleteSchedule(bno);
+					 rs=scheduleServ.deleteSchedule(bno);
 					System.out.println(rs+"개 삭제 : task");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				mv.addObject("pno", pno);
-				mv.setViewName("redirect:/scheduleboard");
+				mv.addObject("deleteResult", rs);
+				mv.setViewName("redirect:/project/pjdetail");
 				return mv;
 			}
 			

@@ -28,6 +28,8 @@ public class TodoServiceImpl implements TodoService{
 	ProjectMemberService pmService;
 	@Autowired
 	AlertService alertService;
+	@Autowired
+	BoardAllDao baDao;
 
 	@Override
 	public List<BoardAllViewDto> getBoardAllList(String uno) throws Exception  {
@@ -86,5 +88,15 @@ public class TodoServiceImpl implements TodoService{
 	@Override
 	public int updateTodoUno(TodoDto tddto) throws Exception {
 		return todoDao.updateTodoUno(tddto);
+	}
+	
+	
+	//혜원 할 일 글 삭제
+	@Override
+	public int deleteTodo(int bno) throws Exception {
+		System.out.println("글삭제 서비스 접근");
+		int rs=baDao.deleteBoardall(bno);
+		System.out.println(rs+"글삭제");
+		return rs;
 	}
 }
