@@ -50,4 +50,7 @@ public class CompanyDao {
 	public String cnameOne(String cno) throws Exception {
 		return sqlSession.selectOne("Company.cnameOne", cno);
 	}
+	public String SelectCEO(String cno) throws Exception {
+		return sqlSession.selectOne("Company.SelectCEO", cno);
+	}
 }

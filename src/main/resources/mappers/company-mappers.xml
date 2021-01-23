@@ -64,8 +64,17 @@
 	
 	<!-- 혜원 코드   -->
 	<select id="cnameOne" resultType="String">
+	<![CDATA[
 		SELECT CNAME FROM COMPANY
 		WHERE CNO=#{cno}
+		]]>
+	</select>
+	
+	<!-- CEO 불러오기 -->
+	<select id="SelectCEO" resultType="String">
+	<![CDATA[
+		select CEO from company where cno=#{cno}
+		]]>
 	</select>
 	
 </mapper>

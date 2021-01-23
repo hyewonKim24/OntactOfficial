@@ -22,5 +22,7 @@ public interface TodoService {
 	public int updateTodoDate(TodoDto tddto) throws Exception;
 
 	public int updateTodoUno(TodoDto tddto) throws Exception;
+	
+	public int deleteTodo(int bno) throws Exception ;
 
 }

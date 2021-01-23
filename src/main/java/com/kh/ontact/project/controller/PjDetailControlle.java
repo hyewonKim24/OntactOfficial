@@ -50,11 +50,11 @@ public class PjDetailControlle {
 	@Autowired
 	FilesDao filesdao;
 	
-
-	// 윤진 : ProejctDetail 전체리스트
-	@RequestMapping(value = "project/pjdetail", method = RequestMethod.GET)
-	public ModelAndView selectListPjDetail(ModelAndView mv, @RequestParam(name = "pno") String pno, UsersDto dto,
-			@RequestParam(value = "mcount", required = false) String mcount) {
+	//윤진 : ProejctDetail 전체리스트
+	@RequestMapping(value="project/pjdetail", method=RequestMethod.GET)
+	public ModelAndView selectListPjDetail(ModelAndView mv, @RequestParam(name="pno") String pno,
+			UsersDto dto,@RequestParam(value = "mcount",required = false) String mcount,
+			@RequestParam(value = "deleteResult",required = false) String deleteResult) {
 		System.out.println("blist 컨트롤러 진입");
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
@@ -112,6 +112,9 @@ public class PjDetailControlle {
 			mv.addObject("userSize", userListSize - 1);
 			if (mcount != null) {
 				mv.addObject("inviteSuccess", "프로젝트에 " + mcount + "명이 초대되었습니다");
+			}
+			if(deleteResult!=null) {
+				mv.addObject("deleteResult", "해당 프로젝트에 글이 1개 삭제되었습니다.");
 			}
 			mv.setViewName("project/pjdetail");
 		} catch (Exception e) {

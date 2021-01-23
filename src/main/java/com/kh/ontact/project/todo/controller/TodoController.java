@@ -151,4 +151,23 @@ public class TodoController {
 		}
 		return rs;
 	}
+	
+	//혜원 : 할일 삭제
+	@RequestMapping(value="/project/tododelete",method=RequestMethod.GET)
+	public ModelAndView taskdelete(ModelAndView mv, @RequestParam(name = "bno") int bno,
+			@RequestParam(name = "pno") String pno) {
+		System.out.println("bno"+bno);
+		System.out.println("pno"+pno);
+		int rs =0;
+		try {
+			rs =todoService.deleteTodo(bno);
+			System.out.println("할 일 "+rs+"개 삭제 : task");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("pno", pno);
+		mv.addObject("deleteResult", rs);
+		mv.setViewName("redirect:/project/pjdetail");
+		return mv;
+	}
 }

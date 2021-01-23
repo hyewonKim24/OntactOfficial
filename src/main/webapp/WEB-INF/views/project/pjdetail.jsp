@@ -1005,13 +1005,12 @@
                             <img src="">
                         </div>
                         <div class="option">
-                            <div>
-                                <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png"
-                                        class="fixNotice"></a>
-                            </div>
                             
                             <!-- 글 삭제 버튼 내 글일때만 보이기 -->
                            <c:if test="${blist.uno eq uno}">
+                            <div>
+                                  <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                              </div>
                             <div>
                                 <a href="" id="dropdown"><img
                                         src="${pageContext.request.contextPath}/resources/img/more-1.png"
@@ -1155,16 +1154,14 @@
 								<img src="">
 							</div>
 							<div class="option">
-								<div>
-									<a href=""><img
-											src="${pageContext.request.contextPath}/resources/img/push-pin.png"
-											class="fixNotice"></a>
-								</div>
 								
 								<!-- 글 삭제 드롭다운 내가 쓴 글만 보이게 -->
 								                            
                             <!-- 글 삭제 버튼 내 글일때만 보이기 -->
                            <c:if test="${blist.uno eq uno}">
+                            <div>
+                                  <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                              </div>
 								<div>
 									<a href="" id="dropdown"><img
 											src="${pageContext.request.contextPath}/resources/img/more-1.png"
@@ -1935,12 +1932,12 @@
                         <img src="">
                     </div>
                     <div class="option">
-                        <div>
-                            <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
-                        </div>
                                                     
                        <!-- 글 삭제 버튼 내 글일때만 보이기 -->
                      <c:if test="${blist.uno eq uno}">
+                      <div>
+                          <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                      </div>
                         <div>
                             <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
                         </div>
@@ -2168,19 +2165,19 @@
                               <img src="">
                           </div>
                           <div class="option">
-                              <div>
-                                  <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
-                              </div>
                                                         
                             <!-- 글 삭제 버튼 내 글일때만 보이기 -->
                            <c:if test="${blist.uno eq uno}">
+                              <div>
+                                  <a href=""><img src="${pageContext.request.contextPath}/resources/img/push-pin.png" class="fixNotice"></a>
+                              </div>
                               <div>
                                   <a href="" id="dropdown"><img src="${pageContext.request.contextPath}/resources/img/more-1.png" class="editoption"></a>
                               </div>
                            </c:if>
                               <div class="editDropdown">
                                   <ul>
-                                      <li><a href="">글 삭제</a></li>
+                                      <li><a href="${pageContext.request.contextPath}/project/tododelete?bno=${blist.bno}&pno=${pno}">글 삭제</a></li>
                                       <li><a href="">글 수정</a></li>
                                   </ul>
                               </div>
@@ -3177,71 +3174,78 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 			});
 			 </script>		
 		</c:if>
+		<c:if test="${not empty deleteResult}">
+			<script>
+			$(document).ready(function(){  
+				alert('${deleteResult}');	
+			});
+			 </script>		
+		</c:if>
 		
 		
 		<script>
-										$(".replyUpdate").unbind("click");
-										$(".replyUpdateBtn").unbind("click");
-										$(".replyDelete").unbind("click");
-										//댓글 수정
-										$(".replyUpdate").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rno = parentDiv.find(".rno").val();
-											console.log(rno + "rno");
-											console.log("댓글 수정");
-											parentDiv.find(".replyResult").css("display", "none");
-											parentDiv.find(".replyUpdate").css("display", "none");
-											parentDiv.find(".replyDelete").css("display", "none");
-											parentDiv.find(".replyUpdateText").css("display", "inline-block");
-											parentDiv.find(".replyUpdateBtn").css("display", "inline-block");
-										});
-										$(".replyUpdateBtn").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rdesc = parentDiv.find(".replyUpdateText").val();
-											var rno = parentDiv.find(".rno").val();
-											console.log(rno + "rno");
-											console.log(rdesc + "rdesc");
-											$.ajax({
-												url: "${pageContext.request.contextPath}/project/replyupdate",
-												data: {
-													rno: rno,
-													rdesc: rdesc
-												},
-												dataType: "json",
-												success: function (data) {
-													parentDiv.find(".replyResult").css("display", "block");
-													parentDiv.find(".replyUpdateText").css("display", "none");
-													parentDiv.find(".replyUpdateBtn").css("display", "none");
-													parentDiv.find(".replyUpdate").css("display", "inline-block");
-													parentDiv.find(".replyDelete").css("display", "inline-block");
-													parentDiv.find(".replyResult").text(rdesc);
-												},
-												error: function () {
-													console.log("댓글수정 실패");
-												}
-											});
-										});
-										//댓글 삭제
-										$(".replyDelete").click(function () {
-											var parent = $(this).parent();
-											var parentDiv = parent.parent();
-											var rno = parentDiv.find(".rno").val();
-											$.ajax({
-												url: "${pageContext.request.contextPath}/project/replydelete",
-												data: {
-													rno: rno
-												},
-												dataType: "json",
-												success: function (data) {
-													parentDiv.remove();
-												},
-												error: function () {
-													console.log("삭제 실패");
-												}
-											});
-										});
-									</script>
+			$(".replyUpdate").unbind("click");
+			$(".replyUpdateBtn").unbind("click");
+			$(".replyDelete").unbind("click");
+			//댓글 수정
+			$(".replyUpdate").click(function () {
+				var parent = $(this).parent();
+				var parentDiv = parent.parent();
+				var rno = parentDiv.find(".rno").val();
+				console.log(rno + "rno");
+				console.log("댓글 수정");
+				parentDiv.find(".replyResult").css("display", "none");
+				parentDiv.find(".replyUpdate").css("display", "none");
+				parentDiv.find(".replyDelete").css("display", "none");
+				parentDiv.find(".replyUpdateText").css("display", "inline-block");
+				parentDiv.find(".replyUpdateBtn").css("display", "inline-block");
+			});
+			$(".replyUpdateBtn").click(function () {
+				var parent = $(this).parent();
+				var parentDiv = parent.parent();
+				var rdesc = parentDiv.find(".replyUpdateText").val();
+				var rno = parentDiv.find(".rno").val();
+				console.log(rno + "rno");
+				console.log(rdesc + "rdesc");
+				$.ajax({
+					url: "${pageContext.request.contextPath}/project/replyupdate",
+					data: {
+						rno: rno,
+						rdesc: rdesc
+					},
+					dataType: "json",
+					success: function (data) {
+						parentDiv.find(".replyResult").css("display", "block");
+						parentDiv.find(".replyUpdateText").css("display", "none");
+						parentDiv.find(".replyUpdateBtn").css("display", "none");
+						parentDiv.find(".replyUpdate").css("display", "inline-block");
+						parentDiv.find(".replyDelete").css("display", "inline-block");
+						parentDiv.find(".replyResult").text(rdesc);
+					},
+					error: function () {
+						console.log("댓글수정 실패");
+					}
+				});
+			});
+			//댓글 삭제
+			$(".replyDelete").click(function () {
+				var parent = $(this).parent();
+				var parentDiv = parent.parent();
+				var rno = parentDiv.find(".rno").val();
+				$.ajax({
+					url: "${pageContext.request.contextPath}/project/replydelete",
+					data: {
+						rno: rno
+					},
+					dataType: "json",
+					success: function (data) {
+						parentDiv.remove();
+					},
+					error: function () {
+						console.log("삭제 실패");
+					}
+				});
+			});
+		</script>
 	</body>
 	</html>

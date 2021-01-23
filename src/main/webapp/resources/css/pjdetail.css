@@ -1839,11 +1839,6 @@
         	background: #432D73;
         	margin-left:5px;
         }
-        .inviteList-table tr:last-child td{
-        	margin-bottom:100px;
-        	background-color: black;
-        	display:none;
-        }
         /* 파일 css */
             .imgsrc{
             width:150px;

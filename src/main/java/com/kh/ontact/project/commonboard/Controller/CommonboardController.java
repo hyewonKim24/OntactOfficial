@@ -69,13 +69,15 @@ public class CommonboardController {
 		
 		@RequestMapping("/del")
 		public ModelAndView deleteCommonboard(ModelAndView mv, @RequestParam int bno, @RequestParam String pno) {
-			 try {
-				commonboardservice.deleteCommonboard(bno);
+			int rs =0; 
+			try {
+				rs = commonboardservice.deleteCommonboard(bno);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			 
 			mv.addObject("pno", pno);
+			mv.addObject("deleteResult", rs);
 			mv.setViewName("redirect:/project/pjdetail");
 			return mv;
 		}

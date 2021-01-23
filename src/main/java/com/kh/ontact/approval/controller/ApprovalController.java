@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 
 import com.kh.ontact.approval.model.dto.ApprovalDto;
 import com.kh.ontact.approval.model.service.ApprovalService;
+import com.kh.ontact.company.model.service.CompanyService;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 
 
@@ -21,6 +22,8 @@ public class ApprovalController {
 	
 	@Autowired
 	ApprovalService ApproService;
+	@Autowired
+	CompanyService companyService;
 	
 	public static final int LIMIT = 10;
 	
@@ -82,8 +85,22 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping(value = "/driftform" , method = RequestMethod.GET)
-	public String driftform(ModelAndView mv) {
-		return "approval/driftform";
+	public ModelAndView driftform(Authentication authentication,ModelAndView mv) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String cno=userdetail.getCno();
+		String ceo = null;
+		try {
+			ceo = companyService.SelectCEO(cno);
+			System.out.println("ceo이름"+ceo);
+			
+			//dept name뿌리는거 가져와야함. 추후 수정 예정. 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("ceo", ceo);
+		mv.setViewName("approval/driftform");
+		return mv;
 	}
 	
 	//결재완료 업데이트
@@ -134,6 +151,7 @@ public class ApprovalController {
 		}
 		return mv;
 	}
+	
 	
 	
 
