@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="../main/header.jsp"%>
-	
+<%@ include file="../main/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,22 +64,20 @@
     	swal("기안이 등록되었습니다.");
   	}
 
+    
     </script>
 
 
 
 <style>
- html,
-    body {
-        width: 100%;
-       /*  height: 100%; */
-        position: relative;
-        font-size: 14px;
-        font-family: Noto Sans KR;
-        line-height: 1.15;
-        background-color: rgb(242, 242, 242);
-    }
-
+html, body {
+	width: 100%;
+	/*  height: 100%; */
+	position: relative;
+	font-size: 14px;
+	font-family: Noto Sans KR;
+	line-height: 1.15;
+}
 
 a {
 	text-decoration: none;
@@ -102,7 +100,7 @@ header {
 	width: 1200px;
 	height: 100%;
 	margin: 0 auto;
-	    padding-top: 63px;
+	padding-top: 63px;
 }
 
 .wrap_title {
@@ -228,40 +226,147 @@ header {
 	width: 200px;
 	height: 30px;
 	color: #787878;
-	  border: 1px solid #c0c0c0;
-    box-sizing: border-box;
+	border: 1px solid #c0c0c0;
+	box-sizing: border-box;
 }
+
 .opt_bt_a {
 	width: 200px;
 	height: 28px;
 	color: #787878;
-	    border: 1px solid #c0c0c0;
-    box-sizing: border-box;
+	border: 1px solid #c0c0c0;
+	box-sizing: border-box;
 }
+
 .opt_bt_b {
 	width: 330px;
 	height: 36px;
 	color: #787878;
 	border: 1px solid #c0c0c0;
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
-.opt_bt_c{
+
+.opt_bt_c {
 	height: 30px;
 }
-.section_a{
+
+.section_a {
 	font-weight: 600;
 	padding-bottom: 9px;
 }
-.text{
+
+.text {
 	padding-right: 10px;
 }
-.text_a{
+
+.text_a {
 	padding-left: 25px;
 	padding-right: 10px;
 }
-.mainsection input{
-	 border: 1px solid #c0c0c0;
-    box-sizing: border-box;
+
+.mainsection input {
+	border: 1px solid #c0c0c0;
+	box-sizing: border-box;
+}
+
+.sb-modal {
+	display: none;
+	position: fixed;
+	z-index: 20;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.sb-modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 23%;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s;
+}
+
+.sb-modal-header {
+	padding: 2px 16px;
+	background-color: #f4f4f4;
+	color: #333333;
+	border-radius: 10px 10px 0 0;
+}
+
+.close {
+	color: #333333;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 50px;
+}
+
+.sb-modal-body {
+	width: 100%;
+	/* padding: 2px 16px; */
+	display: flex;
+	flex-direction: column;
+	height: 200px;
+	display: inline-block;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.sb-modal-body>#stateupdate {
+	width: 22%;
+	height: 45px;
+	margin-right: 20px;
+	line-height: 25px;
+	font-size: 13px;
+	border: 1px solid black;
+	border-radius: 6px;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	color: black;
+	font-weight: 600;
+	text-align: center;
+	background-color: white;
+}
+
+.close_a {
+	width: 22%;
+	height: 45px;
+	margin: 0 auto;
+	line-height: 25px;
+	font-size: 13px;
+	border: 1px solid black;
+	border-radius: 6px;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	color: black;
+	font-weight: 600;
+	text-align: center;
+	background-color: white;
+}
+
+#new_pj_btn {
+	width: 100px;
+	line-height: 30px;
+	text-align: center;
+	border: 1px solid #5A3673;
+	background-color: #5A3673;
+	color: #fff;
+	font-size: 12px;
 }
 </style>
 <title>ontact, 서로 연결되는 온라인 공간</title>
@@ -299,92 +404,141 @@ header {
 		</div>
 
 
-		<form action="${pageContext.request.contextPath}/appinsert"
+		<form action="${pageContext.request.contextPath}/project/appinsert"
 			method="post" enctype="tmultipart/form-data">
 			<div class="page_section">
 				<h2 style="font-size: 29px;">기안 작성하기</h2>
 				<hr>
 
 				<div class="main_section">
-					<div class="section_a"> <span class="text">문서형식</span>  
-						<select class="opt_bt" name="apformat">
+					<div class="section_a">
+						<span class="text">문서형식</span> <select class="opt_bt"
+							name="apformat">
 							<option value="선택하세요">선택하세요</option>
 							<option value="품의서">품의서</option>
 							<option value="보고서">보고서</option>
-						</select> <span class="text_a">결재자</span>
-						 <select class="opt_bt" name="apperson">
+						</select> <span class="text_a">결재자</span> <select class="opt_bt"
+							name="apperson">
 							<option value="선택하세요">선택하세요</option>
 							<option value="${ceo}">${ceo}</option>
 						</select>
 					</div>
 
 					<div class="section_a">
-							<span class="text">기안부서 </span>
-						<select class="opt_bt" name="dno">
+						<span class="text">기안부서 </span> <select class="opt_bt" name="dno">
 							<option value="선택하세요">선택하세요</option>
 							<option value="1">개발팀</option>
 							<option value="2">기획팀</option>
 							<option value="3">영업팀</option>
 							<option value="4">마케팅팀</option>
-						</select> <span class="text_a">기안자</span>
-						 <input type="text" class="opt_bt_a" name="apdrafter">
-						<span class="text_a">기안 일시 </span>
-						<input type="text" class="opt_bt" id="startDate" onchange="printName()"
-							name="apdate">
+						</select> <span class="text_a">기안자</span> <input type="text"
+							class="opt_bt_a" name="apdrafter"> <span class="text_a">기안
+							일시 </span> <input type="text" class="opt_bt" id="startDate"
+							onchange="printName()" name="apdate">
 					</div>
 					<hr>
 
 
-					<input type="text" class="opt_bt_b" name="aptitle" placeholder="기안 제목을 입력하세요">
+					<input type="text" class="opt_bt_b" name="aptitle"
+						placeholder="기안 제목을 입력하세요">
 					<!-- <table width="100%" align="center" cellpadding="0" cellspacing="0"> -->
 					<table width="100%" class="board-listheader" cellpadding="0"
 						cellspacing="0">
 						<tr>
 							<td>프로젝트</td>
-							<td colspan="3"><input type="text" name="apptitle" class="opt_bt_c"
-								style="width: 90%; border: 0;"></td>
+							<td colspan="3"><input type="text" name="apptitle"
+								class="opt_bt_c" style="width: 90%; border: 0;"></td>
 						</tr>
 						<tr>
 							<td>장소</td>
 							<td><input type="text" name="applace" class="opt_bt_c"
-								style="width: 86%; border: 0;"></td>
+								style="width: 85%; border: 0;"></td>
 							<td>일시</td>
 							<td id="result"></td>
 						</tr>
 						<tr>
 							<td>참석자</td>
-							<td colspan="3"><input type="text" name="apattend" class="opt_bt_c"
-								style="width: 90%; border: 0;"></td>
+							<td colspan="3"><input type="text" name="apattend"
+								class="opt_bt_c" style="width: 90%; border: 0;"></td>
 						</tr>
 						<tr>
 							<td>회의 내용</td>
-							<td colspan="3"><input type="text" name="apcontent" class="opt_bt_c"
-									style="resize: none; width: 90%; height: 100%; border: 0;">
+							<td colspan="3"><input type="text" name="apcontent"
+								class="opt_bt_c"
+								style="resize: none; width: 90%; height: 100%; border: 0;">
 							</td>
 						</tr>
 						<tr>
 							<td>결정사항</td>
-							<td colspan="3"><input type="text" name="apdec" class="opt_bt_c"
-								style="width: 90%; border: 0;"></td>
+							<td colspan="3"><input type="text" name="apdec"
+								class="opt_bt_c" style="width: 90%; border: 0;"></td>
 						</tr>
 						<tr>
 							<td>기타</td>
-							<td colspan="3"><input type="text" name="apetc" class="opt_bt_c"
-								style="width: 90%; border: 0;"></td>
+							<td colspan="3"><input type="text" name="apetc"
+								class="opt_bt_c" style="width: 90%; border: 0;"></td>
 						</tr>
 					</table>
 				</div>
 				<div class="apwrite">
-					<button type="submit" onclick="show_alert();" id="apwritebtn"
-						name="apwritebtn">기안등록하기</button>
+					<!-- <button type="submit" onclick="show_alert();" id="apwritebtn" name="apwritebtn">기안등록하기</button> -->
+					<button type="button" onclick="newpjModal();" id="new_pj_btn">기안등록하기</button>
+
+
 					<button type="button" onclick="window.location='driftlist'"
 						id="apwritebtn" name="apwritebtn">취소</button>
+				</div>
+
+
+				<div id="newpjModal" class="sb-modal">
+					<!-- Modal content -->
+					<div class="sb-modal-content">
+						<div class="sb-modal-header">
+							<span class="close">&times;</span>
+						</div>
+						<div class="sb-modal-body">
+							<h5>등록 하시겠습니까</h5>
+							<input type="submit" id="stateupdate" value="확 인" /> <input
+								type="button" class="close_a" value="취 소" />
+						</div>
+					</div>
 				</div>
 			</div>
 			<sec:csrfInput />
 		</form>
 	</div>
+	<script>
 
+
+/* window.onload = */ function newpjModal() {
+var modal = document.getElementById("newpjModal");
+var btn = document.getElementById("new_pj_btn");
+var span = document.getElementsByClassName("close")[0];
+var span2 = document.getElementsByClassName("close_a")[0];
+var btn2 = document.getElementById("stateupdate");
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+	modal.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+	modal.style.display = "none";
+}
+span2.onclick = function() {
+	modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+}
+btn2.onclick = function(event) {
+	location.href = '${pageContext.request.contextPath}/project/driftlist'
+}
+}
+
+</script>
 
 
 </body>

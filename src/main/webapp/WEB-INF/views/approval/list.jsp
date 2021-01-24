@@ -14,6 +14,15 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
 <style>
+ html,
+    body {
+        width: 100%;
+       /*  height: 100%; */
+        position: relative;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+    }
 a {
 	text-decoration: none;
 }
@@ -236,7 +245,7 @@ header {
 
 		<div class="page_section">
 			<div>
-				<h2>전자결재 기안함</h2>
+				<h2>전자결재 결재함</h2>
 				<hr>
 				<div class="main_section">
 					<span class="section_title">결재요청건 ${listCount }건</span>

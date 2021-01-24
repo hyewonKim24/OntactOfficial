@@ -22,7 +22,6 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
-        background-color: rgb(242, 242, 242);
     }
 
 

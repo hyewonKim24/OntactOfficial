@@ -659,7 +659,6 @@ input:checked+.slider:before {
 			</ul>
 			<ul>
 				<li><span class="sec_title">모아보기</span></li>
-				
 				<li><a href="${pageContext.request.contextPath}/project/task?pno=${pno}"> <svg version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

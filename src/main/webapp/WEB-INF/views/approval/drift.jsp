@@ -22,7 +22,6 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
-        background-color: rgb(242, 242, 242);
     }
 
 
@@ -258,7 +257,7 @@ header {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
-.sb-modal-content {
+. {
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -354,7 +353,7 @@ header {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
-.ssb-modal-content {
+.s {
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -525,7 +524,7 @@ header {
 						<td>장소</td>
 						<td>${apno.applace }</td>
 						<td style="width: 5%">일시</td>
-						<td>${apno.apstate }</td>
+						<td style="width: 22%;">${apno.apdate }</td>
 					</tr>
 					<tr>
 						<td>참석자</td>
@@ -612,7 +611,7 @@ header {
 
 				<div id="newpjModal_a" class="ssb-modal">
 					<!-- Modal content -->
-					<div class="ssb-modal-content">
+					<div class="s">
 						<div class="ssb-modal-header">
 							<span class="cclose">&times;</span>
 							<h4>반려사유입력</h4>
@@ -639,7 +638,7 @@ header {
 
 				<div id="newpjModal" class="sb-modal">
 					<!-- Modal content -->
-					<div class="sb-modal-content">
+					<div class="">
 						<div class="sb-modal-header">
 							<span class="close">&times;</span>
 						</div>
