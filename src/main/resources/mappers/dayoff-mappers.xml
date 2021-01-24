@@ -47,7 +47,7 @@
 	
 	<!-- 휴가 신청 -->
 	<insert id="insertDayoff" flushCache="true" statementType="PREPARED"> 
-		insert into dayoff values(dfno_se.nextval, #{uno}, #{offdays}, to_date(#{offstart}, 'yyyy-mm-dd'), to_date(#{offend}, 'yyyy-mm-dd'), #{offreason}, default, default)
+		insert into dayoff values(dfno_se.nextval, #{uno}, #{offdays}, to_date('${offstart}', 'yyyy-mm-dd'), to_date('${offend}', 'yyyy-mm-dd'), #{offreason}, default, default)
 		<!-- insert into dayoff values(dfno_se.nextval, '2', '${dname}', '${uname}', ${offdays}, to_date('${offstart}', 'yyyy-mm-dd'), to_date('${offend}', 'yyyy-mm-dd'), '${offreason}', default, default) -->
 	</insert>
 	

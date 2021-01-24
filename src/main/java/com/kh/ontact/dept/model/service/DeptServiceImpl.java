@@ -47,13 +47,21 @@ public class DeptServiceImpl implements DeptService{
 	}
 	
 	@Override
-	public int deleteDept(HashMap<String, String> paramMap) {  
-		return deptDao.deleteDept(paramMap);
+	public int deleteDept(HashMap<String, String> paramMap2) {  
+		
+		
+		System.out.println("결과갑 ㅅ : " + paramMap2.get("dno"));
+		System.out.println("결과갑 ㅅ : " + paramMap2.get("cno"));
+		int rs = deptDao.deleteDept(paramMap2);
+		System.out.println("결과갑 ㅅ : " + rs);
+		return rs;
+		
 	}
 	
 	@Override
 	public DeptDto selectDtOne(String dno){
 		return deptDao.selectDtOne(dno);
+		
 	}
 	
 	public int updateDept(List<UsersDto> list) { 

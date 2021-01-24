@@ -23,7 +23,7 @@ public interface DeptService {
 
 	public int insertDept(DeptDto d);
 	
-	public int deleteDept(HashMap<String, String> paramMap); 
+	public int deleteDept(HashMap<String, String> paramMap2); 
 	
 	public int updateDept(List<UsersDto> list);
 	

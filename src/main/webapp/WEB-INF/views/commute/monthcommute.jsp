@@ -94,7 +94,7 @@
     .contents{
         position: absolute;
         width: 970px;
-        height: 950px;
+        height: 1040px;
         left: 210px;
         padding : 40px 0 40px 40px;
         border-left: 1px solid #e7e7e7;

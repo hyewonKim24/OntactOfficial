@@ -229,8 +229,8 @@ public class UsersServiceImpl implements UsersService{
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
-		public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap) {
-			return usersDao.deleteOrgani(paramMap);
+		public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap1) {
+			return usersDao.deleteOrgani(paramMap1);
 		}
 
 	}

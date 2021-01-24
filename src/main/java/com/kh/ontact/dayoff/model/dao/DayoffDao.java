@@ -33,6 +33,8 @@ public class DayoffDao {
 		return sqlSession.selectOne("DayoffMapper.selectDfOne", dfno);
 	}
 	public int insertDayoff(DayoffDto d) { // 글 입력
+		System.out.println(d.getOffstart());
+		System.out.println(d.getOffend());
 		System.out.println("다오진입");
 		return sqlSession.insert("DayoffMapper.insertDayoff", d);
 	}

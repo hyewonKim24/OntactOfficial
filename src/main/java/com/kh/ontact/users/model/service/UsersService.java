@@ -52,5 +52,5 @@ public interface UsersService {
 	public int listCount(HashMap<String, String> paramMap);
 	public List<UsersDto> selectOgUser(int startPage, int limit, HashMap<String, String> paramMap);
 	public int updateDept(UsersDto u); 
-	public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap);
+	public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap1);
 }

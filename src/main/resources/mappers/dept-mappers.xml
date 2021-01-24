@@ -47,7 +47,7 @@
 	</insert>
 	
 	<!-- 부서 삭제 -->
-	<delete id="deleteDept" parameterType ="java.util.HashMap">  
+	<delete id="deleteDept" flushCache="true" parameterType="hashMap">  
 		delete from dept where cno = #{cno} and dno = #{dno}
 	</delete>
 	

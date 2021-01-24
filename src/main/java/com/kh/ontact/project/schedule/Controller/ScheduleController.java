@@ -49,7 +49,7 @@ public class ScheduleController {
 	BoardAllService baService;
 	@Autowired
 	UsersService usersService;
-
+	
 	
 	//스케줄 디테일로 들어가기
 	@RequestMapping(value="/scheduleboard" ,method=RequestMethod.GET)

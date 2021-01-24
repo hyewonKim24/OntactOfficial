@@ -60,7 +60,7 @@ public class DeptController {
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("cno", cno);
 			paramMap.put("dname", dname);
-			
+			//
 			int currentPage = page;
 //			부서 출력
 			int deptlistCount1 = deptServ.listCount(cno);
@@ -119,7 +119,7 @@ public class DeptController {
 	
 	//부서 변경
 	@RequestMapping(value = "/commute/organuserupdate", method = RequestMethod.POST)
-	public ModelAndView selectUser(DeptDto d, 
+	public ModelAndView updateDept(DeptDto d, 
 				@RequestParam(name = "deptSelect") String dno,
 				@RequestParam(name = "chk") List<String> uno,
 				ModelAndView mv) {
@@ -144,7 +144,7 @@ public class DeptController {
 		}
 		return mv;
 	}
-	
+	//
 	//부서 생성
 	@RequestMapping(value = "/commute/deptins", method = {RequestMethod.POST,RequestMethod.GET})
 	public String insertDept(DeptDto d, RedirectAttributes rttr, Authentication authentication) {
@@ -184,7 +184,7 @@ public class DeptController {
 				HashMap<String, String> paramMap1 = new HashMap<String, String>();
 				paramMap1.put("cno", cno);
 				paramMap1.put("dname", dname);
-				
+				//
 				HashMap<String, String> paramMap2 = new HashMap<String, String>();
 				paramMap2.put("cno", cno);
 				paramMap2.put("dno", dno);
@@ -198,7 +198,6 @@ public class DeptController {
 					deptServ.deleteDept(paramMap2);
 					mv.addObject("message2", "success");
 					mv.setViewName("redirect:/commute/organlist");
-//					msg = "부서가 삭제 되었습니다.";
 				} else {
 					System.out.println("부서에 사원이 있는 경우!!!");
 					mv.addObject("message2", "failed");

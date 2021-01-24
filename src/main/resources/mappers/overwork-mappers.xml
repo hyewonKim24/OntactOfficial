@@ -16,21 +16,21 @@
   
   	<!-- 시간외 근무 조회 -->
 	<select id="listCount" resultType="int">
-		select count(*) from overwork where uno = #{uno} order by owdate desc
+		select count(*) from overwork where uno = #{uno} order by owno desc
 	</select>
 	
 	<select id="selectOverwork" resultType="arraylist"
 		resultMap="resultOverwork">
-		select * from overwork where uno = #{uno} order by owdate desc
+		select * from overwork where uno = #{uno} order by owno desc
 	</select>
 	
-	<select id="searchlistCount" resultType="int" parameterType ="java.util.HashMap" resultMap="resultOverwork"> 
-		select count(owno) from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owdate desc
+	<select id="searchlistCount" flushCache="true" parameterType="hashMap" resultMap="resultOverwork">
+		select count(*) from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owno desc
 	</select>
 	
 	<select id="searchOverwork" parameterType ="java.util.HashMap"
 		 resultMap="resultOverwork">
-		select * from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owdate desc
+		select * from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owno desc
 	</select>
 	
 	<select id="selectOwOne" parameterType="string" resultType="OverworkDto">

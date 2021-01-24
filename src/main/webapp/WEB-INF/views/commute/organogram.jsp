@@ -349,8 +349,8 @@
 	    	//부서 검색
 	        $("#keyword").keyup(function() {
                 var k = $(this).val();
-                $(".deptname").hide();
-                var temp = $(".deptname:contains('" + k + "')");
+                $(".parent_a").hide();
+                var temp = $(".parent_a:contains('" + k + "')");
                 $(temp).show();
             })
             /* //부서 리스트
@@ -468,10 +468,10 @@
                     <div><a href="${pageContext.request.contextPath}/commute/organlist">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
-                <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"> --%>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
                     <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
-                <%-- </sec:authorize>  --%>
+                </sec:authorize>
                 </div>
                 <div class="detail">
                     <div class="title">
@@ -485,9 +485,12 @@
                     <div>
                         <table>
                             <tr>
-                                <th>선택</th>
-                                <th>사원번호</th>
-                                <th>부서</th>                          
+                            	<th style="width : 80px;">
+                            	<sec:authorize access="hasRole('ROLE_ADMIN')">
+                                	선택
+                                </sec:authorize>
+                                </th>
+                                <th style="width : 80px;">사원번호</th>
                                 <th>이름</th>
                                 <th>직급</th>
                                 <th>이메일</th>
@@ -502,21 +505,23 @@
                         <c:if test="${not empty list}">
 						<c:forEach var="og" items="${list}" varStatus="status">
 						
-                            <tr>
-                                <td><input type="checkbox" name="chk" value="${og.uno}" class="chkbox"></td>
+                            <tr><td>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <input type="checkbox" name="chk" value="${og.uno}" class="chkbox">
+                            </sec:authorize>
+                            </td>
                                 <td>${og.uno}</td>
-                                <td>${og.dname}</td>
                                 <td>${og.uname}</td>
                                 <td>${og.urank}</td>
                                 <td>${og.uemail}</td>
                             </tr>
-                         
+                        
                         </c:forEach>
                        	</c:if> 
                        
                             <!-- 앞 페이지 번호 처리 -->
 					<tr>
-						<td colspan="6">
+						<td colspan="5">
 						<c:if test="${currentPage <= 1}">
 						&lt; &nbsp;
 						</c:if>
@@ -553,8 +558,9 @@
 					</tr>
                         </table>
                     </div>
+                    
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <div class="move_wrap">
-                        
                         <select name="deptSelect" class="deptSelect">  
 	                        <c:forEach var="dp" items="${selectDept}" varStatus="e">
 								    <option value="${dp.dno}">${dp.dname}</option>  
@@ -563,6 +569,7 @@
                         
                         <button id="moveBtn" onclick="changeDept();">다른 조직으로 이동</button>
                     </div> 
+                    </sec:authorize>
                     </form>
                 </div>
             </div>

@@ -62,4 +62,8 @@ public class ProjectDao {
 		return sqlSession.delete("Project.deleteProject", pno);
 	}
 	
+	// 프로젝트 pname 불러오기
+	public String selectPname(String pno) throws Exception{
+		return sqlSession.selectOne("Project.selectPname", pno);
+	}
 }

@@ -348,10 +348,9 @@
                         <td style="width: 250px;">
                             <select style="width: 200px; height: 30px;color : #787878;" id="dname" name="dname">
                                 <option value="0">선택하세요</option>
-                                <option value="1">개발팀</option>
-                                <option value="2">기획팀</option>
-                                <option value="3">영업팀</option>
-                                <option value="4">마케팅팀</option>
+                                <c:forEach var="dp" items="${deptlist}" varStatus="e">
+								    <option value="${dp.dno}">${dp.dname}</option>  
+							</c:forEach>
                             </select>
                         </td>
                         <td class="title">성명</td>
@@ -405,7 +404,7 @@
 	                        <th>시간</th>
 	                        <th>업무내용</th>
 	                        <th>사유</th>
-	                        <th>승인</th>
+	                        <th>상태</th>
 	                        <th></th>
 	                    </tr>
 	                 </thead>
@@ -425,7 +424,10 @@
 	                        <td>${ow.owtime}</td>
 	                        <td>${ow.owtitle}</td>
 	                        <td>${ow.owreason}</td>
-	                        <td>${ow.owapproval}</td>
+	                        <td>
+	                        	<input type="hidden" value="${ow.owapproval}" name="owno" class="owno app${e.count}">
+	                        	<span class="owappval${e.count}"></span>
+	                        </td>
 	                        <td>
 	                        <sec:authorize access="hasRole('ROLE_ADMIN')">
 	                        	<button class="accept${e.count}">승인</button>
@@ -441,6 +443,13 @@
 	                    		$(".ownohidden").val(ownoA);
 	                    		goUpdate();
 		                    })
+		                    
+		                    if($(".app${e.count}").val() == 1){
+		                    	$(".owappval${e.count}").text("승인 완료");
+		                    }else if($(".app${e.count}").val() == 0){
+		                    	$(".owappval${e.count}").text("");
+		                    }
+		                    
 	                    </script>
 	                     </c:forEach>
 	                    <script type="text/javascript">

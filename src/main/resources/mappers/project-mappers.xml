@@ -176,4 +176,8 @@
 		delete from project where pno=#{pno}
 		]]> 
 	</delete>
+	
+	<select id="selectPname" resultType="string">
+		select pname from project where pno =#{pno}
+	</select>
 </mapper>

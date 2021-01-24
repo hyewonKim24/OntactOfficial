@@ -51,6 +51,9 @@
 	let pick_cnt = 0;
 	console.log("pick_cnt : " + pick_cnt);
 	
+	
+	
+      
 	</script>
 	</head>
 	
@@ -1947,10 +1950,6 @@
 
 <!-- 혜림 일정 글 결과화면 -->
 		<c:if test="${blist.btype eq 3}">
-<script>
-console.log("00="+ "${blist.bno}");
-</script>
-		
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
@@ -1986,16 +1985,14 @@ console.log("00="+ "${blist.bno}");
                             <input type="text" value="${blist.bname}" readonly>
                         </div>
                        	<c:forEach items="${blist.scheduleDto}" var="s" varStatus="e">
-                       	<script>
-                  	     	console.log("01="+ "${e.count}");
-                       	</script>
+                       	
                         <div class="rschedate">
                             <img src="${pageContext.request.contextPath}/resources/img/time.png" class="sche_icon">
                             <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.sstart}"/>
-                            <input type="text" id="scheSdate" name="startdate" class="d" value="${s.sstart}"> 
+                            <input type="text" id="scheSdate" name="startdate" class="d" value="${s.sstart}" readonly> 
                             &nbsp; &nbsp; ~ &nbsp; &nbsp;
                              <fmt:formatDate pattern="yyyy년mm월dd일" value="${s.send}"/>
-                            <input type="text" id="scheEdate" name="enddate" class="d" value="${s.send}"> 
+                            <input type="text" id="scheEdate" name="enddate" class="d" value="${s.send}" readonly> 
                         </div>
                         <!-- 참가자 -->
                         <div class="rschepeople">
@@ -2009,7 +2006,7 @@ console.log("00="+ "${blist.bno}");
                                         <div class="attendee-title">참석자변경</div>
                                         <div class="attendee-list">
                                             <div class="attendee-search">
-                                                <input type="text" placeholder="참석자 이름 검색">
+                                                <input type="text" id="schedule_keyword"placeholder="참석자 이름 검색">
                                                 <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
                                             </div>
                                             
@@ -2025,63 +2022,69 @@ console.log("00="+ "${blist.bno}");
                                                     <img src="${pageContext.request.contextPath}/resources/img/user-3.png">
                                                     <span>${ulist.uname}</span>
                                                     <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno}">
-                                                    <input type="checkbox" class="pick-${blist.bno} pick${ee.count}" name="pick-${blist.bno}" value="+ 선택">
+                                                    <input type="checkbox" class="pick-${blist.bno} pick${ee.count} pick" name="pick-${blist.bno}" value="+ 선택">
                                                     
                                                 </div>
                                                 </c:forEach>
                                                 <script type="text/javascript">
-            				    	//참석자 변경 모달
-            				        $('.js-open').click(function () {
-            				        	console.log("03="+ "js-open");
-            				        	/* var $layer = $('.js-layer'); */
-            				        	/* var $layer = $(this).next();  */
-            				        	var $layer = $(this).parent(".rschepeople");
-            				            var aaa = $layer.find('.js-layer');
-            				            aaa.removeClass('hide');
-            				        	/* $layer.removeClass('hide'); */
-            				        });
-            				        $('.closebtn').click(function () {
-            				        	console.log("04="+ "closebtn");
-            				        	
-            				        	pick_cnt=0;
-            				        	console.log("pick_cnt0 : " + pick_cnt);
-            				        	
-            				            var $layer = $('.js-layer');
-            				            $layer.addClass('hide');
-            				        });
-            				        console.log("값찍어보기 :" + '${e.count}');
-            				        //$('.pick${e.count}').click(function(e){
-            				        $('.pick-${blist.bno}').click(function(e){
-            				        	console.log("05====="+ e);
-            				        	console.log("05="+ ".pick-${blist.bno}");
-            				        	/* $(this).unbind("click"); */
-            				        	e.stopPropagation();
-            				        	console.log("클릭햇다");
-            				            if($(this).is(":checked") == true){
-                				        	pick_cnt++;
-                				        	console.log("pick_cnt++ : " + pick_cnt);
-                				        	
-            				                $p=$(this).parent(".userlist_wrap");
-            				                var user = $p.find("span").text();
-            				                // var add = '<span>'+ user +'</span>'
-            				                var add = '<input type="text" class="'+ user+ '" value="' + user+ '" name="attendeeChange'+pick_cnt+'">'
-            				                $(".pick-attendee-${blist.bno}").append(add);
-            				            } else if($(this).is(":checked") == false){
-                				        	pick_cnt--;
-                				        	console.log("pick_cnt-- : " + pick_cnt);
-                				        	
-            				                $p=$(this).parent(".userlist_wrap");
-            				                var user = $p.find("span").text();
-            				                if($("." + user).val() == user){
-            				                    var aaa = $(".test").val();
-            				                    console.log(aaa);
-            				                    $("." + user).remove();
-            				                 }
-            				            }
-            				        })
-                                    </script>
-                                    <script>
-                                       console.log("06="+ "/c:forEach");
+                                                
+                                              //참석자 변경 모달 검색
+                                                $("#schedule_keyword").keyup(function() {
+                                                      var k = $(this).val();
+                                                      $(".userlist_wrap").hide();
+                                                      var temp = $(".userlist_wrap:contains('" + k + "')");
+                                                      $(temp).show();
+                                               	})
+                                                  
+			            				    	//참석자 변경 모달
+			            				        $('.js-open').click(function () {
+			            				        	console.log("03="+ "js-open");
+			            				        	/* var $layer = $('.js-layer'); */
+			            				        	/* var $layer = $(this).next();  */
+			            				        	var $layer = $(this).parent(".rschepeople");
+			            				            var aaa = $layer.find('.js-layer');
+			            				            aaa.removeClass('hide');
+			            				        	/* $layer.removeClass('hide'); */
+			            				        });
+			            				        $('.closebtn').click(function () {
+			            				        	console.log("04="+ "closebtn");
+			            				        	
+			            				        	pick_cnt=0;
+			            				        	console.log("pick_cnt0 : " + pick_cnt);
+			            				        	
+			            				            var $layer = $('.js-layer');
+			            				            $layer.addClass('hide');
+			            				        });
+			            				        console.log("값찍어보기 :" + '${e.count}');
+			            				        //$('.pick${e.count}').click(function(e){
+			            				        $('.pick-${blist.bno}').click(function(e){
+			            				        	console.log("05====="+ e);
+			            				        	console.log("05="+ ".pick-${blist.bno}");
+			            				        	/* $(this).unbind("click"); */
+			            				        	e.stopPropagation();
+			            				        	console.log("클릭햇다");
+			            				            if($(this).is(":checked") == true){
+			                				        	pick_cnt++;
+			                				        	console.log("pick_cnt++ : " + pick_cnt);
+			                				        	
+			            				                $p=$(this).parent(".userlist_wrap");
+			            				                var user = $p.find("span").text();
+			            				                // var add = '<span>'+ user +'</span>'
+			            				                var add = '<input type="text" class="'+ user+ ' appenduser" value="' + user+ '" name="attendeeChange'+pick_cnt+'">'
+			            				                $(".pick-attendee-${blist.bno}").append(add);
+			            				            } else if($(this).is(":checked") == false){
+			                				        	pick_cnt--;
+			                				        	console.log("pick_cnt-- : " + pick_cnt);
+			                				        	
+			            				                $p=$(this).parent(".userlist_wrap");
+			            				                var user = $p.find("span").text();
+			            				                if($("." + user).val() == user){
+			            				                    var aaa = $(".test").val();
+			            				                    console.log(aaa);
+			            				                    $("." + user).remove();
+			            				                 }
+			            				            }
+			            				        })
                                     </script>
                                     <div class="modal-btn">
                                         <!-- 취소 button 눌러도 확인과 같이 action submit 됨 -->
@@ -2100,23 +2103,14 @@ console.log("00="+ "${blist.bno}");
 	                        <!-- 장소 -->
 	                        <div class="rscheplace">
 	                            <img src="${pageContext.request.contextPath}/resources/img/placeholder.png" class="sche_icon">
-	                            <input type="text" value="${s.splace}">
+	                            <input type="text" value="${s.splace}" readonly>
 	                        </div>
 	                        <!-- 메모 -->
 	                        <div class="rschememo">
 	                            <img src="${pageContext.request.contextPath}/resources/img/calendar.png" id="calendaricon"class="sche_icon">
-	                        	<textarea class="content_detail2" placeholder="${s.smemo}"></textarea>
+	                        	<textarea class="content_detail2" placeholder="${s.smemo}" readonly></textarea>
 	                        </div>
 			                </c:forEach>
-			                
-			                
-			                       <script>
-                                                console.log("07="+ "/c:forEach");
-                                                </script>
-			                
-			                
-			                
-			                
 			                
                     	</div>
                 	</div>

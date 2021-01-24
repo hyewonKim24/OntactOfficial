@@ -34,7 +34,9 @@ body {
    color: #111111;
     background-color: rgb(242, 242, 242);
 }
-
+a{
+text-decoration : none;
+}
 .headersection {
 	position: relative;
 	width: 100%;
@@ -57,8 +59,10 @@ body {
 .close {
    width: 60px;
    height: 30px;
-   
-   color: #F2F2F2;
+   background-color:#432d73;
+   color : white;
+   text-align : center;
+   line-height: 30px;
    border: none;
    border-radius: 3px;
    float:right;
@@ -341,7 +345,7 @@ body {
 																$(".modal_content #enddate").text("종료일 : " + enddate);
 																$(".modal_content #attendees").text("참석자 : " + attendees);
 																$(".modal_content #taskmanager").text("담당자 : " + taskmanager);
-												        	
+												        		
 												        });
 												        
 														/* $("#successModal").modal("show"); */
@@ -384,6 +388,10 @@ body {
 				                                                var send = element.send;
 				                                                var bname = element.bname;
 				                                                var btype = element.btype;
+				                                                
+				                                                var pname = element.pname;
+				                                                console.log("프로젝트 이름이름 : " + pname);
+				                                                $("span#schePname").text(pname);
 				                                                
 				                                                var uname = element.uname;
 				                                                var attendees = element.attendees;
@@ -471,11 +479,12 @@ body {
       <div class="contents">
          <div class="article">
          	
-            <div class="conTitle">일정 : 프로젝트 이름</div>
-            <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close" onclick="location.href='${pageContext.request.contextPath}/project/pjdetail'">닫기</button>
+            <div class="conTitle">일정 : <span id="schePname"></span></div>
+            <a href="${pageContext.request.contextPath}/project/all/list" type="button" class="close" data-dismiss="modal"
+                  aria-label="Close">닫기</a>
             <!-- 달력 -->
             <div id='calendar'></div>
+            
             <!-- 달력 모달 -->
             <div id="gomodal">
             <div class="modal_layer"></div>
@@ -529,10 +538,9 @@ body {
        var $layer = $('.modal_conte');
        $layer.addClass('hide');
    });
-      /* $('input[type='checkbox']') */
-      /* $("input[name='chk']").change(function(){
-         
-      }) */
+   
+   /* var pname = $("#schePname").val();
+   console.log("ㅍㄹㅈㅌㅇ : " + pname); */
       
       
    

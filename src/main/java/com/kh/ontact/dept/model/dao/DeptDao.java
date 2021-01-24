@@ -41,9 +41,13 @@ public class DeptDao {
 	public int insertDept(DeptDto d) { // 글 입력 
 		return sqlSession.insert("Dept.insertDept", d);
 	}
-	public int deleteDept(HashMap<String, String> paramMap) { 
+	public int deleteDept(HashMap<String, String> paramMap2) { 
 		System.out.println("삭제 다오까지옴");
-		return sqlSession.delete("Dept.deleteDept", paramMap);
+		System.out.println(paramMap2.get("dno"));
+		System.out.println(paramMap2.get("cno"));
+		
+		
+		return sqlSession.delete("Dept.deleteDept", paramMap2);
 	}
 	public int updateDept(UsersDto dto) { 
 		System.out.println("업데이트 다오까지옴");

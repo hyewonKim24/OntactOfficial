@@ -25,7 +25,7 @@ public class OverworkServiceImpl implements OverworkService{
 	}
 	
 	@Override
-	public int searchlistCount(HashMap<String, String> paramMap) {
+	public int searchlistCount(HashMap<String, String> paramMap) throws Exception {
 		return overworkDao.searchlistCount(paramMap);
 	} 
 	

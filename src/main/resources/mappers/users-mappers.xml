@@ -263,7 +263,7 @@
 	<select id="listCount" resultType="int" parameterType ="java.util.HashMap"> 
 		select count(uno) 
 		from users u, dept d 
-		where u.dno = d.dno and d.dno = #{dname} and d.cno=#{cno}
+		where u.dno = d.dno and d.dname = #{dname} and d.cno=#{cno}
 	</select>
 	
 	<select id="selectOgUser"

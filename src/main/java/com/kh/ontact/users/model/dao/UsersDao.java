@@ -135,8 +135,8 @@ public class UsersDao {
 		public int updateDept(UsersDto u) { // 글 수정 
 			return sqlSession.update("Users.updateDept", u);
 		}
-		public List<UsersDto> deleteOrgani(HashMap<String, String> paramMap) { // 특정 페이지 단위의 게시글 조
-			return sqlSession.selectList("Users.deleteOrgani", paramMap);
+		public List<UsersDto> deleteOrgani(HashMap<String, String> paramMap1) { // 특정 페이지 단위의 게시글 조
+			return sqlSession.selectList("Users.deleteOrgani", paramMap1);
 		}
 		
 

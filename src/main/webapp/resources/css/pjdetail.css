@@ -1072,14 +1072,14 @@
 		/* 참석자 모달 변경 */
 		.layer {
 		    position: fixed;
-		    width: 40%;
-		    left: 50%;
+		    width: 30%;
+		    left: 54%;
 		    margin-left: -21%; /* half of width */
 		    height: 580px;
 		    top: 40%;
 		    margin-top: -150px; /* half of height */
 		    overflow: auto;
-		
+			z-index : 999;
 		    /* decoration */
 		    border: 1px solid #dadbdb;
 		    background-color: rgb(255, 255, 255);
@@ -1090,9 +1090,25 @@
 		        width: 80%;
 		        margin-left: -40%;
 		    }
+		    #schedule_keyword{
+				width: 80%;
+		        margin-left: -40%;
+			}
 		}
 		.hide {
 		    display: none;
+		}
+		.appenduser{
+			width : 100px;
+			height : 40px;
+			border : 1px solid #a079bb;
+			background-color : #a079bb;
+			text-align : center;
+			margin : 7px;
+			color : white;
+		}
+		#schedule_keyword{
+			padding-left : 20px;
 		}
 		
         /* 참석자 변경 모달 */
@@ -1116,13 +1132,16 @@
             line-height: 45px;
             text-align: center;
             font-size: 16px;  
-            background:#e7e7e7;
+            background:#5A3673;
+            color : white;
+            border : 1px solid #5A3673;
         }
         .attendee-search{
             height: 35px;
             padding: 10px 0;
-            background:#e7e7e7;
+            background:#5A3673;
             letter-spacing: -20px;
+            border : 1px solid #5A3673;
         }
         .attendee-search input{
             width: 410px;
