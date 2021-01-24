@@ -257,48 +257,55 @@
 		}
 	    });
         
-       function fnSubmit(){
-       		if(fnMemberValidation() == false) return;
-        	if(confirm("제출하시겠습니?")){
-        	   alert("제출완료");
-        	}else{
-        	   return;
-        	}
-        }	 
+        $('#insertOw').on('click', function(){
+       		if(fnMemberValidation() == false) {
+       			return;
+       			console.log("false로 들어옴");
+       		}else if(fnMemberValidation() == true){
+                console.log("true로 들어옴");
+    			confirm("제출하시겠습니까?")
+    			if(true){
+    	          	   $("#owworkIns_frm").submit();
+    	        	 alert("제출완료");
+    	        }else{
+    	        	  return;
+    	      	}
+         	}else{
+          	   return;
+          	}
+        });
+       
         function fnMemberValidation(){
-        	 if($.trim($('#name').val()) == ''){
-        	   alert("부서를 선택해주세요");
-        	   $('#name').focus();
-        	   return false;
+        	if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
+         	   alert("부서를 선택해주세요");
+          	   $('#name').focus();
+          	   return false;
         	  }
-        	  if($.trim($('#email').val()) == ''){
+        	  if($.trim($('#uname').val()) == ''){
         	   alert("이름을 입력해주세요");
-        	   $('#email').focus();
+        	   $('#uname').focus();
         	   return false;
         	  }
-        	  if(!($('#genderM')[0].checked == true || $('#genderW')[0].checked == true)){
-        	   alert("휴가 시작일자를 선택해주세요.");
-        	   $('#genderM').focus();
-        	   return false;
+        	  if($.trim($('#owstart').val()) == ''){
+           	   alert("시간 외 근무 일을 선택해주세요.");
+           	   $('#dayoffStart').focus();
+          	   return false;
         	  }
-        	  
-        	  if($('#smsyn').is(':checked') == false){
-        	   alert("휴가 종료일자를 선택해주세요");
-        	   $('#smsyn').focus();
-        	   return false;
-        	  }
-        	  
-        	  if(($.trim($('#zipcode1').val()) == '') || ($.trim($('#zipcode2').val()) == '')){
-        	   alert("일수를 입력해주세요");
-        	   $('#zipcode1').focus();
-        	   return false;
-        	  }
-        	  if(($.trim($('#zipcode1').val()) == '') || ($.trim($('#zipcode2').val()) == '')){
-           	   alert("휴가사유를 입력해주세요");
-           	   $('#zipcode1').focus();
+        	  if($.trim($('#owtime').val()) == ''){
+           	   alert("예상시간을 입력해주세요");
+           	   $('#uname').focus();
            	   return false;
            	  }
-        	  
+        	  if($.trim($('#owtitle').val()) == ''){
+              	   alert("업무내용을 입력해주세요");
+              	   $('#uname').focus();
+              	   return false;
+              	  }
+        	  if($.trim($('#owreason').val()) == ''){
+              	   alert("사유를 입력해주세요");
+              	   $('#uname').focus();
+              	   return false;
+              	  }
         	  return true;
         	 }
         	
@@ -333,12 +340,13 @@
         <div class="article">
             <div class="conTitle">시간외 근무 신청 및 조회</div>
             <div class="application">
-            <form action="<c:url value="/overwork/ins"/>" method="get">
+            <form name="owworkIns_frm" id="owworkIns_frm" action="${pageContext.request.contextPath}/overwork/ins" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <table>
                     <tr>
                         <td class="title">부서명</td>
                         <td style="width: 250px;">
-                            <select style="width: 200px; height: 30px;color : #787878;" name="dno">
+                            <select style="width: 200px; height: 30px;color : #787878;" id="dname" name="dname">
                                 <option value="0">선택하세요</option>
                                 <option value="1">개발팀</option>
                                 <option value="2">기획팀</option>
@@ -366,20 +374,21 @@
                         <td colspan="3" style="padding-bottom: 20px;"><input type="text" style="width: 860px; height: 65px;" id="owreason"name="owreason" placeholder="  사유를 입력하세요" autocomplete="off"></td>
                     </tr>
                     <tr>
-                        <td colspan="4"><button type="submit" name="insertOw" id="insertOw">신청하기</button></td>
+                        <td colspan="4"><button name="insertOw" id="insertOw">신청하기</button></td>
                     </tr>
                     </table>
                </form>
             </div>
             <div class="option">
             <form action="<c:url value="/overwork/owlist"/>" method="get">
+            
                 <table>
                     <tr>
                         <td>기간 선택</td>
                         <td><input type="Date" id="startDate" name="startdate" placeholder="시작일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"> 
                         &nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp; 
                         <input type="Date" id="endDate" name="enddate" placeholder="종료일을 선택하세요" autocomplete="off" style="padding : 0 10px; color : #787878;"></td>
-                        <td><button name="submit" >조회</button></td>
+                        <td><button type="submit" id="search" >조회</button></td>
                     </tr>
                 </table>
                </form>

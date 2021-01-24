@@ -229,21 +229,13 @@ public class ScheduleController {
 			String uname=userdetail.getUname(); // 해당 부서의 휴가현황만 볼 수 있도록
 			System.out.println("세션 값 확인 " + uname);
 			
-			HashMap<String, String> paramMap1 = new HashMap<String, String>();
-			HashMap<String, String> paramMap2 = new HashMap<String, String>();
-			paramMap1.put("pno", pno);
-			paramMap2.put("pno", pno);
+			
 			List<ScheduleDto> array1 = null;
 			List<ScheduleDto> array2 = null;
-			//
-			paramMap1.put("uname", uname);
-			paramMap1.put("attendee", '%'+ uname+'%');
-			paramMap2.put("uname", uname);
-			paramMap2.put("attendee", '%'+ uname+'%');
 				
-			array1 = scheduleServ.selectAllSche(paramMap1);
+			array1 = scheduleServ.selectAllSche(pno);
 			System.out.println("전체일정 : " + array1);
-			array2 = scheduleServ.selectAllTask(paramMap2);
+			array2 = scheduleServ.selectAllTask(pno);
 			System.out.println("전체업무 : " + array2);
 	
 			List<ScheduleDto> joined = ListUtils.union(array1, array2);
@@ -251,7 +243,7 @@ public class ScheduleController {
 			Gson gson = new Gson();
 			return gson.toJson(joined);
 	}
-
+//
 //사용안함
 	@ResponseBody
 	@RequestMapping(value="/schedule/list/test", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
@@ -299,12 +291,12 @@ public class ScheduleController {
 					paramMap2.put("uname", null);
 					paramMap2.put("attendee", '%'+ uname+'%');
 				}
-				array1 = scheduleServ.selectAllSche(paramMap1);
+				array1 = scheduleServ.selectAllSche(pno);
 				System.out.println("전체일정 : " + array1);
-				array2 = scheduleServ.selectAllTask(paramMap2);
+				array2 = scheduleServ.selectAllTask(pno);
 				System.out.println("전체업무 : " + array2);
 				}
-			//
+			
 			List<ScheduleDto> joined = ListUtils.union(array1, array2);
 			System.out.println("리스트합치기" + joined); 
 			Gson gson = new Gson();

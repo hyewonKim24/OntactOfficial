@@ -105,18 +105,18 @@
                 group by b.bno, b.pno, b.uno, b.bname, b.bopen, b.btype, b.bfirst, b.bdate,s.sstart, s.send, s.splace, s.smemo
                 )bs on p.pno = bs.pno
     		inner join users u on u.uno = bs.uno
-    		where p.pno = #{pno} and (uname = #{uname} or attendees like #{attendee})
+    		where p.pno = #{pno}
    		 	order by bs.sstart
 	</select>
 
 	<!--업무 : 내업무 (5), 요청한 업무(1), 전체 업무 where 절 사라지게 -->
 	<select id="selectAllTask" resultMap="resultSchedule">
-		select p.pno, p.pname, b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, t.tstart as sstart, t.tend as send, t.tmemo as smemo, t.taskmanager as attendees
+		select p.pno, p.pname, b.bno, b.pno, b.uno, u.uname, b.bname, b.bopen, b.btype, b.bfirst, b.bdate, t.tstart as sstart, t.tend as send, t.tmemo as smemo, t.taskmanager as taskmanager
 			from project p 
 			inner join boardall b on p.pno = b.pno
 			inner join task t on b.bno = t.bno
 			inner join users u on u.uno = b.uno
-			where p.pno = #{pno} and (u.uname =#{uname} or t.taskmanager like #{attendee})
+			where p.pno = #{pno}
 			order by t.tstart
 		<!-- <if test="paramMap != null"> where b.uno = #{buno} or t.taskmanager 
 			=#{svuno} </if> -->

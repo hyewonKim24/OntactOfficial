@@ -207,23 +207,25 @@ public class UsersServiceImpl implements UsersService{
 	}
 	
 	//조직도 - 혜림
-		public int listCountFirst() {
-			return usersDao.listCountFirst();
+		public int listCountFirst(String cno) {
+			return usersDao.listCountFirst(cno);
 		}
-		public List<UsersDto> selectOgFirst(int startPage, int limit) { 
-			return usersDao.selectOgFirst(startPage, limit);
+		public List<UsersDto> selectOgFirst(int startPage, int limit, String cno) { 
+			return usersDao.selectOgFirst(startPage, limit, cno);
 		}
-			public int listCount(String dname) {
-			return usersDao.listCount(dname);
+			public int listCount(HashMap<String, String> paramMap) {
+			return usersDao.listCount(paramMap);
 		}
-		public List<UsersDto> selectOgUser(int startPage, int limit, String dname) {
-			return usersDao.selectOrgani(startPage, limit, dname);
+		public List<UsersDto> selectOgUser(int startPage, int limit, HashMap<String, String> paramMap) {
+			System.out.println("꺼내보기" + paramMap.get("dname"));
+			System.out.println("꺼내보기" + paramMap.get("cno"));
+			return usersDao.selectOrgani(startPage, limit, paramMap);
 		}
 		public int updateDept(UsersDto u) {  
 			return usersDao.updateDept(u);
 		}
-		public List<UsersDto> deleteOgUser(String dname) {
-			return usersDao.deleteOrgani(dname);
+		public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap) {
+			return usersDao.deleteOrgani(paramMap);
 		}
 
 	}

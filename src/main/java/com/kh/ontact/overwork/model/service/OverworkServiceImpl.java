@@ -25,6 +25,11 @@ public class OverworkServiceImpl implements OverworkService{
 	}
 	
 	@Override
+	public int searchlistCount(HashMap<String, String> paramMap) {
+		return overworkDao.searchlistCount(paramMap);
+	} 
+	
+	@Override
 	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap){
 		return overworkDao.searchOverwork(paramMap);
 	}

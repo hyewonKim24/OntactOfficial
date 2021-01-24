@@ -152,6 +152,9 @@ input{
 
 .header-icon {
 	vertical-align: middle;
+}
+.header-icon-my{
+	vertical-align: middle;
 	border-radius: 90px;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
 }
@@ -1111,10 +1114,11 @@ input{
 					<span class="alarm-count" id="chat-alarm-count"></span> 
 					<span class="alarm-counts" id="chat-alarm-counts"></span> 
 					
-					<!--채팅 아이콘--> <svg
-							id="Layer1" data-name="Layer 1"
-							xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
-							fill="#505050" width="25px" height="25px" class="header-icon">
+					<!--채팅 아이콘-->
+					<%-- <img src="${pageContext.request.contextPath}/resources/img/svg/chat.svg" width="25px" height="25px" class="header-icon">
+					 --%>
+					
+					 <svg id="Layer1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="#505050" width="25px" height="25px" class="header-icon">
                             <defs>
                                 <style>
 #Layer1 {
@@ -1126,8 +1130,7 @@ input{
 </style>
                             </defs>
                             <title>chat</title>
-                            <path
-								d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
+                            <path d="M48.76,23.66A23.57,23.57,0,1,0,4.25,35.76a2.79,2.79,0,0,1,.17,2.42C3.5,40.76,2.66,43.36,1.85,46a1.65,1.65,0,0,0,.1,1.3c.16.21.83.16,1.21,0,2.53-.81,5.05-1.64,7.55-2.53A2.18,2.18,0,0,1,12.8,45,22.94,22.94,0,0,0,28,48.45,23.62,23.62,0,0,0,48.76,23.66Z" />
                         </svg>
 				</a> <a href="#" id="alarm-icon" class="header-right-icon"> 
 						
@@ -1171,7 +1174,7 @@ input{
 				 <a href="#" class="header-right-icon" id="my-icon">
 				 
 			 	 <c:if test="${empty ufilepath}">
-						<img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="25px" height="25px" class="header-icon">
+						<img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="25px" height="25px" class="header-icon-my">
 				 </c:if>
 				 <c:if test="${not empty ufilepath}">
 			 			<img src="${ufilepath}" width="25px" height="25px" class="header-icon">

@@ -32,6 +32,30 @@
 				box-shadow: 1px 1px 3px 1px #e7e7e7;
 				float: left;
 			}
+			
+			/*프로젝트 상단 타이틀 출력 */
+			.proname-wrap{
+			    margin-bottom: 10px;
+			    position: relative;
+			    background: #fff;
+			    border-bottom: 1px solid #d6d6d7;
+			    border-radius: 3px;
+    		}
+    		.proname-title{
+    			background-color:#5A3673;
+    			color:#fff;
+    			padding: 20px 20px 20px 20px;
+    			vertical-align: middle;
+    		}
+    		.proname-wrap .proname{
+    			line-height: 20px;
+    			font-size:15px;
+    			font-weight: bold;
+    			padding-left:8px;
+    		}
+			.pro-icon{
+				vertical-align: middle;
+			}
 			/* 글 쓰기 부분 */
 			.write {
 				border: 1px solid #dadbdb;
@@ -305,6 +329,12 @@
 				margin: 0;
 				float: right;
 			}
+			.pro-option {
+				width: 20px;
+				height: 40px;
+				margin: 0;
+				float: right;
+			}
 			.fixNotice {
 				width: 18px;
 				margin-top: 3px;
@@ -329,6 +359,29 @@
 				margin-left : -50px;
 				z-index : 9999;
 				background-color : white;
+			}
+			.pro-editDropdown {
+				position : absolute;
+				display: none;
+				width: 120px;
+				height: 70px;
+				border: 1px solid #e7e7e7;
+				box-sizing: border-box;
+				font-size: 12px;
+				float: right;
+				margin-top: 6px;
+				margin-left : -110px;
+				z-index : 900;
+				background-color : white;
+			}
+			.pro-editDropdown ul{
+				padding: 8px 0;
+			}
+			.pro-editDropdown ul li{
+				padding: 6px 15px;
+			}
+			.pro-editDropdown ul li:first-child {
+				color: red;
 			}
 			.editDropdown ul {
 				padding: 8px 0;

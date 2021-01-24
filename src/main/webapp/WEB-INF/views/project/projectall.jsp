@@ -464,5 +464,13 @@ body {
 			</div>
 		</div>
 	</section>
+	
+		<c:if test="${not empty prodelete}">
+			<script>
+			$(document).ready(function(){  
+				alert('${prodelete}');	
+			});
+			 </script>		
+		</c:if>
 </body>
 </html>

@@ -109,30 +109,30 @@ public class UsersDao {
 	
 	//혜림 - 조직도
 		//미분류그룹
-		public int listCountFirst() {
-			return sqlSession.selectOne("Users.listCount");
+		public int listCountFirst(String cno) {
+			return sqlSession.selectOne("Users.listCountFirst", cno);
 		}
-		public List<UsersDto> selectOgFirst(int startPage, int limit) { // 특정 페이지 단위의 게시글 조
+		public List<UsersDto> selectOgFirst(int startPage, int limit, String cno) { // 특정 페이지 단위의 게시글 조
 			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
-			return sqlSession.selectList("Users.selectOgFirst",null,row);
+			return sqlSession.selectList("Users.selectOgFirst",cno,row);
 		}
 		//분류그룹
-		public int listCount(String dname) {
-			return sqlSession.selectOne("Users.listCount", dname);
+		public int listCount(HashMap<String, String> paramMap) {
+			return sqlSession.selectOne("Users.listCount", paramMap);
 		}
-		public List<UsersDto> selectOrgani(int startPage, int limit, String dname) { // 특정 페이지 단위의 게시글 조
+		public List<UsersDto> selectOrgani(int startPage, int limit, HashMap<String, String> paramMap) { // 특정 페이지 단위의 게시글 조
 			int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
 			RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowbounds
-			return sqlSession.selectList("Users.selectOgUser",dname,row);
+			return sqlSession.selectList("Users.selectOgUser",paramMap,row);
 		}
 		
 		//사원 부서 수정, 삭제 조건
 		public int updateDept(UsersDto u) { // 글 수정 
 			return sqlSession.update("Users.updateDept", u);
 		}
-		public List<UsersDto> deleteOrgani(String dname) { // 특정 페이지 단위의 게시글 조
-			return sqlSession.selectList("Users.deleteOrgani", dname);
+		public List<UsersDto> deleteOrgani(HashMap<String, String> paramMap) { // 특정 페이지 단위의 게시글 조
+			return sqlSession.selectList("Users.deleteOrgani", paramMap);
 		}
 		
 

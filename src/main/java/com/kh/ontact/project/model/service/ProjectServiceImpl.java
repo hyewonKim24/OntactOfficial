@@ -68,5 +68,15 @@ public class ProjectServiceImpl implements ProjectService{
 	public String SelectCompanyPno(String cno) throws Exception {
 		return pjDao.SelectCompanyPno(cno);
 	}
+
+	@Override
+	public ProjectDto SelectProName(String pno) throws Exception {
+		return pjDao.SelectProName(pno);
+	}
+
+	@Override
+	public int deleteProject(String pno) throws Exception {
+		return pjDao.deleteProject(pno);
+	}
 	
 }

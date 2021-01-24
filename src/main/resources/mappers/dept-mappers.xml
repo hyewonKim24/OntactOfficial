@@ -5,6 +5,7 @@
 		<id property="dno" column="dno" />
 		<result property="cno" column="cno" />
 		<result property="dname" column="dname" />
+		<result property="cname" column="cname" />
 	</resultMap>
 	
 	<!-- 윤진 / project insert modal : 부서 보관함 목록 뿌리기 -->
@@ -22,11 +23,11 @@
 	<!-- 혜림 조직도 -->
 	<!-- 부서 전체 -->
 	<select id="listCount" resultType="int">
-		select count(dno) from dept where cno = #{cno}
+		select count(d.dno) from dept d, company c where c.cno = d.cno and c.cno = #{cno}
 	</select>
 	<select id="selectDept" resultType="arraylist"
 		resultMap="resultDept">
-		select * from dept where cno = #{cno}
+		select d.cno as cno, d.dno as dno, d.dname as dname, c.cname as cname from dept d, company c where c.cno = d.cno and c.cno = #{cno}
 	</select>
 	<!-- <select id="selectDtOne" parameterType="string" resultType="DeptDto">
 		select * from dept where dno = #{dno} 
@@ -50,7 +51,7 @@
 		delete from dept where cno = #{cno} and dno = #{dno}
 	</delete>
 	
-	<update id="updateDayoffApp" parameterType="string"
+	<update id="updateDept" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
 		update users set dno = #{dno}
 		where uno = #{uno}

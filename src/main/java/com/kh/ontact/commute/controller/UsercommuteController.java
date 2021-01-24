@@ -51,11 +51,11 @@ public class UsercommuteController {
 			
 			//검색
 			String state = cstate;
-			System.out.println("상태" + state);
+			
 			String start =  startdate;
-			System.out.println("start" + start);
+			
 			String end = enddate;
-			System.out.println("end" + end);
+			
 		
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("cstate", state);
@@ -72,20 +72,19 @@ public class UsercommuteController {
 			System.out.println(listCount1);
 			System.out.println(listCount2);
 		    
-			if (startdate == null || startdate == "" && enddate == null || enddate == "" ) {
+			if (startdate == null || startdate == "" && enddate == null || enddate == "" && cstate == null || cstate == "") {
 				System.out.println("if로 들어옴");
 				mv.addObject("list", commuteServ.selectDailyCommute(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
 				mv.addObject("listCount", listCount1);
 				mv.setViewName("commute/dailycommute");
-			} else if(startdate != null && enddate != null || cstate == "" ) {
+			} else if(startdate != null || startdate != "" && enddate != null || enddate != "" && cstate != null || cstate != "") {
 				System.out.println("else로 들어옴");
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
 				mv.addObject("listCount", listCount2);
 				mv.addObject("list", commuteServ.searchDailyCommute(paramMap));
-				System.out.println(commuteServ.searchDailyCommute(paramMap));
 				mv.setViewName("commute/dailycommute");
 			}
 //			if (paramMap != null && !paramMap.equals("")) {
@@ -238,16 +237,16 @@ public class UsercommuteController {
 			String end = enddate;
 			System.out.println("end" + end);
 			
-			HashMap<String, String> search = new HashMap<String, String>();
-			search.put("uno", uno);
-			search.put("startdate", start);
-			search.put("enddate", end);
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
+			paramMap.put("startdate", start);
+			paramMap.put("enddate", end);
 
 			int allListCount = commuteServ.mAllCount(uno);
 			System.out.println("카운트1 : " + allListCount);
 			int allmaxPage = (int) ((double) allListCount / LIMIT + 0.9);
 			
-			int searchListCount = commuteServ.msearchCount(search);
+			int searchListCount = commuteServ.msearchCount(paramMap);
 			System.out.println("카운트2 : " + searchListCount);
 			int searchmaxPage = (int) ((double) searchListCount / LIMIT + 0.9);
 			
@@ -262,8 +261,8 @@ public class UsercommuteController {
 				mv.setViewName("commute/monthcommute");
 			} else if(startdate != null && enddate != null) {
 				System.out.println("else로 들어옴");
-				mv.addObject("list", commuteServ.searchDailyCommute(search));
-				System.out.println("결과 확인 : " + commuteServ.searchDailyCommute(search));
+				mv.addObject("list", commuteServ.searchMonthCommute(paramMap));
+				System.out.println("결과 확인 : " + commuteServ.searchMonthCommute(paramMap));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", searchmaxPage);
 				mv.addObject("listCount", searchListCount);
@@ -279,7 +278,6 @@ public class UsercommuteController {
 	@ResponseBody
 	@RequestMapping(value = "/commute/getDailyCommute", method = RequestMethod.GET)
     public String getDailyVisitor(String month, Authentication authentication){
-		System.out.println("어디로 들어온거지?");
 		//세션값
 		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 	    String uno=userdetail.getUno();

@@ -35,12 +35,12 @@
 	</select>
 	
 	<select id="listCount" resultType="int" parameterType ="java.util.HashMap">
-		select count(dfno) from dayoff where offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart
+		select count(dfno) from dayoff where uno =#{uno} and offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart
 	</select>
 	
 	<select id="searchDayoff" parameterType ="java.util.HashMap"
 		resultType="arraylist" resultMap="resultDayoff">
-		select * from dayoff where offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart
+		select * from dayoff where uno =#{uno} and offstart between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by offstart
 	</select>
 	<select id="selectDfOne" parameterType="string" resultType="DayoffDto">
 	</select>
@@ -61,7 +61,7 @@
 	<select id="selectDfCalendar" parameterType ="java.util.HashMap" resultMap="resultDayoff">
 		select d.dno as dno, df.offstart as offstart, df.offend as offend, df.uno as uno, df.offreason as offreason, u.uname as uname, c.cno as cno
         from dayoff df, dept d, users u, company c
-        where df.uno = u.uno and c.cno = #{cno} and d.dno =#{dno} order by offstart
+        where df.uno = u.uno and u.dno = d.dno and d.cno = c.cno and c.cno = #{cno} and d.dno =#{dno} order by offstart
 	</select>
 	
 </mapper>

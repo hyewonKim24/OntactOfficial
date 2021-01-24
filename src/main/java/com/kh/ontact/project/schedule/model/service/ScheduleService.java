@@ -20,9 +20,9 @@ public interface ScheduleService {
 	
 	public List<ScheduleDto> ListScheduleAll(String pno) throws Exception;
 
-	public List<ScheduleDto> selectAllSche(HashMap<String, String> paramMap1);
+	public List<ScheduleDto> selectAllSche(String pno);
 	
-	public List<ScheduleDto> selectAllTask(HashMap<String, String> paramMap2);
+	public List<ScheduleDto> selectAllTask(String pno);
 	
 //	public List<ScheduleDto> selectAllSche(int[] valueChk); 
 //

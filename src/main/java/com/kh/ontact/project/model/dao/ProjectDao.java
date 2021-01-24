@@ -53,5 +53,13 @@ public class ProjectDao {
 	public String SelectCompanyPno(String cno) throws Exception{
 		return sqlSession.selectOne("Project.SelectCompanyPno", cno);
 	}
+	// 프로젝트명, 프로젝트 글 수 불러오기
+	public ProjectDto SelectProName(String pno) throws Exception{
+		return sqlSession.selectOne("Project.SelectProName", pno);
+	}
+	// 프로젝트 삭제
+	public int deleteProject(String pno) throws Exception{
+		return sqlSession.delete("Project.deleteProject", pno);
+	}
 	
 }

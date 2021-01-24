@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.overwork.model.dto.OverworkDto;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 @Repository("deptDao")
 public class DeptDao {
@@ -44,6 +45,11 @@ public class DeptDao {
 		System.out.println("삭제 다오까지옴");
 		return sqlSession.delete("Dept.deleteDept", paramMap);
 	}
+	public int updateDept(UsersDto dto) { 
+		System.out.println("업데이트 다오까지옴");
+		return sqlSession.delete("Dept.updateDept", dto);
+	}
+	
 	//은실
 	public String dnameChk(String dno) throws Exception {
 		return sqlSession.selectOne("Dept.dnameChk", dno);

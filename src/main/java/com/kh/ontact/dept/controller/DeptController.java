@@ -1,5 +1,6 @@
 package com.kh.ontact.dept.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ontact.company.model.dao.CompanyDao;
+import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
@@ -31,8 +34,11 @@ public class DeptController {
 	@Autowired
 	private UsersService usersService;
 	
+	@Autowired
+	private CompanyDao companyDao;
+	
 	public static final int LIMIT = 10;
-	//
+	
 	//부서
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/commute/organlist", method = RequestMethod.GET)
@@ -47,44 +53,54 @@ public class DeptController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String cno=userdetail.getCno();
 			System.out.println("세션값확인 : " + cno);
-			//
+			
+			
 		try {
+			String cname = companyDao.cnameOne(cno);
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("cno", cno);
+			paramMap.put("dname", dname);
+			
 			int currentPage = page;
 //			부서 출력
 			int deptlistCount1 = deptServ.listCount(cno);
 			int deptlistCount2 = deptServ.searchlistCount();
 //			부서 사원 출력
-			int listCount1 = usersService.listCountFirst();
-			int listCount2 = usersService.listCount(dname);
+			int listCount1 = usersService.listCountFirst(cno);
+			int listCount2 = usersService.listCount(paramMap);
 			System.out.println("미분류부서 : " + listCount1 );
 			System.out.println("분류부서 : " + listCount2);
 			
 			int maxPage1 = (int) ((double) listCount1 / LIMIT + 0.9);
 			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
-
+			
+			
 			mv.addObject("deptlistCount", deptlistCount1);
 			mv.addObject("selectDept", deptServ.selectDept(cno));
 			System.out.println("뭐지" + deptServ.selectDept(cno));
 			mv.setViewName("/commute/organogram");
 
 //			미분류그룹 default
-			if (dname == null || keyword == null || keyword == "") {
+			if (dname == null) {
 				System.out.println("#####if로 들어옴");
 				mv.addObject("userslistCount", listCount1);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
 				mv.addObject("dname", "미분류그룹");
-				mv.addObject("selectOgUser", usersService.selectOgFirst(currentPage, LIMIT));
-				System.out.println("결과" + usersService.selectOgFirst(currentPage, LIMIT));
+				mv.addObject("cname", cname);
+				mv.addObject("list", usersService.selectOgFirst(currentPage, LIMIT, cno));
+				System.out.println("결과" + usersService.selectOgFirst(currentPage, LIMIT, cno));
 				mv.setViewName("/commute/organogram");
 			}
-			if (dname != null) {
+			else if (dname != null){
 				System.out.println("######dname이 있는 경우");
 				mv.addObject("userslistCount", listCount2);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
 				mv.addObject("dname", dname);
-				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT, dname));
+				mv.addObject("cname", cname);
+				mv.addObject("list", usersService.selectOgUser(currentPage, LIMIT, paramMap));
+				System.out.println("결과222" + usersService.selectOgUser(currentPage, LIMIT, paramMap));
 				mv.setViewName("/commute/organogram");
 			} 
 //			부서검색			
@@ -101,40 +117,33 @@ public class DeptController {
 		return mv;
 	}
 	
-//	//부서별 사원
-//	@RequestMapping(value = "/commute/organuserlist", method = RequestMethod.GET)
-//	public ModelAndView selectUser(DeptDto d, 
-//				@RequestParam(name = "page", defaultValue = "1") int page,
-//				ModelAndView mv) {
-//			System.out.println("Dept 리스트진입");
-//		try {
-//			int currentPage = page;
-//			int listCountFirst = usersService.listCountFirst();
-//			int maxPageFirst = (int) ((double) listCountFirst / LIMIT + 0.9);
-//			
-//			int listCount = usersService.listCount();
-//			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
-//			
-//			String dno = d.getDno();
-//			
-//			if (dno == null && dno == ("")) { // 미분류그룹
-//				System.out.println("if로 들어옴");
-//				mv.addObject("listCountFirst", listCountFirst);
-//				mv.addObject("selectOgFirst", usersService.selectOgFirst(currentPage,LIMIT));
-//				mv.setViewName("commute/organogram");
-//			} else { // 분류그룹
-//				System.out.println("else로 들어옴");
-//				mv.addObject("listCount", listCount);
-//				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage,LIMIT));
-//				mv.setViewName("commute/organogram");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			mv.addObject("msg", e.getMessage());
-//			mv.setViewName("errorPage");
-//		}
-//		return mv;
-//	}
+	//부서 변경
+	@RequestMapping(value = "/commute/organuserupdate", method = RequestMethod.POST)
+	public ModelAndView selectUser(DeptDto d, 
+				@RequestParam(name = "deptSelect") String dno,
+				@RequestParam(name = "chk") List<String> uno,
+				ModelAndView mv) {
+		System.out.println("부서번호" + dno);
+		System.out.println("사원번호" + uno);
+		List<UsersDto> list = new ArrayList<UsersDto>();
+		UsersDto one = null;
+		try {
+			for(int i = 0; i < uno.size(); i++) {
+				one = new UsersDto();
+				one.setUno(uno.get(i));
+				one.setDno(dno);
+				list.add(one);
+			}
+			deptServ.updateDept(list);
+			
+			mv.setViewName("redirect:/commute/organlist");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
 	
 	//부서 생성
 	@RequestMapping(value = "/commute/deptins", method = {RequestMethod.POST,RequestMethod.GET})
@@ -143,14 +152,10 @@ public class DeptController {
 			System.out.println("부서 생성 인서트진입");
 			System.out.println(d.getDname());
 			System.out.println(d.getCno());
-			
-			List<UsersDto> users = usersService.deleteOgUser(d.getDname());
-			if(users.size() > 0) {
-				rttr.addFlashAttribute("message", "사원이 존재하는 부서는 삭제하실 수 없습니다.");
-			}
+		
 			deptServ.insertDept(d);
 			rttr.addFlashAttribute("message", "success");
-			//
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			rttr.addFlashAttribute("msg", e.getMessage());
@@ -160,44 +165,50 @@ public class DeptController {
 	}
 	
 	//부서 삭제
-		@SuppressWarnings("unused")
-		@ResponseBody
-		@RequestMapping(value = "/commute/deptdel",  produces = "application/text; charset=utf8")
-		public String deleteDept(
+//		@SuppressWarnings("unused")
+//		@ResponseBody
+@RequestMapping(value = "/commute/deptdel", method = RequestMethod.POST)
+		public ModelAndView deleteDept(
 				@RequestParam(name = "dname") String dname,
 				@RequestParam(name = "dno") String dno,
 				@RequestParam(name = "cno") String cno,
 				Authentication authentication, HttpServletRequest request,
-				HttpServletResponse response
-				) {
-			
-				String msg = null;
+				ModelAndView mv,HttpServletResponse response) {
+				
 			try {
 				System.out.println("부서 삭제 인서트진입");
 				System.out.println("부서번호 : "+dno);
 				System.out.println("회사번호 : "+ cno);
 				System.out.println("부서이름 : "+ dname);
 				
-				HashMap<String, String> paramMap = new HashMap<String, String>();
-				paramMap.put("cno", cno);
-				paramMap.put("dno", dno);
+				HashMap<String, String> paramMap1 = new HashMap<String, String>();
+				paramMap1.put("cno", cno);
+				paramMap1.put("dname", dname);
+				
+				HashMap<String, String> paramMap2 = new HashMap<String, String>();
+				paramMap2.put("cno", cno);
+				paramMap2.put("dno", dno);
 
-				List<UsersDto> deptUserList = usersService.deleteOgUser(dname);
+				List<UsersDto> deptUserList = usersService.deleteOgUser(paramMap1);
 				
 				System.out.println("어떤게들어있나 : " + deptUserList);
 				System.out.println("크기가 몇일ㄲ까 : " + deptUserList.size());
 				
 				if(deptUserList.size() == 0 || deptUserList == null) { //부서에 사람이 없는 경우만 삭제 가능하도록
-					deptServ.deleteDept(paramMap);
-					msg = "부서가 삭제 되었습니다.";
+					deptServ.deleteDept(paramMap2);
+					mv.addObject("message2", "success");
+					mv.setViewName("redirect:/commute/organlist");
+//					msg = "부서가 삭제 되었습니다.";
 				} else {
 					System.out.println("부서에 사원이 있는 경우!!!");
-					msg = "사원이 존재하는 부서는 삭제하실수 없습니다.";
+					mv.addObject("message2", "failed");
+					mv.setViewName("redirect:/commute/organlist");
+//					msg = "사원이 존재하는 부서는 삭제하실수 없습니다.";
 				}
 			} catch (Exception e) {
 				
 			}
-			return msg;
+			return mv;
 			
 		}
 	

@@ -63,6 +63,26 @@
 		<input type="hidden" value="${uname}" id="uname" name="uname">
 		<div class="main">
 			<div class="contents">
+				<!-- 혜원 / 프로젝트 이름 -->
+				<div class="proname-wrap">
+					<div class="proname-title">
+					<img src="${pageContext.request.contextPath}/resources/img/svg/archive-fill.svg" width="20px" height="20px" class="pro-icon">
+					<span class="proname">${pjdto.pname}&nbsp;</span>(&nbsp;${pjdto.cnt}&nbsp;)
+				<div class="pro-option">
+					<a class="pro-dropdown">
+						<img src="${pageContext.request.contextPath}/resources/img/svg/three-dots-vertical.svg" width="25px" height="25px" class="pro-right-icon">
+					</a>
+					<div class="pro-editDropdown">
+	                   <ul>
+	                       <li>
+	                     		<a href="${pageContext.request.contextPath}/project/deleteprojcet?pno=${pno}" class="list_delbtn">프로젝트 삭제</a>
+	                       </li>
+	                       <li><a href="">프로젝트 수정</a></li>
+	                   </ul>
+	                </div> 
+				</div>
+				</div>
+			</div>
 				<!--  혜원/ 업무리포트  -->
 				<div class="task-report-wrap">
 					<p id="report-title"> 업무리포트 </p>
@@ -772,8 +792,8 @@
 													<div class="tdp-add-wrap">
 														<div class="tdp-add">
 															<ul>
-																<!-- <input type="hidden" class="tdp" name="tduno" value="">
-																<input type="hidden" class="tdp-file" value=""> -->
+																<input type="hidden" class="tdp" name="tduno" value="">
+																<!-- <input type="hidden" class="tdp-file" value=""> -->
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
 																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
@@ -882,7 +902,6 @@
 										'<div class="tdp-add-wrap">' + '\n' + '<div class="tdp-add">' + '\n' +
 										'<ul>' + '\n' + 
 										'<input type="hidden" class="tdp" name="tduno" value="">'+ '\n' +
-										'<input type="hidden" class="tdp-file" value="">'+ '\n' +
 										'<c:forEach items="${userlist}" var="ulist">' + '\n' +
 										'<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}' + '\n' +
 										'<input type="hidden" class="tdp-uno" value="${ulist.uno}">'+ '\n' +
@@ -955,25 +974,28 @@
 								});
 								//할일 담당자 선택
 								$(document).on('click', ".tdp-list${ulist.uno}", function (e) {
-			                        e.stopPropagation();
-			                        let uno = $(this).find('.tdp-uno').val();
-			                        let ufilepath = $(this).find('.ufilepath').val();
-			                        $(this).parents(".tdp-add-wrap").hide();
-			
-			                        let profile = $(this).parents('.todo').find('.todo-04');
-			                        console.log("profile : "+profile);
-			                        console.log("ufilepath : " + ufilepath);
-			                        console.log("uno : " + uno);
-			                        if (ufilepath == null || ufilepath == '') {
-			                            profile.attr('src', '${pageContext.request.contextPath}/resources/img/user-3.png');
-			                            profile.addClass('userimg');
-			                        }
-			                        else if (ufilepath != null || ufilepath != '') {
-			                            console.log("filepath:" + ufilepath);
-			                            profile.attr('src', ufilepath);
-			                            profile.addClass('userimg');
-			                        }
-			                    });
+                                    e.stopPropagation();
+                                    let uno = $(this).find('.tdp-uno').val();
+                                    let ufilepath = $(this).find('.ufilepath').val();
+                                    $(this).parents(".tdp-add-wrap").hide();
+
+                                    let profile = $(this).parents('.todo').find('.todo-04');
+                                    let unobox = $(this).parents('.tdp-add').find('.tdp');
+                                    console.log("profile : "+profile);
+                                    console.log("ufilepath : " + ufilepath);
+                                    console.log("uno : " + uno);
+                                    if (ufilepath == null  || ufilepath == '') {
+                                        profile.attr('src', '${pageContext.request.contextPath}/resources/img/user-3.png');
+                                        profile.addClass('userimg');
+                                        unobox.val(uno);
+                                    }
+                                    else if (ufilepath != null || ufilepath != '') {
+                                        console.log("filepath:" + ufilepath);
+                                        profile.attr('src', ufilepath);
+                                        profile.addClass('userimg');
+                                        unobox.val(uno);
+                                    }
+                                });
 								//윤진 : 할일 insert
 								//글작성 버튼 submit
 								
@@ -992,7 +1014,7 @@
 							</script>
 				</div>
 				</div>
-<!--  윤진 ) 업무 내용 작성 부분 끝 -->
+<!--  윤진 ) 할일 내용 작성 부분 끝 -->
 
 <!--  은실 ) 일반글 출력 (전체리스트로 수정해야함, 댓글 추가 안했음) -->
 	<c:forEach items="${blist}" var="blist" varStatus="e">
@@ -2896,6 +2918,13 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 					});
 				};
 				});
+			
+	//프로젝트 삭제 모달(혜원)
+	$(".pro-dropdown").on("click", function (e) {
+		e.preventDefault();
+		var $t = $(this).parents(".pro-option");
+		$t.find(".pro-editDropdown").toggle();
+	});
 			
 			
 	// 파일 추가 (은실)
