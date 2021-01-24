@@ -20,6 +20,7 @@ public interface UsersService {
 	void joinGuestChk(GuestRegisterRequest regReq) throws Exception;
 	void pwdChk(UsersDto userdto) throws Exception;
 	int updateTmppwd(UsersDto dto) throws Exception;
+	String getpwd(String uno) throws Exception;
 	CompanyDto findCompany(String cno) throws Exception;
 	String dnameChk(String dno) throws Exception;
 	int updateUrank(HashMap<String, String> paramMap) throws Exception;

@@ -63,6 +63,10 @@ public class UsersDao {
 		System.out.println("가져온이메일:"+dto.getUemail());
 		return sqlSession.update("Users.updateTmppwd",dto);
 	}
+	// 비밀번호 변경
+	public String getpwd(String uno) throws Exception {
+		return sqlSession.selectOne("Users.getpwd", uno);
+	}
 	// 마이페이지 계정정보 업데이트
 	public int updateUtell(HashMap<String, String> paramMap) {
 		return sqlSession.update("Users.updateUtell",paramMap);

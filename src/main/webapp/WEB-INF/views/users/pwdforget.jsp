@@ -19,6 +19,8 @@ body {
 	font-family: Noto Sans KR;
 	line-height: 1.15;
 }
+input:focus{
+outline:none;}
 
 header {
 	min-width: 350px;
@@ -145,7 +147,7 @@ min-width:620px;
 			<h2 class="title__func">&nbsp;&nbsp;비밀번호 찾기</h2>
 		</div>
 		<div class="title">
-			<button id="login">로그인</button>
+			<button id="login" onclick="location.href ='${pageContext.request.contextPath}/main/loginform'">로그인</button>
 		</div>
 	</header>
 	<section>

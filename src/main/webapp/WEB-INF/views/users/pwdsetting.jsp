@@ -27,6 +27,11 @@
             font-family: Noto Sans KR;
             line-height: 1.15;
         }
+        
+        a{
+            cursor:pointer;
+            text-decoration:none;
+        }
 
         button,
         input {
@@ -69,7 +74,7 @@
             margin-top: 30px;
             width: 150px;
             height: 56px;
-            font-size: 18px;
+            font-size: 17px;
             line-height: 54px;
             border: 1px solid #5A3673;
             background-color: #5A3673;
@@ -88,13 +93,18 @@
             cursor: pointer;
         }
 
-        aside ul li a {
+        aside ul a li {
             font-weight: 700;
             color: black;
             text-decoration: none;
             cursor: pointer;
-            font-size: 17px;
+            font-size: 15px;
         }
+        
+        
+        aside ul li:hover{
+		background-color: #e7e7e7;
+		}
 
         /* 본문 */
         article {
@@ -183,8 +193,8 @@
             <button id="aside_back"><&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
             </a>
                     <ul>
-                        <li><a href="${pageContext.request.contextPath}/user/mypage/detail">계정 정보</a></li>
-                        <li><a href="${pageContext.request.contextPath}/user/mypage/updpwd">비밀번호 설정</a></li>
+                         <a href="${pageContext.request.contextPath}/user/mypage/detail"><li>계정 정보</li></a>
+                			<a href="${pageContext.request.contextPath}/user/mypage/updpwd"><li style="text-decoration:underline;">비밀번호 설정</li></a>
                     </ul>
         </aside>
         <article>

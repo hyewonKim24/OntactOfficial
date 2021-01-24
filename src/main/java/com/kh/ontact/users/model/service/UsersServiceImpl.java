@@ -117,6 +117,11 @@ public class UsersServiceImpl implements UsersService{
 		System.out.println(result+"행이 업데이트 되었습니다.");
 		return result;
 	}
+	//현재 비밀번호
+	@Override
+	public String getpwd(String uno) throws Exception {
+		return usersDao.getpwd(uno);
+	}
 	
 	// 마이페이지 정보 뿌리기
 	@Override

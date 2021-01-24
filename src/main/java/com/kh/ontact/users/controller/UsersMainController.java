@@ -463,6 +463,7 @@ public class UsersMainController {
 		String uno = user.getUno();
 		String result = "aaa";
 		String urank_chk = "[!@#$%^&*(),.?\\\":{}|<>]";
+		System.out.println("urank는 : "+urank);
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		try {
 			Pattern pattern_symbol = Pattern.compile(urank_chk);
@@ -550,30 +551,33 @@ public class UsersMainController {
 		ModelAndView mv = new ModelAndView();
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
-		String realpwd = user.getPassword(); // 현재 비밀번호 값
-		String upwd = nowpwd; // 사용자가 입력한 현재 비밀번호
-		System.out.println(realpwd + "그리고" + nowpwd);
-		System.out.println(userdto.getUpwd());
-		if (!pwdEncoder.matches(upwd, realpwd)) {
-			logger.info("비밀번호 틀림");
-			mv.addObject("message", "이전 비밀번호가 올바르지 않습니다.");
-			mv.setViewName("users/pwdsetting");
-			return mv;
-		} else {
-			logger.info("비밀번호 일치함");
-			// 비밀번호 업데이트
-			String inputPass = userdto.getUpwd();
-			String pwd = pwdEncoder.encode(inputPass);
-			userdto.setUpwd(pwd);
-			userdto.setUemail(user.getUsername());
-			try {
+		String uno = user.getUno();
+		
+		try {
+			String realpwd = usersService.getpwd(uno);
+			String upwd = nowpwd; // 사용자가 입력한 현재 비밀번호
+			System.out.println(realpwd + "그리고" + nowpwd);
+			System.out.println(userdto.getUpwd());
+			if (!pwdEncoder.matches(upwd, realpwd)) {
+				logger.info("비밀번호 틀림");
+				mv.addObject("message", "이전 비밀번호가 올바르지 않습니다.");
+				mv.setViewName("users/pwdsetting");
+				return mv;
+			} else {
+				logger.info("비밀번호 일치함");
+				// 비밀번호 업데이트
+				String inputPass = userdto.getUpwd();
+				String pwd = pwdEncoder.encode(inputPass);
+				userdto.setUpwd(pwd);
+				userdto.setUemail(user.getUsername());
 				usersService.updateTmppwd(userdto);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			mv.addObject("success", "비밀번호 변경이 되었습니다.");
+			mv.setViewName("users/pwdsetting");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		mv.addObject("success", "비밀번호 변경이 되었습니다.");
-		mv.setViewName("users/pwdsetting");
+		
 		return mv;
 	}
 

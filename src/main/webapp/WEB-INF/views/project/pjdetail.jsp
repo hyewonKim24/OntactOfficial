@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -793,7 +793,7 @@
 														<div class="tdp-add">
 															<ul>
 																<input type="hidden" class="tdp" name="tduno" value="">
-																<!-- <input type="hidden" class="tdp-file" value=""> -->
+																<!--<input type="hidden" class="tdp-file" value=""> -->
 																<c:forEach items="${userlist}" var="ulist" varStatus="e">
 																	<li class="tdp-list tdp-list${ulist.uno}">${ulist.uname}
 																		<input type="hidden" class="tdp-uno" value="${ulist.uno}">
@@ -1056,18 +1056,18 @@
                     <div class="boardResult">
                     	<h2 class="title">${blist.bname }</h2>
                     	<c:forEach items="${blist.commonboardDto}" var="c">
-                       		<div class="title_detail">${c.bdesc}</div>
+                       		<div class="title_name">${c.bdesc}</div>
                        	</c:forEach>
                        	<div class="uploadFiles">
                        		<ul class="uploadedFileList-real">
 					<c:forEach items="${file}" var="file" varStatus="e">
 					<c:if test="${blist.bno eq file.bno }">
                        			<li data-src="${file.fname }" class="uploadedFileList-real-li ${blist.bno}">
-                       				<a href="${file.fpath }" class="boardimg-name-real"><span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span></a>
+                       				<span class="boardimg-real"><img src="${file.imgsrc}" alt="Attachment"></span>
                        				<div class="boardimg-info-real">
-	                       				<%-- <a href="${file.fpath }" class="boardimg-name-real">
+	                       				<a href="${file.fpath }" class="boardimg-name-real">
 	                       					<i class="fa fa-paperclip"></i>${file.foriginalname }
-	                       				</a> --%>
+	                       				</a>
                        				</div>
                        				<input type="hidden" class="fnamevalue" value="${file.fname }"></input>
                        			</li>
@@ -1828,7 +1828,7 @@
 								</div>
 								<!-- 은실 ) 파일뿌리기 -->
 								 <div class="uploadFiles">
-			                       		<ul class="uploadedFileList-real">
+			                       		<ul class="uploadedFileList-real task_file">
 								<c:forEach items="${file}" var="file" varStatus="e">
 								<c:if test="${blist.bno eq file.bno }">
 			                       			<li data-src="${file.fname }" class="uploadedFileList-real-li ${tlist.bno}">
@@ -3194,7 +3194,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	              success: function (result) {
 	              }
 	          });
-	      alert("삭제되었습니다.");
+	      //alert("삭제되었습니다.");
 	      // db 삭제
 	      $(this).get(0).click();
 	      }
@@ -3222,7 +3222,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 	              success: function (result) {
 	              }
 	          });
-	      alert("삭제되었습니다.");
+	      //alert("삭제되었습니다.");
 	      // db 삭제
 	      $(this).get(0).click();
 	      }

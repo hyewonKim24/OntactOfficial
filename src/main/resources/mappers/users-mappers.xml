@@ -108,6 +108,13 @@
 		update users set upwd=#{upwd} where uemail=#{uemail}
 		]]>
 	</update>
+	<!-- 비밀번호 변경 -->
+	<select id="getpwd" resultType="string">
+		<![CDATA[
+		select upwd from users
+		where uno = #{uno}
+		]]>
+	</select>
 	
 	<!-- 마이페이지 내 정보 업데이트 -->
 	<update id="updateUtell" flushCache="true" parameterType="hashMap">

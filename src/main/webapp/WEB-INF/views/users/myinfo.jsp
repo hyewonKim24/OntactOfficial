@@ -39,6 +39,7 @@
         }
         a{
             cursor:pointer;
+            text-decoration:none;
         }
 
         header {
@@ -72,7 +73,7 @@
             margin-top: 30px;
             width: 150px;
             height: 56px;
-            font-size: 18px;
+            font-size: 17px;
             line-height: 54px;
             border: 1px solid #5A3673;
             background-color: #5A3673;
@@ -91,13 +92,17 @@
             cursor: pointer;
         }
 
-        aside ul li a {
+        aside ul a li {
             font-weight: 700;
             color: black;
             text-decoration: none;
             cursor: pointer;
-            font-size: 17px;
+            font-size: 15px;
         }
+        
+        aside ul li:hover{
+		background-color: #e7e7e7;
+		}
 
         /* 본문 */
         article {
@@ -346,6 +351,7 @@
             color:#7b7c7f;
             line-height: 26px;
         }
+        
     </style>
 </head>
 
@@ -360,8 +366,8 @@
             <button id="aside_back"><&nbsp;&nbsp;&nbsp;&nbsp;돌아가기</button>
             </a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/user/mypage/detail">계정 정보</a></li>
-                <li><a href="${pageContext.request.contextPath}/user/mypage/updpwd">비밀번호 설정</a></li>
+                <a href="${pageContext.request.contextPath}/user/mypage/detail"><li style="text-decoration:underline;">계정 정보</li></a>
+                <a href="${pageContext.request.contextPath}/user/mypage/updpwd"><li>비밀번호 설정</li></a>
             </ul>
         </aside>
         <article>
@@ -477,7 +483,7 @@
                              <!--편집활성-->
                              <div class="userinfo_edit" style="display: none">
                                 <span class="userinfo_editable_content">직책</span>
-                                <input type="text" class="input_edit" placeholder="직책 입력 2~6자"  maxlength="6" name="urank" value="${rank}" id="urank">
+                                <input type="text" class="input_edit" placeholder="직책 입력 2~6자"  maxlength="6" name="urank" value="${rank}" id="urank1">
                                 <button class="info_btn_save" id="urankbtn">저장</button>
                                 <a class="canclebtn">취소</a>
                             </div>
@@ -592,7 +598,8 @@
        
        
        $('#urankbtn').click(function(){
-    	   var urank = $("#urank").val();
+    	   var urank = $("#urank1").val();
+    	   console.log(urank);
     	   var urank_origin = $("#urank_content").text();
 	        $.ajax({
 				type:"GET",
@@ -605,16 +612,16 @@
 						$('#alert').fadeIn(2000, function(){
 							$(this).fadeOut('slow');
 						});
-						$("#urank").parent('.userinfo_edit').css("display","none");
-						$("#urank").parents('li').find('.companyinfo_editable').css("display","flex");
-						$("#urank").val(urank_origin);
+						$("#urank1").parent('.userinfo_edit').css("display","none");
+						$("#urank1").parents('li').find('.companyinfo_editable').css("display","flex");
+						$("#urank1").val(urank_origin);
 					} else{
 						$('#alert').text('변경되었습니다.');
 						$('#alert').fadeIn(2000, function(){
 							$(this).fadeOut('slow');
 						});
-						$("#urank").parent('.userinfo_edit').css("display","none");
-						$("#urank").parents('li').find('.companyinfo_editable').css("display","flex");
+						$("#urank1").parent('.userinfo_edit').css("display","none");
+						$("#urank1").parents('li').find('.companyinfo_editable').css("display","flex");
 						$('#urank_content').text(urank);
 					}
 				}
@@ -683,6 +690,11 @@
         $("#uploadphoto").on("change", fileChange);
         function fileChange(e){
         	e.preventDefault();
+        	let ufilename = $("#ufilename").val();
+            	if(ufilename!==null||ufilename!==""){
+            		deleteFile(ufilename);
+            	} 
+        	
         	var files = e.target.files;
         	var file = files[0];
         	var formData = new FormData();

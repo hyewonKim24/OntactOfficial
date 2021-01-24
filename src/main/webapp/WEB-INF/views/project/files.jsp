@@ -31,6 +31,7 @@
         font-family: Noto Sans KR;
         line-height: 1.15;
         background-color: rgb(242, 242, 242);
+        overflow:hidden;
     }
 
     a {
@@ -245,7 +246,7 @@
         cursor:pointer;
     }
     .file_list_wrapper{
-    	height: 90%;
+    	height: 81%;
     	overflow-y:scroll;
     }
     
@@ -342,6 +343,7 @@
         /* background-color:gray; */
         padding-left: 6%;
         position: relative;
+        overflow:hidden;
     /* background-repeat: no-repeat;
     background-size: 27px 27px;
     background-position: 20px 50%; */
@@ -389,8 +391,9 @@
     padding: 20px 0px 0 20px;
     display:flex;
     flex-wrap:wrap;
-    height: 85%;
+    height: 81%;
     overflow-y:scroll;
+    align-content: flex-start;
     }
     .piclist_tr{
     display: inline-block;
@@ -1105,6 +1108,8 @@
 		 }
 		 $('.piclist_wrapper').append(html);
 	 };
+	 
+
 		
    </script>
 </body>

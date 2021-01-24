@@ -101,6 +101,7 @@
 				border-bottom: 1px solid #dadbdb;
 				padding-bottom: 8px;
 				margin-bottom: 12px;
+				font-size:16px;
 			}
 			.title_detail {
 				border: none;
@@ -109,6 +110,11 @@
 				font-size: 16px;
 				font-weight: 700;
 				font-family: Noto Sans KR;
+			}
+			.title_name{
+				font-size: 14px;
+				font-family: Noto Sans KR;
+				margin-bottom:10px;
 			}
 			.content_detail {
 				border: none;
@@ -126,7 +132,7 @@
 				overflow-y: hidden;
 				font-family: Noto Sans KR;
 			}
-.content_detail:focus, .title_detail:focus {
+.content_detail:focus, .title_detail:focus, .content_detail2:focus{
 	outline: none;
 }
 			.textfooter {
@@ -1909,6 +1915,7 @@
             width:150px;
             overflow:hidden;
             margin-right:7px;
+            margin-bottom:15px;
             }
             .boardimg img,
             .boardimg-real img{
@@ -1918,8 +1925,40 @@
             height:150px;
             }
             .boardimg-info-real a{
-            font-size:13px;
+            font-size:12px;
             }
+            .boardimg-info{
+            display:flex;
+            justify-content: center;
+            }
+            .boardimg-name{
+            font-size:12px;
+            color:#505050;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            }
+            .boardimg-delbtn{
+            font-size:12px;
+            color:#787878;
+            }
+            .boardimg-name-real{
+            font-size:12px;
+            color:#505050;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            }
+            .boardimg-info-real{
+            display:flex;
+            justify-content: center;
+            }
+           	.uploadedFileList-real{
+           	margin:30px 0 10px 0px
+           	}
+           	.task_file{
+           	margin:30px 0 10px 15px;
+           	}
         /* 윤진 :할일 리스트*/
 .todo-cont {
     width: 95%;
