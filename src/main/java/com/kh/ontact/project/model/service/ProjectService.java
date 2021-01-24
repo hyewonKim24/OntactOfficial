@@ -29,4 +29,9 @@ public interface ProjectService {
 	
 	// 회사 프로젝트 pno 불러오기
 	public String SelectCompanyPno(String cno) throws Exception;
+	// 프로젝트명, 프로젝트 글 수 불러오기
+	public ProjectDto SelectProName(String pno) throws Exception;
+	// 프로젝트 삭제
+	public int deleteProject(String pno) throws Exception;
+	
 }

@@ -51,7 +51,7 @@ public class ProjectController {
 	// 프로젝트 전체목록
 	@RequestMapping(value = "/project/all/list", method = RequestMethod.GET)
 	public ModelAndView selectListProject(ModelAndView mv, Authentication authentication,
-			HttpServletResponse response) {
+			HttpServletResponse response,@RequestParam(value = "prodelete", required = false) String prodelete) {
 		try {
 			response.setContentType("text/html;charset=UTF-8");
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
@@ -69,6 +69,8 @@ public class ProjectController {
 			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
 			mv.addObject("listpj", pjService.selectListProject(paramMap));
 			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));
+			if(prodelete!=null)
+				mv.addObject("prodelete", "프로젝트가 1개 삭제되었습니다");
 			mv.setViewName("project/projectall");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -332,6 +334,21 @@ public class ProjectController {
 		mv.setViewName("redirect:/project/pjdetail");
 		return mv;
 	}
-
+	
+	//프로젝트 삭제
+	@RequestMapping(value = "/project/deleteprojcet")
+	public ModelAndView deleteProject(@RequestParam(name = "pno") String pno, ModelAndView mv) {
+		System.out.println("프로젝트 삭제 컨트롤러 진입");
+		int rs =0;
+		try {
+			rs = pjService.deleteProject(pno);
+			System.out.println("프로젝트 삭제:"+rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("prodelete", rs);
+		mv.setViewName("redirect:/project/all/list");
+		return mv;
+	}
 	
 }

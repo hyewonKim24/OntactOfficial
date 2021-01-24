@@ -63,6 +63,26 @@
 		<input type="hidden" value="${uname}" id="uname" name="uname">
 		<div class="main">
 			<div class="contents">
+				<!-- 혜원 / 프로젝트 이름 -->
+				<div class="proname-wrap">
+					<div class="proname-title">
+					<img src="${pageContext.request.contextPath}/resources/img/svg/archive-fill.svg" width="20px" height="20px" class="pro-icon">
+					<span class="proname">${pjdto.pname}&nbsp;</span>(&nbsp;${pjdto.cnt}&nbsp;)
+				<div class="pro-option">
+					<a class="pro-dropdown">
+						<img src="${pageContext.request.contextPath}/resources/img/svg/three-dots-vertical.svg" width="25px" height="25px" class="pro-right-icon">
+					</a>
+					<div class="pro-editDropdown">
+	                   <ul>
+	                       <li>
+	                     		<a href="${pageContext.request.contextPath}/project/deleteprojcet?pno=${pno}" class="list_delbtn">프로젝트 삭제</a>
+	                       </li>
+	                       <li><a href="">프로젝트 수정</a></li>
+	                   </ul>
+	                </div> 
+				</div>
+				</div>
+			</div>
 				<!--  혜원/ 업무리포트  -->
 				<div class="task-report-wrap">
 					<p id="report-title"> 업무리포트 </p>
@@ -2898,6 +2918,13 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 					});
 				};
 				});
+			
+	//프로젝트 삭제 모달(혜원)
+	$(".pro-dropdown").on("click", function (e) {
+		e.preventDefault();
+		var $t = $(this).parents(".pro-option");
+		$t.find(".pro-editDropdown").toggle();
+	});
 			
 			
 	// 파일 추가 (은실)

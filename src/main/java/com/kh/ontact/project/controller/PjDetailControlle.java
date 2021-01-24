@@ -18,6 +18,8 @@ import com.kh.ontact.project.boardall.model.dto.BoardAllViewDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
 import com.kh.ontact.project.commonboard.model.service.CommonboardService;
 import com.kh.ontact.project.files.model.dao.FilesDao;
+import com.kh.ontact.project.model.dto.ProjectDto;
+import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
 import com.kh.ontact.project.task.model.dto.TaskDto;
@@ -49,6 +51,8 @@ public class PjDetailControlle {
 	private TodoService todoService;
 	@Autowired
 	FilesDao filesdao;
+	@Autowired
+	ProjectService pjService;
 	
 	//윤진 : ProejctDetail 전체리스트
 	@RequestMapping(value="project/pjdetail", method=RequestMethod.GET)
@@ -59,6 +63,7 @@ public class PjDetailControlle {
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		BoardAllDto badto = new BoardAllDto();
+		ProjectDto pjdto = new ProjectDto();
 		badto.setPno(pno);
 		List<BoardAllViewDto> blist = new ArrayList<BoardAllViewDto>();
 		List<ProjectMemberDto> ulist = new ArrayList<ProjectMemberDto>();
@@ -91,8 +96,10 @@ public class PjDetailControlle {
 			rclist = replyService.ReplyCount(pno);
 			System.out.println("댓글 카운트 list" + rclist);
 			userListSize = ulist.size();
-//		int rs = alertService.alertProRead(aldto);
-//		System.out.println("프로젝트 알림 읽음 개수 :"+rs);
+			
+			//프로젝트 이름 , 글 개수 불러오기
+			pjdto=pjService.SelectProName(pno);
+			System.out.println("프로젝트 이름 개수:"+pjdto);
 
 			// 프로젝트 초대 리스트
 			pmlist = usersService.projectInviteList(dto);
@@ -105,6 +112,7 @@ public class PjDetailControlle {
 			mv.addObject("blist", blist);
 			mv.addObject("userlist", ulist);
 
+			mv.addObject("pjdto", pjdto);
 			mv.addObject("rclist", rclist);
 			mv.addObject("pmlist", pmlist);
 			mv.addObject("replylist", rlist);

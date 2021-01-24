@@ -66,8 +66,8 @@ public class PtaskController {
 			if(pno==null || pno.equals("")) {
 				ppno = pjService.SelectCompanyPno(cno);
 				System.out.println("회사 프로젝트 번호:"+ppno);
-				task = taskService.PListTaskMy(paramMap);
 				paramMap.put("pno", ppno);
+				task = taskService.PListTaskMy(paramMap);
 				mv.addObject("pno", ppno);
 			}else {
 				paramMap.put("pno", pno);

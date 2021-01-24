@@ -152,4 +152,28 @@
 			where p.cno=#{cno}
 		]]> 
 	</select>
+	
+	
+	<resultMap type="ProjectDto" id="projectNameMap">
+		<id column="pname" property="pname" />
+		<result column="cnt" property="cnt" />
+	</resultMap>
+	
+	<!-- 프로젝트명, 프로젝트 글 수 불러오기 -->
+	<select id="SelectProName" resultMap="projectNameMap">
+		<![CDATA[ 
+		select p.pname, count(b.bno) as cnt from project p
+		    full outer join boardall b
+		    on b.pno=p.pno
+		    where p.pno=#{pno}
+		    group by p.pname
+		]]> 
+	</select>
+	
+	<!-- 프로젝트 삭제 -->
+	<delete id="deleteProject">
+		<![CDATA[ 
+		delete from project where pno=#{pno}
+		]]> 
+	</delete>
 </mapper>
