@@ -257,7 +257,7 @@ header {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
-. {
+.sb-modal-content  {
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -353,7 +353,7 @@ header {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
-.s {
+.ssb-modal-content {
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -611,14 +611,12 @@ header {
 
 				<div id="newpjModal_a" class="ssb-modal">
 					<!-- Modal content -->
-					<div class="s">
+					<div class="ssb-modal-content">
 						<div class="ssb-modal-header">
 							<span class="cclose">&times;</span>
 							<h4>반려사유입력</h4>
 						</div>
-						<form
-							action="${pageContext.request.contextPath}/updateaprejection"
-							method="get">
+						<form action="${pageContext.request.contextPath}/project/updateaprejection" method="get">
 							<input type="hidden" name="apno" value="${apno.apno}">
 							<div id="pname">
 								<textarea cols="40" rows="8" placeholder="반려 사유를 입력해주세요(50자 내외)"
@@ -638,7 +636,7 @@ header {
 
 				<div id="newpjModal" class="sb-modal">
 					<!-- Modal content -->
-					<div class="">
+					<div class="sb-modal-content">
 						<div class="sb-modal-header">
 							<span class="close">&times;</span>
 						</div>
