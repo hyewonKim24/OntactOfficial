@@ -282,13 +282,14 @@
                     return;
                     console.log("false로 들어옴");
               }else if(nMemberValidation() == true){
-                 console.log("true로 들어옴");
-        			confirm("제출하시겠습니까?");
-        			alert("제출 완료");
-         	   var frm = document.frm;
-         	   frm.action = "<c:url value='/dayoff/dayoffins'/>";
-         	   frm.method = "post";
-         	   frm.submit();
+            	  console.log("true로 들어옴");
+      			confirm("제출하시겠습니까?")
+      			if(true){
+      	          	   $("#dfIns_frm").submit();
+      	        	 alert("제출완료");
+      	        }else{
+      	        	  return;
+      	      	}
         	}else{
          	   return;
          	}
@@ -299,23 +300,28 @@
         	   alert("부서를 선택해주세요");
          	   $('#name').focus();
          	   return false;
-         	 } else if($.trim($('#uname').val()) == ''){
+         	 }
+         	 if($.trim($('#uname').val()) == ''){
          	   alert("이름을 입력해주세요");
          	   $('#uname').focus();
          	   return false;
-        	  } else if($.trim($('#dayoffStart').val()) == ''){
+        	  }
+         	 if($.trim($('#dayoffStart').val()) == ''){
             	   alert("휴가 시작일을 선택해주세요.");
             	   $('#dayoffStart').focus();
            	   return false;
-           	  } else if($.trim($('#dayoffEnd').val()) == ''){
+           	  } 
+         	 if($.trim($('#dayoffEnd').val()) == ''){
                	alert("휴가 종료일을 선택해주세요.");
                	$('#dayoffEnd').focus();
               	return false;
-             } else if($.trim($('#offdays').val()) == ''){
+             }
+         	 if($.trim($('#offdays').val()) == ''){
                  alert("일수를 입력해주세요.");
                  $('#offdays').focus();
                  return false;
-              } else if($.trim($('#offreason').val()) == ''){
+              }
+         	 if($.trim($('#offreason').val()) == ''){
             	   alert("휴가사유를 입력해주세요");
            	   		$('#offreason').focus();
    	        	   return false;
@@ -351,8 +357,8 @@
         <div class="article">
             <div class="conTitle">휴가 신청 및 조회</div>
             <div class="application">
-            <form action = "${pageContext.request.contextPath}/dayoff/dayoffins" method = "get">
-           
+            <form id="dfIns_frm" action = "${pageContext.request.contextPath}/dayoff/dayoffins" method = "post">
+           	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <table>
                     <tr>
                         <td class="title">부서명</td>

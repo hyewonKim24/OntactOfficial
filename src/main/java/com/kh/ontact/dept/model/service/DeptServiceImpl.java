@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ontact.dept.model.dao.DeptDao;
 import com.kh.ontact.dept.model.dto.DeptDto;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 @Service("deptServ")
 public class DeptServiceImpl implements DeptService{
@@ -53,6 +54,15 @@ public class DeptServiceImpl implements DeptService{
 	@Override
 	public DeptDto selectDtOne(String dno){
 		return deptDao.selectDtOne(dno);
+	}
+	
+	public int updateDept(List<UsersDto> list) { 
+		int rs = 0;
+		for(int i = 0; i < list.size(); i++) {
+			 rs += deptDao.updateDept(list.get(i));
+		}
+		System.out.println(rs + "행이 업데이트됨");
+		return rs;
 	}
 	
 }

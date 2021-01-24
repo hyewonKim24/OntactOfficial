@@ -24,6 +24,11 @@ public class OverworkDao {
 		RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowboun
 		return sqlSession.selectList("OverworkMapper.selectOverwork", uno,row);
 	}
+	
+	public int searchlistCount(HashMap<String, String> paramMap) {
+		return sqlSession.selectOne("OverworkMapper.searchlistCount", paramMap);
+	} 
+	
 	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap) { // 게시글 검색 조회 
 		return sqlSession.selectList("OverworkMapper.searchOverwork", paramMap);
 	}

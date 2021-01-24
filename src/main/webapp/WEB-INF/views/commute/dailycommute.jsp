@@ -410,11 +410,11 @@ canvas {
 			    newWindow.focus();
 		}
 		
-		$("#search").click(function(){
+		/* $("#search").click(function(){
 		    $(this).prop("checked", true);
 		    $("form").submit();
-		})
-		function checkboxArr() {
+		}) */
+		/* function checkboxArr() {
 		    var checkArr = [];     // 배열 초기화
 		    $("input[name='cstate']:checked").each(function(i) {
 		        checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
@@ -427,7 +427,7 @@ canvas {
 		        }
 		    })
             });
-        }
+        } */
     });
 </script>
 </head>
@@ -471,7 +471,8 @@ canvas {
 					</div>
 				</div>
 				<div class="option">
-					<form action="${pageContext.request.contextPath}/commute/dailylist" method="get" name="search_frm">
+					<form name="search_frm">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<table>
 							<tr>
 								<td>기간 선택</td>
@@ -569,7 +570,7 @@ canvas {
 		if(fnMemberValidation() == false) {
             return;
             console.log("false로 들어옴");
-      }else if(nMemberValidation() == true){
+      }else if(fnMemberValidation() == true){
          console.log("true로 들어옴");
 			
  	   var frm = document.search_frm;

@@ -257,7 +257,7 @@
         margin: 0;
         width: 150px;
         height: 30px;
-        background-color: #F2F2F2;
+        background-color: #e7e7e7;
         border: none;
         border-radius: 3px;
     }
@@ -298,8 +298,15 @@
     	height : 35px;
     	/* background-color : white; */
     	border : none;
-    	
     	text-align : left;
+    }
+    .deptSelect{		
+    	width : 100px;
+    	height : 30px;   
+    	border : 1px solid #a2a2a2; 
+    	border-radius : 3px;
+    	 box-sizing: border-box; 	
+    	 margin-right : 5px;
     }
 
     </style>
@@ -367,12 +374,10 @@
 					frm.submit();
 				}
 			});
-            $(".dnameBtn")
+            
             //부서 삭제
             $("#deleteBtn").click(function() {
             	$(".pickDept").css("display", "inline-block");
-            	
-            	
 				/* var frm = document.dept_frm;
 				frm.action = "${pageContext.request.contextPath}/commute/deptdel"
 				frm.method = "get"
@@ -432,6 +437,7 @@
 			                        class="pickDept pickDept${e.count}" id="dept${e.count}">삭제</button>
 		                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}">
 		                        ${dp.dname}
+		                        <input type ="hidden" value="${dp.dno}" name="dno" class="dno">
 		                        </a>
 		                        </li>
 		                        <script>
@@ -459,7 +465,7 @@
                     </ul>
                 </div>
                 <div class="notyet">
-                    <div><a href="${pageContext.request.contextPath}/commute/organlist?">미분류그룹</a></div>
+                    <div><a href="${pageContext.request.contextPath}/commute/organlist">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
                 <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"> --%>
@@ -474,7 +480,8 @@
 	                    <!-- <input type="text" id="depttitle" value="" readonly>  -->
                  </div>
                  
-                    
+                    <form class="change_frm" name="change_frm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <div>
                         <table>
                             <tr>
@@ -486,24 +493,26 @@
                                 <th>이메일</th>
                             </tr>
                             
-                        <c:if test="${userslistCount eq 0}">
+                        <%-- <c:if test="${userslistCount eq 0}">
 							<tr>
 								<td colspan="6" align="center">
 								<br>사원이 존재하지 않습니다.<br> <br></td>
 							</tr>
-						</c:if>     
-                        <c:if test="${userslistCount ne 0}">
-						<c:forEach var="og" items="${selectOgUser}" varStatus="status">
+						</c:if>      --%>
+                        <c:if test="${not empty list}">
+						<c:forEach var="og" items="${list}" varStatus="status">
+						
                             <tr>
-                                <td><input type="checkbox" name="chk" value="ok" class="chkbox"></td>
+                                <td><input type="checkbox" name="chk" value="${og.uno}" class="chkbox"></td>
                                 <td>${og.uno}</td>
                                 <td>${og.dname}</td>
                                 <td>${og.uname}</td>
                                 <td>${og.urank}</td>
                                 <td>${og.uemail}</td>
                             </tr>
+                         
                         </c:forEach>
-                       	</c:if>
+                       	</c:if> 
                        
                             <!-- 앞 페이지 번호 처리 -->
 					<tr>
@@ -544,10 +553,17 @@
 					</tr>
                         </table>
                     </div>
-                    <!-- <div class="move_wrap">
-                        <button id="moveBtn">다른 조직으로 이동</button>
-                        &nbsp; <span>0명</span>
-                    </div> -->
+                    <div class="move_wrap">
+                        
+                        <select name="deptSelect" class="deptSelect">  
+	                        <c:forEach var="dp" items="${selectDept}" varStatus="e">
+								    <option value="${dp.dno}">${dp.dname}</option>  
+							</c:forEach>
+						</select>  
+                        
+                        <button id="moveBtn" onclick="changeDept();">다른 조직으로 이동</button>
+                    </div> 
+                    </form>
                 </div>
             </div>
     </div>
@@ -565,33 +581,15 @@ function checkOneS(a){
        }
     }
  }
- 
-
-
 
  
-/*  $("#moveBtn").click(function(){
-	 if($('input:checkbox[name="checkbox_name"]:checked').length == 0){
-		 alert("이동할 사원을 선택해주세요");
-	 } else{
-		 var
-		 $.ajax({
- 			contentType : 'application/json charset=UTF-8',
-				url: "${pageContext.request.contextPath}/commute/deptdel",
-				data: {
-					dname : dname,
-					dno : dno,
-					cno : cno
-				},
-				success: function (data) {
-					alert(data);
-				},
-				error: function () {
-					
-				}
-			});
-	 }
- }) */
+ function changeDept(){
+	 var frm = document.change_frm;
+		frm.action = "${pageContext.request.contextPath}/commute/organuserupdate"
+		frm.method = "post"
+		frm.submit();
+ }
+ 
 </script>
 </body>
 </html>

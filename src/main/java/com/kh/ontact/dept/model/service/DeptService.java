@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ontact.dept.model.dto.DeptDto;
+import com.kh.ontact.users.model.dto.UsersDto;
 
 public interface DeptService {
 	//윤진 - 프로젝트
@@ -23,5 +24,7 @@ public interface DeptService {
 	public int insertDept(DeptDto d);
 	
 	public int deleteDept(HashMap<String, String> paramMap); 
+	
+	public int updateDept(List<UsersDto> list);
 	
 }

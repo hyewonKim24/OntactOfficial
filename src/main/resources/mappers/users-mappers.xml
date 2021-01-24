@@ -245,31 +245,32 @@
 	<!-- 혜림 조직도 부서별 직원리스트 조회 -->
 	<!-- 미분류 상태 -->
 	<select id="listCountFirst" resultType="int">
-		select count(uno) from users where dno = null 
+		select count(uno) from users
+		where cno=#{cno} and dno is null
 	</select>
 	<select id="selectOgFirst" resultType="arraylist"
 		resultMap="resultUsers">
-		select uno, uname, urank, uemail from users where dno = null
+		select uno, dno, uname, urank, uemail from users where cno=#{cno} and dno is null
 	</select>
 	<!-- 부서로 분류된 후 -->
-	<select id="listCount" resultType="int"> 
+	<select id="listCount" resultType="int" parameterType ="java.util.HashMap"> 
 		select count(uno) 
 		from users u, dept d 
-		where u.dno = d.dno and d.dname = #{dname}
+		where u.dno = d.dno and d.dno = #{dname} and d.cno=#{cno}
 	</select>
 	
 	<select id="selectOgUser"
-		resultMap="resultUsers">
+		resultMap="resultUsers" parameterType ="java.util.HashMap">
 		select u.uno, d.dname, u.uname, u.urank, u.uemail 
 		from users u, dept d 
-		where u.dno = d.dno and d.dname = #{dname}
+		where u.dno = d.dno and d.dname = #{dname} and d.cno=#{cno}
 	</select>
 	
 	<select id="deleteOrgani"
 		resultMap="resultUsers">
 		select u.uno, d.dname, u.uname, u.urank, u.uemail 
 		from users u, dept d 
-		where u.dno = d.dno and d.dname = #{dname}
+		where u.dno = d.dno and d.dname = #{dname} and d.cno =#{cno}
 	</select>
 	
 	<!-- <resultMap type="map" id="resultUsersMap">

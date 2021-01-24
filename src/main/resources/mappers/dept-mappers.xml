@@ -51,7 +51,7 @@
 		delete from dept where cno = #{cno} and dno = #{dno}
 	</delete>
 	
-	<update id="updateDayoffApp" parameterType="string"
+	<update id="updateDept" parameterType="string"
 		flushCache="true" statementType="PREPARED"> 
 		update users set dno = #{dno}
 		where uno = #{uno}

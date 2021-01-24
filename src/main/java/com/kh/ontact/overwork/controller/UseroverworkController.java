@@ -29,7 +29,7 @@ public class UseroverworkController {
 			@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "startdate", required = false) String startdate,
 			@RequestParam(name = "enddate", required = false) String enddate,
-			Authentication authentication, ModelAndView mv) {
+			Authentication authentication, HttpServletRequest request, ModelAndView mv) {
 			
 		System.out.println("시간외근무 리스트 진입");
 		try {
@@ -37,29 +37,35 @@ public class UseroverworkController {
 			String uno=userdetail.getUno();
 			System.out.println("세션값확인 : " + uno);
 			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			
 			int currentPage = page;
 //			 한 페이지당 출력할 목록 갯수, 페이징
-			int listCount = overworkServ.listCount(uno);
-			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
-		      
+			int listCount1 = overworkServ.listCount(uno);
+			int maxPage = (int) ((double) listCount1 / LIMIT + 0.9);
+
 			//검색
 			String start =  startdate;
 			System.out.println("start" + start);
 			String end = enddate;
 			System.out.println("end" + end);
 			
-			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
+
+			int listCount2 = overworkServ.searchlistCount(paramMap);
 			
 			if (startdate == null && enddate == null) {
 				mv.addObject("list", overworkServ.selectOverwork(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
-				mv.addObject("listCount", listCount);
+				mv.addObject("listCount", listCount1);
 				mv.setViewName("commute/overcommute");
 			} else if (startdate != null && enddate != null) {
+//				mv.addObject("listCount", listCount2);
 				mv.addObject("list", overworkServ.searchOverwork(paramMap));
+				System.out.println("결과" + overworkServ.searchOverwork(paramMap));
 				mv.setViewName("commute/overcommute");
 			}
 			
@@ -70,8 +76,8 @@ public class UseroverworkController {
 		}
 		return mv;
 	}
-	//
-	@RequestMapping(value = "/overwork/ins", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/overwork/ins", method = RequestMethod.POST)
 	public String  insetOverwork(OverworkDto o, Authentication authentication, RedirectAttributes rttr) {
 		try {
 			System.out.println("인서트진입");
@@ -94,7 +100,7 @@ public class UseroverworkController {
 		}
 		return "redirect:/overwork/owlist";
 	}
-	//
+	
 	@RequestMapping(value = "/overwork/owupd", method = RequestMethod.POST)
 	public ModelAndView updateOverworkApp( 
 			@RequestParam(name = "hiddenname") String owno,

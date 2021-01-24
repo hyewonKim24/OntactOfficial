@@ -46,10 +46,10 @@ public interface UsersService {
 	
 	
 	// 조직도
-	public int listCountFirst();
-	public List<UsersDto> selectOgFirst(int startPage, int limit);
-	public int listCount(String dname);
-	public List<UsersDto> selectOgUser(int startPage, int limit, String dname);
+	public int listCountFirst(String cno);
+	public List<UsersDto> selectOgFirst(int startPage, int limit, String cno);
+	public int listCount(HashMap<String, String> paramMap);
+	public List<UsersDto> selectOgUser(int startPage, int limit, HashMap<String, String> paramMap);
 	public int updateDept(UsersDto u); 
-	public List<UsersDto> deleteOgUser(String dname);
+	public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap);
 }

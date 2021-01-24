@@ -11,6 +11,8 @@ public interface OverworkService {
 	
 	public List<OverworkDto> selectOverwork(int startPage, int limit, String uno);
 	
+	public int searchlistCount(HashMap<String, String> paramMap);
+	
 	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap); 
 
 	public OverworkDto selectOwOne(String owno);

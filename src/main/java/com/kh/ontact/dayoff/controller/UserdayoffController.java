@@ -39,26 +39,26 @@ public class UserdayoffController {
 		try {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String uno=userdetail.getUno();
-			System.out.println("세션값확인 : " + uno);
+			
 			//
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			int currentPage = page;
 ///			 한 페이지당 출력할 목록 갯수, 페이징
 			int listCount1 = dayoffServ.allListCount(uno);
-			int listCount2 = dayoffServ.listCount(paramMap);
-			System.out.println(listCount1);
 			int maxPage = (int) ((double) listCount1 / LIMIT + 0.9);
 			
 			String start =  startdate;
+			System.out.println("start" + start);
 			String end = enddate;
+			System.out.println("end" + end);
 			
+			paramMap.put("uno", uno);
 			paramMap.put("startdate", start);
 			paramMap.put("enddate", end);
+			int listCount2 = dayoffServ.listCount(paramMap);
 			
 			if (startdate == null && enddate == null) {
 				System.out.println("if 문으로 들어옴");
-				List<DayoffDto> dList = dayoffServ.selectDayoff(currentPage, LIMIT, uno);
-				
 				mv.addObject("list", dayoffServ.selectDayoff(currentPage, LIMIT, uno));
 				System.out.println(dayoffServ.selectDayoff(currentPage, LIMIT, uno));
 				mv.addObject("currentPage", currentPage);
@@ -73,6 +73,7 @@ public class UserdayoffController {
 				mv.addObject("listCount", listCount2);
 				mv.setViewName("commute/dayoff");
 			}
+			//
 //			if (startdate != null && enddate != null) {
 //				System.out.println("if 문으로 들어옴");
 //				mv.addObject("list", dayoffServ.searchDayoff(paramMap));
@@ -94,7 +95,7 @@ public class UserdayoffController {
 		return mv;
 	}
 	//
-	@RequestMapping(value = "/dayoff/dayoffins", method = RequestMethod.GET)
+	@RequestMapping(value = "/dayoff/dayoffins", method = RequestMethod.POST)
 	public String insertDayoff(DayoffDto d, Authentication authentication, RedirectAttributes rttr) {
 		try {
 			System.out.println("인서트진입");

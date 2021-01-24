@@ -24,8 +24,12 @@
 		select * from overwork where uno = #{uno} order by owdate desc
 	</select>
 	
+	<select id="searchlistCount" resultType="int" parameterType ="java.util.HashMap" resultMap="resultOverwork"> 
+		select count(owno) from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owdate desc
+	</select>
+	
 	<select id="searchOverwork" parameterType ="java.util.HashMap"
-		resultType="arraylist" resultMap="resultOverwork">
+		 resultMap="resultOverwork">
 		select * from overwork where uno =#{uno} and owdate between to_date(#{startdate}, 'yyyy-mm-dd') and to_date(#{enddate}, 'yyyy-mm-dd') order by owdate desc
 	</select>
 	
