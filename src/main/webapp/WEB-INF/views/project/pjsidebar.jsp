@@ -471,8 +471,7 @@ input:checked+.slider:before {
 			error : function() {
 				alert("sidebar : pjteam load error");
 			}
-		});
-	//경로 추가하고 현재페이지 색 바뀌는 것 추가해야함		
+		});		
 
 	});
 	// modal
@@ -502,7 +501,6 @@ input:checked+.slider:before {
 		 
 		// 전역변수 설정
 		$(document).ready(function(){
-			
 			// 글 작성 알림 카운트 ajax 추가
 			$.ajax({
 						url: "${pageContext.request.contextPath}/alertcount",
@@ -560,7 +558,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg> 미보관 <span class="pj_sb_alarm">00</span>
 				</a></li>
-				<li><a href="#"> <svg version="1.1" class="pj_btn"
+				<li><a href="${pageContext.request.contextPath}/project/unread/list"><svg version="1.1" class="pj_btn"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 50 50" style="enable-background: new 0 0 50 50;"

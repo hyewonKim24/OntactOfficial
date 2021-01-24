@@ -99,6 +99,27 @@ public class ProjectController {
 		return mv;
 	}
 	
+	// 읽지않음 프로젝트 목록
+	@RequestMapping(value="/project/unread/list", method = RequestMethod.GET)
+	public ModelAndView selectListPjUnread(ModelAndView mv, Authentication authentication, HttpServletResponse response) {
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String uno = userdetail.getUno();
+			String cno = userdetail.getCno();
+			
+			HashMap<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("uno", uno);
+			paramMap.put("cno", cno);
+			
+			mv.addObject("pjunread",pjService.selectListPjUnread(paramMap));
+			mv.setViewName("project/pjunread");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return mv;
+	}
+	
 	//부서별  보관함 프로젝트 리스트
 	@RequestMapping(value="/project/pjteam/list", method = RequestMethod.GET)
 	public ModelAndView selectListPjTeam(ModelAndView mv, 
@@ -114,7 +135,7 @@ public class ProjectController {
 
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("uno", uno);
-			paramMap.put("dname", dname);
+			paramMap.put("dname", '%'+dname+'%');
 			System.out.println("paramMap:"+paramMap);
 			
 			mv.addObject("pjteam", pjService.selectListPjTeam(paramMap));
@@ -236,11 +257,34 @@ public class ProjectController {
 		} 
 		return pjuns;
 	}
+	// 읽지않음 프로젝트 목록 ajax
+	@ResponseBody
+	@RequestMapping(value="/project/unread/listajax", method = RequestMethod.GET)
+	public List<ProjectDto> selectListProjectUnread(Authentication authentication, HttpServletResponse response) {
+		List<ProjectDto> pjunread = new ArrayList<ProjectDto>();
+		try {
+		response.setContentType("text/html;charset=UTF-8");
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String uno = userdetail.getUno();
+		String cno = userdetail.getCno();
+		
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("uno", uno);
+		paramMap.put("cno", cno);
+		
+		pjunread = pjService.selectListPjUnread(paramMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return pjunread;
+	}
+	
 	// 부서별 프로젝트 목록 ajax
 	@ResponseBody
 	@RequestMapping(value="/project/pjteam/listajax", method = RequestMethod.GET)
 	public List<ProjectDto> selectListProjectTeam(Authentication authentication, HttpServletResponse response,
-			@RequestParam(value = "dname", required = false) String dname) {
+			@RequestParam(name = "dname") String dname) {
+		System.out.println("부서 에이작스 진입 ");
 		List<ProjectDto> pjteam = new ArrayList<ProjectDto>();
 		try {
 		response.setContentType("text/html;charset=UTF-8");
@@ -250,7 +294,8 @@ public class ProjectController {
 		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("uno", uno);
-		paramMap.put("dname", dname);
+		paramMap.put("dname", '%'+dname+'%');
+		System.out.println("부서 에이작스 "+ paramMap);
 		
 		pjteam = pjService.selectListPjTeam(paramMap);
 		} catch (Exception e) {

@@ -50,6 +50,7 @@
 		<result column="pjmembercnt" property="pjmembercnt" />
 		<result column="pjteam" property="pjteam" />
 		<result column="cnt" property="cnt" />
+		<result column="dname" property="dname" />
 	</resultMap>
 	<!-- 프로젝트 전체 목록 -->
 	<select id="selectListProject" resultMap="projectListMap">
@@ -75,13 +76,13 @@
 	</select>
 
 	<!-- 프로젝트 미보관함 -->
-	<select id="selectListPjUns" resultMap="projectListMap">
+	<select id="selectListPjUns" resultMap="projectListMap" parameterType="map">
 		<![CDATA[
 			select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam, a.cnt as cnt
 		    from project pj 
 		        inner join company c on c.cno = pj.cno
 		        inner join 
-		            (select pno, count(pno) as pjmembercnt from project_member where cno =#{cno} group by pno) pjm on pj.pno = pjm.pno
+		            (select pno, count(pno) as pjmembercnt from project_member where cno =#{cno} and uno = #{uno} group by pno) pjm on pj.pno = pjm.pno
 		        left join
 		            (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
 		                from project_dept pjd, dept d 
@@ -93,27 +94,47 @@
 		    order by pj.pno desc
 	     ]]>
 	</select>
+	
+	<!-- 프로젝트 읽지 않음-->
+	<select id="selectListPjUnread" resultMap="projectListMap" parameterType="map">
+		<![CDATA[
+		select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam, a.cnt as cnt
+		from project pj 
+		    inner join company c on c.cno = pj.cno
+		    inner join 
+		        (select pno, count(pno) as pjmembercnt from project_member where cno=#{cno} group by pno) pjm on pj.pno = pjm.pno
+		    left join
+		        (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
+		            from project_dept pjd, dept d 
+		            where d.dno = pjd.dno 
+		            group by pjd.pno) pjteam 
+		    on pj.pno = pjteam.pno 
+		    full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on pj.pno = a.pno
+		where pj.pname <> c.cname and pname <> pjteam.dname and a.cnt is not null
+		order by pj.pno desc
+		]]>
+	</select>
 
 	<!--부서별 보관함 목록 -->
-	<select id="selectListPjTeam" resultMap="projectListMap" parameterType="map">
+	<select id="selectListPjTeam" resultMap="projectListMap" parameterType="java.util.HashMap">
 		<![CDATA[
-			select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam, a.cnt as cnt
+		select pj.pno as pj_pno, pj.pname as pj_pname, pj.popen as pj_open, pjm.pjmembercnt as pjmembercnt, pjteam.dname as pjteam, a.cnt as cnt
 		    from 
 		        project pj 
 		        inner join 
 		        (select * from project_member where uno= #{uno}) pju
 		        on pj.pno = pju.pno
 		        inner join 
-		        (select pno, count(*) as pjmembercnt from project_member group by pno order by pno ) pjm 
+		        (select pno, count(*) as pjmembercnt from project_member group by pno ) pjm 
 		        on pj.pno = pjm.pno
-		         left join
+		         inner  join
 		        (select pjd.pno, LISTAGG(d.dname,',') WITHIN GROUP(ORDER BY d.dname) AS dname 
 		            from project_dept pjd, dept d 
 		            where d.dno = pjd.dno 
 		            group by pjd.pno) pjteam 
 		        on pj.pno = pjteam.pno
 		        full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno =#{uno} and acount=1) a on pj.pno = a.pno
-		        where pjteam.dname like '%${dname}%'
+		        where pjteam.dname like '${dname}'
 		    order by pj.pno desc
 	     ]]>
 	</select>

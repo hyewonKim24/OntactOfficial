@@ -293,16 +293,18 @@ body {
 </style>
 <script>
 	//div 랜덤 배경색
-		$(document).ready(function() {
-		function backgroundColor() { // div 랜덤 배경색
-		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
-		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
-		     var color = backgroundColor[randome];
-			   return color;
-		};
-		
- 		$.ajax({
+ 		$(document).ready(function() {
+			function backgroundColor() { // div 랜덤 배경색
+			    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
+			    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
+			     var color = backgroundColor[randome];
+				   return color;
+			};
+		var dname=$('.dname').val();
+		console.log(dname+"dname"); 
+  		$.ajax({
 			url: "${pageContext.request.contextPath}/project/pjteam/listajax",
+			data: {dname: dname},
 			success: function (object) {
 				$('.pj_board_list').html('');
 				
@@ -333,7 +335,7 @@ body {
 				console.log("list 불러오기 실패");
 			}
 		}); 
-        });  
+ 		});
 	
 	$(document).ready(function() {
 		$(".pj_team_list").mouseover(function() {
@@ -351,6 +353,7 @@ body {
 			$(this).css("background-image", 'url("icon/check.svg")');
 		});
 	});
+	
 	// modal
 	// window.onload = function () {
 	//     var modal = document.getElementById("pjmoveModal");
@@ -409,7 +412,7 @@ body {
 		<div id="pj_board_bottom">
 			<div id="section_project">
 				<div class="pj_title">
-					<span>${dname}</span> <span><a href="#" id="pj_edit">편집</a></span>
+					<span>${dname} <input type="hidden" class="dname" name="${dname}" value="${dname}"></span>
 				</div>
 				<div class="pj_board_list">
 					<!-- 프로젝트가 하나도 없을 경우-->

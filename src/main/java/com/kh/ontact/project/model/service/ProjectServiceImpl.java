@@ -58,6 +58,12 @@ public class ProjectServiceImpl implements ProjectService{
 		return pjDao.selectListPjUns(paramMap);
 	}
 	
+	// 읽지않음 프로젝트
+	@Override
+	public List<ProjectDto> selectListPjUnread(HashMap<String, String> paramMap) throws Exception{
+		return pjDao.selectListPjUnread(paramMap);
+	}
+	
 	// 부서별 보관함 프로젝트 목록
 	@Override
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap)throws Exception{

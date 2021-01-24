@@ -22,6 +22,9 @@ public interface ProjectService {
 	
 	//미보관 프로젝트
 	public List<ProjectDto> selectListPjUns(HashMap<String, String> paramMap) throws Exception;
+	
+	//읽지않음 프로젝트
+	public List<ProjectDto> selectListPjUnread(HashMap<String, String> paramMap) throws Exception;
 
 	// 부서별 보관함 프로젝트 목록
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap) throws Exception;

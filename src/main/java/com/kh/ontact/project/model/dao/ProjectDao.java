@@ -41,8 +41,13 @@ public class ProjectDao {
 		return sqlSession.selectList("Project.selectListPjUns", paramMap);
 	}
 	
+	// 읽지않음 프로젝트
+	public List<ProjectDto> selectListPjUnread(HashMap<String, String> paramMap){
+		return sqlSession.selectList("Project.selectListPjUnread", paramMap);
+	}
 	// 부서별 보관함 프로젝트 목록
 	public List<ProjectDto> selectListPjTeam(HashMap<String, String> paramMap){
+		System.out.println("프로젝트부서보관함 dao 진입"+paramMap.get("dname"));
 		return sqlSession.selectList("Project.selectListPjTeam", paramMap);
 	}
 	

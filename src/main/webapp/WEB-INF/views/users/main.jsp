@@ -93,7 +93,7 @@
 <body>
 
     <header>
-	    <h2>ONTACT</h2>
+	    <h2><img src="${pageContext.request.contextPath}/resources/img/ontact_logo-04-white.png" width="140px"></h2>
 	    <sec:authorize access="isAnonymous()">
 	        <button id="login"  onclick="location.href ='${pageContext.request.contextPath}/main/loginform'">로그인</button>
 	    </sec:authorize>

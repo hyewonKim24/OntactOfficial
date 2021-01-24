@@ -51,9 +51,6 @@
 	let pick_cnt = 0;
 	console.log("pick_cnt : " + pick_cnt);
 	
-	
-	
-      
 	</script>
 	</head>
 	
