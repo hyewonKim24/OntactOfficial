@@ -43,13 +43,13 @@ public class ScheduleDao {
 	
 	
 //	전체 일정
-	public List<ScheduleDto> selectAllSche(HashMap<String, String> paramMap1) {
+	public List<ScheduleDto> selectAllSche(String pno) {
 		
 //		System.out.println(paramMap.get("uname"));
-		return sqlSession.selectList("ScheduleMapper.selectAllSche", paramMap1);
+		return sqlSession.selectList("ScheduleMapper.selectAllSche", pno);
 	}
-	public List<ScheduleDto> selectAllTask(HashMap<String, String> paramMap2) {
-		return sqlSession.selectList("ScheduleMapper.selectAllTask", paramMap2);
+	public List<ScheduleDto> selectAllTask(String pno) {
+		return sqlSession.selectList("ScheduleMapper.selectAllTask", pno);
 	}
 	
 }

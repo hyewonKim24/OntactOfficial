@@ -310,12 +310,13 @@
 		if(result1 == "success") {
 	        alert("부서가 추가되었습니다.");
 	    }
+		
 		//부서 삭제 알림
 		var result2='${message2}';
 		console.log(result2);
 		if(result2 == "success") {
 	        alert("부서가 삭제되었습니다.");
-	    } else if((result2 == "failed")){
+	    } else if(result2 == "failed"){
 	    	alert("사원이 존재하는 부서는 삭제하실 수 없습니다.");
 	    }
 		
@@ -377,45 +378,6 @@
 				frm.method = "get"
 				frm.submit(); */
 			});
-            
-            $(".pickDept${e.count}").click(function() {
-            	
-            	var pt = $(this).parents(".parent_a");
-            	var dname = pt.find(".dname").val();
-            	var cno = pt.find(".cno").val();
-            	var dno = pt.find(".dno").val();
-            	console.log("aaaa" + dname);
-            	console.log("bbbb" + cno);
-            	console.log("cccc" + dno);
-            	
-            	 var header = $("meta[name='_csrf_header']").attr("content");
-                 var token = $("meta[name='_csrf']").attr("content");
-            	
-            	confirm("부서를 삭제하시겠습니까?");
-            	if(true){
-            		var dname = dname;
-            		var dno = dno;
-            		var cno  = cno;
-            		$.ajax({
-            			contentType : 'application/json charset=UTF-8',
-						url: "${pageContext.request.contextPath}/commute/deptdel",
-						data: {
-							dname : dname,
-							dno : dno,
-							cno : cno
-						},
-						success: function (data) {
-							alert(data);
-							pt.hide();
-						},
-						error: function () {
-							
-						}
-					});
-            	}else {
-            		alert("취소되었습니다.");
-            	}
-			});
         });
     </script>
 </head>
@@ -455,33 +417,37 @@
                             <button id="deptBtn">
                             	<img src ="${pageContext.request.contextPath}/resources/img/substract.png" style="width: 8px; height: 8px;">
                             </button>
-                            &nbsp; ONTACT<span>(${deptlistCount})</span>
+                            &nbsp; ${cname}<span>(${deptlistCount})</span>
                         </li>
-                        <%-- <c:if test="${not empty selectDept}"> --%>
-							<c:forEach var="dp" items="${selectDept}" varStatus="e">
-		                        <form name="listDept_frm" >
-	                				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <%-- <c:if test="${not empty selectDept}"> --%>
+					<c:forEach var="dp" items="${selectDept}" varStatus="e">
 		                        <li class="parent_a">
-			                        <input type ="button" value="삭제" name="pickDept" class="pickDept pickDept${e.count}" id="dept${e.count}">
-			                        <button name="dname" class="dnameBtn dname${e.count}" onclick="goList()">${dp.dname} </button>
-			                        <input type ="hidden" value="${dp.dname}" name="dname" class="dnamehidden${e.count}">
-			                        <input type ="hidden" value="${dp.cno}" name="cno" class="cno">
+		                        <form name="listDept_frm" id="listDept_frm_${dp.dno}" action="${pageContext.request.contextPath}/commute/deptdel" method="post">
+	                				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<input type ="hidden" value="${dp.dname}" name="dname" class="dname">
+									<input type ="hidden" value="${dp.cno}" name="cno" class="cno">
 			                        <input type ="hidden" value="${dp.dno}" name="dno" class="dno">
-		                        </li>
 		                        </form>
+			                    <button type ="button"name="pickDept" onclick="goList('${dp.dno}');" 
+			                        class="pickDept pickDept${e.count}" id="dept${e.count}">삭제</button>
+		                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}">
+		                        ${dp.dname}
+		                        </a>
+		                        </li>
 		                        <script>
-				                     $(".dname${e.count}").click(function(){
-			                    		var value = $(this).val();
-			                    		console.log("값을 확인 : " + value);
-			                    		var pt = $(this).find(".firstttl");
-			                    		console.log("값을 확인 : " + pt);
-			                    		pt.text(value);
-			                    		console.log("값을 확인 : " + ownoA);
-				                    }) 
+				                    /* $(".pickDept${e.count}").click(function(){
+			                    		goList();
+				                    }) */
 			                    </script>
 	                    
 	                        </c:forEach>
-	                        
+	                        <script>
+		                        function goList(dno){
+		                        	var frmId = "#listDept_frm_"+dno;
+		                        	console.log("frmId:" + frmId);
+		                        	$(frmId).submit();
+		                        }
+	                        </script>
                         <%-- </c:if> --%>
                         
                         <li style="padding-left:30px;">
@@ -496,10 +462,10 @@
                     <div><a href="${pageContext.request.contextPath}/commute/organlist?">미분류그룹</a></div>
                 </div>
                 <div class="deptEdit">
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"> --%>
                     <button id="addBtn"><img src="${pageContext.request.contextPath}/resources/img/add.png" style="width: 19px; height: 20px;"></button>
                     <button id="deleteBtn"><img src="${pageContext.request.contextPath}/resources/img/trash (1).png" style="width: 19px; height: 20px;"></button>
-                </sec:authorize> 
+                <%-- </sec:authorize>  --%>
                 </div>
                 <div class="detail">
                     <div class="title">
@@ -601,12 +567,7 @@ function checkOneS(a){
  }
  
 
-function goList(){
-	var listfrm = document.listDept_frm;
-	listfrm.action="${pageContext.request.contextPath}/commute/organlist?"
-	listfrm.method="post"
-	listfrm.submit();
-}
+
 
  
 /*  $("#moveBtn").click(function(){

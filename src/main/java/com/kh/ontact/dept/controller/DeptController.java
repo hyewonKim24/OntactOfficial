@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ontact.company.model.dao.CompanyDao;
+import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
@@ -30,6 +32,9 @@ public class DeptController {
 	
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private CompanyDao companyDao;
 	
 	public static final int LIMIT = 10;
 	//
@@ -47,8 +52,11 @@ public class DeptController {
 			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
 			String cno=userdetail.getCno();
 			System.out.println("세션값확인 : " + cno);
-			//
+			
+			
 		try {
+			String cname = companyDao.cnameOne(cno);
+			
 			int currentPage = page;
 //			부서 출력
 			int deptlistCount1 = deptServ.listCount(cno);
@@ -74,6 +82,7 @@ public class DeptController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage1);
 				mv.addObject("dname", "미분류그룹");
+				mv.addObject("cname", cname);
 				mv.addObject("selectOgUser", usersService.selectOgFirst(currentPage, LIMIT));
 				System.out.println("결과" + usersService.selectOgFirst(currentPage, LIMIT));
 				mv.setViewName("/commute/organogram");
@@ -84,6 +93,7 @@ public class DeptController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage2);
 				mv.addObject("dname", dname);
+				mv.addObject("cname", cname);
 				mv.addObject("selectOgUser", usersService.selectOgUser(currentPage, LIMIT, dname));
 				mv.setViewName("/commute/organogram");
 			} 
@@ -100,8 +110,8 @@ public class DeptController {
 		}
 		return mv;
 	}
-	
-//	//부서별 사원
+	//
+	//부서별 사원
 //	@RequestMapping(value = "/commute/organuserlist", method = RequestMethod.GET)
 //	public ModelAndView selectUser(DeptDto d, 
 //				@RequestParam(name = "page", defaultValue = "1") int page,
@@ -143,14 +153,10 @@ public class DeptController {
 			System.out.println("부서 생성 인서트진입");
 			System.out.println(d.getDname());
 			System.out.println(d.getCno());
-			
-			List<UsersDto> users = usersService.deleteOgUser(d.getDname());
-			if(users.size() > 0) {
-				rttr.addFlashAttribute("message", "사원이 존재하는 부서는 삭제하실 수 없습니다.");
-			}
+		
 			deptServ.insertDept(d);
 			rttr.addFlashAttribute("message", "success");
-			//
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			rttr.addFlashAttribute("msg", e.getMessage());
@@ -160,18 +166,16 @@ public class DeptController {
 	}
 	
 	//부서 삭제
-		@SuppressWarnings("unused")
-		@ResponseBody
-		@RequestMapping(value = "/commute/deptdel",  produces = "application/text; charset=utf8")
-		public String deleteDept(
+//		@SuppressWarnings("unused")
+//		@ResponseBody
+@RequestMapping(value = "/commute/deptdel")
+		public ModelAndView deleteDept(
 				@RequestParam(name = "dname") String dname,
 				@RequestParam(name = "dno") String dno,
 				@RequestParam(name = "cno") String cno,
 				Authentication authentication, HttpServletRequest request,
-				HttpServletResponse response
-				) {
-			
-				String msg = null;
+				ModelAndView mv,HttpServletResponse response) {
+				
 			try {
 				System.out.println("부서 삭제 인서트진입");
 				System.out.println("부서번호 : "+dno);
@@ -189,15 +193,19 @@ public class DeptController {
 				
 				if(deptUserList.size() == 0 || deptUserList == null) { //부서에 사람이 없는 경우만 삭제 가능하도록
 					deptServ.deleteDept(paramMap);
-					msg = "부서가 삭제 되었습니다.";
+					mv.addObject("message2", "success");
+					mv.setViewName("redirect:/commute/organlist");
+//					msg = "부서가 삭제 되었습니다.";
 				} else {
 					System.out.println("부서에 사원이 있는 경우!!!");
-					msg = "사원이 존재하는 부서는 삭제하실수 없습니다.";
+					mv.addObject("message2", "failed");
+					mv.setViewName("redirect:/commute/organlist");
+//					msg = "사원이 존재하는 부서는 삭제하실수 없습니다.";
 				}
 			} catch (Exception e) {
 				
 			}
-			return msg;
+			return mv;
 			
 		}
 	

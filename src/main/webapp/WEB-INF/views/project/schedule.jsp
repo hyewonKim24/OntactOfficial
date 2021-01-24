@@ -54,6 +54,17 @@ body {
    margin: 0 auto;
    margin-top : 15px;
 }
+.close {
+   width: 60px;
+   height: 30px;
+   
+   color: #F2F2F2;
+   border: none;
+   border-radius: 3px;
+   float:right;
+   margin-top : 7px;
+   z-index : 9999;
+}
 /* 사이드 체크박스 */
 .sidenav {
    position: relative;
@@ -140,18 +151,7 @@ body {
    
    
 }
-.close {
-   width: 60px;
-   height: 30px;
-   
-   color: #F2F2F2;
-   border: none;
-   border-radius: 3px;
-   float:right;
-   margin-top : 7px;
-   
 
-}
 /* .modal_layer {
    position: fixed;
    top: 0;
@@ -203,12 +203,13 @@ body {
    color: #F2F2F2;
    border: none;
    border-radius: 3px;
-   texgt-align: center;
+   texgt-align: left;
    float : right;
+   font-size : 10px;
 }
 
 #title{
-	 font-size : 22px;
+	 font-size : 18px;
 	 padding : 5px 0 ;
 }
 #pname{
@@ -240,6 +241,9 @@ body {
 	font-size : 14px;
 	padding-bottom : 5px;
 }
+.hide {
+   display: none;
+} 
 .menu input[type="checkbox"] {
 	display: none;
 	width: 10%;
@@ -295,41 +299,51 @@ body {
 										$.ajax({
 											contentType : 'application/json',
 											url : '${pageContext.request.contextPath}/schedule/list',
+											data : {pno : pno},
 											dataType : 'json',
 											success : function(result) {
 												
 												var events = [];
 												if (result != null) {
 													$.each(result, function(index, element) {
+														
 														//모달생성
 												        $(".fc-event-container").click(function(){
 												        	$("#gomodal").attr("style", "display:block");
-												        	var btype = eventObj.id;
-												        	console.log("모달 글타입" + btype);
-												        	var pname = element.pname; 
-												        	var uname = element.uname; 
-												        	var attendees = element.attendees;
-												        	var taskmanager = element.taskmanager;
+												        		var others = eventObj.id;
+												        		var aaa = others.split('/');
+												        		console.log("aaaaa" + others);
+												        		console.log("bbb" + aaa[0] + "ccc" + aaa[1] + "sssss" + aaa[2]);
 												        	
-															var startdate = moment(eventObj.start).format('YYYY-MM-DD');
-															var enddate = moment(eventObj.end).format('YYYY-MM-DD');
-															console.log("시작일" + startdate);
-															
-															var ttl = null;
-															if(btype == 2){
-																var ttl = "업무";
-															} else if(btype ==3){
-																var ttl = "일정";
-															}
-															
-															$(".modal_content #title").text(ttl + " : " + eventObj.title);
-															$(".modal_content #people").text("작성자 : " + uname);
-															$(".modal_content #pname").text(pname);
-															$(".modal_content #startdate").text("시작일 : " + startdate);
-															$(".modal_content #enddate").text("종료일 : " + enddate);
-															$(".modal_content #attendees").text("참석자 : " + attendees);
-															$(".modal_content #taskmanager").text("담당자 : " + taskmanager);
+													        	var pname = element.pname; 
+													        	var uname = aaa[0]; 
+													        	var attendees = aaa[1];
+													        	var taskmanager = aaa[2];
+													        	
+													        	console.log("작성" + uname);
+													        	console.log("참석자" + attendees);
+													        	console.log("담당자" + taskmanager);
+																var startdate = moment(eventObj.start).format('YYYY-MM-DD');
+																var enddate = moment(eventObj.end).format('YYYY-MM-DD');
+																console.log("시작일" + startdate);
+																
+																if(attendees == "undefined"){
+																	$("#taskmanager").removeClass('hide');
+																}
+																if(taskmanager == "undefined"){
+																	$("#attendees").removeClass('hide');
+																}
+																
+																$(".modal_content #title").text(eventObj.title);
+																$(".modal_content #people").text("작성자 : " + uname);
+																$(".modal_content #pname").text("프로젝트 이름 : " + pname);
+																$(".modal_content #startdate").text("시작일 : " + startdate);
+																$(".modal_content #enddate").text("종료일 : " + enddate);
+																$(".modal_content #attendees").text("참석자 : " + attendees);
+																$(".modal_content #taskmanager").text("담당자 : " + taskmanager);
+												        	
 												        });
+												        
 														/* $("#successModal").modal("show"); */
 														
 														
@@ -370,7 +384,12 @@ body {
 				                                                var send = element.send;
 				                                                var bname = element.bname;
 				                                                var btype = element.btype;
-				                                                console.log("글타입 : " + btype);
+				                                                
+				                                                var uname = element.uname;
+				                                                var attendees = element.attendees;
+				                                                var taskmanager = element.taskmanager;
+				                                                var id = uname + "/" + attendees  + "/"  + taskmanager;
+				                                                console.log("합쳐서 나온거" + id);
 				                                                var startdate = moment(sstart).format('YYYY-MM-DD');
 				                                                var enddate = moment(send).format('YYYY-MM-DD'); 
 																/* var reason = "${pageContext.request.contextPath}/commute/dailylist";
@@ -395,13 +414,13 @@ body {
 																
 																var add = ttl + "/ " + bname;
 																events.push({
-																	  id : btype,
+																	  id : id,
 				                                                      title : add,
 				                                                      start : startdate,
 				                                                      end : enddate,
-				                                                      color : colors	
-																		/* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
-																		   */
+				                                                      color : colors,
+																	 
+																		   
 																}); //.push()
 																console.log(event);
 															}); //.each()
@@ -473,8 +492,8 @@ body {
                
                <div id="startdate"></div>
                <div id="enddate"></div>
-               <div id="attendees"></div>
-               <div id="taskmanager"></div>
+               <div id="attendees" class="hide"></div>
+               <div id="taskmanager" class="hide"></div>
             </div>
          </div>   
          </div>

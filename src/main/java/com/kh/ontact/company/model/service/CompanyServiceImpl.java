@@ -15,6 +15,7 @@ public class CompanyServiceImpl implements CompanyService{
 		return companydao.SelectCEO(cno);
 	}
 	
+	
 	//@Override
 //	public String findCno(String curl) throws Exception {
 //		return companydao.findCno(curl);
