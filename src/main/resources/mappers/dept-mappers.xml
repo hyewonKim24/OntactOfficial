@@ -28,10 +28,9 @@
 	</select>
 	<select id="selectDept" resultType="arraylist"
 		resultMap="resultDept">
-		select distinct c.cno as cno, d.dno as dno, d.dname as dname, c.cname as cname, p.pno as pno
+		select distinct c.cno as cno, d.dno as dno, d.dname as dname, c.cname as cname
         from dept d
-        inner join company c on c.cno = d.cno 
-        inner join project_dept p on d.dno = p.dno
+        inner join company c on c.cno = d.cno
         where c.cno = #{cno}
         
 	</select>

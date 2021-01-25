@@ -45,7 +45,7 @@
 	
 	<!-- 출근 시간 삽입 -->
 	<insert id="insertEnter" flushCache="true" statementType="PREPARED">  
-	insert into commute values(#{uno}, sysdate, 0, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
+	insert into commute values(#{uno}, sysdate, #{cstate}, to_char(to_date( #{cstarttime}, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
 			null, null, #{creason})
 	</insert>
 	

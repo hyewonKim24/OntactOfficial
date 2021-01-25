@@ -27,7 +27,7 @@ public class CommuteDto {
 	private String dname;
 	private String uname;
 	private Date cdate;
-	private String cstate;
+	private int cstate;
 	private String cstarttime;
 	private String cendtime;
 	private String cworktime;

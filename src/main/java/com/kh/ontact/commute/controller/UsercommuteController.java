@@ -165,11 +165,15 @@ public class UsercommuteController {
 			System.out.println("qrT " + qrT );
 			System.out.println("standardT " + standardT);
 			if(qrT > standardT) {
-				c.setCstate("1");
+				System.out.println("aaa로 ");
+				int state = 1;
+				c.setCstate(state);
 				c.setCreason("지각");
 				System.out.println("지각");
 			} else {
-				c.setCstate("0");
+				System.out.println("bbb로 ");
+				int state = 0;
+				c.setCstate(state);
 				System.out.println("정상출근");
 			}
 			

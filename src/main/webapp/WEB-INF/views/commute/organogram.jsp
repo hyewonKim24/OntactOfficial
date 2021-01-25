@@ -27,6 +27,7 @@
         font-family: Noto Sans KR;
         line-height: 1.15;
         color: rgb(17,17,17);
+        background-color : #f2f2f2;
     }
     a {
 		text-decoration: none;
@@ -56,6 +57,7 @@
         width: 210px;
         height: 100%;
         float: left;
+        background-color : #f2f2f2;
     }
     .sidenav ul,
     .sidenav ul li a {
@@ -70,7 +72,7 @@
     display: none;
     }
     .sidenav > ul > li > a {
-    padding: 19px 20px;
+    padding: 25px 20px 19px 60px;
     z-index: 2;  
     cursor: pointer;
     font-weight: 700;
@@ -81,8 +83,8 @@
     }
     .sidenav ul ul li a {
     cursor: pointer;
-    padding: 10px 0;
-    padding-left: 30px;
+    padding: 20px 0;
+    padding-left: 60px;
     z-index: 1;
     text-decoration: none;
     font-size: 13px;
@@ -90,12 +92,13 @@
     /* 콘텐츠 */
     .contents{
         position: absolute;
-        width: 970px;
+        width: 1000px;
         height: 950px;
         left: 210px;
         padding : 40px 0 40px 40px;
         border-left: 1px solid #e7e7e7;
         box-sizing: border-box;
+        background-color : white;
     }
     .conTitle{
         width: 930px;
@@ -391,6 +394,7 @@
 		<div>헤더 들어갈 자리</div>
 	</div>
     <div class="main">
+    
         <div class="sidenav">
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
@@ -528,7 +532,7 @@
 						&lt; &nbsp;
 						</c:if>
 						 	<c:if test="${currentPage > 1}">
-								<c:url var="dflistprev" value="/dayoff/dflist">
+								<c:url var="oglistprev" value="/commute/organlist">
 									<c:param name="page" value="${currentPage-1}" />
 								</c:url>
 								<a href="${dflistprev}">&lt; &nbsp;</a>
@@ -542,7 +546,7 @@
 									<font color ="#5A3673"><b>${p} &nbsp;</b></font>
 								</c:if>
 								<c:if test="${p ne currentPage}">
-									<c:url var="dflistchk" value="/dayoff/dflist">
+									<c:url var="oglistchk" value="/commute/organlist">
 										<c:param name="page" value="${p}" />
 									</c:url>
 									<a href="${dflistchk}">${p}&nbsp;</a>
@@ -551,7 +555,7 @@
 							<c:if test="${currentPage >= maxPage}"> &gt;
 							</c:if>
 							<c:if test="${currentPage < maxPage}">
-								<c:url var="dflistnext" value="/dayoff/dflist">
+								<c:url var="oglistnext" value="/commute/organlist">
 									<c:param name="page" value="${currentPage+1}" />
 								</c:url>
 								<a href="${dflistnext}">&gt;</a>

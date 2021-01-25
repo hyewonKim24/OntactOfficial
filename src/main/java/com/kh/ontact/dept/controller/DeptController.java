@@ -89,10 +89,9 @@ public class DeptController {
 			int maxPage1 = (int) ((double) listCount1 / LIMIT + 0.9);
 			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
 			
-			
 			mv.addObject("deptlistCount", deptlistCount1);
 			mv.addObject("selectDept", deptServ.selectDept(cno));
-			System.out.println("뭐지" + deptServ.selectDept(cno));
+			
 			mv.setViewName("/commute/organogram");
 
 //			미분류그룹 default
@@ -222,7 +221,7 @@ public class DeptController {
 				@RequestParam(name = "dname") String dname,
 				@RequestParam(name = "dno") String dno,
 				@RequestParam(name = "cno") String cno,
-				@RequestParam(name = "pno") String pno,
+//				@RequestParam(name = "pno") String pno,
 				Authentication authentication, HttpServletRequest request,
 				ModelAndView mv,HttpServletResponse response) {
 				
@@ -231,7 +230,7 @@ public class DeptController {
 				System.out.println("부서번호 : "+dno);
 				System.out.println("회사번호 : "+ cno);
 				System.out.println("부서이름 : "+ dname);
-				System.out.println("플이름 : "+ pno);
+//				System.out.println("플이름 : "+ pno);
 				
 				HashMap<String, String> paramMap1 = new HashMap<String, String>();
 				paramMap1.put("cno", cno);
@@ -242,21 +241,21 @@ public class DeptController {
 				paramMap2.put("dno", dno);
 
 				List<UsersDto> deptUserList = usersService.deleteOgUser(paramMap1);
-				List<ProjectDto> pjUserList = pjDao.PjUserListDept(pno);
-				System.out.println("어떤게들어있나1111 : " + pjUserList);
+//				List<ProjectDto> pjUserList = pjDao.PjUserListDept(pno);
+//				System.out.println("어떤게들어있나1111 : " + pjUserList);
 				System.out.println("어떤게들어있나2222 : " + deptUserList);
 				System.out.println("크기가 몇일ㄲ까 : " + deptUserList.size());
 				//
 				if(deptUserList.size() == 0 || deptUserList == null) { //부서에 사람이 없는 경우만 삭제 가능하도록
 					int rs1 = deptServ.deleteDept(paramMap2);
 					System.out.println("몇개 ? 1111" + rs1);
-					if(pjUserList.size() == 1) {
-						int rs2 = pjDao.deleteProject(pno);
-						System.out.println("몇개 ? 2222" + rs2);
-						System.out.println("프로젝트 삭제 함");
-					}else {
-						System.out.println("프로젝트 삭제 안함");
-					}
+//					if(pjUserList.size() == 1) {
+//						int rs2 = pjDao.deleteProject(pno);
+//						System.out.println("몇개 ? 2222" + rs2);
+//						System.out.println("프로젝트 삭제 함");
+//					}else {
+//						System.out.println("프로젝트 삭제 안함");
+//					}
 					System.out.println("부서에 사원이 없는 경우!!!");
 					mv.addObject("message2", "success");
 					mv.setViewName("redirect:/commute/organlist");
