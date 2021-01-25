@@ -676,7 +676,9 @@ input{
     display: block;
     border-radius: 90px;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
-    margin-left:130px;
+    margin-left:110px;
+    width: 70px;
+    height: 70px;
 
 }
 .profile-name{
@@ -1460,7 +1462,7 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 			<p>
 				<img src="${pageContext.request.contextPath}/resources/img/svg/settings-4.svg"  width="20px" height="20px" class="h-profile-icon">
 				<a href="${pageContext.request.contextPath}/user/mypage/detail" class="h-profle-content"> 
-				내 정보 수정
+				계정 정보
 				</a>
 			</p>
                	<sec:authorize access="isAuthenticated()">
