@@ -27,6 +27,7 @@ body {
 	width: 1200px;
 	margin: 0 auto;
 }
+		
 
 #pj_board {
 	margin: 80px auto;
@@ -68,8 +69,14 @@ body {
 #pj_company{
 	background-color: #CDC2D3;
 }
+#pj_company:hover{
+	cursor: pointer;
+}
 #pj_team{
 	background-color: #F7B3A8;
+}
+#pj_team:hover{
+	cursor: pointer;
 }
 /*개별 project */
 .pj_box {
@@ -424,8 +431,8 @@ body {
 			<div id="section_company">
 				<div class="pj_title">All</div>
 				<c:if test="${!empty pjc}">
-					<a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjc.pno}">
-						<div id="pj_company" class="pj_box">
+					<%-- <a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjc.pno}"> --%>
+						<div id="pj_company" class="pj_box" onclick="location.href='${pageContext.request.contextPath}/project/pjdetail?pno=${pjc.pno}';">
 							<div>${pjc.cname}</div>
 							<div class="pj_team_list"></div>
 							<div>
@@ -436,14 +443,14 @@ body {
 							</c:if>
 							<!-- <button type="button" title="선택" class="pjCheck"></button> -->
 						</div>
-					</a>
+				<!-- 	</a> -->
 				</c:if>
 			</div>
 			<div id="section_team">
 				<div class="pj_title">Team</div>
 				<c:if test="${!empty pjd}">
-					<a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjd.pno}">
-						<div id="pj_team" class="pj_box">
+					<%-- <a href="${pageContext.request.contextPath}/project/pjdetail?pno=${pjd.pno}"> --%>
+						<div id="pj_team" class="pj_box" onclick="location.href='${pageContext.request.contextPath}/project/pjdetail?pno=${pjd.pno}';">
 							<div>${pjd.dname}</div>
 							<div class="pj_team_list"></div>
 							<div>
@@ -453,7 +460,7 @@ body {
 								<span class='pj_cnt'>${pjd.cnt}</span>
 							</c:if>
 						</div>
-					</a>
+					<!-- </a> -->
 				</c:if>
 			</div>
 		</div>
