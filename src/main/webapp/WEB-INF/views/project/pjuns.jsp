@@ -287,7 +287,7 @@ body {
 	//div 랜덤 배경색
 		$(document).ready(function() {
 		function backgroundColor() { // div 랜덤 배경색
-		    var backgroundColor = ['#f27781', '#5a3673', '#432d73', '#23d9d9', '#f5df4d', '#653bbf', '#34268c', '#f23a29'];
+		    var backgroundColor = ['#A1B9BC', '#AB9294', '#B1AD7E', '#9D789B', '#869098', '#7A81A8', '#BBB6C5', '#6E5B98', '#A28AAB', '#844881', '#A96583','#A9729B', '#D67897','#868FC7', '#EFA5C5'];
 		    var randome = Math.floor(Math.random() * backgroundColor.length); // Math.random()로 출력시 소수점까지 출력하게 된다.
 		     var color = backgroundColor[randome];
 			   return color;
