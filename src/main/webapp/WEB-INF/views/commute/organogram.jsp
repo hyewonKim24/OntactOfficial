@@ -78,6 +78,7 @@
     font-weight: 700;
     text-decoration: none;
     }
+    
     .sidenav ul ul li{
         background-color: #e7e7e7;
     }
@@ -89,6 +90,7 @@
     text-decoration: none;
     font-size: 13px;
     }
+    
     /* 콘텐츠 */
     .contents{
         position: absolute;
@@ -399,14 +401,14 @@
             <ul>
                 <li class="menu"><a href="">근태 관리</a>
                 <ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
-						<li><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
+						<li class="hover"><a href="${pageContext.request.contextPath}/commute/dailylist">출퇴근 관리</a></li>
+						<li class="hover"><a href="${pageContext.request.contextPath}/commute/monthlylist">월 근무내역</a></li>
+						<li class="hover"><a href="${pageContext.request.contextPath}/overwork/owlist">시간외 근무신청</a></li>
 					</ul></li>
 				<li class="menu"><a href="">휴가 관리</a>
 					<ul class="hide">
-						<li><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
-						<li><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
+						<li class="hover"><a href="${pageContext.request.contextPath}/dayoff/dflist">휴가 신청</a></li>
+						<li class="hover"><a href="${pageContext.request.contextPath}/dayoff/calendarlist">휴가 현황</a></li>
 					</ul></li>
 				<li><a href="${pageContext.request.contextPath}/commute/organlist">조직도</a></li>
             </ul>

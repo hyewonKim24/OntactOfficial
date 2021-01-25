@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.kh.ontact.alert.model.dto.AlertDto;
 import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.dayoff.model.dto.DayoffDto;
+import com.kh.ontact.project.boardall.model.dao.BoardAllDao;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
 import com.kh.ontact.project.model.service.ProjectService;
@@ -53,7 +54,8 @@ public class ScheduleController {
 	//혜원 임의로 추가
 	@Autowired
 	ProjectService pjService;
-	
+	@Autowired
+	BoardAllDao baDao;
 	
 	//스케줄 디테일로 들어가기
 	@RequestMapping(value="/scheduleboard" ,method=RequestMethod.GET)
@@ -201,6 +203,7 @@ public class ScheduleController {
 				int rs=0;
 				try {
 					 rs=scheduleServ.deleteSchedule(bno);
+					 rs=baDao.deleteBoardall(bno);
 					System.out.println(rs+"개 삭제 : task");
 				} catch (Exception e) {
 					e.printStackTrace();
