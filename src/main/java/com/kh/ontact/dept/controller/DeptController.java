@@ -146,8 +146,11 @@ public class DeptController {
 		List<ProjectMemberDto> pmlist = new ArrayList<ProjectMemberDto>();
 		ProjectMemberDto pmdto = null;
 		UsersDto one = null;
+		DeptDto deptdto = new DeptDto();
+		deptdto.setCno(cno);
+		deptdto.setDno(dno);
 		try {
-			String deptpno = deptServ.selectDeptPno(dno);
+			String deptpno = deptServ.selectDeptPno(deptdto);
 			System.out.println("deptPno:"+deptpno);
 
 			for(int i = 0; i < uno.size(); i++) {

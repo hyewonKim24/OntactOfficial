@@ -64,6 +64,12 @@
 	
 	<!-- 혜원 부서 프로젝트 pno 찾기 -->
 	<select id="selectDeptPno" resultType="string">
-		select pno from project_dept where dno=#{dno}
+		select p.pno from project_dept pd
+		    inner join project p
+		    on p.pno=pd.pno 
+		    inner join dept d
+		    on pd.dno = d.dno
+		    where pd.dno=#{dno}
+		    and p.cno=#{cno} and p.pname=d.dname
 	</select>
 </mapper>

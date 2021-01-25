@@ -27,6 +27,6 @@ public interface DeptService {
 	
 	public int updateDept(List<UsersDto> list);
 	
-	public String selectDeptPno(String dno) throws Exception;
+	public String selectDeptPno(DeptDto dto) throws Exception;
 	
 }

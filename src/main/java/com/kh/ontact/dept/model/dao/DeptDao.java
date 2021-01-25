@@ -60,8 +60,8 @@ public class DeptDao {
 	}
 	
 	//혜원
-	public String selectDeptPno(String dno) throws Exception {
-		return sqlSession.selectOne("Dept.selectDeptPno", dno);
+	public String selectDeptPno(DeptDto dto) throws Exception {
+		return sqlSession.selectOne("Dept.selectDeptPno", dto);
 	}
 	
 	

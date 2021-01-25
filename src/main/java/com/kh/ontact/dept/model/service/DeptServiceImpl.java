@@ -74,8 +74,8 @@ public class DeptServiceImpl implements DeptService{
 	}
 
 	@Override
-	public String selectDeptPno(String dno) throws Exception {
-		return deptDao.selectDeptPno(dno);
+	public String selectDeptPno(DeptDto dto) throws Exception {
+		return deptDao.selectDeptPno(dto);
 	}
 	
 }

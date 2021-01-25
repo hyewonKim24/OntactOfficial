@@ -12,6 +12,7 @@
 	<result property="rdate" column="rdate" />
 	<result property="rdesc" column="rdesc" />
 	<result property="uname" column="uname" />
+	<result property="ufilepath" column="ufilepath" />
 	<result property="rcount" column="rcount" />
 	</resultMap>
 	
@@ -25,7 +26,7 @@
 	<!-- 해당 프로젝트의 댓글 조회 -->
 	<select id="ListReply" resultType="map" resultMap="resultReply">
 	 <![CDATA[
-		 select r.rno as rno,r.uno as uno,u.uname as uname,
+		 select r.rno as rno,r.uno as uno,u.uname as uname, u.ufilepath as ufilepath,
 		r.bno as bno,r.pno as pno,r.rdate as rdate,r.rdesc as rdesc from reply r
 		inner join users u
 		on r.uno = u.uno

@@ -27,4 +27,5 @@ public class ReplyDto {
 	private String rdesc;
 	private String uname;
 	private int rcount;
+	private String ufilepath;
 }
