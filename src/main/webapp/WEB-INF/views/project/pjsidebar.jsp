@@ -526,7 +526,7 @@ input:checked+.slider:before {
 			<button type="button" id="new_pj_btn">+&nbsp;새
 				프로젝트</button>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/project/all/list"> <svg version="1.1" class="pj_btn"
+				<li class="selected_a"><a href="${pageContext.request.contextPath}/project/all/list"> <svg version="1.1" class="pj_btn"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 50 35" style="enable-background: new 0 0 50 35;"
@@ -538,7 +538,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg>전체 <span class="pj_sb_alarm pj_sb_alarm_all"></span>
 				</a></li>
-				<li><a href="${pageContext.request.contextPath}/project/uns/list"> <svg version="1.1" class="pj_btn"
+				<li class="selected_b"><a href="${pageContext.request.contextPath}/project/uns/list"> <svg version="1.1" class="pj_btn"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 60 60" style="enable-background: new 0 0 60 60;"
@@ -558,7 +558,7 @@ input:checked+.slider:before {
 	                        </g>
 	                    </svg> 미보관 <span class="pj_sb_alarm">00</span>
 				</a></li>
-				<li><a href="${pageContext.request.contextPath}/project/unread/list"><svg version="1.1" class="pj_btn"
+				<li class="selected_c"><a href="${pageContext.request.contextPath}/project/unread/list"><svg version="1.1" class="pj_btn"
 							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							viewBox="0 0 50 50" style="enable-background: new 0 0 50 50;"

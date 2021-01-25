@@ -301,6 +301,9 @@ body {
     border-radius: 24px;
     z-index: 2;
 }
+.selected_a{
+	background-color: #e7e7e7;
+}
 </style>
 <script>
 	//div 랜덤 배경색
