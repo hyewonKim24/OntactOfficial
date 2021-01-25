@@ -1086,8 +1086,8 @@ input{
 			
 	<div class="header-wrap">
 		<div class="header">
-			<span class="header-left-wrap"> <!-- 로고 넣어야 함 ! --> <img
-				src="${pageContext.request.contextPath}/resources/img/ontact_logo-03.png" id="header-logo"> <span
+			<span class="header-left-wrap"> <!-- 로고 넣어야 함 ! --> <a href="${pageContext.request.contextPath}/project/all/list"><img
+				src="${pageContext.request.contextPath}/resources/img/ontact_logo-03.png" id="header-logo"> </a><span
 				id="header-search">
 					<form class="header-search-form" name="header_frm">
 						<select class="header-pj-select" name="headerselect">
