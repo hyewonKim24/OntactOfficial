@@ -2744,7 +2744,9 @@ l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z" />
 			<form action="${pageContext.request.contextPath}/project/projectmemberinsert" method="post" class="pinvitefrm1">
             <div class="invite-rs">
               <c:if test="${empty pmlist }">
-               	 검색 결과가 없습니다.
+					<div class="invite-rs-empty">
+		               	 초대할 직원이 없습니다.
+					</div>
                	 </c:if>
 						<sec:csrfInput /> 
 						<table class="inviteList-table">

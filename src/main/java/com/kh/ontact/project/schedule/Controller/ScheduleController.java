@@ -27,6 +27,7 @@ import com.kh.ontact.alert.model.service.AlertService;
 import com.kh.ontact.dayoff.model.dto.DayoffDto;
 import com.kh.ontact.project.boardall.model.dto.BoardAllDto;
 import com.kh.ontact.project.boardall.model.service.BoardAllService;
+import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.project.reply.model.dto.ReplyDto;
 import com.kh.ontact.project.reply.model.service.ReplyService;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
@@ -49,6 +50,9 @@ public class ScheduleController {
 	BoardAllService baService;
 	@Autowired
 	UsersService usersService;
+	//혜원 임의로 추가
+	@Autowired
+	ProjectService pjService;
 	
 	
 	//스케줄 디테일로 들어가기
@@ -210,10 +214,24 @@ public class ScheduleController {
 	
 //	전체 일정 (캘린더)
 	@RequestMapping(value = "/schedule", method = RequestMethod.GET)
-	public ModelAndView calendarlist(ModelAndView mv, @RequestParam(name = "pno") String pno) {
+	public ModelAndView calendarlist(ModelAndView mv, 
+			@RequestParam(name = "pno", required = false) String pno,Authentication authentication) {
 		System.out.println("전체일정 진입1");
 		System.out.println("들어오는지 확인" + pno);
-		mv.addObject("pno", pno);
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String cno=userdetail.getCno(); // 해당 부서의 휴가현황만 볼 수 있도록
+		String ppno=null;
+		try {
+			if(pno==null || pno.equals("")) {
+				ppno = pjService.SelectCompanyPno(cno);
+				System.out.println("회사 프로젝트 번호:"+ppno);
+				mv.addObject("pno", ppno);
+			}else {
+				mv.addObject("pno", pno);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		mv.setViewName("project/schedule");
 		return mv;
 	}

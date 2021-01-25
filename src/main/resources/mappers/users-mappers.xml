@@ -8,6 +8,7 @@
 		<result property="cno" column="cno" />
 		<result property="cname" column="cname" />
 		<result property="dno" column="dno" />
+		<result property="dname" column="dname" />
 		<result property="uemail" column="uemail" />
 		<result property="uname" column="uname" />
 		<result property="utell" column="utell" />
@@ -226,9 +227,11 @@
 	<!-- 해당 cno의 내 정보 빼고 users list 불러오기 -->
 	<select id="ChatUsersList" resultType="arraylist" resultMap="resultUsers" >
  	<![CDATA[
-		SELECT u.uno,u.cno,c.cname,u.uname,u.ufilepath,u.urank,u.uemail FROM USERS u
+		SELECT u.uno,u.cno,c.cname,u.uname,u.ufilepath,u.urank,u.uemail,d.dname FROM USERS u
 		inner join company c
 		on c.cno=u.cno
+        inner join dept d
+        on d.dno=u.dno
 		where u.cno=#{cno} and UNO NOT IN (#{uno})
 		]]>
 	</select>

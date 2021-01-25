@@ -380,6 +380,9 @@
 				z-index : 900;
 				background-color : white;
 			}
+			.pro-right-icon{
+				cursor: pointer;
+			}
 			.pro-editDropdown ul{
 				padding: 8px 0;
 			}
@@ -1753,6 +1756,7 @@
 			    border: 1px solid #dadbdb;
 			    background-color: rgb(255, 255, 255);
 			    box-sizing: border-box;
+			    border-radius:5px;
 			    display:none;
 			    z-index:101;
 			}
@@ -1825,6 +1829,12 @@
             line-height: 40px;
             height: 400px;
             overflow: scroll;
+        }
+        .invite-rs-empty{
+        	text-align: center;
+        	font-size:12px;
+        	color:#505050;
+        	padding:20px;
         }
         .invite-my-img{
 	        line-height: 68px;

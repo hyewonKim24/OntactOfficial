@@ -46,7 +46,8 @@ public class PtaskController {
 	ProjectService pjService;
 
 	public static final int LIMIT = 20;
-
+	
+	//전체 업무
 	@RequestMapping(value = "/task")
 	public ModelAndView ptaskMy(ModelAndView mv, Authentication authentication,
 			 @RequestParam(name = "pno", required = false) String pno) {

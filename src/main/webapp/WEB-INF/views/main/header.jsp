@@ -1086,9 +1086,14 @@ input{
 			
 	<div class="header-wrap">
 		<div class="header">
-			<span class="header-left-wrap"> <!-- 로고 넣어야 함 ! --> <a href="${pageContext.request.contextPath}/project/all/list"><img
-				src="${pageContext.request.contextPath}/resources/img/ontact_logo-03.png" id="header-logo"> </a><span
-				id="header-search">
+			<span class="header-left-wrap"> <!-- 로고 넣어야 함 ! -->
+			 <a href="${pageContext.request.contextPath}/project/all/list">
+			 <img src="${pageContext.request.contextPath}/resources/img/ontact_logo-03.png" id="header-logo"> 
+			 </a>
+				
+				<span id="header-search">
+
+
 					<form class="header-search-form" name="header_frm">
 						<select class="header-pj-select" name="headerselect">
 							<option value="P">&nbsp;&nbsp;&nbsp;프로젝트</option>
@@ -1178,7 +1183,7 @@ input{
 						<img src="${pageContext.request.contextPath}/resources/img/user-3.png" width="25px" height="25px" class="header-icon-my">
 				 </c:if>
 				 <c:if test="${not empty ufilepath}">
-			 			<img src="${ufilepath}" width="25px" height="25px" class="header-icon">
+			 			<img src="${ufilepath}" width="25px" height="25px" class="header-icon-my">
 				 </c:if>
 
 				</a> <!-- 채팅 모달 -->
