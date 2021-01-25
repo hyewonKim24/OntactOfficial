@@ -257,7 +257,8 @@
 		}
 	    });
         
-        $('#insertOw').on('click', function(){
+        $('#insertOw').on('click', function(e){
+        	e.preventDefault();
        		if(fnMemberValidation() == false) {
        			return;
        			console.log("false로 들어옴");

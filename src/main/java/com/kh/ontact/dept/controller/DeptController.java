@@ -21,7 +21,9 @@ import com.kh.ontact.company.model.dao.CompanyDao;
 import com.kh.ontact.company.model.dto.CompanyDto;
 import com.kh.ontact.dept.model.dto.DeptDto;
 import com.kh.ontact.dept.model.service.DeptService;
+import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
+import com.kh.ontact.users.model.dao.UsersDao;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
 import com.kh.ontact.users.model.service.UsersService;
@@ -36,6 +38,9 @@ public class DeptController {
 	
 	@Autowired
 	private CompanyDao companyDao;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	public static final int LIMIT = 10;
 	
@@ -152,8 +157,31 @@ public class DeptController {
 			System.out.println("부서 생성 인서트진입");
 			System.out.println(d.getDname());
 			System.out.println(d.getCno());
-		
+			
+			CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+			String cno=userdetail.getCno();
+			String uno=userdetail.getUno();
+			System.out.println("세션값확인 : " + cno);
+			
+			
+			HashMap<String, String> paramMap1 = new HashMap<String, String>();
+			paramMap1.put("pname", d.getDname());
+			paramMap1.put("cno", cno);
+			
+			HashMap<String, String> paramMap2 = new HashMap<String, String>();
+			paramMap2.put("uno", uno);
+			paramMap2.put("cno", cno);
+			
 			deptServ.insertDept(d);
+			usersDao.joinPjChange(paramMap1);
+			usersDao.joinPjMemChange(paramMap2);
+			usersDao.joinPjDeptChange(cno);
+
+			System.out.println("deptt : " + deptServ.insertDept(d));
+			System.out.println("pjChange : " + usersDao.joinPjChange(paramMap1));
+			System.out.println("memChange: " + usersDao.joinPjMemChange(paramMap2));
+			System.out.println("pjdeptChange : " +  usersDao.joinPjDeptChange(cno));
+			
 			rttr.addFlashAttribute("message", "success");
 			
 		}catch(Exception e) {

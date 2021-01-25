@@ -33,6 +33,26 @@
 	</resultMap>	
 	
 	
+	<insert id="joinPjChange" flushCache="true"> 
+		<![CDATA[ 
+			insert into project(pno, pname, cno) values(PNO_SE.NEXTVAL, #{pname}, #{cno}) 
+		]]> 
+	</insert> 
+	
+	<insert id="joinPjMemChange" flushCache="true"> 
+		<![CDATA[ 
+			insert into project_member values (pno_se.currval, #{uno}, 1, #{cno}) 
+		]]> 
+	</insert>
+	
+	<insert id="joinPjDeptChange" flushCache="true"> 
+		<![CDATA[ 
+			insert into project_dept values (pno_se.currval, DNO_SE.CURRVAL, #{cno}) 
+		]]> 
+	</insert> 
+	
+	
+	
 	<!-- 비즈니스 가입 -->
 	<insert id="joinBusiness" flushCache="true">
 		<![CDATA[

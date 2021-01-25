@@ -55,7 +55,7 @@
 		set cendtime = to_char(to_date( '${cendtime}', 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd hh24:mi:ss'), 
 			cworktime = TRUNC((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss')-to_date(cstarttime,'yyyy-mm-dd hh24:mi:ss'))*24-1) || '.' ||
 						TRUNC(mod((to_date('${cendtime}','yyyy-mm-dd hh24:mi:ss') - to_date(cstarttime, 'yyyy-mm-dd hh24:mi:ss'))*24,1)*60)
-		where uno = '${uno}' and to_date(cdate, 'yyyy-mm-dd hh24:mi:ss') = to_date(sysdate, 'yyyy-mm-dd')
+		where uno = '${uno}' and to_char(to_date( cdate, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd') = to_char(to_date(current_date, 'yyyy-mm-dd hh24:mi:ss'), 'yyyy-mm-dd')
 	</update>
 	
 	<!-- 월 근무내역 조회 -->

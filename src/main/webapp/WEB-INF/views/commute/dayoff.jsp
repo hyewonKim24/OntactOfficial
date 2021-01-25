@@ -281,24 +281,26 @@
        	/* var responseMessage = "<c:out value="${message}" />"; */
        		/* $("#insertDf").on("click", function(){
        		}); */
+        
+       		$('#insertDf').on('click', function(e){
+            	e.preventDefault();
+           		if(fnMemberValidation() == false) {
+           			return;
+           			console.log("false로 들어옴");
+           		}else if(fnMemberValidation() == true){
+                    console.log("true로 들어옴");
+        			confirm("제출하시겠습니까?")
+        			if(true){
+        	          	   $("#dfIns_frm").submit();
+        	        	 alert("제출완료");
+        	        }else{
+        	        	  return;
+        	      	}
+             	}else{
+              	   return;
+              	}
+            });
        		
-        $('#insertDf').on('click', function(){
-        		if(fnMemberValidation() == false) {
-                    return;
-                    console.log("false로 들어옴");
-              }else if(nMemberValidation() == true){
-            	  console.log("true로 들어옴");
-      			confirm("제출하시겠습니까?")
-      			if(true){
-      	          	   $("#dfIns_frm").submit();
-      	        	 alert("제출완료");
-      	        }else{
-      	        	  return;
-      	      	}
-        	}else{
-         	   return;
-         	}
-        	});
         	 
         function fnMemberValidation(){
          	 if($('#dname option:selected').val() == '' || $('#dname option:selected').val() == 0){
@@ -395,7 +397,7 @@
              
                     </tr>
                     <tr>
-                        <td colspan="6"><button type="submit" id="insertDf" name="insertDf" >신청하기</button></td>
+                        <td colspan="6"><button id="insertDf" name="insertDf" >신청하기</button></td>
                     <!-- type="submit" -->
                     </tr>
                     </table>

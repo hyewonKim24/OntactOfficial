@@ -17,6 +17,18 @@ public class UsersDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	public int joinPjChange(HashMap<String,String> paramMap1) throws Exception{
+		return sqlSession.insert("Users.joinPjChange",paramMap1);
+	}
+	public int joinPjMemChange(HashMap<String,String> paramMap2) throws Exception{
+		return sqlSession.insert("Users.joinPjMemChange", paramMap2);
+	}
+	public int joinPjDeptChange(String cno) throws Exception{
+		return sqlSession.insert("Users.joinPjDeptChange", cno);
+	}
+	
+	
 	//비즈니스 회원가입
 	public void joinBusiness(UsersDto dto) throws Exception{
 		sqlSession.insert("Users.joinBusiness",dto);

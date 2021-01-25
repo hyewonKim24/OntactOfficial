@@ -71,4 +71,7 @@ public class ProjectDao {
 	public String selectPname(String pno) throws Exception{
 		return sqlSession.selectOne("Project.selectPname", pno);
 	}
+	
+
+		
 }
