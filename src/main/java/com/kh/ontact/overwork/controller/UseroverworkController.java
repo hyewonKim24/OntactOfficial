@@ -58,8 +58,9 @@ public class UseroverworkController {
 			int currentPage = page;
 //			 한 페이지당 출력할 목록 갯수, 페이징
 			int listCount1 = overworkServ.listCount(uno);
-			int maxPage = (int) ((double) listCount1 / LIMIT + 0.9);
+			int maxPage1 = (int) ((double) listCount1 / LIMIT + 0.9);
 			int listCount2 = overworkServ.searchlistCount(paramMap);
+			int maxPage2 = (int) ((double) listCount2 / LIMIT + 0.9);
 			//
 			
 			if (startdate == null || startdate == ""  && enddate == null || enddate == "") {
@@ -68,13 +69,15 @@ public class UseroverworkController {
 				mv.addObject("deptlist", deptServ.selectListDept(cno));
 				mv.addObject("list", list);
 				mv.addObject("currentPage", currentPage);
-				mv.addObject("maxPage", maxPage);
+				mv.addObject("maxPage", maxPage1);
 				mv.addObject("listCount", listCount1);
 				mv.setViewName("commute/overcommute");
 			} else if (startdate != null || startdate != "" && enddate != null || enddate != "") {
 				mv.addObject("deptlist", deptServ.selectListDept(cno));
-				mv.addObject("list", overworkServ.searchOverwork(paramMap));
-				System.out.println("결과" + overworkServ.searchOverwork(paramMap));
+				mv.addObject("list", overworkServ.searchOverwork(currentPage, LIMIT, paramMap));
+				System.out.println("결과" + overworkServ.searchOverwork(currentPage, LIMIT, paramMap));
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage2);
 				mv.addObject("listCount", listCount2);
 				mv.setViewName("commute/overcommute");
 			}

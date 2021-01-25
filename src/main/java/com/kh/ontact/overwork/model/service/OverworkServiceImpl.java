@@ -30,8 +30,8 @@ public class OverworkServiceImpl implements OverworkService{
 	} 
 	
 	@Override
-	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap){
-		return overworkDao.searchOverwork(paramMap);
+	public List<OverworkDto> searchOverwork(int startPage, int limit, HashMap<String, String> paramMap){
+		return overworkDao.searchOverwork(startPage, limit, paramMap);
 	}
 	
 	@Override

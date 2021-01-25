@@ -21,91 +21,100 @@
 
 <style>
   
-* {
-	margin: 0;
-}
-
-body {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	font-size: 14px;
-	font-family: Noto Sans KR;
-	line-height: 1.15;
-}
-a{
-	text-decoration: none;
-	color: #111111;
-}
-.headersection {
+      *{
+        margin : 0;
+    }
+    body{
+        width : 100%;
+        height: 100%;
+        position: relative;
+        font-size: 14px;
+        font-family: Noto Sans KR;
+        line-height: 1.15;
+        color: rgb(17,17,17);
+        background-color : #f2f2f2;
+    }
+    a {
+		text-decoration: none;
+		color: #111111;
+	}
+    .headersection {
 	position: relative;
 	width: 100%;
 	height: 60px;
-}
-
-.headersection div {
-	width: 1200px;
-	height: 60px;
-	margin: 0 auto;
-}
-/* 본문 */
-.main {
-	position: relative;
-	width: 1200px;
-	height: 100%;
-	margin: 0 auto;
-}
-/* 사이드메뉴 */
-.sidenav {
-	position: relative;
-	width: 210px;
-	height: 100%;
-	float: left;
-}
-
-.sidenav ul, .sidenav ul li a {
-	display: block;
-	color: black;
-}
-
-.sidenav ul li {
-	display: block;
-	font-size: 16px;
-}
-
-.sidenav ul ul {
-	display: none;
-}
-
-.sidenav>ul>li>a {
-	padding: 19px 20px;
-	z-index: 2;
-	cursor: pointer;
-	font-weight: 700;
-	text-decoration: none;
-}
-
-.sidenav ul ul li {
-	background-color: #e7e7e7;
-}
-
-.sidenav ul ul li a {
-	cursor: pointer;
-	padding: 10px 0;
-	padding-left: 30px;
-	z-index: 1;
-	text-decoration: none;
-	font-size: 13px;
-}
+	}
+	
+	.headersection div {
+		width: 1200px;
+		height: 60px;
+		margin: 0 auto;
+	}
+    /* 본문 */
+    .main{
+        position: relative;
+        width: 1200px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    /* 사이드메뉴 */
+    .sidenav{
+        position: relative;
+        width: 210px;
+        height: 100%;
+        float: left;
+        background-color : #f2f2f2;
+    }
+    .sidenav ul,
+    .sidenav ul li a {
+        display: block;
+        color: black;
+    }
+    .sidenav ul li{
+        display: block;
+        font-size: 16px;
+    }
+    .sidenav ul ul {
+    display: none;
+    }
+    .sidenav > ul > li > a {
+    padding: 25px 20px 19px 60px;
+    z-index: 2;  
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    }
+    
+    .sidenav ul ul li{
+        /* background-color: #e7e7e7; */
+    }
+    .sidenav ul ul li a {
+    cursor: pointer;
+    padding: 20px 0;
+    padding-left: 60px;
+    z-index: 1;
+    text-decoration: none;
+    font-size: 13px;
+    }
+    .sidenav ul ul li:hover{
+    	background-color : #e7e7e7;
+    	color : #5A3673;
+    }
+    
+    .sidenav ul ul li a:hover{
+    	font-weight : 700;
+    	
+    }
+    
 /* 콘텐츠 */
 .contents {
 	position: absolute;
-	width: 970px;
-	height: 860px;
+	width: 1000px;
+	height: 800px;
 	left: 210px;
-	padding: 40px 0 40px 40px;
+	padding: 40px 0 40px 35px;
 	border-left: 1px solid #e7e7e7;
 	box-sizing: border-box;
+	background-color : white;
 }
 
 .conTitle {
@@ -121,6 +130,31 @@ a{
     width: 930px;
     padding-top : 30px;
     margin: 0;
+}
+
+.fc-button-primary{
+	background-color: #432d73;
+	border-color : #787878;
+	
+}
+
+.fc-button-primary:hover{
+	background-color: #432d73;
+	border-color : #787878;
+	
+}
+
+.fc-button-primary:not(:disabled):active, 
+.fc-button-primary:not(:disabled).fc-button-active{
+	background-color: #432d73;
+	border-color : #787878;
+}
+.fc-button:disabled{
+	opacity : 1;
+}
+.fc-button-primary:disabled{
+	background-color: #432d73;
+	border-color : #787878;
 }
 </style>
 <script> 
@@ -182,7 +216,7 @@ a{
 	                                        	   title: description,
 	                                               start: startdate,
 	                                               end: enddate,
-	                                            
+	                                               color : "#23d9d9",
 	                                                  /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
 	                                                  color:"#ff3399"   */                                                 
 	                                            }); //.push()

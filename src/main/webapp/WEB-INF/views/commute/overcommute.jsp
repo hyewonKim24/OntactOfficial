@@ -13,7 +13,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-    *{
+     *{
         margin : 0;
     }
     body{
@@ -23,9 +23,10 @@
         font-size: 14px;
         font-family: Noto Sans KR;
         line-height: 1.15;
-   		color: #111111;
-	}
-	a{
+        color: rgb(17,17,17);
+        background-color : #f2f2f2;
+    }
+    a {
 		text-decoration: none;
 		color: #111111;
 	}
@@ -53,6 +54,7 @@
         width: 210px;
         height: 100%;
         float: left;
+        background-color : #f2f2f2;
     }
     .sidenav ul,
     .sidenav ul li a {
@@ -64,36 +66,48 @@
         font-size: 16px;
     }
     .sidenav ul ul {
-    	display: none;
+    display: none;
     }
     .sidenav > ul > li > a {
-	    padding: 19px 20px;
-	    z-index: 2;  
-	    cursor: pointer;
-	    font-weight: 700;
-	    text-decoration: none;
+    padding: 25px 20px 19px 60px;
+    z-index: 2;  
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
     }
+    
     .sidenav ul ul li{
-        background-color: #e7e7e7;
+        /* background-color: #e7e7e7; */
     }
     .sidenav ul ul li a {
-	    cursor: pointer;
-	    padding: 10px 0;
-	    padding-left: 30px;
-	    z-index: 1;
-	    text-decoration: none;
-	    font-size: 13px;
+    cursor: pointer;
+    padding: 20px 0;
+    padding-left: 60px;
+    z-index: 1;
+    text-decoration: none;
+    font-size: 13px;
     }
-    /* 콘텐츠 */
-    .contents{
-        position: absolute;
-        width: 970px;
-        height: 1100px;
-        left: 210px;
-        padding : 40px 0 40px 40px;
-        border-left: 1px solid #e7e7e7;
-        box-sizing: border-box;
+    .sidenav ul ul li:hover{
+    	background-color : #e7e7e7;
+    	color : #5A3673;
     }
+    
+    .sidenav ul ul li a:hover{
+    	font-weight : 700;
+    	
+    }
+    
+/* 콘텐츠 */
+.contents {
+	position: absolute;
+	width: 1000px;
+	height: 1055px;
+	left: 210px;
+	padding: 40px 0 40px 35px;
+	border-left: 1px solid #e7e7e7;
+	box-sizing: border-box;
+	background-color : white;
+}
     .conTitle{
         width: 930px;
         height: 40px;
@@ -481,7 +495,7 @@
 								var="p" begin="${startPage+1}" end="${endPage}">
 								<!-- eq : == / ne : != -->
 								<c:if test="${p eq currentPage}">
-									<font color ="#5A3673" ><b>${p} &nbsp;</b></font>
+									<font color ="#da0f8e" ><b>${p} &nbsp;</b></font>
 								</c:if>
 								<c:if test="${p ne currentPage}">
 									<c:url var="owlistchk" value="/overwork/owlist">

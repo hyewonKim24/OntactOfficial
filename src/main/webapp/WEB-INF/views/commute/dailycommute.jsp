@@ -26,7 +26,6 @@
 	rel="stylesheet">
 
 <style>
- <style>
   *{
         margin : 0;
     }
@@ -86,7 +85,7 @@
     padding: 25px 20px 19px 60px;
     z-index: 2;  
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 500;
     text-decoration: none;
     }
     
@@ -105,13 +104,19 @@
     	background-color : #e7e7e7;
     	color : #5A3673;
     }
+    
+    .sidenav ul ul li a:hover{
+    	font-weight : 700;
+    	
+    }
+    
 /* 콘텐츠 */
 .contents {
 	position: absolute;
 	width: 1000px;
 	height: 860px;
 	left: 210px;
-	padding: 40px 0 40px 40px;
+	padding: 40px 0 40px 35px;
 	border-left: 1px solid #e7e7e7;
 	box-sizing: border-box;
 	background-color : white;
@@ -523,15 +528,27 @@ canvas {
 						</c:if> 
 						<c:if test="${listCount ne 0}">
 						<%-- <c:if test="${not empty list}"> --%>
-							<c:forEach var="cm" items="${list}" varStatus="status">
+							<c:forEach var="cm" items="${list}" varStatus="e">
 								<tr>
 									<td>${cm.cdate}</td>
-									<td>${cm.cstate}</td>
+									<td>
+									<input type="hidden" value="${cm.cstate}" class="cmcstate app${e.count}">
+                        			<span class="owappval${e.count}"></span>
+									
+									</td>
 									<td>${cm.cstarttime}</td>
 									<td>${cm.cendtime}</td>
 									<td>${cm.cworktime}</td>
 									<td>${cm.creason}</td>
 								</tr>
+								<script>
+			                    if($(".app${e.count}").val() == 1){
+			                    	$(".owappval${e.count}").text("지각");
+			                    }else if($(".app${e.count}").val() == 0){
+			                    	$(".owappval${e.count}").text("정상출근");
+			                    }
+	                    </script>
+	                    
 							</c:forEach>
 						</c:if>
 						<!-- 앞 페이지 번호 처리 -->
@@ -547,7 +564,7 @@ canvas {
 								<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
 									<!-- eq : == / ne : != -->
 									<c:if test="${p eq currentPage}">
-										<font color ="#5A3673"><b>${p} &nbsp; </b></font>
+										<font color ="#da0f8e"><b>${p} &nbsp; </b></font>
 									</c:if>
 									<c:if test="${p ne currentPage}">
 										<c:url var="dailychk" value="/commute/dailylist">
@@ -603,6 +620,7 @@ function fnMemberValidation(){
  	   
  	  return true;
  	 };
+ 	
 	</script>
 </body>
 </html>

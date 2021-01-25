@@ -108,7 +108,7 @@
         line-height: 40px;
         padding-bottom: 20px;
         font-size: 32px;
-        border-bottom: 1px solid #e7e7e7;
+        border-bottom: 1px solid #c0c0c0;
     }
     .search{
         position: absolute;
@@ -117,7 +117,7 @@
         padding: 10px 15px;
         margin-top: 30px;
         line-height: 40px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         box-sizing: border-box;
         border-bottom: 0;
         
@@ -125,7 +125,7 @@
     .search input{
         width: 168px;
         height: 30px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         /* border-right: 0; */
         box-sizing: border-box;
     }
@@ -135,7 +135,7 @@
         background-color: white;
 
         color:#F2F2F2;
-        border : 1px solid #e7e7e7;
+        border : 1px solid #c0c0c0;
         /* border-left: 0; */
         box-sizing: border-box;
         vertical-align: middle;   
@@ -150,7 +150,7 @@
         top: 190px;
         width: 200px;
         height: 400px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         border-bottom: 0;
         box-sizing: border-box;
         
@@ -186,7 +186,7 @@
         height: 40px;
         line-height: 40px;
         padding-left: 30px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         border-bottom: 0;
         box-sizing: border-box;
         
@@ -199,7 +199,7 @@
         line-height: 50px;
         padding-left: 15px;
         float: left;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         box-sizing: border-box;
         
     }
@@ -217,7 +217,7 @@
         left: 260px;
         margin-top: 30px;
         padding: 15px 15px 0 15px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #c0c0c0;
         box-sizing: border-box;
         
     }
@@ -493,12 +493,12 @@
                     <div>
                         <table>
                             <tr>
-                            	<th style="width : 80px;">
+                            	<th style="width : 50px;">
                             	<sec:authorize access="hasRole('ROLE_ADMIN')">
                                 	선택
                                 </sec:authorize>
                                 </th>
-                                <th style="width : 80px;">사원번호</th>
+                                <th style="width : 100px;">사원번호</th>
                                 <th>이름</th>
                                 <th>직급</th>
                                 <th>이메일</th>
@@ -513,12 +513,12 @@
                         <c:if test="${not empty list}">
 						<c:forEach var="og" items="${list}" varStatus="status">
 						
-                            <tr><td>
+                            <tr><td style="width : 50px;">
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <input type="checkbox" name="chk" value="${og.uno}" class="chkbox">
                             </sec:authorize>
                             </td>
-                                <td>${og.uno}</td>
+                                <td style="width : 100px;">${og.uno}</td>
                                 <td>${og.uname}</td>
                                 <td>${og.urank}</td>
                                 <td>${og.uemail}</td>
@@ -545,7 +545,7 @@
 								var="p" begin="${startPage+1}" end="${endPage}">
 								<!-- eq : == / ne : != -->
 								<c:if test="${p eq currentPage}">
-									<font color ="#5A3673"><b>${p} &nbsp;</b></font>
+									<font color ="#da0f8e"><b>${p} &nbsp;</b></font>
 								</c:if>
 								<c:if test="${p ne currentPage}">
 									<c:url var="oglistchk" value="/commute/organlist">

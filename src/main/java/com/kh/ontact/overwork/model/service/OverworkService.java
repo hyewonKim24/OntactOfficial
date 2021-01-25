@@ -13,7 +13,7 @@ public interface OverworkService {
 	
 	public int searchlistCount(HashMap<String, String> paramMap) throws Exception;
 	
-	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap); 
+	public List<OverworkDto> searchOverwork(int startPage, int limit, HashMap<String, String> paramMap); 
 
 	public OverworkDto selectOwOne(String owno);
 	

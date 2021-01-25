@@ -30,7 +30,9 @@ public class OverworkDao {
 		return sqlSession.selectOne("OverworkMapper.searchlistCount", paramMap);
 	} 
 	
-	public List<OverworkDto> searchOverwork(HashMap<String, String> paramMap) { // 게시글 검색 조회 
+	public List<OverworkDto> searchOverwork(int startPage, int limit, HashMap<String, String> paramMap) {
+		int startRow = (startPage - 1) * limit; // 시작 페이지를 가져옴, 0~9, 10~19
+		RowBounds row = new RowBounds(startRow, limit); //ibatis 세션의 rowboun
 		return sqlSession.selectList("OverworkMapper.searchOverwork", paramMap);
 	}
 	public OverworkDto selectOwOne(String owno) { 
