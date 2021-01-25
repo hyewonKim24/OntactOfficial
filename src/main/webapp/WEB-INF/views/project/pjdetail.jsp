@@ -2040,12 +2040,12 @@
 
                                                 <c:forEach items="${userlist}" var="ulist" varStatus="ee"> 
                                                 <div class="userlist_wrap">
-                                                <c:if test="${empty blist.ufilepath }">
-					                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
-					                            </c:if>
-					                            <c:if test="${not empty blist.ufilepath }">
-					                            	<img src="${blist.ufilepath}"  class="profileImg-file">
-					                            </c:if>
+	                                                <c:if test="${empty ulist.ufilepath }">
+						                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
+						                            </c:if>
+						                            <c:if test="${not empty ulist.ufilepath }">
+						                            	<img src="${ulist.ufilepath}"  class="profileImg-file">
+						                            </c:if>
                                                     <span>${ulist.uname}</span>
                                                     <input type="hidden" class="taks-res-uno" name="attendee1" value="${ulist.uno}">
                                                     <input type="checkbox" class="pick-${blist.bno} pick${ee.count} pick" name="pick-${blist.bno}" value="+ 선택">
