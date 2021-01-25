@@ -176,11 +176,6 @@ public class DeptController {
 			usersDao.joinPjChange(paramMap1);
 			usersDao.joinPjMemChange(paramMap2);
 			usersDao.joinPjDeptChange(cno);
-
-			System.out.println("deptt : " + deptServ.insertDept(d));
-			System.out.println("pjChange : " + usersDao.joinPjChange(paramMap1));
-			System.out.println("memChange: " + usersDao.joinPjMemChange(paramMap2));
-			System.out.println("pjdeptChange : " +  usersDao.joinPjDeptChange(cno));
 			
 			rttr.addFlashAttribute("message", "success");
 			
