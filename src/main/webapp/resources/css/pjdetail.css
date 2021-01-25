@@ -1527,13 +1527,17 @@
 				width: 25px;
 				margin-top: 10px;
 			}
+			/* 은실 캘린더 z-index 조정 */
+			.ui-datepicker{
+			z-index:10;
+			}
 /* 윤진 : 우측 바 */
 			.rightBar {
 				position:fixed;
 				width: 250px;
 				height: 100%;
 				margin: 80px 0 0 950px;
-				z-index: 99;
+				z-index: 3;
 			}
 			/* 윤진 : 이전화면 버튼 div*/
 			.rightBar #prevbtn {

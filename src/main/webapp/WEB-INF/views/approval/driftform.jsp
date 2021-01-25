@@ -297,6 +297,7 @@ header {
 	-webkit-animation-duration: 0.4s;
 	animation-name: animatetop;
 	animation-duration: 0.4s;
+	
 }
 
 .sb-modal-header {

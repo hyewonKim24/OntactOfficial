@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- 파비콘 -->
-    <link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/favicon/favicon.ico">
+    <link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/public/favicon.ico">
 	<sec:csrfMetaTags />
     <title>ontact, 서로 연결되는 온라인 공간</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"

@@ -57,7 +57,14 @@ public class UsersMainController {
 	EmailService emailService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UsersMainController.class);
-
+	
+	static class FaviconController {
+        @RequestMapping("favicon.ico")
+        String favicon() {
+            return "forward:/resources/public/favicon.ico";
+        }
+    }
+	
 	// 메인화면 이동
 	@RequestMapping("/main")
 	public String main() {

@@ -198,6 +198,7 @@ body {
 	-webkit-animation-duration: 0.4s;
 	animation-name: animatetop;
 	animation-duration: 0.4s;
+	min-width:500px;
 }
 
 /* Add Animation */
@@ -267,6 +268,12 @@ to {
 	font-weight: 700;
 	letter-spacing: -1px;
 }
+#pname::placeholder{
+color:#dbd9d9;
+}
+.sb-modal-body textarea::placeholder{
+color:#757575;
+}
 
 .sb-modal-body textarea {
 	width: 90%;
@@ -281,6 +288,10 @@ to {
 	box-sizing: border-box;
 	letter-spacing: -1px;
 	overflow-x:hidden;
+	font-family: Noto Sans KR;
+}
+textarea:focus{
+outline:none;
 }
 
 /*관리자 승인 참여*/
@@ -334,6 +345,10 @@ to {
 	transition: .4s;
 }
 
+input:focus{
+outline:none;
+}
+
 input:checked+.slider {
 	background-color: #23d9d9;
 }
@@ -369,19 +384,20 @@ input:checked+.slider:before {
 }
 
 .sb-modal-body>.pj_select_team div:nth-child(1) {
-	font-weight: 700;
+	/* font-weight: 700; */
 	margin-bottom: 10px;
 }
 
 .sb-modal-body>.pj_select_team div:nth-child(2) {
-	width: 90%;
-	overflow-y: scroll;
+	/* width: 90%; */
+	overflow-y: auto;
+	height:100px;
 }
 
 .sb-modal-body>#pj_new_btn {
 	width: 60%;
 	height: 50px;
-	margin: 0 auto;
+	margin: 30px auto;
 	line-height: 48px;
 	font-size: 15px;
 	border-style: none;
@@ -415,7 +431,7 @@ input:checked+.slider:before {
 				success : function(data) {
 					$("#pjteam").html("");
 					for (var i = 0; i < data.length; i++) {
-						$("#pjteam").append('<input type="checkbox" name="dno" value="'+ data[i].dno + '">'+data[i].dname+'<br>');
+						$("#pjteam").append('<label for="dnochk'+[i]+'"><input type="checkbox" name="dno" id="dnochk'+[i]+'"value="'+ data[i].dno + '">'+data[i].dname+'<br>');
 					}
 					
 					//혜원 코드 추가
@@ -776,7 +792,7 @@ input:checked+.slider:before {
 							</label>
 						</div>
 						<div class="pj_select_team">
-							<div>부서보관함 선택</div>
+							<div style="font-weight:700;">부서보관함 선택</div>
 							<div>
 								<div id="pjteam"></div>
 							</div>
