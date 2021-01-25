@@ -1,6 +1,7 @@
 package com.kh.ontact.project.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,19 +61,24 @@ public class ProjectController {
 			String cno = userdetail.getCno();
 			String dno = userdetail.getDno();
 			
+			boolean hasUserRole = authentication.getAuthorities().stream()
+			          .anyMatch(r -> r.getAuthority().equals("ROLE_USER"));
+			
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("uno", uno);
 			paramMap.put("cno", cno);
 			
 			ProjectDto aaa = null;
-	         if(userdetail.getAuthorities().equals("ROLE_USER")) {
-	            aaa = pjService.selectOneTeam(paramMap);
-	         }
-
+			if(hasUserRole) {
+				aaa = pjService.selectOneTeam(paramMap);
+				System.out.println("aaa"+aaa);
+			}
+			
 			mv.addObject("pjc", pjService.selectOneCompany(uno));
 			System.out.println("내 회사 결과 : " + pjService.selectOneCompany(uno));
+			
 			mv.addObject("pjd", aaa);
-			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
+			//System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
 			mv.addObject("listpj", pjService.selectListProject(paramMap));
 			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));
 			if(prodelete!=null)

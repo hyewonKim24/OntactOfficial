@@ -128,6 +128,7 @@
 				font-size: 14px;
 				overflow-y: hidden;
 				font-family: Noto Sans KR;
+				resize:none;
 			}
 			.content_detail2 {
 				border: none;
@@ -136,6 +137,7 @@
 				font-size: 14px;
 				overflow-y: hidden;
 				font-family: Noto Sans KR;
+				resize:none;
 			}
 .content_detail:focus, .title_detail:focus, .content_detail2:focus{
 	outline: none;
