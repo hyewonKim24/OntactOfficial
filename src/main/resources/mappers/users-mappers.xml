@@ -230,7 +230,7 @@
 		SELECT u.uno,u.cno,c.cname,u.uname,u.ufilepath,u.urank,u.uemail,d.dname FROM USERS u
 		inner join company c
 		on c.cno=u.cno
-        inner join dept d
+        full outer join dept d
         on d.dno=u.dno
 		where u.cno=#{cno} and UNO NOT IN (#{uno})
 		]]>

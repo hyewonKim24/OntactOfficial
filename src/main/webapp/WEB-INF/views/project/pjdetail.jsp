@@ -1028,8 +1028,15 @@
                 <div class="one">
                     <div class="boardHeader">
                         <div class="writeInfo">
-                            <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png"
-                                    class="profileImg"></span>
+                            <span>
+                            <c:if test="${empty blist.ufilepath }">
+                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
+                            </c:if>
+                            <c:if test="${not empty blist.ufilepath }">
+                            	<img src="${blist.ufilepath}"  class="profileImg-file">
+                            </c:if>
+                            
+                            </span>
                             <div class="writer">${blist.uname} </div>
                             <div class="writeDate">${blist.bdate }</div>
                             <img src="">
@@ -1176,9 +1183,14 @@
 					<div class="one">
 						<div class="boardHeader">
 							<div class="writeInfo">
-								<span><img
-										src="${pageContext.request.contextPath}/resources/img/user-3.png"
-										class="profileImg"></span>
+								<span>
+									<c:if test="${empty blist.ufilepath }">
+		                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
+		                            </c:if>
+		                            <c:if test="${not empty blist.ufilepath }">
+		                            	<img src="${blist.ufilepath}"  class="profileImg-file">
+		                            </c:if>		
+								</span>
 								<div class="writer">${blist.uname }</div>
 								<div class="writeDate">${blist.bdate}</div>
 								<img src="">
@@ -1956,7 +1968,14 @@
             <div class="one">
                 <div class="boardHeader">
                     <div class="writeInfo">
-                        <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+                        <span>
+                        	<c:if test="${empty blist.ufilepath }">
+                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
+                            </c:if>
+                            <c:if test="${not empty blist.ufilepath }">
+                            	<img src="${blist.ufilepath}"  class="profileImg-file">
+                            </c:if>
+                      	</span>
                         <div class="writer">${blist.uname}</div>
                         <div class="writeschedate">${blist.bdate}</div>
                         <img src="">
@@ -2212,7 +2231,14 @@
 		<div class="one">
                       <div class="boardHeader">
                           <div class="writeInfo">
-                              <span><img src="${pageContext.request.contextPath}/resources/img/user-3.png" class="profileImg"></span>
+                              <span>
+                              	<c:if test="${empty blist.ufilepath }">
+	                            	<img src="${pageContext.request.contextPath}/resources/img/user-3.png"  class="profileImg">
+	                            </c:if>
+	                            <c:if test="${not empty blist.ufilepath }">
+	                            	<img src="${blist.ufilepath}"  class="profileImg-file">
+	                            </c:if>
+                              </span>
                               <div class="writer">${blist.uname }</div>
                               <div class="writeDate">${blist.bdate }</div>
                               <img src="">

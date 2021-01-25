@@ -927,7 +927,7 @@ input{
 						$(".prof-name").text(uname);
 						$(".prof-cname").text(cname);
 						$(".prof-email").text(uemail);
-						if(dname==null){
+						if(dname!=null){
 							$(".prof-dname").text(dname);
 						}else{
 							$(".prof-dname").text('-');
