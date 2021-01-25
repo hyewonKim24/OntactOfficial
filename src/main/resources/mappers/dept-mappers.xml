@@ -6,6 +6,7 @@
 		<result property="cno" column="cno" />
 		<result property="dname" column="dname" />
 		<result property="cname" column="cname" />
+		<result property="pno" column="pno" />
 	</resultMap>
 	
 	<!-- 윤진 / project insert modal : 부서 보관함 목록 뿌리기 -->
@@ -27,7 +28,12 @@
 	</select>
 	<select id="selectDept" resultType="arraylist"
 		resultMap="resultDept">
-		select d.cno as cno, d.dno as dno, d.dname as dname, c.cname as cname from dept d, company c where c.cno = d.cno and c.cno = #{cno}
+		select distinct c.cno as cno, d.dno as dno, d.dname as dname, c.cname as cname, p.pno as pno
+        from dept d
+        inner join company c on c.cno = d.cno 
+        inner join project_dept p on d.dno = p.dno
+        where c.cno = #{cno}
+        
 	</select>
 	<!-- <select id="selectDtOne" parameterType="string" resultType="DeptDto">
 		select * from dept where dno = #{dno} 

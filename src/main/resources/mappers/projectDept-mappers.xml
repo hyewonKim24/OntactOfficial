@@ -16,4 +16,6 @@
 			(PNO_SE.CURRVAL, #{item.DNO}, #{cno})
 		</foreach>
 	</insert>
+	
+	
 </mapper>

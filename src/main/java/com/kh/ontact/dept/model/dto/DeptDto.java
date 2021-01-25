@@ -17,4 +17,5 @@ public class DeptDto {
 	private String cno;
 	private String dname;
 	private String cname;
+	private String pno;
 }

@@ -432,12 +432,14 @@
 									<input type ="hidden" value="${dp.dname}" name="dname" class="dname">
 									<input type ="hidden" value="${dp.cno}" name="cno" class="cno">
 			                        <input type ="hidden" value="${dp.dno}" name="dno" class="dno">
+			                        <input type ="hidden" value="${dp.pno}" name="pno" class="pno">
 		                        </form>
 			                    <button type ="button"name="pickDept" onclick="goList('${dp.dno}');" 
 			                        class="pickDept pickDept${e.count}" id="dept${e.count}">삭제</button>
 		                        <a href="${pageContext.request.contextPath}/commute/organlist?dname=${dp.dname}">
 		                        ${dp.dname}
 		                        <input type ="hidden" value="${dp.dno}" name="dno" class="dno">
+		                        <input type ="hidden" value="${dp.pno}" name="pno" class="pno">
 		                        </a>
 		                        </li>
 		                        <script>

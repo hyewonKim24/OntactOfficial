@@ -50,6 +50,15 @@ public class ProjectDao {
 		System.out.println("프로젝트부서보관함 dao 진입"+paramMap.get("dname"));
 		return sqlSession.selectList("Project.selectListPjTeam", paramMap);
 	}
+	// 프로젝트 멤버 목록
+	public List<ProjectDto> PjUserListDept(String pno)  throws Exception{
+		System.out.println("프로젝트 삭제");
+		List<ProjectDto> bbbb = sqlSession.selectList("ProjectMember.PjUserListDept", pno);
+		System.out.println("프로젝트 삭제" +bbbb);
+		return bbbb;
+	}
+	
+	
 	
 	
 	

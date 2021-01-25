@@ -2029,7 +2029,6 @@
                                         <div class="attendee-list">
                                             <div class="attendee-search">
                                                 <input type="text" id="schedule_keyword"placeholder="참석자 이름 검색">
-                                                <button id="searchBtn"><img src="${pageContext.request.contextPath}/resources/img/search.png"></button>
                                             </div>
                                             
                                             <div class="attendee-people">

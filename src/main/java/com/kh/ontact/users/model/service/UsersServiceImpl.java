@@ -230,7 +230,11 @@ public class UsersServiceImpl implements UsersService{
 			return usersDao.updateDept(u);
 		}
 		public List<UsersDto> deleteOgUser(HashMap<String, String> paramMap1) {
-			return usersDao.deleteOrgani(paramMap1);
+		System.out.println("서비스까지 옴");
+		List<UsersDto> deleteList = usersDao.deleteOrgani(paramMap1);
+		System.out.println("####AAAA" + deleteList);
+			return deleteList;
+			
 		}
 
 	}

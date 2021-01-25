@@ -30,4 +30,11 @@
 		]]>
 	</insert>
 	
+	<select id="PjUserListDept" resultMap ="resultProjectMember">
+		 <![CDATA[
+		SELECT UNO FROM PROJECT_MEMBER WHERE pno=#{pno}
+		]]>
+	</select>
+	
+	
 </mapper>

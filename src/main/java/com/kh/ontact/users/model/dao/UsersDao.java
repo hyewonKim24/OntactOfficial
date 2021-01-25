@@ -148,6 +148,7 @@ public class UsersDao {
 			return sqlSession.update("Users.updateDept", u);
 		}
 		public List<UsersDto> deleteOrgani(HashMap<String, String> paramMap1) { // 특정 페이지 단위의 게시글 조
+			System.out.println("다오까지 옴");
 			return sqlSession.selectList("Users.deleteOrgani", paramMap1);
 		}
 		
