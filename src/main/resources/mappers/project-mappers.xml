@@ -80,7 +80,7 @@
 		            group by pjd.pno) pjteam 
 		        on pj.pno = pjteam.pno 
 		        group by pj.pno, pj.pname, pj.popen, pjm.pjmembercnt, pjteam.dname, a.cnt, c.cname
-		        having pj.pname <> c.cname
+		        having pj.pname <> c.cname and (pj.pname<>pjteam.dname or pjteam.dname is null)
 		    order by pj.pno desc 
 	     ]]>
 	</select>
