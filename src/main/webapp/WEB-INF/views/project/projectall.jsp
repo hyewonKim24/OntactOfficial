@@ -454,7 +454,7 @@ body {
 							<div>${pjd.dname}</div>
 							<div class="pj_team_list"></div>
 							<div>
-								<span>${pjd.ucnt}</span> <span>명 참여중</span>
+								<span>${pjd.pjmembercnt}</span> <span>명 참여중</span>
 							</div>
 							<c:if test="${pjd.cnt !=undefined }">
 								<span class='pj_cnt'>${pjd.cnt}</span>

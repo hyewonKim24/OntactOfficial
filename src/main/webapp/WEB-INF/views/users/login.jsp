@@ -141,8 +141,7 @@
 </head>
 <body>
     <header>
-        <h2>ONTACT</h2>
-        
+       <h2><img src="${pageContext.request.contextPath}/resources/img/ontact_logo-04-white.png" width="140px"></h2>
 	        <button id="joinbtn" onclick="location.href='${pageContext.request.contextPath}/main'">회원가입</button>
 	   
     	<sec:authorize access="isAuthenticated()">

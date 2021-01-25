@@ -62,10 +62,15 @@ public class ProjectController {
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("uno", uno);
 			paramMap.put("cno", cno);
+			
+			ProjectDto aaa = null;
+	         if(userdetail.getAuthorities().equals("ROLE_USER")) {
+	            aaa = pjService.selectOneTeam(paramMap);
+	         }
 
 			mv.addObject("pjc", pjService.selectOneCompany(uno));
 			System.out.println("내 회사 결과 : " + pjService.selectOneCompany(uno));
-			mv.addObject("pjd", pjService.selectOneTeam(paramMap));
+			mv.addObject("pjd", aaa);
 			System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
 			mv.addObject("listpj", pjService.selectListProject(paramMap));
 			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));

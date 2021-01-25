@@ -28,20 +28,30 @@
 		<id column="dno" property="dno" />
 		<result column="cno" property="cno" />
 		<result column="dname" property="dname" />
-		<result column="ucnt" property="ucnt" />
+		<result column="pjmembercnt" property="pjmembercnt" />
 		<result column="pno" property="pno" />
 		<result column="cnt" property="cnt" />
 	</resultMap>
 	<select id="selectOneTeam" resultMap="selectOneTeam"  parameterType="HashMap">
 		<![CDATA[
-			select d.cno as cno, d.dno as dno, d.dname as dname, u.ucnt as ucnt, p.pno as pno, a.cnt as cnt
-			    from dept d
-			    inner join project p on p.cno = d.cno and trim(p.pname)=trim(d.dname)
-			    inner join (select uno, dno, count(*) as ucnt from users group by uno,dno)u on u.dno= d.dno
-			    left outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on p.pno = a.pno
-			    where d.cno = #{cno} and u.uno = #{uno}
+		select distinct d.cno as cno, d.dno as dno, d.dname as dname, p.pno, pjm.pjmembercnt as pjmembercnt, p.pno as pno, a.cnt as cnt
+                from dept d
+                inner join project p on p.pname = d.dname and p.cno=d.cno
+                inner join project_dept pjd on d.dno = pjd.dno and pjd.cno=d.cno
+                inner join (select pno, cno, count(*) as pjmembercnt from project_member group by pno, cno having cno = #{cno}) pjm on p.pno = pjm.pno
+                left join (select * from project_member where uno=#{uno})pjm2 on p.pno=pjm2.pno
+                full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on p.pno = a.pno
+                where d.cno = #{cno} and pjm2.uno=#{uno}
 		]]>
 	</select>
+<!-- 			select d.cno as cno, d.dno as dno, d.dname as dname, u.ucnt as ucnt, p.pno as pno, a.cnt as cnt
+                from dept d
+                inner join project p on p.pname = d.dname and p.cno=d.cno
+                inner join project_dept pjd on d.dno = pjd.dno and pjd.cno=d.cno
+                inner join (select pno, cno, count(*) as ucnt from project_member group by pno, cno having cno = #{cno}) u on p.pno = u.pno
+                left join (select * from project_member where uno=#{uno})pjm2 on p.pno=pjm2.pno
+                full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on p.pno = a.pno
+                where d.cno = #{cno} and pjm2.uno=#{uno} -->
 
 	<resultMap type="map" id="projectListMap">
 		<id column="pj_pno" property="pno" />
@@ -110,7 +120,7 @@
 		            group by pjd.pno) pjteam 
 		    on pj.pno = pjteam.pno 
 		    full outer join (select pno, uno, count(acount) as cnt from alert group by pno, uno, acount having uno = #{uno} and acount=1) a on pj.pno = a.pno
-		where pj.pname <> c.cname and pname <> pjteam.dname and a.cnt is not null
+		where a.cnt is not null
 		order by pj.pno desc
 		]]>
 	</select>
