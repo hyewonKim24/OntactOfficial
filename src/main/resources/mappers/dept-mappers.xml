@@ -62,4 +62,9 @@
 		update users set dno = #{dno}
 		where uno = #{uno}
 	</update>
+	
+	<!-- 혜원 부서 프로젝트 pno 찾기 -->
+	<select id="selectDeptPno" resultType="string">
+		select pno from project_dept where dno=#{dno}
+	</select>
 </mapper>

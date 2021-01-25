@@ -25,6 +25,8 @@ import com.kh.ontact.project.model.dao.ProjectDao;
 import com.kh.ontact.project.model.dto.ProjectDto;
 import com.kh.ontact.project.model.service.ProjectService;
 import com.kh.ontact.project.schedule.model.dto.ScheduleDto;
+import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
+import com.kh.ontact.projectMember.model.service.ProjectMemberService;
 import com.kh.ontact.users.model.dao.UsersDao;
 import com.kh.ontact.users.model.dto.CustomUserDetails;
 import com.kh.ontact.users.model.dto.UsersDto;
@@ -46,6 +48,9 @@ public class DeptController {
 	
 	@Autowired
 	private ProjectDao pjDao;
+	
+	@Autowired
+	private ProjectMemberService pmService;
 	
 	public static final int LIMIT = 10;
 	
@@ -132,19 +137,36 @@ public class DeptController {
 	public ModelAndView updateDept(DeptDto d, 
 				@RequestParam(name = "deptSelect") String dno,
 				@RequestParam(name = "chk") List<String> uno,
-				ModelAndView mv) {
+				ModelAndView mv, Authentication authentication) {
+		CustomUserDetails userdetail = (CustomUserDetails) authentication.getPrincipal();
+		String cno=userdetail.getCno();
+		
 		System.out.println("부서번호" + dno);
 		System.out.println("사원번호" + uno);
 		List<UsersDto> list = new ArrayList<UsersDto>();
+		List<ProjectMemberDto> pmlist = new ArrayList<ProjectMemberDto>();
+		ProjectMemberDto pmdto = null;
 		UsersDto one = null;
 		try {
+			String deptpno = deptServ.selectDeptPno(dno);
+			System.out.println("deptPno:"+deptpno);
+
 			for(int i = 0; i < uno.size(); i++) {
 				one = new UsersDto();
 				one.setUno(uno.get(i));
 				one.setDno(dno);
 				list.add(one);
+				
+				pmdto = new ProjectMemberDto();
+				pmdto.setUno(uno.get(i));
+				pmdto.setPno(deptpno);
+				pmdto.setCno(cno);
+				pmlist.add(pmdto);
 			}
 			deptServ.updateDept(list);
+			int rs = pmService.projectMeberinvite(pmlist);
+			System.out.println(" 부서 프로젝트에 "+ rs+"명 insert됨.");
+			
 			
 			mv.setViewName("redirect:/commute/organlist");
 		} catch (Exception e) {

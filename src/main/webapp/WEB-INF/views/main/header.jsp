@@ -1506,7 +1506,7 @@ $(document).ready(function() {
 				$("#alarm-scroll-box").append(printHTML);
 				$("#alarm-count").remove();
 				$("#alarm-counts").remove(); 
-				$(".pj_sb_alarm_all").html('');
+				$(".pj_sb_alarm_all").html('0');
 			},
 			error:function(){
 				console.log("실패");

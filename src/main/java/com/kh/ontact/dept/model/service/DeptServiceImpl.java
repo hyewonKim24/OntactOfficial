@@ -72,5 +72,10 @@ public class DeptServiceImpl implements DeptService{
 		System.out.println(rs + "행이 업데이트됨");
 		return rs;
 	}
+
+	@Override
+	public String selectDeptPno(String dno) throws Exception {
+		return deptDao.selectDeptPno(dno);
+	}
 	
 }

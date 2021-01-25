@@ -59,5 +59,10 @@ public class DeptDao {
 		return sqlSession.selectOne("Dept.dnameChk", dno);
 	}
 	
+	//혜원
+	public String selectDeptPno(String dno) throws Exception {
+		return sqlSession.selectOne("Dept.selectDeptPno", dno);
+	}
+	
 	
 }
