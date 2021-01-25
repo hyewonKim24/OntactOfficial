@@ -216,7 +216,7 @@
 	                                        	   title: description,
 	                                               start: startdate,
 	                                               end: enddate,
-	                                               color : "#23d9d9",
+	                                               color : "#da0f8e",
 	                                                  /* url: "${pageContext.request.contextPath }/detail.do?seq="+element.seq,
 	                                                  color:"#ff3399"   */                                                 
 	                                            }); //.push()
