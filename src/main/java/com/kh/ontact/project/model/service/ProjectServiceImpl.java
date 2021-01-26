@@ -28,6 +28,11 @@ public class ProjectServiceImpl implements ProjectService{
 	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) throws Exception {
 		return pjDao.selectListProject(paramMap);
 	}
+	@Override
+	public List<ProjectDto> selectListProject2(HashMap<String, String> paramMap) throws Exception {
+		return pjDao.selectListProject2(paramMap);
+	}
+	
 
 	//프로젝트 목록 : 회사
 	@Override

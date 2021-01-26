@@ -10,7 +10,7 @@ import com.kh.ontact.projectMember.model.dto.ProjectMemberDto;
 public interface ProjectService {
 	//프로젝트 전체 목록 : 프로젝트명, 공개여부
 	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) throws Exception;
-
+	List<ProjectDto> selectListProject2(HashMap<String, String> paramMap) throws Exception;
 	//프로젝트 목록 : 회사
 	public ProjectDto selectOneCompany(String uno) throws Exception;
 	

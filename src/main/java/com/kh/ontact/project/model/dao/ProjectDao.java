@@ -20,6 +20,9 @@ public class ProjectDao {
 	public List<ProjectDto> selectListProject(HashMap<String, String> paramMap) {
 		return sqlSession.selectList("Project.selectListProject", paramMap);
 	}
+	public List<ProjectDto> selectListProject2(HashMap<String, String> paramMap) {
+		return sqlSession.selectList("Project.selectListProject2", paramMap);
+	}
 	
 	// 프로젝트 전체목록 : 회사명
 	public ProjectDto selectOneCompany(String uno){

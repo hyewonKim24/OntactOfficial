@@ -79,8 +79,12 @@ public class ProjectController {
 			
 			mv.addObject("pjd", aaa);
 			//System.out.println("내 부서 결과 : " + pjService.selectOneTeam(paramMap));
+			if(hasUserRole) {
 			mv.addObject("listpj", pjService.selectListProject(paramMap));
 			System.out.println("project List 결과 : " + pjService.selectListProject(paramMap));
+			} else {
+				mv.addObject("listpj", pjService.selectListProject2(paramMap));
+			}
 			if(prodelete!=null)
 				mv.addObject("prodelete", "프로젝트가 1개 삭제되었습니다");
 			mv.setViewName("project/projectall");
@@ -237,12 +241,19 @@ public class ProjectController {
 			String uno = userdetail.getUno();
 			String cno = userdetail.getCno();
 			
+			boolean hasUserRole = authentication.getAuthorities().stream()
+			          .anyMatch(r -> r.getAuthority().equals("ROLE_USER"));
+			
 			HashMap<String, String> paramMap = new HashMap<String, String>();
 			paramMap.put("uno", uno);
 			paramMap.put("cno", cno);
 			System.out.println("paramMap:"+paramMap);
+			if(hasUserRole) {
+				listpj= pjService.selectListProject(paramMap);
+			} else {
+				listpj= pjService.selectListProject2(paramMap);
+			}
 			
-			listpj= pjService.selectListProject(paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
