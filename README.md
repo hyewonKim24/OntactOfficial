@@ -1,5 +1,5 @@
 # ONTACT, 새롭게 일하는 방식 그룹웨어 서비스 
-### 시연 영상 ![Youtube Badge](https://img.shields.io/badge/Youtube-ff0000?style=flat-square&logo=youtube&link=https://youtu.be/주소)
+### [**시연 영상 바로 보기**](https://youtu.be/ijIUGMm0Rfw) ![Youtube Badge](https://img.shields.io/badge/Youtube-ff0000?style=flat-square&logo=youtube&link=https://youtu.be/ijIUGMm0Rfw)
 ##### 팀원 : 김혜원(조장), 김봉영, 오은실, 이윤진, 이혜림
 ## Contetns
 1. [개요](#소개)
@@ -29,6 +29,10 @@ ___
 13. **AJAX**를 통해 프로젝트 상세 페이지를 한 페이지에 구현
 ___
 ## 사용기술 및 개발환경
+<p align="center">
+    <img src = "ForREADME/use.png", width="100%">
+</p>
+
 |Category|Detail|
 |:--:|:--:|
 |FrontEnd|HTML5, JS, CSS3, JQuery|
@@ -143,5 +147,107 @@ ___
       - 프로젝트별 전체 일정 및 업무 조회(FullCalendar )
 ___
 ## 주요기능
+**1. 회원가입**
+<p align="center">
+    <img src = "ForREADME/01.png", width="100%">
+</p>
+
+**2. 마이페이지**
+<p align="center">
+    <img src = "ForREADME/02.png", width="100%">
+</p>
+
+**3. 프로젝트 목록(사원)**
+<p align="center">
+    <img src = "ForREADME/03.png", width="100%">
+</p>
+<p align="center">
+    <img src = "ForREADME/04.png", width="100%">
+</p>
+
+**4. 프로젝트 생성**
+<p align="center">
+    <img src = "ForREADME/05.png", width="100%">
+</p>
+
+**5. 프로젝트 상세(일반글)**
+<p align="center">
+    <img src = "ForREADME/06.png", width="100%">
+</p>
+
+**6. 프로젝트 상세(업무)**
+<p align="center">
+    <img src = "ForREADME/07.png", width="100%">
+</p>
+
+**7. 프로젝트 상세(일정)**
+<p align="center">
+    <img src = "ForREADME/08.png", width="100%">
+</p>
+
+**8. 프로젝트 상세(할일)**
+<p align="center">
+    <img src = "ForREADME/09.png", width="100%">
+</p>
+
+**9. 프로젝트 상세 : 프로젝트 채팅**
+<p align="center">
+    <img src = "ForREADME/10.png", width="100%">
+</p>
+
+**10. 전체 업무**
+<p align="center">
+    <img src = "ForREADME/11.png", width="100%">
+</p>
+
+**11. 전체 일정**
+<p align="center">
+    <img src = "ForREADME/12.png", width="100%">
+</p>
+
+**12. 파일함**
+<p align="center">
+    <img src = "ForREADME/13.png", width="100%">
+</p>
+
+**13. 채팅**
+<p align="center">
+    <img src = "ForREADME/14.png", width="100%">
+</p>
+
+**14. 사용자 정보**
+<p align="center">
+    <img src = "ForREADME/15.png", width="100%">
+</p>
+
+**15. 알림**
+<p align="center">
+    <img src = "ForREADME/16.png", width="100%">
+</p>
+
+**16. 근태관리**
+<p align="center">
+    <img src = "ForREADME/17.png", width="100%">
+</p>
+<p align="center">
+    <img src = "ForREADME/18.png", width="100%">
+</p>
+
+**17. 전자결재**
+<p align="center">
+    <img src = "ForREADME/19.png", width="100%">
+</p>
+<p align="center">
+    <img src = "ForREADME/20.png", width="100%">
+</p>
 ___
 ## Document
+### 1. 유스케이스
+<p align="center">
+    <img src = "ForREADME/usecase.jpg", width="100%">
+</p>
+
+### 2. ERD
+<p align="center">
+    <img src = "ForREADME/erd.png", width="100%">
+</p>
