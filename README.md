@@ -157,7 +157,7 @@ ___
     <img src = "ForREADME/02.png", width="100%">
 </p>
 
-**3. 프로젝트 목록(사원)**
+**3. 프로젝트 목록**
 <p align="center">
     <img src = "ForREADME/03.png", width="100%">
 </p>
