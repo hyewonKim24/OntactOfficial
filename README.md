@@ -35,11 +35,11 @@ ___
 |BackEnd|Java(JDK 1.8), Servlet, Spring(4.2.4), Mybatis|
 |OS|Windows 10, MacOS|
 |Libray&API|Spring Security, Validation, Hiberate, MailSender, Apache Commons FileUpload, Imgscalr, Jquery lightbox, WebSocket, WebSocketConfigurer, Lombok, Chart.js, jsQR Scanner, Fullcalendar, Kakaomap, FontAwesome|
-|IDE|STS(3.9.12.RELEASE)|
+|IDE|STS(3.9.12.RELEASE), VisualStudio|
 |Server|Tomcat(v8.5)|
-|Document|Google Drive, KakaoOven, ERD, diagrams.net|
+|Document|Google Drive, KakaoOven, ERDCloud, diagrams.net|
 |CI|Github|
-|DateBase|AWS RDS, Oracle(12c)|
+|DateBase|AWS RDS, Oracle(11g)|
 ___
 ## 프로젝트 기능 구현
 - 김혜원
