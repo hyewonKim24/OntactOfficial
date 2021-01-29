@@ -24,8 +24,8 @@ public class FilesDao {
 		return sqlSession.selectList("Files.MygetFileboard", uno);
 	}
 	// 파일 리스트 프로젝트
-	public List<ProjectDto> filepjlist(String cno) throws Exception {
-		return sqlSession.selectList("Files.filepjlist", cno);
+	public List<ProjectDto> filepjlist(String uno) throws Exception {
+		return sqlSession.selectList("Files.filepjlist", uno);
 	}
 
 	// 글 인서트시 파일 인서트

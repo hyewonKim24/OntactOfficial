@@ -61,7 +61,7 @@ public class FilesListController {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
 				}
-				mv.addObject("listpj", filesDao.filepjlist(cno));
+				mv.addObject("listpj", filesDao.filepjlist(uno));
 				System.out.println(filesDao.filepjlist(cno)+"프로젝트리스트");
 				mv.addObject("flist", list);
 			} catch (Exception e) {
@@ -274,7 +274,7 @@ public class FilesListController {
 					String fsize = list.get(i).getFsize();
 					list.get(i).setFsize(util.getFileSize(fsize));
 				}
-				mv.addObject("listpj", filesDao.filepjlist(cno));
+				mv.addObject("listpj", filesDao.filepjlist(uno));
 				mv.addObject("flist", list);
 				mv.addObject("pno", pno);
 			} catch (Exception e) {

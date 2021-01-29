@@ -48,11 +48,15 @@
 		select f.*, u.uname from files f
 		inner join users u
 		on f.uno=u.uno
-		where u.cno=#{uno}
+		where u.cno=#{cno}
 		order by fdate desc
 	</select>
 	<select id="filepjlist" resultMap="resultpj">
-		select pno, pname from project where cno=#{cno} order by pno desc
+		select pm.pno,p.pname from project_member pm
+		inner join project p
+		on p.pno=pm.pno
+		where uno=#{uno}
+		order by pno desc
 	</select>
 	<resultMap type="ProjectDto" id="resultpj">
 		<!-- property에는 VO의 필드명, column에는 db table의 컬럼명 -->
