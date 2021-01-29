@@ -2074,12 +2074,11 @@
 			            				        });
 			            				        $('.closebtn').click(function () {
 			            				        	console.log("04="+ "closebtn");
-			            				        	
 			            				        	pick_cnt=0;
 			            				        	console.log("pick_cnt0 : " + pick_cnt);
-			            				        	
-			            				            var $layer = $('.js-layer');
-			            				            $layer.addClass('hide');
+			            				        	$('.closebtn').parets(".rschepeople");
+			            				        	var aaa = $layer.find('.js-layer');
+			            				            aaa.addClass('hide');
 			            				        });
 			            				        console.log("값찍어보기 :" + '${e.count}');
 			            				        //$('.pick${e.count}').click(function(e){
@@ -2114,7 +2113,7 @@
                                     </script>
                                     <div class="modal-btn">
                                         <!-- 취소 button 눌러도 확인과 같이 action submit 됨 -->
-                                        <button class="edit-btn closebtn" type="button" onclick="return false;">취소</button>
+                                        <button class="edit-btn closebtn" type="button" >취소</button>
                                         <button class="edit-btn" type="button" onclick="changeAttendee('${blist.bno}')">확인</button>
                                     </div> 
 									</form>

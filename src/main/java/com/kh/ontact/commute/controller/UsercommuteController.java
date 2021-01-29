@@ -201,8 +201,11 @@ public class UsercommuteController {
 				System.out.println(array[i]);
 			}
 			String cendtime = array[0];
+			System.out.println("aa" + cendtime);
+			String dno = array[1];
+			System.out.println("bb" + cendtime);
 			String uno = array[2];
-			
+			System.out.println(" cc" + uno);
 			c.setCendtime(cendtime);
 			c.setUname(uno);
 			
@@ -216,7 +219,7 @@ public class UsercommuteController {
 		}
 		return "redirect:qrleave";
 	}
-	
+	//
 	//월근무내역
 	@RequestMapping(value = "/commute/monthlylist", method = RequestMethod.GET)
 	public ModelAndView selectMonthCommute(

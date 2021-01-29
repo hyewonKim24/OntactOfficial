@@ -37,7 +37,7 @@ public class CommuteDao {
 		return sqlSession.insert("CommuteMapper.insertEnter", c);
 	}
 	public int updateLeave(CommuteDto c) { // 글 수정 
-		System.out.println("commute 다오 insert 진입");
+		System.out.println("commute 다오 update 진입" + c.getCendtime());
 		return sqlSession.update("CommuteMapper.updateLeave", c);
 	}
 	
