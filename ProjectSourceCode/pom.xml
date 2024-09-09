@@ -10,9 +10,9 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.springframework-version>6.1.12</org.springframework-version>
+		<org.aspectj-version>1.9.22.1</org.aspectj-version>
+		<org.slf4j-version>2.0.16</org.slf4j-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
+			<version>1.2.17</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.mail</groupId>
@@ -95,13 +95,13 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -144,12 +144,12 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.5</version>
+			<version>3.5.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.3.1</version>
+			<version>3.0.4</version>
 		</dependency>
 		<!-- spring-jdbc, 필수 -->
 		<dependency>
@@ -161,14 +161,14 @@
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
+			<version>20030825.184428</version>
 		</dependency>
 		<!-- LOMBOK -->
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.12</version>
+			<version>1.18.34</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- Test -->
@@ -196,12 +196,12 @@
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
+			<version>1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
+			<version>20030203.000550</version>
 		</dependency>
 		<dependency>
 			<groupId>org.imgscalr</groupId>
@@ -212,12 +212,12 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<version>2.0.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
+			<version>8.0.1.Final</version>
 		</dependency>
 		<!-- 메일 -->
 		<dependency>
@@ -241,7 +241,7 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.4.2</version>
+			<version>1.9.13</version>
 		</dependency>
 
 		<dependency>
@@ -259,7 +259,7 @@
 		<dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <version>2.11.0</version>
         </dependency> 
 
 	</dependencies>
